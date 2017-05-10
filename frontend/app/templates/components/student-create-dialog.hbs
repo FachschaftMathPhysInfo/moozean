@@ -1,0 +1,29 @@
+{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>{{title}}</h2>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-form onSubmit=(action "exitDialog" "ok") as |form|}}
+  {{#paper-dialog-content}}
+      <div class="flex layout-column">
+    {{form.input flex=30 label="Name" value=student.name required=true onChange=(action (mut student.name))}}
+    {{form.input flex=30 label="Uni-ID"  maxlength=5 minlength=5 required=true value=student.uniid onChange=(action (mut student.uniid))}}
+    {{#paper-switch flex=30 value=booleanProp1 onChange=(action (mut booleanProp1))}}
+     Pfand {{#unless  booleanProp1}}<strong>nicht</strong>{{/unless}} bezahlt.
+    {{/paper-switch}}
+    {{#paper-switch flex=30 value=student.report onChange=(action (mut student.report))}}
+    Bericht {{#unless student.report}}<strong>nicht</strong>{{/unless}} abgegeben.
+    {{/paper-switch}}
+    </div>
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions class="layout-row"}}
+    <span class="flex"></span>
+    {{#paper-button onClick=(action "exitDialog" "cancel")}}Cancel{{/paper-button}}
+    {{#paper-button  onClick=(action "exitDialog" "ok" student) disabled=form.isInvalid}}{{#if saving}}{{paper-icon "rotate-right" spin=true}}{{/if}} OK{{/paper-button }}
+  {{/paper-dialog-actions}}
+  {{/paper-form}}
+{{/paper-dialog}}
+{{yield}}
