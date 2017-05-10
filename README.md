@@ -1,24 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby version
+Following versions are tested:
+  - rails `>=5`
+  - ruby `>=2.3`
 
-Things you may want to cover:
+ ## System dependencies
 
-* Ruby version
+ Please have the following installed:
+   - `ǹpm`
+   - `ember`, see [emberjs.com]
 
-* System dependencies
+   ## Database & Ember install
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+   Run `rake db:migrate` and `rake ember:install`. Optionally run `rake ember:compile` to speed up.
