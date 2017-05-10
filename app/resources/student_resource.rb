@@ -11,7 +11,7 @@ class StudentResource < JSONAPI::Resource
         strategy.call(records, value, options)
       end
     else
-      value_regex = value.join('|')
+      value_regex = Array.wrap(value).join('|')
       records.where("#{filter} LIKE '#{value_regex}'")
     end
   end

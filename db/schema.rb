@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170506103039) do
+ActiveRecord::Schema.define(version: 20170507121217) do
 
   create_table "folders", force: :cascade do |t|
     t.string   "name"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(version: 20170506103039) do
     t.datetime "updated_at", null: false
     t.index ["folder_id"], name: "index_lents_on_folder_id"
     t.index ["student_id"], name: "index_lents_on_student_id"
+  end
+
+  create_table "returneds", force: :cascade do |t|
+    t.integer  "student_id"
+    t.integer  "folder_id"
+    t.date     "lentat"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folder_id"], name: "index_returneds_on_folder_id"
+    t.index ["student_id"], name: "index_returneds_on_student_id"
   end
 
   create_table "students", force: :cascade do |t|
