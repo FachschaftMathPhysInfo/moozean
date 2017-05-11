@@ -1,5 +1,5 @@
 import Ember from 'ember';
-
+import moment from 'moment';
 export default Ember.Controller.extend({
   items:[],
   titlestudent:"Studierendes eintragen",
@@ -68,10 +68,11 @@ export default Ember.Controller.extend({
       for(var i=0;i<folders.length;i++ ){
         console.log(folders[i]);
         let lent = this.store.createRecord('lent',{student:this.get('student'),folder:folders[i]});
-        lent.save().then(function(_this){return function(data){
+        lent.save().then(function(_this,f){return function(data){
           _this.set('currentStep',0);
-          _this.set('student',{});
-        }}(this));
+          _this.set('student',null);
+          _this.get('ordner').removeObject(f);
+        }}(this,folders[i]));
       }
     },
     addFolder:function(data){
@@ -86,7 +87,31 @@ export default Ember.Controller.extend({
       lent.destroyRecord();
     },
     mail:function(lent){
-      alert("Mail an "+lent.get('student.name')+" versandt!");
+      //alert("Mail an "+lent.get('student.name')+" versandt!");
+        this.set('showMailDialog',true);
+        this.set('newmail',this.store.createRecord('email',{
+          subject:"Ordner "+lent.get('folder.name'),
+          body:"Hallo "+lent.get('student.name')+",\n\nLaut unserer Datenbank hast du seit dem "+moment(lent.get('createdAt')).format("ll")+
+          " den Ordner "+lent.get('folder.name')+" ausgeliehen.\n"+
+          "\n "+
+        "Das ist generell auch noch kein großes Problem. Allerdings haben wir nur wenige Ordner, die \n "+
+        "eigentlich nur zum Kopieren ausgeliehen werden sollten. Deswegen wäre es schön, wenn du ihn \n "+
+        "bald wieder zurückbringst :))\n "+
+        "\n"+
+        "Falls du von dieser Mail unglaublich verwirrt bist, weil du dich nicht erinnern kannst, jemals \n "+
+        "einen solchen Ordner ausgeliehen zu haben, sag uns, dass wir wohl der falschen Person \n "+
+        "geschrieben haben ;)\n "+
+        "\n "+
+        "Viele Grüße\n "+
+        "Deine Fachschaft-MathPhys",
+          address:lent.get('student.uniid')+"@ix.urz.uni-heidelberg.de"
+        }));
+    },
+    closeMailDialog:function(option){
+      this.set('showMailDialog',false);
+      if(option=="ok"){
+        this.get('newmail').save();
+      }
     }
   }
 });

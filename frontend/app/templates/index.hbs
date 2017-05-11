@@ -18,6 +18,9 @@
 {{student-create-dialog student=newstudent closeDialog=(action "closeDialog") title=titlestudent}}
 {{/if}}
 
+{{#if showMailDialog closeDialog=(action "closeMailDialog") action="closeMailDialog"}}
+{{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
+{{/if}}
 {{#paper-stepper  currentStep=currentStep onStepChange=(action (mut currentStep))
   onStepperCompleted=(action "saveModel") linear=false class="flex md-whiteframe-1dp" as |stepper|}}
   {{#stepper.step label="Studierendes" summary=student.name as |step|}}
