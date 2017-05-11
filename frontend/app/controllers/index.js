@@ -18,15 +18,17 @@ export default Ember.Controller.extend({
     console.log(this.get('student'));
     return this.get('student')==null;
   }),
-  ausleihbar:Ember.computed('studentselected','ordner.[]',function(){
+  ausleihbar:Ember.computed('studentselected','ordner.length','ordner','ordner.[]',function(){
     var refund=this.get('student.refund');
     var contains_obligation=false;
     var folders=this.get('ordner');
     folders.forEach(function(item){
       contains_obligation |=item.get('obligationToReport');
     });
-    if(refund) contains_obligation=false;
-    return (!(this.get('studentselected') &&(this.get('ordner').length==0)))||(contains_obligation);
+    if(refund){
+     contains_obligation=false;
+   }
+    return ((this.get('studentselected')||(this.get('ordner').length==0)))||(contains_obligation);
   }),
   showDialog:false,
   actions:{
