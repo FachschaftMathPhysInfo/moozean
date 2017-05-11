@@ -19,7 +19,14 @@ export default Ember.Controller.extend({
     return this.get('student')==null;
   }),
   ausleihbar:Ember.computed('studentselected','ordner.[]',function(){
-    return this.get('studentselected') &&(this.get('ordner').length==0);
+    var refund=this.get('student.refund');
+    var contains_obligation=false;
+    var folders=this.get('ordner');
+    folders.forEach(function(item){
+      contains_obligation |=item.get('obligationToReport');
+    });
+    if(refund) contains_obligation=false;
+    return (!(this.get('studentselected') &&(this.get('ordner').length==0)))||(contains_obligation);
   }),
   showDialog:false,
   actions:{

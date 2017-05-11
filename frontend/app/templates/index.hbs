@@ -62,8 +62,8 @@
       searchField="name"
       noMatchesMessage="Kein Ordner gefunden" as |item|}}
       <strong>{{item.name}}</strong>
-      {{#if item.family}}
-        <em>{{item.family}}</em>
+      {{#if item.obligationToReport}}
+        <em>kostenpflichtig</em>
       {{/if}}
     {{/paper-chips}}
     {{/step.body}}
