@@ -1,8 +1,10 @@
 {{#paper-toolbar}}
    {{#paper-toolbar-tools}}
-     {{#paper-button iconButton=true}}
-       {{paper-icon "menu"}}
-     {{/paper-button}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+      {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
      <h2>Ozean <span class="hide-sm">- Organ zur Entnahme allerlei nützlicher Ordner</span></h2>
      <span class="flex"></span>
      {{#paper-button iconButton=true onClick=(action "addStudent")}}
@@ -13,7 +15,7 @@
      {{/paper-button}}
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
+{{#paper-content class="md-padding column flex-100"}}
 {{#if showDialog closeDialog=(action "closeDialog") action="closeDialog"}}
 {{student-create-dialog student=newstudent closeDialog=(action "closeDialog") title=titlestudent}}
 {{/if}}
@@ -41,7 +43,7 @@
         {{paper-autocomplete-highlight
           label=country.name
           searchText=autocomplete.searchText
-          flags="i"}}
+          flags="i"}} <em>{{country.uniid}}</em>
       {{/paper-autocomplete}}
     {{/step.body}}
     {{#step.actions as |nextStep previousStep|}}

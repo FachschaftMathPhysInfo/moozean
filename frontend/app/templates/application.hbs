@@ -1,1 +1,23 @@
-{{outlet}}
+{{#paper-sidenav-container  class="layout-row layout-xs-column"}}
+{{#paper-sidenav
+  class="md-whiteframe-z2 site-sidenav flex"
+  name="left2"
+  open=open
+  closeOnClick=true
+  onToggle=(action (mut open))
+flex-layout="column" flex=true }}
+  {{#paper-toolbar tall=true as |toolbar|}}
+    {{#paper-toolbar-tools}}<center><span class="logo">μφ</span><br/>FACHSCHAFT MATHPHYS</center>{{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-content padding=true}}
+    {{#paper-list}}
+      {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}<md-icon>{{svg-jar "ocean" class="icon" height="24px" width="24px"}}</md-icon>Ozean{{/menu-item}}
+      {{#menu-item active=(is-active "moor" currentRouteName) onClick=(transition-to "moor")}}{{paper-icon "folder"}}Moor{{/menu-item}}
+    {{/paper-list}}
+  {{/paper-content}}
+{{/paper-sidenav}}
+
+  {{#paper-content flex-layout="column" class="flex row"}}
+    {{outlet}}
+    {{/paper-content}}
+ {{/paper-sidenav-container}}

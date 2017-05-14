@@ -10,3 +10,69 @@ $warn: 'pink';
 @import 'ember-paper';
 @import 'ember-paper-stepper';
 @import 'paper-data-table';
+
+.menu-item {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+
+    .expand-icon {
+      position: relative;
+      right: -36px;
+      transition: transform 250ms linear;
+    }
+
+    &.expanded .expand-icon {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .menu-item, .submenu-item {
+    min-height: 40px;
+    &.active, &:hover {
+      background-color: #{map-get($accent, 'A400')};
+    }
+}
+@import 'menu';
+
+body {
+  fill: currentColor;
+}
+svg {
+  fill: currentColor;
+}
+
+
+/**
+ * Needed styles to set correct widths.
+ */
+
+body {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+body.ember-application {
+  flex-direction: row;
+  flex: 1;
+  display: flex;
+}
+
+body > div.ember-view {
+  flex-direction: row;
+  flex: 1;
+  display: flex;
+}
+
+.site-nav-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+
+.inner-sidenav {
+  position: relative;
+}

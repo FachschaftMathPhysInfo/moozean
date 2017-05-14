@@ -1,0 +1,107 @@
+/************
+ * DOCS MENU
+ ************/
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color($color-grey, '500');
+}
+
+.site-sidenav,
+.site-sidenav.md-locked-open-add-active,
+.site-sidenav.md-locked-open {
+  width:     272px;
+  min-width: 272px;
+  max-width: 272px;
+}
+.site-sidenav > * {
+  min-width: 218px;
+}
+md-sidenav.site-sidenav {
+  background: color($primary, '400');
+
+  md-toolbar.md-default-theme {
+    background: linear-gradient(to bottom, color($primary, '600'), color($primary, '400'));;
+    border-bottom: 1px solid rgba(#fff000, .1);
+
+    height: 180px;
+    min-height: 180px;
+    max-height: 180px;
+    center{
+      margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+    }
+    .logo {
+      font-family:"Linux Biolinum";
+      font-size: 80px;
+      font-weight: 400;
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 150px;
+      }
+
+      div {
+        font-weight: bold;
+        margin-top: -20px;
+      }
+    }
+  }
+
+  md-content {
+    background: transparent;
+    color: $light-contrast-color;
+    md-icon {
+      color: inherit;
+    }
+  }
+
+  .menu-item {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+
+    .expand-icon {
+      position: relative;
+      right: -36px;
+      transition: transform 250ms linear;
+    }
+
+    &.expanded .expand-icon {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .submenu-item {
+    .md-list-item-inner {
+      padding-left: 36px;
+    }
+  }
+
+  .menu-item, .submenu-item {
+    min-height: 40px;
+
+    &.active, &:hover {
+      background-color: rgba(#fff, .1);
+    }
+
+    .md-list-item-inner {
+      min-height: 40px;
+
+      md-icon {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+}

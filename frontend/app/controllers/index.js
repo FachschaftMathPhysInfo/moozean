@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
   titlestudent:"Studierendes eintragen",
   bleibendeOrdner:[{name:"KP1A"},{name:"KM1A"}],
   ordner:[],
+  toggleMenu:true,
   newstudent:{},
   sumordner:Ember.computed('ordner.[]',function(){
       var result =[];
