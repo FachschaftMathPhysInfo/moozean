@@ -70,6 +70,9 @@ export default Ember.Controller.extend({
       return this.store.query('student', {
         filter: {
           name: '%'+data+'%'
+        },
+        page:{
+          limit:10
         }
       })
     },

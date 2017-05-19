@@ -1,6 +1,7 @@
 class StudentResource < JSONAPI::Resource
   attributes :name, :uniid, :report, :refund, :matriculationnumber,:comment
   filter :name
+  paginator :offset
   def self.apply_filter(records, filter, value, options = {})
     strategy = _allowed_filters.fetch(filter.to_sym, Hash.new)[:apply]
 
