@@ -3,11 +3,11 @@
 one:
   name: MyString
   content: MyString
-  obligation_to_report: false
   barcode: MyString
+  obligation_to_report: false
 
 two:
   name: MyString
   content: MyString
-  obligation_to_report: false
   barcode: MyString
+  obligation_to_report: false

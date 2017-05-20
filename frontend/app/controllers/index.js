@@ -16,7 +16,6 @@ export default Ember.Controller.extend({
   }),
   student:null,
   studentselected:Ember.computed('student',function(){
-    console.log(this.get('student'));
     return this.get('student')==null;
   }),
   ausleihbar:Ember.computed('studentselected','ordner.length','ordner','ordner.[]',function(){
@@ -39,15 +38,11 @@ export default Ember.Controller.extend({
     },
     editStudent:function(student){
        this.set('newstudent',student);
-       console.log(student);
        this.set('titlestudent','Studierendes bearbeiten');
        this.set("showDialog",true);
     },
-    closeDialog:function(option,student){
-      console.log(this.newstudent);
-      console.log(this.get('newstudent'));
+    closeDialog:function(option){
       if(option=="ok"){
-        console.log(this.get('newstudent'));
         let foo=function(_this){return function(){
           _this.set('student',_this.get('newstudent'));
           _this.set('newstudent',_this.store.createRecord('student'));
@@ -61,10 +56,10 @@ export default Ember.Controller.extend({
     alert(reason);//TODO: FIXME
 });
 }else{
-  if(this.get('newstudent').unloadRecord!=null)
-  this.get('newstudent').unloadRecord();
-  this.set("showDialog",false);
-}
+      if(this.get('newstudent').unloadRecord!=null)
+      this.get('newstudent').unloadRecord();
+      this.set("showDialog",false);
+    }
     },
     searchStudent:function(data){
       return this.store.query('student', {
@@ -76,12 +71,11 @@ export default Ember.Controller.extend({
         }
       })
     },
-    saveModel:function(data){
+    saveModel:function(){
       let folders = this.get('ordner');
       for(var i=0;i<folders.length;i++ ){
-        console.log(folders[i]);
         let lent = this.store.createRecord('lent',{student:this.get('student'),folder:folders[i]});
-        lent.save().then(function(_this,f){return function(data){
+        lent.save().then(function(_this,f){return function(){
           _this.set('currentStep',0);
           _this.set('student',null);
           _this.get('ordner').removeObject(f);
@@ -103,6 +97,7 @@ export default Ember.Controller.extend({
       //alert("Mail an "+lent.get('student.name')+" versandt!");
         this.set('showMailDialog',true);
         this.set('newmail',this.store.createRecord('email',{
+          referencable:lent,
           subject:"Ordner "+lent.get('folder.name'),
           body:"Hallo "+lent.get('student.name')+",\n\nLaut unserer Datenbank hast du seit dem "+moment(lent.get('createdAt')).format("ll")+
           " den Ordner "+lent.get('folder.name')+" ausgeliehen.\n"+
@@ -124,6 +119,10 @@ export default Ember.Controller.extend({
       this.set('showMailDialog',false);
       if(option=="ok"){
         this.get('newmail').save();
+      } else
+      {
+        if(this.get('newmail').unloadRecord!=null)
+        this.get('newmail').unloadRecord();
       }
     }
   }

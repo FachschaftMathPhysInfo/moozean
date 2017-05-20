@@ -1,5 +1,8 @@
 class StudentResource < JSONAPI::Resource
   attributes :name, :uniid, :report, :refund, :matriculationnumber,:comment
+  # Relationen zu bisher und aktuell ausgeliehene Ordner
+  has_many :folders_lents, class_name:"Folder"
+  has_many :folders_returneds, class_name:"Folder"
   filter :name
   paginator :offset
   def self.apply_filter(records, filter, value, options = {})
