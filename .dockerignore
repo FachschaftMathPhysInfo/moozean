@@ -1,0 +1,7 @@
+.git
+.dockerignore
+.byebug_history
+/log/*
+/tmp/*
+frontend/tmp/*
+frontend/node_modules/*
