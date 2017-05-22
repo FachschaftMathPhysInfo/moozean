@@ -7,7 +7,10 @@
   onToggle=(action (mut open))
 flex-layout="column" flex=true }}
   {{#paper-toolbar tall=true as |toolbar|}}
-    {{#paper-toolbar-tools}}<center><span class="logo">μφ</span><br/>FACHSCHAFT MATHPHYS</center>{{/paper-toolbar-tools}}
+    {{#paper-toolbar-tools}}<center>
+      {{svg-jar "ocean"  height="160px" width="160px"}}<br/>
+      FACHSCHAFT MATHPHYS
+    </center>{{/paper-toolbar-tools}}
   {{/paper-toolbar}}
   {{#paper-content padding=true}}
     {{#paper-list}}
