@@ -11,6 +11,11 @@ $warn: 'pink';
 @import 'ember-paper-stepper';
 @import 'paper-data-table';
 
+//
+body > [class="ember-view"] {
+  max-width: 100%;
+}
+
 .menu-item {
     text-transform: uppercase;
     font-size: 14px;
@@ -53,6 +58,7 @@ body {
 }
 
 body.ember-application {
+  overflow-x: auto;
   flex-direction: row;
   flex: 1;
   display: flex;

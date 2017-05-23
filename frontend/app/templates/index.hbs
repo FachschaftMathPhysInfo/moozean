@@ -5,7 +5,7 @@
       {{paper-icon icon="menu"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
-     <h2>Ozean <span class="hide-sm">- Organ zur Entnahme allerlei nützlicher Ordner</span></h2>
+     <h2>Ozean <span class="hide-xs hide-sm">- Organ zur Entnahme allerlei nützlicher Ordner</span></h2>
      <span class="flex"></span>
      {{#paper-button iconButton=true onClick=(action "addStudent")}}
        {{paper-icon "person add"}}
@@ -23,28 +23,31 @@
 {{#if showMailDialog closeDialog=(action "closeMailDialog") action="closeMailDialog"}}
 {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
 {{/if}}
-{{#paper-stepper  currentStep=currentStep onStepChange=(action (mut currentStep))
-  onStepperCompleted=(action "saveModel") linear=false class="flex md-whiteframe-1dp" as |stepper|}}
+<div class="flex">
+{{#paper-card as |card|}}
+	{{#card.content}}
+{{#paper-stepper  currentStep=currentStep onStepChange=(action (mut currentStep)) mobileStepper=true
+  onStepperCompleted=(action "saveModel") linear=false vertical=true class="flex" as |stepper|}}
   {{#stepper.step label="Studierendes" summary=student.name as |step|}}
     {{#step.body}}
-      {{#paper-autocomplete
-        disabled=firstDisabled
-        onCreate=(action "addStudent")
-        allowClear=true
-        searchText=(readonly student.name)
-        selected=student
-        search= (action "searchStudent")
-        searchField="name"
-        labelPath="name"
-        placeholder="Studierendes aussuchen"
-        loadingMessage="Suche Studierendes..."
-        noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
-        onSelectionChange=(action (mut student)) as |country autocomplete|}}
-        {{paper-autocomplete-highlight
-          label=country.name
-          searchText=autocomplete.searchText
-          flags="i"}} <em>{{country.uniid}}</em>
-      {{/paper-autocomplete}}
+    {{#paper-autocomplete
+            disabled=firstDisabled
+            onCreate=(action "addStudent")
+            allowClear=true
+            searchText=(readonly student.name)
+            selected=student
+            search= (action "searchStudent")
+            searchField="name"
+            labelPath="name"
+            placeholder="Studierendes aussuchen"
+            loadingMessage="Suche Studierendes..."
+            noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
+            onSelectionChange=(action (mut student)) as |country autocomplete|}}
+            {{paper-autocomplete-highlight
+              label=country.name
+              searchText=autocomplete.searchText
+              flags="i"}} <em>{{country.uniid}}</em>
+          {{/paper-autocomplete}}
     {{/step.body}}
     {{#step.actions as |nextStep previousStep|}}
           {{#paper-button primary=true raised=true disabled=studentselected onClick=(action nextStep)}}
@@ -79,43 +82,49 @@
     {{/step.actions}}
   {{/stepper.step}}
 {{/paper-stepper}}
+{{/card.content}}
+{{/paper-card}}
 {{outlet}}
-
-{{!Table}}
-{{#paper-data-table sortProp="folder" sortDir="desc" selectable=true as |table|}}
-{{#table.head as |head|}}
-  {{#head.column checkbox=true}}
-    {{#paper-checkbox disabled=true onChange=null}}{{/paper-checkbox}}
-  {{/head.column}}
-  {{#head.column sortProp="folder.name"}}Ordner{{/head.column}}
-  {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
-  {{#head.column sortProp="createdAt" }}ausgeliehen{{/head.column}}
-  {{#head.column}}Optionen{{/head.column}}
-{{/table.head}}
-{{#table.body as |body|}}
-  {{#each (sort-by table.sortDesc model.lents) as |m|}}
-    {{#body.row edit=true as |row|}}
-      {{#row.cell checkbox=true}}
-        {{#paper-checkbox
-          value=m.checked
-          onChange=(action (mut m.checked))}}
-        {{/paper-checkbox}}
-      {{/row.cell}}
-      {{#row.cell}}{{m.folder.name}}{{/row.cell}}
-      {{#row.cell}}
-        {{m.student.name}}
-          {{#paper-button iconButton=true onClick=(action "editStudent" m.student)}}
-            {{paper-icon "edit" }}
-          {{/paper-button}}
-      {{/row.cell}}
-      {{#row.cell}}{{moment-from-now m.createdAt interval=1000}}{{/row.cell}}
-      {{#row.cell edit=true as |cell|}}
-        {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
-        {{#paper-button raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}} {{if m.emails.length "Erneut"}} Mailen{{/paper-button}}
-      {{/row.cell}}
-    {{/body.row}}
-  {{/each}}
-{{/table.body}}
-{{/paper-data-table}}
+{{!Table in Card}}
+{{#paper-card as |card|}}
+	{{#card.content }}
+  {{#paper-data-table   sortProp="folder" sortDir="desc" selectable=true as |table|}}
+  {{#table.head as |head|}}
+    {{#head.column checkbox=true}}
+      {{#paper-checkbox disabled=true onChange=null}}{{/paper-checkbox}}
+    {{/head.column}}
+    {{#head.column sortProp="folder.name"}}Ordner{{/head.column}}
+    {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
+    {{#head.column sortProp="createdAt" }}ausgeliehen{{/head.column}}
+    {{#head.column}}Optionen{{/head.column}}
+  {{/table.head}}
+  {{#table.body as |body|}}
+    {{#each (sort-by table.sortDesc model.lents) as |m|}}
+      {{#body.row edit=true as |row|}}
+        {{#row.cell checkbox=true}}
+          {{#paper-checkbox
+            value=m.checked
+            onChange=(action (mut m.checked))}}
+          {{/paper-checkbox}}
+        {{/row.cell}}
+        {{#row.cell}}{{m.folder.name}}{{/row.cell}}
+        {{#row.cell}}
+          {{m.student.name}}
+            {{#paper-button iconButton=true onClick=(action "editStudent" m.student)}}
+              {{paper-icon "edit" }}
+            {{/paper-button}}
+        {{/row.cell}}
+        {{#row.cell}}{{moment-from-now m.createdAt interval=1000}}{{/row.cell}}
+        {{#row.cell edit=true as |cell|}}
+          {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
+          {{#paper-button raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}} {{if m.emails.length "Erneut"}} Mailen{{/paper-button}}
+        {{/row.cell}}
+      {{/body.row}}
+    {{/each}}
+  {{/table.body}}
+  {{/paper-data-table}}
+  {{/card.content}}
+{{/paper-card}}
+</div>
 {{outlet}}
 {{/paper-content}}

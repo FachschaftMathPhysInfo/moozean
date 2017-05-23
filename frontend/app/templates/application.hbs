@@ -8,7 +8,7 @@
 flex-layout="column" flex=true }}
   {{#paper-toolbar tall=true as |toolbar|}}
     {{#paper-toolbar-tools}}<center>
-      {{svg-jar "ocean"  height="160px" width="160px"}}<br/>
+      {{svg-jar "ocean"  height="140px" width="140px"}}<br/>
       FACHSCHAFT MATHPHYS
     </center>{{/paper-toolbar-tools}}
   {{/paper-toolbar}}
@@ -20,7 +20,7 @@ flex-layout="column" flex=true }}
   {{/paper-content}}
 {{/paper-sidenav}}
 
-  {{#paper-content flex-layout="column" class="flex row"}}
+  {{#paper-content flex-layout="column" class="flex row layout-column"}}
     {{outlet}}
     {{/paper-content}}
  {{/paper-sidenav-container}}
