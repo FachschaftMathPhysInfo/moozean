@@ -1,8 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('mail', 'Unit | Model | mail', {
+moduleForModel('email', 'Unit | Model | email', {
   // Specify the other units that are required for this test.
-  needs: []
+  needs: ['model:referencable']
 });
 
 test('it exists', function(assert) {
