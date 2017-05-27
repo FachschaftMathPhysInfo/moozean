@@ -1,5 +1,5 @@
 class EmailResource < JSONAPI::Resource
-  attributes :address, :subject, :body
+  attributes :address, :subject, :body, :created_at
   has_one :referencable, :polymorphic => true
   after_save :send_mail
   def send_mail
