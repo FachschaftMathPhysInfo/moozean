@@ -15,8 +15,12 @@ class StudentResource < JSONAPI::Resource
         strategy.call(records, value, options)
       end
     else
+      verb="LIKE"
+      if filter == "id"
+        verb="="
+      end
       value_regex = Array.wrap(value).join('|')
-      records.where("#{filter} LIKE '#{value_regex}'")
+      records.where("#{filter} #{verb} '#{value_regex}'")
     end
   end
 end
