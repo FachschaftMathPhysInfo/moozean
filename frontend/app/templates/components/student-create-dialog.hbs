@@ -12,7 +12,7 @@
     {{form.input flex=30 label="Name" value=student.name required=true onChange=(action (mut student.name))}}
     {{form.input flex=30 label="Uni-ID"  maxlength=5 minlength=5 required=true value=student.uniid onChange=(action (mut student.uniid))}}
     {{#paper-switch flex=30 value=student.refund onChange=(action (mut student.refund))}}
-     Pfand {{#unless  booleanProp1}}<strong>nicht</strong>{{/unless}} bezahlt.
+     Pfand {{#unless  student.refund}}<strong>nicht</strong>{{/unless}} bezahlt.
     {{/paper-switch}}
     {{#paper-switch flex=30 value=student.report onChange=(action (mut student.report))}}
     Bericht {{#unless student.report}}<strong>nicht</strong>{{/unless}} abgegeben.
