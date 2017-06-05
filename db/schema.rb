@@ -15,54 +15,54 @@ ActiveRecord::Schema.define(version: 20170520085218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "emails", force: :cascade do |t|
-    t.string   "address"
-    t.string   "subject"
-    t.string   "body"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.string   "referencable_type"
-    t.integer  "referencable_id"
-    t.index ["referencable_type", "referencable_id"], name: "index_emails_on_referencable_type_and_referencable_id", using: :btree
-  end
-
-  create_table "folders", force: :cascade do |t|
-    t.string   "name"
-    t.string   "content"
-    t.boolean  "obligation_to_report"
-    t.string   "barcode"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-  end
-
-  create_table "lents", force: :cascade do |t|
-    t.integer  "student_id"
-    t.integer  "folder_id"
+  create_table "emails", id: :serial, force: :cascade do |t|
+    t.string "address"
+    t.string "subject"
+    t.string "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["folder_id"], name: "index_lents_on_folder_id", using: :btree
-    t.index ["student_id"], name: "index_lents_on_student_id", using: :btree
+    t.string "referencable_type"
+    t.integer "referencable_id"
+    t.index ["referencable_type", "referencable_id"], name: "index_emails_on_referencable_type_and_referencable_id"
   end
 
-  create_table "returneds", force: :cascade do |t|
-    t.integer  "student_id"
-    t.integer  "folder_id"
-    t.date     "lentat"
+  create_table "folders", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "content"
+    t.boolean "obligation_to_report"
+    t.string "barcode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["folder_id"], name: "index_returneds_on_folder_id", using: :btree
-    t.index ["student_id"], name: "index_returneds_on_student_id", using: :btree
   end
 
-  create_table "students", force: :cascade do |t|
-    t.string   "name"
-    t.string   "uniid"
-    t.string   "matriculationnumber"
-    t.boolean  "refund"
-    t.boolean  "report"
-    t.string   "comment"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+  create_table "lents", id: :serial, force: :cascade do |t|
+    t.integer "student_id"
+    t.integer "folder_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folder_id"], name: "index_lents_on_folder_id"
+    t.index ["student_id"], name: "index_lents_on_student_id"
+  end
+
+  create_table "returneds", id: :serial, force: :cascade do |t|
+    t.integer "student_id"
+    t.integer "folder_id"
+    t.date "lentat"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folder_id"], name: "index_returneds_on_folder_id"
+    t.index ["student_id"], name: "index_returneds_on_student_id"
+  end
+
+  create_table "students", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "uniid"
+    t.string "matriculationnumber"
+    t.boolean "refund"
+    t.boolean "report"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "lents", "folders"
