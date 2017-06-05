@@ -6,6 +6,6 @@ class Student < ApplicationRecord
   has_many :lents
   has_many :returneds
   # Relationen zu bisher und aktuell ausgeliehene Ordner
-  has_many :folder_lents, :through => :lents, class_name: "Folder"
-  has_many :folder_returneds, :through => :returneds, class_name: "Folder"
+  has_many :folders_lents, :through => :lents,source: :folder, class_name: "Folder"
+  has_many :folders_returneds, :through => :returneds,source: :folder, class_name: "Folder"
 end

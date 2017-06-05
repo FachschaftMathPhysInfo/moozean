@@ -11,6 +11,7 @@ The recommended software versions are
    - `npm`
    - `ember`, see [emberjs.com]
    - `rails` and `bundler`
+   - `postgresql`
 
 ## Database & Ember install
 
