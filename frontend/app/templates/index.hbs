@@ -84,10 +84,15 @@
     {{/paper-chips}}
     {{/step.body}}
     {{#step.actions as |nextStep previousStep|}}
-          {{#paper-button primary=true raised=true disabled=ausleihbar onClick=(action "saveModel")}}
+          {{#paper-button primary=true raised=true disabled=nicht_ausleihbar onClick=(action "saveModel")}}
             Ausleihen
           {{/paper-button}}
-          {{#paper-button onClick=(action previousStep)}}
+	{{#if nicht_ausleihbar}}
+          {{#paper-button primary=true raised=true onClick=(action "editStudent" student)}}
+             Pfand bezahlen
+          {{/paper-button}}
+	{{/if}}	
+	  {{#paper-button onClick=(action previousStep)}}
             Back
           {{/paper-button}}
     {{/step.actions}}

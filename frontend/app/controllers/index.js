@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
   studentselected:Ember.computed('student',function(){
     return this.get('student')==null;
   }),
-  ausleihbar:Ember.computed('studentselected','ordner.length','ordner','ordner.[]',function(){
+  nicht_ausleihbar:Ember.computed('studentselected','student.refund','ordner.length','ordner','ordner.[]',function(){
     var refund=this.get('student.refund');
     var contains_obligation=false;
     var folders=this.get('ordner');
@@ -124,6 +124,6 @@ export default Ember.Controller.extend({
         if(this.get('newmail').unloadRecord!=null)
         this.get('newmail').unloadRecord();
       }
-    }
+    },
   }
 });

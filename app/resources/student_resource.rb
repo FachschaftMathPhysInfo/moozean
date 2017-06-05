@@ -15,7 +15,7 @@ class StudentResource < JSONAPI::Resource
         strategy.call(records, value, options)
       end
     else
-      verb="LIKE"
+      verb="ILIKE"
       if filter == "id"
         verb="="
       end
