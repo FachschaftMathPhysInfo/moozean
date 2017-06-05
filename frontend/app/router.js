@@ -8,6 +8,7 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('moor');
+  this.route('recentlyreturned');
 });
 
 export default Router;

@@ -10,9 +10,20 @@
      {{#paper-button iconButton=true onClick=(action "addStudent")}}
        {{paper-icon "person add"}}
      {{/paper-button}}
-     {{#paper-button iconButton=true}}
-       {{paper-icon "more_vert"}}
-     {{/paper-button}}
+     {{#paper-menu isOpen=dreipunktemenuisopen position="target-right target" as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button onClick=null iconButton=true}}
+            {{paper-icon "more_vert" class="md-menu-origin"}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+
+        {{#menu.content as |content|}}
+            {{#content.menu-item onClick=(transition-to "recentlyreturned")}}
+              {{paper-icon "folder_shared" class="md-menu-align-target"}}
+              letzte Ausleihen
+            {{/content.menu-item}}
+        {{/menu.content}}
+      {{/paper-menu}}
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
 {{#paper-content class="md-padding column flex-100"}}
