@@ -5,6 +5,9 @@ class EmailResource < JSONAPI::Resource
   def send_mail
     #Sending an emails
     puts self
-    StandardEmailMailer.send_email(self).deliver_now
+    puts "Hallo"
+    mail= {body: self.body, address: self.address, subject: self.subject}
+    puts mail
+    StandardEmailMailer.send_email(mail).deliver_now
   end
 end

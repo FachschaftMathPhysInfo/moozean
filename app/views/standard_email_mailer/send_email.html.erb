@@ -4,6 +4,6 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <%= @email.body %>
+    <%=  simple_format(@email[:body]) %>
   </body>
 </html>
