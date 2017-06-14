@@ -2,10 +2,20 @@
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function(defaults) {
+  let disabledAddons=[];
+  console.log(process.env);
+  if (EmberApp.env() !== 'production' && !process.env.ENABLE_SW) {
+    // disable service workers by default for dev and testing
+    console.log('blacklisted');
+    disabledAddons.push('ember-service-worker');
+    disabledAddons.push('ember-service-worker-index');
+    disabledAddons.push('ember-service-worker-asset-cache');
+  }
   var app = new EmberApp(defaults, {
-    // Add options here
+    addons: {
+      blacklist: disabledAddons
+    }
   });
-
   // Use `app.import` to add additional libraries to the generated
   // output files.
   //

@@ -1,0 +1,26 @@
+{
+  "name": "Ozean - Organ zur Entnahme allerlei nützlicher Ordner",
+  "short_name": "Ozean",
+  "theme_color": "#990000",
+  "background_color": "#990000",
+  "display": "standalone",
+  "orientation": "landscape",
+  "start_url": "/index",
+  "icons": [
+    {
+  "src": "ocean-logo.svg",
+  "type": "image/svg",
+  "sizes": "48x48 72x72 96x96 128x128 256x256 512x512"
+},
+{
+"src": "ocean-logo.svg.png",
+"type": "image/png",
+"sizes": "512x512"
+},
+{
+"src": "ocean-logo.144.png",
+"type": "image/png",
+"sizes": "144x144"
+}
+  ]
+}
