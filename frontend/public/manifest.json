@@ -5,7 +5,7 @@
   "background_color": "#990000",
   "display": "standalone",
   "orientation": "landscape",
-  "start_url": "/index",
+  "start_url": "/",
   "icons": [
     {
   "src": "ocean-logo.svg",
