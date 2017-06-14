@@ -125,5 +125,14 @@ export default Ember.Controller.extend({
         this.get('newmail').unloadRecord();
       }
     },
+    closepfand:function(option,student){
+      this.set('showPfandDialog', false);
+      if(option=="ok"){
+          student.set('refund', true);
+      }
+    },
+    showPfandDialog:function(){
+      this.set('showPfandDialog', true);
+    },
   }
 });

@@ -34,6 +34,8 @@
 {{#if showMailDialog closeDialog=(action "closeMailDialog") action="closeMailDialog"}}
 {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
 {{/if}}
+
+
 <div class="flex">
 {{#paper-card as |card|}}
 	{{#card.content}}
@@ -87,11 +89,11 @@
           {{#paper-button primary=true raised=true disabled=nicht_ausleihbar onClick=(action "saveModel")}}
             Ausleihen
           {{/paper-button}}
-	{{#if nicht_ausleihbar}}
-          {{#paper-button primary=true raised=true onClick=(action "editStudent" student)}}
+	{{#unless student.refund}}
+          {{#paper-button primary=true raised=true onClick=(action "showPfandDialog" student)}}
              Pfand bezahlen
           {{/paper-button}}
-	{{/if}}	
+	{{/unless}}
 	  {{#paper-button onClick=(action previousStep)}}
             Back
           {{/paper-button}}
@@ -151,3 +153,4 @@
 </div>
 {{outlet}}
 {{/paper-content}}
+{{#if showPfandDialog}}{{pfand-dialog closeDialog=(action "closepfand") student=student}}{{/if}}
