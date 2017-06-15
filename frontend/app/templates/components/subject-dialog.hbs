@@ -1,0 +1,22 @@
+{{#paper-dialog class="flex-77" onClose=(action closeDialog "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>{{title}}</h2>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(action closeDialog "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-form onSubmit=(action closeDialog "ok") as |form|}}
+  {{#paper-dialog-content}}
+      <div class="flex layout-column">
+    {{form.input flex=30 label="Name" value=subject.name required=true onChange=(action (mut subject.name))}}
+    </div>
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions class="layout-row"}}
+    <span class="flex"></span>
+    {{#paper-button onClick=(action closeDialog "cancel")}}Abbrechen{{/paper-button}}
+    {{#paper-button  onClick=(action closeDialog "ok" subject) disabled=form.isInvalid}} OK{{/paper-button }}
+  {{/paper-dialog-actions}}
+  {{/paper-form}}
+{{/paper-dialog}}
+{{yield}}

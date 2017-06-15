@@ -1,1 +1,103 @@
-{{outlet}}
+{{#paper-toolbar}}
+   {{#paper-toolbar-tools}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+      {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+     <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Allgemein <span class="hide-sm"></span></h2>
+     <span class="flex"></span>
+     {{#paper-button iconButton=true}}
+       {{paper-icon "more_vert"}}
+     {{/paper-button}}
+   {{/paper-toolbar-tools}}
+ {{/paper-toolbar}}
+{{#paper-content class="md-padding"}}
+{{#paper-card as |card|}}
+  {{#card.title as |title|}}
+        {{#title.text as |text|}}
+          {{#text.headline}}Fach{{/text.headline}}
+        {{/title.text}}
+      {{/card.title}}
+    {{#paper-list}}
+    {{paper-divider}}
+      {{#each model.subjects as |subject|}}
+        {{#paper-item class="md-1-line"}}
+          {{paper-icon "book" class="md-avatar-icon"}}
+            <div class="md-list-item-text">
+              <h3>{{subject.name}}</h3>
+            </div>
+            <span class="flex">
+            </span>
+            {{#paper-button iconButton=true onClick=(action "editSubject" subject)}}{{paper-icon "edit"}}{{/paper-button}}
+            {{#paper-button iconButton=true onClick=(action "deleteSubject" subject)}}{{paper-icon "delete"}}{{/paper-button}}
+          {{/paper-item}}
+          {{paper-divider}}
+        {{/each}}
+    {{/paper-list}}
+  {{#card.actions}}
+    {{#paper-button primary=true onClick=(action "addSubject")}}Neues Prüfungsfach{{/paper-button}}
+  {{/card.actions}}
+{{/paper-card}}
+{{#paper-card as |card|}}
+  {{#card.title as |title|}}
+        {{#title.text as |text|}}
+          {{#text.headline}}Prüfungsart{{/text.headline}}
+        {{/title.text}}
+      {{/card.title}}
+    {{#paper-list}}
+    {{paper-divider}}
+      {{#each model.typs as |typ|}}
+        {{#paper-item class="md-1-line"}}
+          {{paper-icon "bubble chart" class="md-avatar-icon"}}
+            <div class="md-list-item-text">
+              <h3>{{typ.name}}</h3>
+            </div>
+            <span class="flex">
+            </span>
+            {{#paper-button iconButton=true onClick=(action "editTyp" typ)}}{{paper-icon "edit"}}{{/paper-button}}
+            {{#paper-button iconButton=true onClick=(action "deleteTyp" typ)}}{{paper-icon "delete"}}{{/paper-button}}
+          {{/paper-item}}
+          {{paper-divider}}
+        {{/each}}
+    {{/paper-list}}
+  {{#card.actions}}
+    {{#paper-button primary=true onClick=(action "addTyp")}}Neue Prüfungsart{{/paper-button}}
+  {{/card.actions}}
+{{/paper-card}}
+{{#paper-card as |card|}}
+  {{#card.title as |title|}}
+        {{#title.text as |text|}}
+          {{#text.headline}}Module{{/text.headline}}
+        {{/title.text}}
+      {{/card.title}}
+    {{#paper-list}}
+    {{paper-divider}}
+      {{#each model.moduls as |modul|}}
+        {{#paper-item class="md-3-line"}}
+          {{paper-icon "bubble chart" class="md-avatar-icon"}}
+            <div class="md-list-item-text">
+              <h3>{{modul.name}}</h3>
+              <h4>{{modul.abbreviation}}</h4>
+              <p>{{modul.linkModulhandbuch}}</p>
+            </div>
+            <span class="flex">
+            </span>
+            {{#paper-button iconButton=true onClick=(action "editModul" modul)}}{{paper-icon "edit"}}{{/paper-button}}
+            {{#paper-button iconButton=true onClick=(action "deleteModul" modul)}}{{paper-icon "delete"}}{{/paper-button}}
+          {{/paper-item}}
+          {{paper-divider}}
+        {{/each}}
+    {{/paper-list}}
+  {{#card.actions}}
+    {{#paper-button primary=true onClick=(action "addModul")}}Neues Modul{{/paper-button}}
+  {{/card.actions}}
+{{/paper-card}}
+{{/paper-content}}
+{{#if showCreateSubjectDialog}}{{subject-dialog closeDialog=(action "closeSubjectDialog") title='Erstelle Prüfungsfach' subject=newsubject}}{{/if}}
+{{#if showEditSubjectDialog}}{{subject-dialog closeDialog=(action "closeSubjectDialog") title='Bearbeite Prüfungsfach' subject=newsubject}}{{/if}}
+{{#if showCreateTypDialog}}{{typ-dialog closeDialog=(action "closeTypDialog") title='Erstelle Prüfungsart' typ=newtyp}}{{/if}}
+{{#if showEditTypDialog}}{{typ-dialog closeDialog=(action "closeTypDialog") title='Bearbeite Prüfungsart' typ=newtyp}}{{/if}}
+
+{{#if showCreateModulDialog}}{{modul-dialog closeDialog=(action "closeModulDialog") title='Erstelle Modul' modul=newmodul}}{{/if}}
+{{#if showEditModulDialog}}{{modul-dialog closeDialog=(action "closeModulDialog") title='Bearbeite Modul' modul=newmodul}}{{/if}}

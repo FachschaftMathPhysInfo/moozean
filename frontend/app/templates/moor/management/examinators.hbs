@@ -1,1 +1,42 @@
-{{outlet}}
+{{#paper-toolbar}}
+   {{#paper-toolbar-tools}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+      {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+     <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Prüfende <span class="hide-sm"></span></h2>
+     <span class="flex"></span>
+     {{#paper-button iconButton=true onClick=(action "addExaminator")}}
+       {{paper-icon "person add"}}
+     {{/paper-button}}
+     {{#paper-button iconButton=true}}
+       {{paper-icon "more_vert"}}
+     {{/paper-button}}
+   {{/paper-toolbar-tools}}
+ {{/paper-toolbar}}
+{{#paper-content class="md-padding"}}
+{{#paper-card as |card|}}
+    {{#paper-list}}
+      {{#each model as |examinator|}}
+        {{#paper-item class="md-2-line"}}
+          {{paper-icon "folder" class="md-avatar-icon"}}
+            <div class="md-list-item-text">
+              <h3>{{examinator.surname}} <em>{{examinator.givenname}}</em></h3>
+              <p>{{examinator.title}}</p>
+            </div>
+            <span class="flex">
+            </span>
+            {{#paper-button iconButton=true onClick=(action "editExaminator" examinator)}}{{paper-icon "edit"}}{{/paper-button}}
+            {{#paper-button iconButton=true onClick=(action "deleteExaminator" examinator)}}{{paper-icon "delete"}}{{/paper-button}}
+          {{/paper-item}}
+          {{paper-divider}}
+        {{/each}}
+    {{/paper-list}}
+  {{#card.actions}}
+    {{#paper-button primary=true onClick=(action "addExaminator")}}Neuen Prüfenden{{/paper-button}}
+  {{/card.actions}}
+{{/paper-card}}
+{{/paper-content}}
+{{#if showCreateExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Erstelle Prüfendes' examinator=newexaminator}}{{/if}}
+{{#if showEditExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Bearbeite Prüfendes' examinator=newexaminator}}{{/if}}
