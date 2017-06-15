@@ -7,7 +7,16 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('moor');
+  this.route('moor', function() {
+    this.route('folderseries',{ path: '/folderseries/:id' }, function() {
+      this.route('print');
+      this.route('new');
+    });
+    this.route('management', function() {
+      this.route('examinators');
+    });
+    this.route('search');
+  });
   this.route('recentlyreturned');
 });
 

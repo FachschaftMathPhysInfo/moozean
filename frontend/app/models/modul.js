@@ -3,8 +3,5 @@ const { attr } = DS;
 export default DS.Model.extend({
   name:attr('string'),
   abbreviation:attr('string'),
-  linkModulhandbuch:attr('string'),
+  linkModulhandbuch:attr('string')
 });
-
-
-

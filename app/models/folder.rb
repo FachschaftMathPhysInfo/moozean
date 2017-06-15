@@ -4,7 +4,4 @@ class Folder < ApplicationRecord
   has_many :students_lents, :through => :lents, source: :student,class_name: "Student"
   has_many :students_returneds, :through => :returneds,source: :student, class_name: "Student"
   belongs_to :folderseries
-  def foldername
-    folderseries.name+suffix
-  end
 end

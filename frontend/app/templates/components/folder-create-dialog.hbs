@@ -9,18 +9,14 @@
   {{#paper-form onSubmit=(action closeDialog "ok") as |form|}}
   {{#paper-dialog-content}}
       <div class="flex layout-column">
-    {{form.input flex=30 label="Name" value=folder.name required=true onChange=(action (mut folder.name))}}
-    {{paper-input textarea=true block=true label="Text" required=true passThru=(hash rows=5)
-    value=folder.content onChange=(action (mut folder.content))}}
-    {{#paper-switch flex=30 value=folder.obligationToReport onChange=(action (mut folder.obligationToReport))}}
-     Pfandpflichtig?
-    {{/paper-switch}}
+    {{folder.folderseries.name}}{{form.input flex=30 label="Suffix" value=folder.suffix required=true onChange=(action (mut folder.suffix))}}
+    {{form.input flex=30 label="Barcode" value=folder.barcode required=true onChange=(action (mut folder.barcode))}}
     </div>
   {{/paper-dialog-content}}
   {{#paper-dialog-actions class="layout-row"}}
     <span class="flex"></span>
-    {{#paper-button onClick=(action closeDialog "cancel")}}Cancel{{/paper-button}}
-    {{#paper-button  onClick=(action closeDialog "ok" student) disabled=form.isInvalid}}{{#if saving}}{{paper-icon "rotate-right" spin=true}}{{/if}} OK{{/paper-button }}
+    {{#paper-button onClick=(action closeDialog "cancel")}}Abbrechen{{/paper-button}}
+    {{#paper-button  onClick=(action closeDialog "ok" folder) disabled=form.isInvalid}} OK{{/paper-button }}
   {{/paper-dialog-actions}}
   {{/paper-form}}
 {{/paper-dialog}}

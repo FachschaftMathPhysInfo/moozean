@@ -1,12 +1,11 @@
 import DS from 'ember-data';
-const { attr,belongsTo } = DS;
+const { attr,belongsTo, hasMany } = DS;
 export default DS.Model.extend({
-  tex:attr('text'),
+  tex:attr('string'),
   examinationDate:attr('date'),
   subject:belongsTo('subject'),
-  type:attr('type'),
+  typ:belongsTo('typ'),
   createdAt:attr('date'),
+  examinators:hasMany('examinator'),
+  moduls:hasMany('modul')
 });
-
-
-

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   jsonapi_resources :emails
   jsonapi_resources :examinators
   jsonapi_resources :subjects
-  jsonapi_resources :types
+  jsonapi_resources :typs
   jsonapi_resources :reports
   jsonapi_resources :examined_bies
   jsonapi_resources :is_abouts

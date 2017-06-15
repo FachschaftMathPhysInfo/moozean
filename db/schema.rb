@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615002519) do
+ActiveRecord::Schema.define(version: 20170615051203) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "emails", force: :cascade do |t|
     t.string "address"
@@ -22,7 +25,6 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.integer "referencable_id"
     t.index ["referencable_type", "referencable_id"], name: "index_emails_on_referencable_type_and_referencable_id"
   end
-
 
   create_table "examinators", force: :cascade do |t|
     t.string "givenname"
@@ -85,7 +87,6 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.index ["student_id"], name: "index_lents_on_student_id"
   end
 
-
   create_table "moduls", force: :cascade do |t|
     t.string "name"
     t.string "abbreviation"
@@ -99,11 +100,11 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.text "tex"
     t.date "examination_date"
     t.bigint "subject_id"
-    t.bigint "type_id"
+    t.bigint "typ_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["subject_id"], name: "index_reports_on_subject_id"
-    t.index ["type_id"], name: "index_reports_on_type_id"
+    t.index ["typ_id"], name: "index_reports_on_typ_id"
   end
 
   create_table "returneds", id: :serial, force: :cascade do |t|
@@ -127,14 +128,13 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.datetime "updated_at", null: false
   end
 
-
   create_table "subjects", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "types", force: :cascade do |t|
+  create_table "typs", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20170615002519) do
   add_foreign_key "lents", "folders"
   add_foreign_key "lents", "students"
   add_foreign_key "reports", "subjects"
-  add_foreign_key "reports", "types"
+  add_foreign_key "reports", "typs"
   add_foreign_key "returneds", "folders"
   add_foreign_key "returneds", "students"
 end
