@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170615092359) do
+ActiveRecord::Schema.define(version: 20170615113528) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,14 @@ ActiveRecord::Schema.define(version: 20170615092359) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "printouts", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "times"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["report_id"], name: "index_printouts_on_report_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.binary "pdf"
     t.text "tex"
@@ -149,6 +157,7 @@ ActiveRecord::Schema.define(version: 20170615092359) do
   add_foreign_key "is_ins", "reports"
   add_foreign_key "lents", "folders"
   add_foreign_key "lents", "students"
+  add_foreign_key "printouts", "reports"
   add_foreign_key "reports", "subjects"
   add_foreign_key "reports", "typs"
   add_foreign_key "returneds", "folders"

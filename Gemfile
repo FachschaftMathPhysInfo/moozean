@@ -47,3 +47,4 @@ gem "ember-cli-rails", '~> 0.8.0'
 gem 'jsonapi-resources'
 
 gem 'rails_12factor', group: [:staging, :production]
+gem "rails-erd"

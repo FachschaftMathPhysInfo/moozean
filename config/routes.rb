@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   jsonapi_resources :moduls
   jsonapi_resources :is_ins
   jsonapi_resources :folderseries
+  jsonapi_resources :printouts
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount_ember_app :frontend, to: "/"
 end
