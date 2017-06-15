@@ -28,4 +28,3 @@ for i in 0..50
   ExaminedBy.create(examinator:Examinator.offset(rand(Examinator.count)).first,report:report)
   IsIn.create(report:report,folderseries:Folderseries.offset(rand(Folderseries.count)).first)
 end
-Folder.create([{name: 'KP1D', obligation_to_report:true},{name: 'KP1B'},{name: 'KP1C'},{name: 'KM1A'},{name: 'KM1B'}])
