@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 #folders=Folder.create([{name: 'KP1D', obligation_to_report:true},{name: 'KP1B'},{name: 'KP1C'},{name: 'KM1A'},{name: 'KM1B'}])
+
 Subject.create(name:'Physik')
 Subject.create(name:'Informatik')
 Subject.create(name:'Mathematik')
@@ -27,3 +28,4 @@ for i in 0..50
   ExaminedBy.create(examinator:Examinator.offset(rand(Examinator.count)).first,report:report)
   IsIn.create(report:report,folderseries:Folderseries.offset(rand(Folderseries.count)).first)
 end
+Folder.create([{name: 'KP1D', obligation_to_report:true},{name: 'KP1B'},{name: 'KP1C'},{name: 'KM1A'},{name: 'KM1B'}])

@@ -12,10 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170615002519) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
-  create_table "emails", id: :serial, force: :cascade do |t|
+  create_table "emails", force: :cascade do |t|
     t.string "address"
     t.string "subject"
     t.string "body"
@@ -25,6 +22,7 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.integer "referencable_id"
     t.index ["referencable_type", "referencable_id"], name: "index_emails_on_referencable_type_and_referencable_id"
   end
+
 
   create_table "examinators", force: :cascade do |t|
     t.string "givenname"
@@ -78,7 +76,7 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.index ["report_id"], name: "index_is_ins_on_report_id"
   end
 
-  create_table "lents", id: :serial, force: :cascade do |t|
+  create_table "lents", force: :cascade do |t|
     t.integer "student_id"
     t.integer "folder_id"
     t.datetime "created_at", null: false
@@ -86,6 +84,7 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.index ["folder_id"], name: "index_lents_on_folder_id"
     t.index ["student_id"], name: "index_lents_on_student_id"
   end
+
 
   create_table "moduls", force: :cascade do |t|
     t.string "name"
@@ -117,7 +116,7 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.index ["student_id"], name: "index_returneds_on_student_id"
   end
 
-  create_table "students", id: :serial, force: :cascade do |t|
+  create_table "students", force: :cascade do |t|
     t.string "name"
     t.string "uniid"
     t.string "matriculationnumber"
@@ -127,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170615002519) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
 
   create_table "subjects", force: :cascade do |t|
     t.string "name"
