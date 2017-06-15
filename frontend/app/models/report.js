@@ -7,5 +7,6 @@ export default DS.Model.extend({
   typ:belongsTo('typ'),
   createdAt:attr('date'),
   examinators:hasMany('examinator'),
-  moduls:hasMany('modul')
+  moduls:hasMany('modul'),
+  picture:attr('string')
 });

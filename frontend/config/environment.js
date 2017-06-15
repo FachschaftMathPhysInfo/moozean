@@ -23,6 +23,7 @@ module.exports = function(environment) {
     },
     moment:{
       locale:'de',
+      defaultFormat: 'MM.YYYY',
       includeLocales: ['de']
     }
   };

@@ -1,0 +1,2 @@
+class PrintoutsController < ApplicationController
+end
