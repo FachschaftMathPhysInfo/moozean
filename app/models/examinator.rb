@@ -1,0 +1,2 @@
+class Examinator < ApplicationRecord
+end

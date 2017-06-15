@@ -1,0 +1,2 @@
+class ExaminedBiesController < ApplicationController
+end

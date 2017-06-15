@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pdf: 
+  tex: MyText
+  examination_date: 2017-06-14
+  subject: one
+  type: one
+
+two:
+  pdf: 
+  tex: MyText
+  examination_date: 2017-06-14
+  subject: two
+  type: two
