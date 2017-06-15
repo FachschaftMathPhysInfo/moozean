@@ -1,0 +1,2 @@
+class IsAboutsController < ApplicationController
+end

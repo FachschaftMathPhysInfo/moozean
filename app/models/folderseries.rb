@@ -1,0 +1,2 @@
+class Folderseries < ApplicationRecord
+end

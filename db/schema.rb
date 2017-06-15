@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520085218) do
+ActiveRecord::Schema.define(version: 20170615002519) do
 
   create_table "emails", force: :cascade do |t|
     t.string "address"
@@ -23,13 +23,57 @@ ActiveRecord::Schema.define(version: 20170520085218) do
     t.index ["referencable_type", "referencable_id"], name: "index_emails_on_referencable_type_and_referencable_id"
   end
 
-  create_table "folders", force: :cascade do |t|
-    t.string "name"
-    t.string "content"
-    t.boolean "obligation_to_report"
+
+  create_table "examinators", force: :cascade do |t|
+    t.string "givenname"
+    t.string "surname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "title"
+  end
+
+  create_table "examined_bies", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "examinator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["examinator_id"], name: "index_examined_bies_on_examinator_id"
+    t.index ["report_id"], name: "index_examined_bies_on_report_id"
+  end
+
+  create_table "folders", id: :serial, force: :cascade do |t|
     t.string "barcode"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "folderseries_id"
+    t.string "suffix"
+    t.index ["folderseries_id"], name: "index_folders_on_folderseries_id"
+  end
+
+  create_table "folderseries", force: :cascade do |t|
+    t.string "name"
+    t.boolean "obligationtoreport"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "is_abouts", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "modul_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["modul_id"], name: "index_is_abouts_on_modul_id"
+    t.index ["report_id"], name: "index_is_abouts_on_report_id"
+  end
+
+  create_table "is_ins", force: :cascade do |t|
+    t.bigint "report_id"
+    t.bigint "folderseries_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folderseries_id"], name: "index_is_ins_on_folderseries_id"
+    t.index ["report_id"], name: "index_is_ins_on_report_id"
   end
 
   create_table "lents", force: :cascade do |t|
@@ -41,7 +85,28 @@ ActiveRecord::Schema.define(version: 20170520085218) do
     t.index ["student_id"], name: "index_lents_on_student_id"
   end
 
-  create_table "returneds", force: :cascade do |t|
+
+  create_table "moduls", force: :cascade do |t|
+    t.string "name"
+    t.string "abbreviation"
+    t.string "link_modulhandbuch"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.binary "pdf"
+    t.text "tex"
+    t.date "examination_date"
+    t.bigint "subject_id"
+    t.bigint "type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_reports_on_subject_id"
+    t.index ["type_id"], name: "index_reports_on_type_id"
+  end
+
+  create_table "returneds", id: :serial, force: :cascade do |t|
     t.integer "student_id"
     t.integer "folder_id"
     t.date "lentat"
@@ -62,4 +127,29 @@ ActiveRecord::Schema.define(version: 20170520085218) do
     t.datetime "updated_at", null: false
   end
 
+
+  create_table "subjects", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "examined_bies", "examinators"
+  add_foreign_key "examined_bies", "reports"
+  add_foreign_key "is_abouts", "moduls"
+  add_foreign_key "is_abouts", "reports"
+  add_foreign_key "is_ins", "folderseries"
+  add_foreign_key "is_ins", "reports"
+  add_foreign_key "lents", "folders"
+  add_foreign_key "lents", "students"
+  add_foreign_key "reports", "subjects"
+  add_foreign_key "reports", "types"
+  add_foreign_key "returneds", "folders"
+  add_foreign_key "returneds", "students"
 end
