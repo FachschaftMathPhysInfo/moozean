@@ -23,7 +23,7 @@ end
 for i in 0..50
   Folder.create(barcode:Faker::Code.ean,suffix:i.to_s,folderseries:Folderseries.offset(rand(Folderseries.count)).first)
   Student.create(name:Faker::Name.name,uniid:'ab'+rand(0..999).to_s,refund:[true, false].sample,report:[true, false].sample)
-  report= Report.create(pdf:File.read('erd.pdf'),tex:'tex'+rand(0..300).to_s,examination_date:Faker::Date.between(2.days.ago, Date.tomorrow),subject:Subject.offset(rand(Subject.count)).first,typ:Typ.offset(rand(Typ.count)).first,picture:Faker::LoremPixel.image("150x150",true))
+  report= Report.create(pdf:File.read('erd.pdf'),tex:'tex'+rand(0..300).to_s,examination_date:Faker::Date.between(2.days.ago, Date.tomorrow),subject:Subject.offset(rand(Subject.count)).first,typ:Typ.offset(rand(Typ.count)).first,picture:Faker::LoremPixel.image("150x150"))
   IsAbout.create(modul:Modul.offset(rand(Modul.count)).first,report:report)
   ExaminedBy.create(examinator:Examinator.offset(rand(Examinator.count)).first,report:report)
   IsIn.create(report:report,folderseries:Folderseries.offset(rand(Folderseries.count)).first)

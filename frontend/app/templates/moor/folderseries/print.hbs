@@ -1,208 +1,219 @@
 {{#paper-toolbar}}
-   {{#paper-toolbar-tools}}
+  {{#paper-toolbar-tools}}
     {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-      {{paper-icon icon="menu"}}
+      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon icon="menu"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
-     <h2>Moor {{paper-icon "chevron-right"}} {{model.name}}{{paper-icon "chevron-right"}} drucken </h2>
-     <span class="flex"></span>
-     {{#paper-button iconButton=true}}
-       {{paper-icon "more_vert"}}
-     {{/paper-button}}
-   {{/paper-toolbar-tools}}
- {{/paper-toolbar}}
- {{#paper-sidenav-container class="inner-sidenav"}}
- {{#paper-sidenav
-        class="md-whiteframe-z2"
-        name="right1"
-        open=rightSidebar
-        position='right'
-        closeOnClick=false
-        lockedOpen=rightSideBarLockedOpen
-        onToggle=(action (mut rightSidebar))}}
-        {{#paper-toolbar as |toolbar|}}
-          {{#paper-toolbar-tools}}Druckauswahl
-          <span class="flex"></span>
-            {{#paper-button onClick=(action "printSelection") iconButton=true}}
-              {{paper-icon "print" class="md-avatar-icon"}}
-            {{/paper-button}}
+    <h2>Moor {{paper-icon "chevron-right"}} {{model.name}}{{paper-icon "chevron-right"}} drucken </h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true}}
+      {{paper-icon "more_vert"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{#paper-sidenav-container class="inner-sidenav" }}
+  {{#paper-sidenav class="md-whiteframe-z2" name="right1" open=rightSidebar position='right' closeOnClick=false lockedOpen=rightSideBarLockedOpen onToggle=(action (mut rightSidebar))}}
+    {{#paper-toolbar as |toolbar|}}
+      {{#paper-toolbar-tools}}Druckauswahl
+        <span class="flex"></span>
+        {{#paper-button onClick=(action "printSelection") iconButton=true}}
+          {{paper-icon "print" class="md-avatar-icon"}}
+        {{/paper-button}}
 
-          {{/paper-toolbar-tools}}
-        {{/paper-toolbar}}
-        {{#paper-content padding=true}}
-        {{#paper-list}}
-      {{#each printselection as |item|}}
-        {{#paper-item}}
-          {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}}, {{#each (take 1 item.report.examinators) as |exm|}}{{exm.surname}}{{/each}}<span class="flex"></span>
-          {{#paper-button iconButton=true onClick=(action "decreaseTimes" item)}}
-            {{paper-icon "remove"}}
-          {{/paper-button}}
-              {{item.times}}
-          {{#paper-button iconButton=true onClick=(action "increaseTimes" item)}}
-            {{paper-icon "add"}}
-          {{/paper-button}}
-        {{/paper-item}}
-      {{/each}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{#paper-content padding=true}}
+      {{#paper-list}}
+        {{#each printselection as |item|}}
+          {{#paper-item}}
+            #{{item.report.id}}2
+            {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}},
+            {{#each (take 1 item.report.examinators) as |exm|}}{{exm.surname}}{{/each}}<span class="flex"></span>
+            {{#paper-button iconButton=true onClick=(action "decreaseTimes" item)}}
+              {{paper-icon "remove"}}
+            {{/paper-button}}
+            {{item.times}}
+            {{#paper-button iconButton=true onClick=(action "increaseTimes" item)}}
+              {{paper-icon "add"}}
+            {{/paper-button}}
+          {{/paper-item}}
+        {{/each}}
       {{/paper-list}}
-        {{/paper-content}}
-      {{/paper-sidenav}}
-{{#paper-content class="md-padding"}}
-{{#paper-card as |card|}}
-  {{#card.title as |title|}}
-    {{#title.text as |text|}}
-      {{#text.headline}}Suchen & Drucken{{/text.headline}}
-    {{/title.text}}
-  {{/card.title}}
-  {{#card.content}}
-  <div class="layout">
-  <div class="flex-50">
-  {{#paper-autocomplete
-      options=model.subjects
-      allowClear=true
-      searchText=(readonly subjectSearchText)
-      onSearchTextChange=(action (mut subjectSearchText))
-      selected=selectedSubject
-      searchField="name"
-      labelPath="name"
-      placeholder="Wähle ein Fach"
-      loadingMessage="Suche Fach..."
-      noMatchesMessage="Es gibt kein solches Fach"
-      onSelectionChange=(action (mut selectedSubject)) as |subject autocomplete|}}
-      {{paper-autocomplete-highlight
+    {{/paper-content}}
+  {{/paper-sidenav}}
+  {{#paper-content class="md-padding" }}
+    {{#paper-card as |card|}}
+      {{#card.title as |title|}}
+        {{#title.text as |text|}}
+          {{#text.headline}}Suchen & Drucken{{/text.headline}}
+        {{/title.text}}
+      {{/card.title}}
+      {{#card.content}}
+        <div class="layout" style="justify-content: space-around">
+          <div class="flex-10">
+            {{#paper-autocomplete
+              options=model.reports
+              allowClear=true
+              searchText=(readonly IDSearchText)
+              onSearchTextChange=(action (mut IDSearchText))
+               selected=selectedID
+               searchField="id"
+               labelPath="id" placeholder="ID"
+               loadingMessage="Suche ID"
+               noMatchesMessage="Es gibt keine solche ID"
+              onSelectionChange=(action (mut selectedID)) as |report autocomplete|}}
+              {{paper-autocomplete-highlight
+                label=report.id
+            searchText=autocomplete.searchText
+            flags="i"}}
+            {{/paper-autocomplete}}
+          </div>
+          <div class="flex-15">
+            {{#paper-autocomplete
+              options=model.subjects
+              allowClear=true
+              searchText=(readonly subjectSearchText)
+              onSearchTextChange=(action (mut subjectSearchText))
+              selected=selectedSubject
+              searchField="name"
+              labelPath="name"
+              placeholder="Wähle Fach"
+              loadingMessage="Suche Fach..."
+              noMatchesMessage="Es gibt kein solches Fach"
+              onSelectionChange=(action (mut selectedSubject)) as |subject autocomplete|}}
+              {{paper-autocomplete-highlight
         label=subject.name
         searchText=autocomplete.searchText
         flags="i"}}
-      {{/paper-autocomplete}}
-      </div>
-      <div class="flex-50">
-      {{#paper-autocomplete
-          options=model.typs
-          allowClear=true
-          searchText=(readonly typSearchText)
-          onSearchTextChange=(action (mut typSearchText))
-          selected=selectedTyp
-          searchField="name"
-          labelPath="name"
-          placeholder="Wähle einen Typ"
-          loadingMessage="Suche Typ..."
-          noMatchesMessage="Es gibt kein solchen Typ"
-          onSelectionChange=(action (mut selectedTyp)) as |typ autocomplete|}}
-          {{paper-autocomplete-highlight
+            {{/paper-autocomplete}}
+          </div>
+          <div class="flex-20">
+            {{#paper-autocomplete
+              options=model.typs
+              allowClear=true
+              searchText=(readonly typSearchText)
+              onSearchTextChange=(action (mut typSearchText))
+              selected=selectedTyp
+              searchField="name"
+              labelPath="name"
+              placeholder="Wähle Prüfungsart"
+              loadingMessage="Suche Prüfungsart..."
+              noMatchesMessage="Es gibt keine solche Prüfungsart"
+              onSelectionChange=(action (mut selectedTyp)) as |typ autocomplete|}}
+              {{paper-autocomplete-highlight
             label=typ.name
             searchText=autocomplete.searchText
             flags="i"}}
-    {{/paper-autocomplete}}
-    </div>
-    <div class="flex-50">
-    {{#paper-chips
-        removeItem=(action "removeExaminator")
-        addItem=(action "addExaminator")
-        placeholder="Prüfende hinzufügen"
-        content=pruefende
-        options=model.examinators
-        searchField="surname"
-        requireMatch=true as |item|}}
-
-        <strong>{{item.surname}}</strong>
-        {{#if item.givenname}}
-          <em>{{item.givenname}}</em>
-        {{/if}}
-        {{/paper-chips}}
-        </div>
-        <div class="flex-50">
-        {{#paper-chips
-            removeItem=(action "removeModul")
-            addItem=(action "addModul")
-            placeholder="Module hinzufügen"
-            content=module
-            options=model.moduls
-            searchField="name"
+            {{/paper-autocomplete}}
+          </div>
+          <div class="flex-25">
+            {{#paper-chips removeItem=(action "removeExaminator")
+            addItem=(action "addExaminator")
+            placeholder="Prüfende hinzufügen"
+            content=pruefende
+            options=model.examinators
+            searchField="surname"
             requireMatch=true as |item|}}
 
-            <strong>{{item.name}}</strong>
-            {{#if item.abbreviation}}
-              <em>{{item.abbreviation}}</em>
-            {{/if}}
+              <strong>{{item.surname}}</strong>
+              {{#if item.givenname}}
+                <em>{{item.givenname}}</em>
+              {{/if}}
             {{/paper-chips}}
           </div>
-  </div>
-  <h3>Legende</h3>
-  <p class="layout-row layout-wrap">
-    <div class="flex-20">{{paper-icon "text fields"}} TEX</div>
-    <div class="flex-20">{{paper-icon "print"}} Drucken</div>
-    <div class="flex-20">{{paper-icon "perm media"}} Modul</div>
-    <div class="flex-20">{{paper-icon "perm identity"}} Prüfende</div>
-    <div class="flex-20">{{paper-icon "today"}} Prüfungsdatum</div>
-    <div class="flex-20">{{paper-icon "bubble chart"}} Prüfungsart</div>
-    <div class="flex-20">{{paper-icon "book"}} Fach</div>
-  </p>
-  {{/card.content}}
-  {{#card.actions}}
-    {{#paper-button onClick=(action "printAll")}}ganzen Ordner drucken{{/paper-button}}
-    {{#paper-button onClick=(action "printShown")}}Angezeigtes drucken{{/paper-button}}
-    {{#paper-button onClick=(action (mut rightSidebar))}}Auswahl anzeigen{{/paper-button}}
-  {{/card.actions}}
-{{/paper-card}}
-<div class="layout-row layout-wrap">
-{{#each gefilterte as |report|}}
-      <div class="flex-xs-33 flex-gt-l-25 flex-noshrink">
-      {{#paper-card as |card| }}
+          <div class="flex-25">
+            {{#paper-chips removeItem=(action "removeModul") addItem=(action "addModul") placeholder="Module hinzufügen" content=module options=model.moduls searchField="name" requireMatch=true as |item|}}
+
+              <strong>{{item.name}}</strong>
+              {{#if item.abbreviation}}
+                <em>{{item.abbreviation}}</em>
+              {{/if}}
+            {{/paper-chips}}
+          </div>
+        </div>
+
+        <h3>Legende</h3>
+        <p class="layout-row layout-wrap">
+          <div class="flex-20">{{paper-icon "text fields"}} TEX</div>
+          <div class="flex-20">{{paper-icon "print"}} Drucken</div>
+          <div class="flex-20">{{paper-icon "perm media"}} Modul</div>
+          <div class="flex-20">{{paper-icon "perm identity"}} Prüfende</div>
+          <div class="flex-20">{{paper-icon "today"}} Prüfungsdatum</div>
+          <div class="flex-20">{{paper-icon "bubble chart"}} Prüfungsart</div>
+          <div class="flex-20">{{paper-icon "book"}} Fach</div>
+        </p>
+      {{/card.content}}
       {{#card.actions}}
-            {{#paper-button iconButton=true onClick=(action "toggleSelection" report)}}
-            {{#if (report-in-selection report printselection)}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
-            {{/paper-button}}
+        {{#paper-button onClick=(action "printAll")}}ganzen Ordner drucken{{/paper-button}}
+        {{#paper-button onClick=(action "printShown")}}Angezeigtes drucken{{/paper-button}}
+        {{#paper-button onClick=(action (mut rightSidebar))}}Auswahl anzeigen{{/paper-button}}
       {{/card.actions}}
-        {{card.image src=report.picture alt="Washed Out" title="Washed Out"}}
-        {{#card.content}}
-          {{#paper-list}}
-            {{#each report.moduls as |modul|}}
-            {{#paper-item class="md-2-line"}}
-              {{paper-icon "perm media" class="md-avatar-icon"}}
-                  <div class="md-list-item-text">
-                    <h3>{{modul.name}}</h3>
-                  </div>
-                {{/paper-item}}
-              {{/each}}
-            {{paper-divider}}
-            {{#each report.examinators as |exm|}}
-            {{#paper-item class="md-2-line"}}
-              {{paper-icon "perm identity" class="md-avatar-icon"}}
-                  <div class="md-list-item-text">
-                    <h3>{{exm.surname}} <em>{{exm.givenname}}</em></h3>
-                  </div>
-                {{/paper-item}}
-              {{/each}}
-            {{paper-divider}}
-            {{#paper-item class="md-2-line"}}
-              {{paper-icon "today" class="md-avatar-icon"}}
+    {{/paper-card}}
+    <div class="layout-row layout-wrap">
+      {{#each gefilterte as |report|}}
+        <div class="flex-xs-33 flex-gt-l-25 flex-noshrink">
+          {{#paper-card as |card| }}
+            {{#card.actions}}
+              &emsp;#{{report.id}}<span class="flex"></span>
+              {{#paper-button iconButton=true onClick=(action "toggleSelection" report)}}
+                {{#if (report-in-selection report printselection)}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
+              {{/paper-button}}
+            {{/card.actions}}
+            {{card.image src=report.picture alt="Washed Out" title="Washed Out"}}
+            {{#card.content}}
+              {{#paper-list}}
+                {{#each report.moduls as |modul|}}
+                  {{#paper-item class="md-2-line" }}
+                    {{paper-icon "perm media" class="md-avatar-icon"}}
+                    <div class="md-list-item-text">
+                      <h3>{{modul.name}}</h3>
+                    </div>
+                  {{/paper-item}}
+                {{/each}}
+                {{paper-divider}}
+                {{#each report.examinators as |exm|}}
+                  {{#paper-item class="md-2-line" }}
+                    {{paper-icon "perm identity" class="md-avatar-icon"}}
+                    <div class="md-list-item-text">
+                      <h3>{{exm.surname}} <em>{{exm.givenname}}</em></h3>
+                    </div>
+                  {{/paper-item}}
+                {{/each}}
+                {{paper-divider}}
+                {{#paper-item class="md-2-line" }}
+                  {{paper-icon "today" class="md-avatar-icon"}}
                   <div class="md-list-item-text">
                     <h3>{{moment-format report.examinationDate "MM.YYYY" }}</h3>
                   </div>
                 {{/paper-item}}
                 {{paper-divider}}
-                {{#paper-item class="md-2-line"}}
+                {{#paper-item class="md-2-line" }}
                   {{paper-icon "bubble chart" class="md-avatar-icon"}}
-                      <div class="md-list-item-text flex">
-                        <h3 class="layout-wrap"><span class="flex">{{report.typ.name}}</span></h3>
-                      </div>
+                  <div class="md-list-item-text flex">
+                    <h3 class="layout-wrap"><span class="flex">{{report.typ.name}}</span></h3>
+                  </div>
                 {{/paper-item}}
                 {{paper-divider}}
-                {{#paper-item class="md-2-line"}}
+                {{#paper-item class="md-2-line" }}
                   {{paper-icon "book" class="md-avatar-icon"}}
-                      <div class="md-list-item-text flex">
-                        <h3 class="layout-wrap"><span class="flex">{{report.subject.name}}</span></h3>
-                      </div>
+                  <div class="md-list-item-text flex">
+                    <h3 class="layout-wrap"><span class="flex">{{report.subject.name}}</span></h3>
+                  </div>
                 {{/paper-item}}
-          {{/paper-list}}
-        {{/card.content}}
-        {{#card.actions}}
-          {{#if report.texAvailable}}{{#email-share subject='Prüfungsbericht-TeX-Datei' url=report.id body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:"}}{{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}{{/email-share}}{{/if}}
-          {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
-        {{/card.actions}}
-      {{/paper-card}}
+              {{/paper-list}}
+            {{/card.content}}
+            {{#card.actions}}
+              {{#if report.texAvailable}}
+                {{#email-share subject='Prüfungsbericht-TeX-Datei' url=report.id body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:" }}
+                  {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
+                {{/email-share}}
+              {{/if}}
+              {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
+            {{/card.actions}}
+          {{/paper-card}}
+        </div>
+      {{/each}}
     </div>
-{{/each}}
-</div>
-{{/paper-content}}
+  {{/paper-content}}
 {{/paper-sidenav-container}}
