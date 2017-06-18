@@ -17,6 +17,9 @@ class ReportResource < JSONAPI::Resource
   def self.creatable_fields(context)
     super - [:tex_available]
   end
+  before_save do
+    @model.pdf = Base64.decode64(@model.pdf['data:application/pdf;base64,'.length .. -1])
+  end
   def pdf
     @model.pdf
   end
