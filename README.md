@@ -2,9 +2,9 @@
 
 ## Ruby version
 The recommended software versions are
-  - rails `>=5`
+  - rails `>=5.1`
   - ruby `>=2.3`
-
+  
 ## System dependencies
 
  Please have the following installed:
@@ -14,7 +14,7 @@ The recommended software versions are
    - `postgresql`
 
 ## Database & Ember install
-   
+
    Run `bundle install` to install all gems
    Run `rake db:create db:migrate` and `rake ember:install`. Optionally run `rake ember:compile` to speed up.
 
@@ -23,6 +23,8 @@ The recommended software versions are
 `bundle exec rake RAILS_ENV=production  SECRET_TOKEN=dummytoken db:create db:migrate ember:install ember:compile`
 
 Then run: `rails -e production`
+
+For Anonymization (and later email retrieval): `rake qc:work`
 
 # Dockerimage
 
