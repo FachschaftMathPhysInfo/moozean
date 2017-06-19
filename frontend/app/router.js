@@ -16,6 +16,7 @@ Router.map(function() {
       this.route('examinators');
     });
     this.route('search');
+    this.route('report');
   });
   this.route('recentlyreturned');
 });

@@ -1,0 +1,118 @@
+{{#paper-toolbar}}
+   {{#paper-toolbar-tools}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+      {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+     <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Prüfungsbericht <span class="hide-sm"></span></h2>
+     <span class="flex"></span>
+     {{#paper-button iconButton=true}}
+       {{paper-icon "more_vert"}}
+     {{/paper-button}}
+   {{/paper-toolbar-tools}}
+ {{/paper-toolbar}}
+{{#paper-content class="md-padding"}}
+{{#paper-card as |card|}}
+  {{#card.content}}
+  {{#paper-autocomplete
+      options=model.subjects
+      allowClear=true
+      searchText=(readonly subjectSearchText)
+      onSearchTextChange=(action (mut subjectSearchText))
+      selected=model.report.subject
+      searchField="name"
+      labelPath="name"
+      placeholder="Wähle ein Fach"
+      loadingMessage="Suche Fach..."
+      noMatchesMessage="Es gibt kein solches Fach"
+      onSelectionChange=(action (mut model.report.subject)) as |subject autocomplete|}}
+      {{paper-autocomplete-highlight
+        label=subject.name
+        searchText=autocomplete.searchText
+        flags="i"}}
+      {{/paper-autocomplete}}
+      {{#paper-autocomplete
+          options=model.typs
+          allowClear=true
+          searchText=(readonly typSearchText)
+          onSearchTextChange=(action (mut typSearchText))
+          selected=model.report.typ
+          searchField="name"
+          labelPath="name"
+          placeholder="Wähle einen Typ"
+          loadingMessage="Suche Typ..."
+          noMatchesMessage="Es gibt kein solchen Typ"
+          onSelectionChange=(action (mut model.report.typ)) as |typ autocomplete|}}
+          {{paper-autocomplete-highlight
+            label=typ.name
+            searchText=autocomplete.searchText
+            flags="i"}}
+    {{/paper-autocomplete}}
+    {{! Prüfende }}
+    {{#paper-chips
+        removeItem=(action "removeExaminator")
+        addItem=(action "addExaminator")
+        placeholder="Prüfende hinzufügen"
+        content=model.report.examinators
+        options=model.examinators
+        searchField="surname"
+        requireMatch=true as |item|}}
+
+        <strong>{{item.surname}}</strong>
+        {{#if item.givenname}}
+          <em>{{item.givenname}}</em>
+        {{/if}}
+        {{/paper-chips}}
+        {{!Module}}
+        {{#paper-chips
+            removeItem=(action "removeModul")
+            addItem=(action "addModul")
+            placeholder="Module hinzufügen"
+            content=model.report.moduls
+            options=model.moduls
+            searchField="name"
+            requireMatch=true as |item|}}
+
+            <strong>{{item.name}}</strong>
+            {{#if item.abbreviation}}
+              <em>{{item.abbreviation}}</em>
+            {{/if}}
+            {{/paper-chips}}
+            {{!Module}}
+            {{#paper-chips
+                removeItem=(action "removeFolderseries")
+                addItem=(action "addFolderseries")
+                placeholder="Ordnerreihen hinzufügen"
+                content=model.report.folderseries
+                options=model.folderseries
+                searchField="name"
+                requireMatch=true as |item|}}
+
+                <strong>{{item.name}}</strong>
+                {{/paper-chips}}
+{{paper-pikaday label="Prüfungsdatum"
+                required=true
+                value=(readonly (moment-format model.report.examinationA "MM.YYYY"))
+                onSelection=(action (mut model.report.examinationAt))
+                onChange=(action (mut someThing)) }}
+  {{/card.content}}
+  {{#card.actions}}
+  {{#paper-button}}
+    {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex"}}
+          {{paper-icon "text fields"}} {{filetexName}}
+    {{/file-picker}}
+  {{/paper-button}}
+    {{#paper-button}}
+      {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded"}}
+            {{paper-icon "picture as pdf"}} {{fileName}}
+      {{/file-picker}}
+    {{/paper-button}}
+    {{#paper-button onClick=(action "save")}}
+      Speichern
+    {{/paper-button}}
+  {{/card.actions}}
+{{/paper-card}}
+{{/paper-content}}
+
+{{outlet}}

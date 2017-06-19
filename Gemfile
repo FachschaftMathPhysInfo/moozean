@@ -10,7 +10,7 @@ end
 gem 'rails', '~> 5.1.1'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-gem 'sqlite3'
+#gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -44,6 +44,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "ember-cli-rails", '~> 0.8.0'
+gem "queue_classic", '~> 3.1'
 gem 'jsonapi-resources'
 
 gem 'rails_12factor', group: [:staging, :production]

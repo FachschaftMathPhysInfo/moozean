@@ -27,6 +27,7 @@ COPY . .
 #ausführen
 
 RUN bundle exec rake RAILS_ENV=production  SECRET_TOKEN=dummytoken db:create db:migrate ember:install ember:compile
+RUN bundle exec rake qc:work &
 VOLUME ["$INSTALL_PATH/public"]
 ENV RAILS_ENV=production
 ENV SECRET_TOKEN=dummytoken
