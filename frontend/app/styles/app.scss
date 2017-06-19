@@ -10,6 +10,8 @@ $warn: 'pink';
 @import 'ember-paper';
 @import 'ember-paper-stepper';
 @import 'paper-data-table';
+@import "ember-power-calendar";
+@import "date-picker";
 //
 body > [class="ember-view"] {
   max-width: 100%;
@@ -86,6 +88,6 @@ body > div.ember-view {
   position: relative;
 }
 
-md-autocomplete {
+md-autocomplete{
   min-width: 5px;
 }

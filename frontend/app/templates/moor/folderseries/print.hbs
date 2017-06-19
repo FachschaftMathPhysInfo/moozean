@@ -50,8 +50,8 @@
         {{/title.text}}
       {{/card.title}}
       {{#card.content}}
-        <div class="layout" style="justify-content: space-around">
-          <div class="flex-10">
+        <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+          <div class="flex-gt-xs-20">
             {{#paper-autocomplete
               options=model.reports
               allowClear=true
@@ -69,7 +69,7 @@
             flags="i"}}
             {{/paper-autocomplete}}
           </div>
-          <div class="flex-15">
+          <div class="flex-gt-xs-25">
             {{#paper-autocomplete
               options=model.subjects
               allowClear=true
@@ -88,7 +88,7 @@
         flags="i"}}
             {{/paper-autocomplete}}
           </div>
-          <div class="flex-20">
+          <div class="flex-gt-xs-25">
             {{#paper-autocomplete
               options=model.typs
               allowClear=true
@@ -107,41 +107,46 @@
             flags="i"}}
             {{/paper-autocomplete}}
           </div>
-          <div class="flex-25">
-            {{#paper-chips removeItem=(action "removeExaminator")
-            addItem=(action "addExaminator")
-            placeholder="Prüfende hinzufügen"
-            content=pruefende
-            options=model.examinators
-            searchField="surname"
-            requireMatch=true as |item|}}
-
-              <strong>{{item.surname}}</strong>
-              {{#if item.givenname}}
-                <em>{{item.givenname}}</em>
-              {{/if}}
-            {{/paper-chips}}
-          </div>
-          <div class="flex-25">
-            {{#paper-chips removeItem=(action "removeModul") addItem=(action "addModul") placeholder="Module hinzufügen" content=module options=model.moduls searchField="name" requireMatch=true as |item|}}
-
-              <strong>{{item.name}}</strong>
-              {{#if item.abbreviation}}
-                <em>{{item.abbreviation}}</em>
-              {{/if}}
-            {{/paper-chips}}
-          </div>
+          <div class="flex-gt-xs-25">
+{{date-picker date=selectedDate}}
+ </div>
         </div>
+          <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+            <div class="flex-gt-xs-45">
+              {{#paper-chips removeItem=(action "removeExaminator")
+              addItem=(action "addExaminator")
+              placeholder="Prüfende hinzufügen"
+              content=pruefende
+              options=model.examinators
+              searchField="surname"
+              requireMatch=true as |item|}}
 
+                <strong>{{item.surname}}</strong>
+                {{#if item.givenname}}
+                  <em>{{item.givenname}}</em>
+                {{/if}}
+              {{/paper-chips}}
+            </div>
+            <div class="flex-gt-xs-50">
+              {{#paper-chips removeItem=(action "removeModul") addItem=(action "addModul") placeholder="Module hinzufügen" content=module options=model.moduls searchField="name" requireMatch=true as |item|}}
+
+                <strong>{{item.name}}</strong>
+                {{#if item.abbreviation}}
+                  <em>{{item.abbreviation}}</em>
+                {{/if}}
+              {{/paper-chips}}
+            </div>
+
+        </div>
         <h3>Legende</h3>
-        <p class="layout-row layout-wrap">
-          <div class="flex-20">{{paper-icon "text fields"}} TEX</div>
-          <div class="flex-20">{{paper-icon "print"}} Drucken</div>
-          <div class="flex-20">{{paper-icon "perm media"}} Modul</div>
-          <div class="flex-20">{{paper-icon "perm identity"}} Prüfende</div>
-          <div class="flex-20">{{paper-icon "today"}} Prüfungsdatum</div>
-          <div class="flex-20">{{paper-icon "bubble chart"}} Prüfungsart</div>
-          <div class="flex-20">{{paper-icon "book"}} Fach</div>
+        <p class="layout-gt-xs-row layout-wrap">
+          <div class="flex-gt-xs-20">{{paper-icon "text fields"}} TEX</div>
+          <div class="flex-gt-xs-20">{{paper-icon "print"}} Drucken</div>
+          <div class="flex-gt-xs-20">{{paper-icon "perm media"}} Modul</div>
+          <div class="flex-gt-xs-20">{{paper-icon "perm identity"}} Prüfende</div>
+          <div class="flex-gt-xs-20">{{paper-icon "today"}} Prüfungsdatum</div>
+          <div class="flex-gt-xs-20">{{paper-icon "bubble chart"}} Prüfungsart</div>
+          <div class="flex-gt-xs-20">{{paper-icon "book"}} Fach</div>
         </p>
       {{/card.content}}
       {{#card.actions}}
@@ -152,7 +157,7 @@
     {{/paper-card}}
     <div class="layout-row layout-wrap">
       {{#each gefilterte as |report|}}
-        <div class="flex-xs-33 flex-gt-l-25 flex-noshrink">
+        <div class="flex-xs-100 flex-gt-xs-33 flex-gt-l-25 flex-noshrink">
           {{#paper-card as |card| }}
             {{#card.actions}}
               &emsp;#{{report.id}}<span class="flex"></span>

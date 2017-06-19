@@ -1,54 +1,53 @@
 {{#paper-toolbar}}
-   {{#paper-toolbar-tools}}
+  {{#paper-toolbar-tools}}
     {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-      {{paper-icon icon="menu"}}
+      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon icon="menu"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
-     <h2>Moor {{paper-icon "chevron-right"}} {{model.name}} <span class="hide-sm"></span></h2>
-     <span class="flex"></span>
-     {{#paper-button iconButton=true onClick=(action "addFolder")}}
-       {{paper-icon "create new folder"}}
-     {{/paper-button}}
-     {{#paper-button iconButton=true onClick=(transition-to "moor.folderseries.print" model)}}
-       {{paper-icon "print"}}
-     {{/paper-button}}
-     {{#paper-button iconButton=true}}
-       {{paper-icon "more_vert"}}
-     {{/paper-button}}
-   {{/paper-toolbar-tools}}
- {{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
-{{#paper-card as |card|}}
-  {{#card.title as |title|}}
-    {{#title.text as |text|}}
-      {{#text.headline}}Einstellungen{{/text.headline}}
-    {{/title.text}}
-  {{/card.title}}
-  {{#card.content}}
-    {{paper-input  label="Name" flex=100  value=model.name onChange=(action (mut model.name))}}
-    {{paper-input textarea=true block=true label="Beschreibung"  passThru=(hash rows=3 maxRows=3)
+    <h2>Moor {{paper-icon "chevron-right"}} {{model.name}} <span class="hide-sm"></span></h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true onClick=(action "addFolder")}}
+      {{paper-icon "create new folder"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true onClick=(transition-to "moor.folderseries.print" model)}}
+      {{paper-icon "print"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "more_vert"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{#paper-content class="md-padding" }}
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Einstellungen{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content}}
+      {{paper-input  label="Name" flex=100  value=model.name onChange=(action (mut model.name))}} {{paper-input textarea=true block=true label="Beschreibung"  passThru=(hash rows=3 maxRows=3)
     value=model.description onChange=(action (mut model.description))}}
-    {{#paper-switch value=model.obligationToReport onChange=(action (mut model.obligationToReport))}}
-      {{if model.obligationToReport "Pfand pflichtig" "Pfandfrei"}}
-  {{/paper-switch}}
-  {{/card.content}}
-  {{#card.actions}}
-    {{#paper-button warn=true}}Löschen{{/paper-button}}
-    {{#paper-button}}Speichern{{/paper-button}}
-  {{/card.actions}}
-{{/paper-card}}
-{{#paper-card as |card|}}
-  {{#card.title as |title|}}
-    {{#title.text as |text|}}
-      {{#text.headline}}Ordner{{/text.headline}}
-    {{/title.text}}
-  {{/card.title}}
-  {{#card.content}}
-    {{#paper-list}}
-      {{#each model.folders as |folder|}}
-        {{#paper-item class="md-2-line"}}
-          {{paper-icon "folder" class="md-avatar-icon"}}
+      {{#paper-switch value=model.obligationToReport onChange=(action (mut model.obligationToReport))}}
+        {{if model.obligationToReport "Pfand pflichtig" "Pfandfrei"}}
+      {{/paper-switch}}
+    {{/card.content}}
+    {{#card.actions}}
+      {{#paper-button warn=true}}Löschen{{/paper-button}}
+      {{#paper-button}}Speichern{{/paper-button}}
+    {{/card.actions}}
+  {{/paper-card}}
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}Ordner{{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content}}
+      {{#paper-list}}
+        {{#each model.folders as |folder|}}
+          {{#paper-item class="md-2-line" }}
+            {{paper-icon "folder" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>{{folder.name}}</h3>
               <p>{{folder.barcode}}</p>
@@ -60,12 +59,12 @@
           {{/paper-item}}
           {{paper-divider}}
         {{/each}}
-    {{/paper-list}}
-  {{/card.content}}
-  {{#card.actions}}
-    {{#paper-button primary=true onClick=(action "addFolder")}}Neuer Ordner{{/paper-button}}
-  {{/card.actions}}
-{{/paper-card}}
+      {{/paper-list}}
+    {{/card.content}}
+    {{#card.actions}}
+      {{#paper-button primary=true onClick=(action "addFolder")}}Neuer Ordner{{/paper-button}}
+    {{/card.actions}}
+  {{/paper-card}}
 {{/paper-content}}
 {{#if showCreateFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Erstelle Ordner' folder=newfolder}}{{/if}}
 {{#if showEditFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Bearbeite Ordner' folder=newfolder}}{{/if}}

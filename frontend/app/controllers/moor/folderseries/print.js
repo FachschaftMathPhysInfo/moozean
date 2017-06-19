@@ -4,12 +4,14 @@ export default Ember.Controller.extend({
   pruefende:Ember.A(),
   module:Ember.A(),
   printselection:Ember.A(),
-  gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedID','selectedSubject','model.reports.[]', function() {
+  selectedDate:null,
+  gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedDate','selectedID','selectedSubject','model.reports.[]', function() {
     let pruefende= this.get('pruefende');
     let module = this.get('module');
     let selectedTyp=this.get('selectedTyp');
     let selectedID=this.get('selectedID');
     let selectedSubject=this.get('selectedSubject');
+    let selectedDate = this.get('selectedDate');
     let reports=this.get('model.reports');
     if(pruefende.length>0) {
       reports = reports.filter(function(report){
@@ -52,6 +54,12 @@ export default Ember.Controller.extend({
     if(selectedSubject){
       reports= reports.filter(function(report){
         return report.get('subject.id')== selectedSubject.get('id');
+      });
+    }
+    if(selectedDate){
+      reports= reports.filter(function(report){
+        console.log(selectedDate);
+        return report.get('examinationDate') >= selectedDate;
       });
     }
      return reports;
