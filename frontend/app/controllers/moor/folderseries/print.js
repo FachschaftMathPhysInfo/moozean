@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 export default Ember.Controller.extend({
   pruefende:Ember.A(),
@@ -58,8 +59,7 @@ export default Ember.Controller.extend({
     }
     if(selectedDate){
       reports= reports.filter(function(report){
-        console.log(selectedDate);
-        return report.get('examinationDate') >= selectedDate;
+        return moment(selectedDate).isBefore(moment(report.get('examinationAt')));
       });
     }
      return reports;
