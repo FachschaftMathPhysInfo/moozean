@@ -98,17 +98,18 @@
                 onChange=(action (mut someThing)) }}
   {{/card.content}}
   {{#card.actions}}
-  {{#paper-button}}
     {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex"}}
+      {{#paper-button}}
           {{paper-icon "text fields"}} {{filetexName}}
+          {{/paper-button}}
     {{/file-picker}}
-  {{/paper-button}}
-    {{#paper-button}}
-      {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded"}}
-            {{paper-icon "picture as pdf"}} {{fileName}}
+
+      {{#file-picker preview=false  readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded"}}
+            {{#paper-button}}
+            {{paper-icon "picture as pdf"}}{{fileName}}
+            {{/paper-button}}
       {{/file-picker}}
-    {{/paper-button}}
-    {{#paper-button onClick=(action "save")}}
+    {{#paper-button onClick=(action "save") disabled=(not model.report.pdf)}}
       Speichern
     {{/paper-button}}
   {{/card.actions}}
