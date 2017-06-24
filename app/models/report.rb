@@ -6,7 +6,6 @@ class Report < ApplicationRecord
   has_many :folderseries, :through =>:is_ins, source: :folderseries, class_name:"Folderseries"
   has_many :examined_by
   has_many :examinator, :through =>:examined_by, class_name: "Examinator"
-
   has_many :examined_bies, class_name: "ExaminedBy"
   has_many :examinators, :through => :examined_bies, source: :examinator, class_name: "Examinator"
   has_many :is_abouts, source: :is_about, class_name:"IsAbout"

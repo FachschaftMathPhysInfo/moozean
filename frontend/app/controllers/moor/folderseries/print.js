@@ -78,7 +78,7 @@ export default Ember.Controller.extend({
       this.get('module').pushObject(modul);
     },
     printReport:function(report, times){
-      let printout=this.store.createRecord('printout',{report:report,times:times});
+      let printout=this.store.createRecord('printout',{report:report,times:times,folderseries:this.get('model')});
       printout.save();
     },
     toggleSelection:function(report){
@@ -87,7 +87,7 @@ export default Ember.Controller.extend({
         this.get('printselection').removeObject(a[0]);
       }
       else{
-        this.get('printselection').pushObject(this.store.createRecord('printout',{report:report,times:1}));
+        this.get('printselection').pushObject(this.store.createRecord('printout',{report:report,times:1,folderseries:this.get('model')}));
       }
       this.set('printselection',this.get('printselection').slice());
     },
@@ -106,14 +106,14 @@ export default Ember.Controller.extend({
     printAll:function(){
       let _this=this;
       this.get('model.reports').forEach(function(report){
-        let printout=_this.store.createRecord('printout',{report:report,times:1});
+        let printout=_this.store.createRecord('printout',{report:report,times:1,folderseries:this.get('model')});
         printout.save();
       });
     },
     printShown:function(){
       let _this=this;
       this.get('gefilterte').forEach(function(report){
-        let printout=_this.store.createRecord('printout',{report:report,times:1});
+        let printout=_this.store.createRecord('printout',{report:report,times:1,folderseries:this.get('model')});
         printout.save();
       });
     },
