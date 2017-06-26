@@ -1,10 +1,10 @@
 defaults: &defaults
-  imap_server: "webmail.henrixapp.com"
+  imap_server: "webmail.example.com"
   imap_port: 993
   use_ssl: true
   ignore_ssl_error: false
-  email: "pruefungsberichte@henrixapp.com"
-  password: "test123456"
+  email: "foo@example.com"
+  password: "foobar"
   box: "INBOX"
 
 development:
