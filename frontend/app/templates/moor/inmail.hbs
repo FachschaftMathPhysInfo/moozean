@@ -1,0 +1,45 @@
+{{#paper-toolbar}}
+   {{#paper-toolbar-tools}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+      {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+     <h2>Moor {{paper-icon "chevron-right"}} Mail</h2>
+     <span class="flex"></span>
+     {{#paper-button iconButton=true}}
+       {{paper-icon "more_vert"}}
+     {{/paper-button}}
+   {{/paper-toolbar-tools}}
+ {{/paper-toolbar}}
+{{#paper-sidenav-container class="inner-sidenav"}}
+
+  {{#paper-sidenav
+    class="md-whiteframe-z2"
+    name="mailbar"
+    open=leftSideBarOpen2
+    lockedOpen=true
+    onToggle=(action (mut leftSideBarOpen2))}}
+    {{#paper-toolbar as |toolbar|}}
+      {{#paper-toolbar-tools}}INBOX{{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+    {{#paper-content padding=true}}
+        {{#paper-list}}
+          {{#each (reverse model) as |mail|}}
+            {{#menu-item class="md-3-line" active=(is-active "moor.inmail.view" currentRouteName mail) onClick=(transition-to "moor.inmail.view" mail.id)}}
+              {{paper-icon "mail" class="md-avatar"}}
+              <div class="md-list-item-text">
+                <h3>{{mail.fromaddress}}</h3>
+                <h4>{{mail.subject}}</h4>
+                <p>{{#each mail.attachments as |attachment|}}{{attachment.name}}{{else}}Kein Anhang{{/each}}</p>
+              </div>
+            {{/menu-item}}
+          {{/each}}
+        {{/paper-list}}
+    {{/paper-content}}
+  {{/paper-sidenav}}
+
+  {{#paper-card-content class="flex mail-container"}}
+      {{outlet}}
+{{/paper-card-content}}
+{{/paper-sidenav-container}}

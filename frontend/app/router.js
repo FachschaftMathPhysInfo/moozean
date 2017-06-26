@@ -17,6 +17,9 @@ Router.map(function() {
     });
     this.route('search');
     this.route('report');
+    this.route('inmail', function() {
+      this.route('view', { path: '/view/:id' }, function() {});
+    });
   });
   this.route('recentlyreturned');
 });

@@ -10,7 +10,9 @@ $warn: 'pink';
 @import 'ember-paper';
 @import 'ember-paper-stepper';
 @import 'paper-data-table';
+@import "ember-paper-tabs";
 @import 'print_selection';
+@import "pdf-style";
 //
 body > [class="ember-view"] {
   max-width: 100%;
