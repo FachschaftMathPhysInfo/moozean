@@ -29,7 +29,7 @@
             {{#menu-item class="md-3-line" active=(is-active "moor.inmail.view" currentRouteName mail) onClick=(transition-to "moor.inmail.view" mail.id)}}
               {{paper-icon "mail" class="md-avatar"}}
               <div class="md-list-item-text">
-                <h3>{{mail.fromaddress}}</h3>
+                <h3>{{mail.fromname}}</h3>
                 <h4>{{mail.subject}}</h4>
                 <p>{{#each mail.attachments as |attachment|}}{{attachment.name}},{{else}}Kein Anhang{{/each}}<span class="flex"></span>{{#paper-button iconButton=true onClick=(action "deleteInmail" mail)}}{{paper-icon "delete forever"}}{{/paper-button}}</p>
               </div>

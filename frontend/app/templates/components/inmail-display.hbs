@@ -4,12 +4,12 @@
       {{gravatar-image class="md-avatar" email=model.fromaddress}}
     {{/header.avatar}}
     {{#header.text as |text|}}
-      {{#text.title}}{{model.subject}}{{/text.title}}
+      {{#text.title}}{{model.fromname}}{{/text.title}}
       {{#text.subhead}}{{model.fromaddress}}{{/text.subhead}}
     {{/header.text}}
   {{/card.header}}
   {{#card.content}}
-    {{#paper-subheader}}Nachricht{{/paper-subheader}}
+    {{#paper-subheader}}{{model.subject}}{{/paper-subheader}}
     <div class="md-padding">
       {{simple-format (readonly model.body)}}
     </div>
