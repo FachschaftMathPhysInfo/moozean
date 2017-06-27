@@ -1,17 +1,21 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 export default Ember.Controller.extend({
   pruefende:Ember.A(),
   module:Ember.A(),
   printselection:Ember.A(),
-  gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedSubject','model.reports.[]', function() {
+  selectedDate:null,
+  gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedDate','selectedID','selectedSubject','model.reports.[]', function() {
     let pruefende= this.get('pruefende');
-    let module= this.get('module');
+    let module = this.get('module');
     let selectedTyp=this.get('selectedTyp');
+    let selectedID=this.get('selectedID');
     let selectedSubject=this.get('selectedSubject');
+    let selectedDate = this.get('selectedDate');
     let reports=this.get('model.reports');
     if(pruefende.length>0) {
-      reports= reports.filter(function(report){
+      reports = reports.filter(function(report){
         let result = true;
         pruefende.forEach(function(pruefer){
           let examers= report.get('examinators');
@@ -43,9 +47,19 @@ export default Ember.Controller.extend({
         return report.get('typ.id')== selectedTyp.get('id');
       });
     }
+    if(selectedID){
+      reports= reports.filter(function(report){
+        return report.get('id') == selectedID.get('id');
+      });
+    }
     if(selectedSubject){
       reports= reports.filter(function(report){
         return report.get('subject.id')== selectedSubject.get('id');
+      });
+    }
+    if(selectedDate){
+      reports= reports.filter(function(report){
+        return moment(selectedDate).isBefore(moment(report.get('examinationAt')));
       });
     }
      return reports;

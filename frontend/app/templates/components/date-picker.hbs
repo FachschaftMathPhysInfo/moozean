@@ -1,0 +1,28 @@
+{{#paper-input class="md-datepicker " onFocus=(action (mut visibleCalendar)) value=(compute (action "formatDate") date) placeholder="Prüfungen seit" onChange=(action "fromGerman")}}
+{{#if visibleCalendar}}
+{{#power-calendar selected=date
+onSelect=(action "onSelect") class="calendar-moozean md-virtual-repeat-container md-autocomplete-suggestions-container"
+center=month
+onCenterChange=(action (mut month) value="date") as |calendar|}}
+
+<nav class="ember-power-calendar-nav">
+<button type="button" class="ember-power-calendar-nav-control" onclick={{action calendar.actions.moveCenter -12 'month'}}>«</button>
+<button type="button" class="ember-power-calendar-nav-control" onclick={{action calendar.actions.moveCenter -1 'month'}}>‹</button>
+<div class="ember-power-calendar-nav-title">
+{{moment-format calendar.center 'MMMM YYYY'}}
+</div>
+<button class="ember-power-calendar-nav-control" onclick={{action calendar.actions.moveCenter 1 'month'}}>›</button>
+<button class="ember-power-calendar-nav-control" onclick={{action calendar.actions.moveCenter 12 'month'}}>»</button>
+</nav>
+
+{{calendar.days}}
+{{/power-calendar}}
+{{/if}}
+
+
+{{/paper-input}}
+{{#if date}}
+   {{#paper-reset-button class="datepicker-reset" onReset=(action "clear") tabindex="-1"}}
+     {{paper-icon "close"}}
+   {{/paper-reset-button}}
+{{/if}}

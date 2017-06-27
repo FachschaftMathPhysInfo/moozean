@@ -1,5 +1,26 @@
 import Ember from 'ember';
 
-export default Ember.Controller.extend({
+const { Controller, computed } = Ember;
 
+export default Controller.extend({
+  actions: {
+    toggleExpandedItem(value, ev) {
+      if (this.get('expandedItem') === value) {
+        value = null;
+      }
+      this.set('expandedItem', value);
+      ev.stopPropagation();
+    }
+  },
+
+  expandedItem: computed('currentRouteName', function() {
+    if (this.get('currentRouteName').substr(0, 6) === 'layout') {
+      return 'layout';
+    } else {
+      return 'expandedMenu';
+    }
+  }),
+
+  menuExpanded: computed.equal('expandedItem', 'expandedMenu'),
+  layoutExpanded: computed.equal('expandedItem', 'layout')
 });
