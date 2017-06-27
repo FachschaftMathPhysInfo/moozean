@@ -22,24 +22,6 @@ export default Ember.Controller.extend({
         this.set("fileName",attachment.get("name"));
         this.set("model.report.pdf",attachment.get("pdf"));
       },
-      removeExaminator:function(examinator){
-        this.get('model.report.examinators').removeObject(examinator);
-      },
-      addExaminator: function(examinator){
-        this.get('model.report.examinators').pushObject(examinator);
-      },
-      removeFolderseries:function(folderseries){
-        this.get('model.report.folderseries').removeObject(folderseries);
-      },
-      addFolderseries: function(folderseries){
-        this.get('model.report.folderseries').pushObject(folderseries);
-      },
-      removeModul:function(modul){
-        this.get('model.report.moduls').removeObject(modul);
-      },
-      addModul: function(modul){
-        this.get('model.report.moduls').pushObject(modul);
-      },
       fileLoaded:function(file) {
         this.set('model.report.pdf',file.data);
         this.set('fileName',file.filename);

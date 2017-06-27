@@ -65,18 +65,6 @@ export default Ember.Controller.extend({
      return reports;
   }),
   actions:{
-    removeExaminator:function(examinator){
-      this.get('pruefende').removeObject(examinator);
-    },
-    addExaminator: function(examinator){
-      this.get('pruefende').pushObject(examinator);
-    },
-    removeModul:function(modul){
-      this.get('module').removeObject(modul);
-    },
-    addModul: function(modul){
-      this.get('module').pushObject(modul);
-    },
     printReport:function(report, times){
       let printout=this.store.createRecord('printout',{report:report,times:times});
       printout.save();

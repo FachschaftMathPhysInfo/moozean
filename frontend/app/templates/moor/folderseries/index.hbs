@@ -28,13 +28,13 @@
     {{#card.content}}
       {{paper-input  label="Name" flex=100  value=model.name onChange=(action (mut model.name))}} {{paper-input textarea=true block=true label="Beschreibung"  passThru=(hash rows=3 maxRows=3)
     value=model.description onChange=(action (mut model.description))}}
-      {{#paper-switch value=model.obligationToReport onChange=(action (mut model.obligationToReport))}}
-        {{if model.obligationToReport "Pfand pflichtig" "Pfandfrei"}}
+      {{#paper-switch value=model.obligationtoreport onChange=(action (mut model.obligationtoreport))}}
+        {{if model.obligationtoreport "Pfand pflichtig" "Pfandfrei"}}
       {{/paper-switch}}
     {{/card.content}}
     {{#card.actions}}
       {{#paper-button warn=true}}Löschen{{/paper-button}}
-      {{#paper-button}}Speichern{{/paper-button}}
+      {{#paper-button onClick=(action "saveFolderseries")}}Speichern{{/paper-button}}
     {{/card.actions}}
   {{/paper-card}}
   {{#paper-card as |card|}}

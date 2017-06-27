@@ -21,13 +21,16 @@
 {{#paper-content class="md-padding"}}
       {{#paper-list}}
       {{#each model as |folder|}}
-          {{#paper-item class="md-2-line"}}
-            {{paper-icon "folder" class="md-avatar"}}
+      {{#paper-item }}
+            {{#paper-button iconButton=true onClick=(action (transition-to "moor.folderseries" folder))}}{{paper-icon "folder" }}{{/paper-button}}
             <div class="md-list-item-text">
               <h3>{{folder.name}}</h3>
-              <p>{{if folder.obligationToReport "pfandpflichtig" "pfandfrei"}}</p>
+              <p>{{if folder.obligationtoreport "pfandpflichtig" "pfandfrei"}}</p>
             </div>
-          {{/paper-item}}
+            <span class="flex"></span>
+            {{#paper-button iconButton=true onClick=(action (transition-to "moor.folderseries.print" folder))}}{{paper-icon "print"}}{{/paper-button}}
+            {{#paper-button iconButton=true onClick=(action "deleteFolderSeries" folder)}}{{paper-icon "delete forever"}}{{/paper-button}}
+      {{/paper-item}}
         {{/each}}
       {{/paper-list}}
 {{outlet}}
