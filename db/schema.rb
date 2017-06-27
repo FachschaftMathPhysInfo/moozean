@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20170623201752) do
   end
 
   create_table "reports", force: :cascade do |t|
+    t.binary "pdf"
+    t.text "tex"
     t.datetime "examination_at"
     t.bigint "subject_id"
     t.bigint "typ_id"
