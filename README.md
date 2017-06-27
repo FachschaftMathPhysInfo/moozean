@@ -4,7 +4,7 @@
 The recommended software versions are
   - rails `>=5.1`
   - ruby `>=2.3`
-  
+
 ## System dependencies
 
  Please have the following installed:
@@ -30,3 +30,16 @@ For Anonymization (and later email retrieval): `rake qc:work`
 
 Build the image using docker-compose:
 `docker-compose up --build`
+
+# Tasks: `classic-queue`
+
+This project uses `classic-queue` for out-of-order tasks. Run `rake qc:update` after setup to update the tables and `rake qc:work` to start a worker.
+
+#Email--support
+
+In `config/email.yml` is the configuration of the email inbox. The programm automatically flages imported emails. Currently, it does **not** delete Emails in the INBOX at any point.
+
+#Cronjob for Email support
+
+As configured in config/schedule.rb this programm will check every 5 minutes for new mail.
+Run `whenever` to see config. `whenever --update-crontab` will udate your crontab-file.

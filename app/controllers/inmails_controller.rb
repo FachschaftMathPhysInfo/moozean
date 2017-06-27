@@ -1,0 +1,2 @@
+class InmailsController < ApplicationController
+end

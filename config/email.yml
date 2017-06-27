@@ -1,0 +1,17 @@
+defaults: &defaults
+  imap_server: "webmail.example.com"
+  imap_port: 993
+  use_ssl: true
+  ignore_ssl_error: false
+  email: "foo@example.com"
+  password: "foobar"
+  box: "INBOX"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
