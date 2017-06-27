@@ -1,0 +1,7 @@
+{{#paper-autocomplete options=options allowClear=true searchText=(readonly subjectSearchText) onSearchTextChange=(action (mut subjectSearchText)) selected=selected searchField="name" labelPath="name" placeholder="Wähle ein Fach" loadingMessage="Suche Fach..."
+  noMatchesMessage="Es gibt kein solches Fach" onSelectionChange=(action (mut selected)) as |subject autocomplete|}}
+  {{paper-autocomplete-highlight
+      label=subject.name
+      searchText=autocomplete.searchText
+      flags="i"}}
+{{/paper-autocomplete}}

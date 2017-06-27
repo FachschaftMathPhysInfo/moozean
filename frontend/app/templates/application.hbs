@@ -15,7 +15,7 @@ flex-layout="column" flex=true }}
   {{#paper-content padding=true}}
     {{#paper-list}}
       {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{svg-jar "ocean" class="site-nav-icon" height="24px" width="24px"}}Ozean{{/menu-item}}
-      {{#menu-item onClick=(action "toggleExpandedItem" "expandedMenu") expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Moor{{/menu-item}}
+      {{#menu-item onClick=(pipe (action "toggleExpandedItem" "expandedMenu")(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Moor{{/menu-item}}
 <div class="submenu">
     {{#liquid-if menuExpanded}}
     {{#submenu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "inbox" class="site-nav-icon"}}Mails{{/submenu-item}}

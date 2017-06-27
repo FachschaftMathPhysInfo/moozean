@@ -1,6 +1,6 @@
 class Folderseries < ApplicationRecord
-  has_many :folders
-  has_many :is_ins
+  has_many :folders, dependent: :destroy
+  has_many :is_ins, dependent: :destroy
   has_many :reports, :through => :is_ins, source: :report, class_name: "Report"
   has_many :subjects, :through => :reports, source: :subject, class_name: "Subject"
   has_many :typs, :through => :reports, source: :typ, class_name: "Typ"

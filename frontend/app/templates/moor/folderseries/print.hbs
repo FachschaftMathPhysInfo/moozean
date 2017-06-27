@@ -27,7 +27,7 @@
       {{#paper-list}}
         {{#each printselection as |item|}}
           {{#paper-item}}
-            #{{item.report.id}}2
+            #{{item.report.id}}
             {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}},
             {{#each (take 1 item.report.examinators) as |exm|}}{{exm.surname}}{{/each}}<span class="flex"></span>
             {{#paper-button iconButton=true onClick=(action "decreaseTimes" item)}}
@@ -70,42 +70,16 @@
             {{/paper-autocomplete}}
           </div>
           <div class="flex-gt-xs-25">
-            {{#paper-autocomplete
+            {{subject-autocomplete
               options=model.subjects
-              allowClear=true
-              searchText=(readonly subjectSearchText)
-              onSearchTextChange=(action (mut subjectSearchText))
               selected=selectedSubject
-              searchField="name"
-              labelPath="name"
-              placeholder="Wähle Fach"
-              loadingMessage="Suche Fach..."
-              noMatchesMessage="Es gibt kein solches Fach"
-              onSelectionChange=(action (mut selectedSubject)) as |subject autocomplete|}}
-              {{paper-autocomplete-highlight
-        label=subject.name
-        searchText=autocomplete.searchText
-        flags="i"}}
-            {{/paper-autocomplete}}
+              }}
           </div>
           <div class="flex-gt-xs-25">
-            {{#paper-autocomplete
+            {{typ-autocomplete
               options=model.typs
-              allowClear=true
-              searchText=(readonly typSearchText)
-              onSearchTextChange=(action (mut typSearchText))
               selected=selectedTyp
-              searchField="name"
-              labelPath="name"
-              placeholder="Wähle Prüfungsart"
-              loadingMessage="Suche Prüfungsart..."
-              noMatchesMessage="Es gibt keine solche Prüfungsart"
-              onSelectionChange=(action (mut selectedTyp)) as |typ autocomplete|}}
-              {{paper-autocomplete-highlight
-            label=typ.name
-            searchText=autocomplete.searchText
-            flags="i"}}
-            {{/paper-autocomplete}}
+            }}
           </div>
           <div class="flex-gt-xs-25">
 {{date-picker date=selectedDate}}
@@ -113,28 +87,12 @@
         </div>
           <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
             <div class="flex-gt-xs-45">
-              {{#paper-chips removeItem=(action "removeExaminator")
-              addItem=(action "addExaminator")
-              placeholder="Prüfende hinzufügen"
+              {{pruefende-chips
               content=pruefende
-              options=model.examinators
-              searchField="surname"
-              requireMatch=true as |item|}}
-
-                <strong>{{item.surname}}</strong>
-                {{#if item.givenname}}
-                  <em>{{item.givenname}}</em>
-                {{/if}}
-              {{/paper-chips}}
+              options=model.examinators}}
             </div>
             <div class="flex-gt-xs-50">
-              {{#paper-chips removeItem=(action "removeModul") addItem=(action "addModul") placeholder="Module hinzufügen" content=module options=model.moduls searchField="name" requireMatch=true as |item|}}
-
-                <strong>{{item.name}}</strong>
-                {{#if item.abbreviation}}
-                  <em>{{item.abbreviation}}</em>
-                {{/if}}
-              {{/paper-chips}}
+              {{modul-chips content=module options=model.moduls}}
             </div>
 
         </div>

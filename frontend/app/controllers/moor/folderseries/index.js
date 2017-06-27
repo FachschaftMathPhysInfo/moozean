@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   newfolder:{},
   actions:{
+    saveFolderseries:function(){
+      this.get("model").save();
+    },
     addFolder:function(){
       this.set('newfolder',this.store.createRecord('folder',{folderseries:this.get('model'),suffix:''}));
       this.set("showCreateFolderDialog",true);
