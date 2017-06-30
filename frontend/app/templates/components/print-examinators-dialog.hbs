@@ -1,0 +1,35 @@
+{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>Prüfende auswählen</h2>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+
+  {{#paper-dialog-content class="flex-66"}}
+    {{#paper-list }}
+      {{#each reportslist as |report|}}
+        {{#paper-subheader}}
+          {{report.subject.name}}-{{report.typ.name}}:
+          {{#each report.moduls as |modul|}}
+            {{modul.abbreviation}}{{if (has-next modul useDeepEqual report.moduls) ", "}}
+          {{/each}}
+          {{/paper-subheader}}
+            {{#each report.examinators as |exm|}}
+              {{#paper-item}}
+                {{#paper-checkbox value=(contains pruefauswahl report exm) onChange=(action "toggleSelect" report exm)}}
+                {{/paper-checkbox}}
+                <b>{{exm.surname}}</b>&nbsp; <em>{{exm.givenname}}</em>
+              {{/paper-item}}
+            {{/each}}
+      {{/each}}
+    {{/paper-list}}
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions class="layout-row" }}
+    <span class="flex"></span>
+    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
+    {{#paper-button onClick=(action "exitDialog" "ok")}}{{if auswahl "Auswählen" "Drucken"}}{{/paper-button}}
+  {{/paper-dialog-actions}}
+{{/paper-dialog}}
+{{yield}}

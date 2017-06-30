@@ -27,9 +27,9 @@
       {{#paper-list}}
         {{#each printselection as |item|}}
           {{#paper-item}}
-            #{{item.report.id}}2
-            {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}},
-            {{#each (take 1 item.report.examinators) as |exm|}}{{exm.surname}}{{/each}}<span class="flex"></span>
+            #{{item.report.id}}&nbsp;
+            {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}}&nbsp;
+            {{item.examinator.surname}}<span class="flex"></span>
             {{#paper-button iconButton=true onClick=(action "decreaseTimes" item)}}
               {{paper-icon "remove"}}
             {{/paper-button}}
@@ -127,7 +127,7 @@
               {{#card.actions}}
                 &emsp;#{{report.id}}<span class="flex"></span>
                 {{#paper-button iconButton=true onClick=(action "toggleSelection" report)}}
-                  {{#if (report-in-selection report printselection)}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
+                  {{#if (report-in-selection printselection report)}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
                 {{/paper-button}}
               {{/card.actions}}
               {{card.image src=report.picture alt="Washed Out" title="Washed Out"}}
@@ -179,7 +179,7 @@
                     {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
                   {{/email-share}}
                 {{/if}}
-                {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
+                {{#paper-button iconButton=true onClick=(action "printReport" report)}}{{paper-icon "print"}}{{/paper-button}}
               {{/card.actions}}
             {{/paper-card}}
           </div>
@@ -187,3 +187,4 @@
       </div>
   {{/paper-content}}
 {{/paper-sidenav-container}}
+{{#if showPruefDialog}}{{print-examinators-dialog closeDialogDrucken=(action "closeDialogDrucken") closeDialogAuswahl=(action "closeDialogAuswahl") reportslist=reportslist auswahl=auswahl pruefauswahl=pruefauswahl}}{{/if}}
