@@ -129,6 +129,7 @@ export default Ember.Controller.extend({
       this.set('showPfandDialog', false);
       if(option=="ok"){
           student.set('refund', true);
+          student.save();
       }
     },
     showPfandDialog:function(){
