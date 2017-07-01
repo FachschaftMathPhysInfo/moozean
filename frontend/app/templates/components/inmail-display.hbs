@@ -1,0 +1,37 @@
+{{#paper-card as |card|}}
+  {{#card.header as |header|}}
+    {{#header.avatar}}
+      {{gravatar-image class="md-avatar" email=model.fromaddress}}
+    {{/header.avatar}}
+    {{#header.text as |text|}}
+      {{#text.title}}{{model.fromname}}{{/text.title}}
+      {{#text.subhead}}{{model.fromaddress}}{{/text.subhead}}
+    {{/header.text}}
+  {{/card.header}}
+  {{#card.content}}
+    {{#paper-subheader}}{{model.subject}}{{/paper-subheader}}
+    <div class="md-padding">
+      {{simple-format (readonly model.body)}}
+    </div>
+    {{#if model.attachments}}
+      {{paper-divider}}
+      {{#paper-subheader}}Anhänge{{/paper-subheader}}
+      {{#paper-tabs borderBottom=true autoSelect=true dynamicHeight=true as |tabs|}}
+        {{#each attachments as |attachment|}}
+          {{#tabs.tab label=attachment.name as |tab|}}
+            {{#if (eq attachment.contentType "application/pdf")}}
+              <div class="pdf-container">
+                {{pdf-document  src=attachment.pdf}}
+              </div>
+              {{#paper-button onClick=(action setPdfFile attachment)}} ALS PDF verwenden{{/paper-button}}
+            {{else}}
+              {{simple-format  attachment.attachment}}
+              {{#paper-button onClick=(action setTexFile attachment)}} ALS Tex verwenden{{/paper-button}}
+            {{/if}}
+          {{/tabs.tab}}
+        {{/each}}
+      {{/paper-tabs}}
+    {{/if}}
+  {{/card.content}}
+{{/paper-card}}
+{{yield}}

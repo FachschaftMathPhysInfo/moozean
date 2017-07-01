@@ -42,6 +42,7 @@ GEM
     builder (3.2.3)
     byebug (9.0.6)
     choice (0.2.0)
+    chronic (0.10.2)
     climate_control (0.2.0)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
@@ -144,6 +145,8 @@ GEM
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -154,6 +157,7 @@ DEPENDENCIES
   faker
   jsonapi-resources
   listen (~> 3.0.5)
+  mail
   pg
   puma (~> 3.0)
   queue_classic (~> 3.1)
@@ -163,6 +167,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
+  whenever
 
 BUNDLED WITH
    1.15.1

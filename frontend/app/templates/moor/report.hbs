@@ -15,82 +15,14 @@
 {{#paper-content class="md-padding"}}
 {{#paper-card as |card|}}
   {{#card.content}}
-  {{#paper-autocomplete
-      options=model.subjects
-      allowClear=true
-      searchText=(readonly subjectSearchText)
-      onSearchTextChange=(action (mut subjectSearchText))
-      selected=model.report.subject
-      searchField="name"
-      labelPath="name"
-      placeholder="Wähle ein Fach"
-      loadingMessage="Suche Fach..."
-      noMatchesMessage="Es gibt kein solches Fach"
-      onSelectionChange=(action (mut model.report.subject)) as |subject autocomplete|}}
-      {{paper-autocomplete-highlight
-        label=subject.name
-        searchText=autocomplete.searchText
-        flags="i"}}
-      {{/paper-autocomplete}}
-      {{#paper-autocomplete
-          options=model.typs
-          allowClear=true
-          searchText=(readonly typSearchText)
-          onSearchTextChange=(action (mut typSearchText))
-          selected=model.report.typ
-          searchField="name"
-          labelPath="name"
-          placeholder="Wähle einen Typ"
-          loadingMessage="Suche Typ..."
-          noMatchesMessage="Es gibt kein solchen Typ"
-          onSelectionChange=(action (mut model.report.typ)) as |typ autocomplete|}}
-          {{paper-autocomplete-highlight
-            label=typ.name
-            searchText=autocomplete.searchText
-            flags="i"}}
-    {{/paper-autocomplete}}
+  {{subject-autocomplete selected=model.report.subject options=model.subjects}}
+  {{typ-autocomplete selected=model.report.typ options=model.typs}}
     {{! Prüfende }}
-    {{#paper-chips
-        removeItem=(action "removeExaminator")
-        addItem=(action "addExaminator")
-        placeholder="Prüfende hinzufügen"
-        content=model.report.examinators
-        options=model.examinators
-        searchField="surname"
-        requireMatch=true as |item|}}
-
-        <strong>{{item.surname}}</strong>
-        {{#if item.givenname}}
-          <em>{{item.givenname}}</em>
-        {{/if}}
-        {{/paper-chips}}
+  {{pruefende-chips options=model.examinators content=model.report.examinators }}
         {{!Module}}
-        {{#paper-chips
-            removeItem=(action "removeModul")
-            addItem=(action "addModul")
-            placeholder="Module hinzufügen"
-            content=model.report.moduls
-            options=model.moduls
-            searchField="name"
-            requireMatch=true as |item|}}
-
-            <strong>{{item.name}}</strong>
-            {{#if item.abbreviation}}
-              <em>{{item.abbreviation}}</em>
-            {{/if}}
-            {{/paper-chips}}
-            {{!Module}}
-            {{#paper-chips
-                removeItem=(action "removeFolderseries")
-                addItem=(action "addFolderseries")
-                placeholder="Ordnerreihen hinzufügen"
-                content=model.report.folderseries
-                options=model.folderseries
-                searchField="name"
-                requireMatch=true as |item|}}
-
-                <strong>{{item.name}}</strong>
-                {{/paper-chips}}
+  {{modul-chips options=model.moduls content=model.report.moduls}}
+    {{!Folderseries}}
+  {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
 {{paper-pikaday label="Prüfungsdatum"
                 required=true
                 value=(readonly (moment-format model.report.examinationA "MM.YYYY"))

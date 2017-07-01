@@ -84,7 +84,6 @@ export default Ember.Controller.extend({
       this.set('reportslist',[report]);
       this.set('auswahl',false);
       this.set('showPruefDialog',true);
-
     },
     toggleSelection:function(report){
       let a=this.get('printselection').filter(function(item){return item.get('report.id')==report.get('id')});

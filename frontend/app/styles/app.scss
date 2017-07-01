@@ -1,18 +1,19 @@
+
 @import 'color-math';
 $primary: $color-mathphys;//orange
 $accent: $color-secondary;
 $warn: 'pink';
-
-// If desired, import the palettes and modify to your liking.
-@import 'color-math';
-@import 'color-palette';
 @import 'font';
 @import 'ember-paper';
 @import 'ember-paper-stepper';
 @import 'paper-data-table';
+@import 'ember-paper-tabs';
+@import "ember-paper-link";
+@import 'pdf-style';
+@import 'print_selection';
 @import "ember-power-calendar";
 @import "date-picker";
-//
+
 body > [class="ember-view"] {
   max-width: 100%;
 }

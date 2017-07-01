@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20170629125421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attachments", force: :cascade do |t|
+    t.binary "pdf"
+    t.bigint "inmail_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "content_type"
+    t.index ["inmail_id"], name: "index_attachments_on_inmail_id"
+  end
+
 
   create_table "emails", id: :serial, force: :cascade do |t|
     t.string "address"
@@ -58,6 +70,17 @@ ActiveRecord::Schema.define(version: 20170629125421) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "inmails", force: :cascade do |t|
+    t.string "fromaddress"
+    t.string "subject"
+    t.string "body"
+    t.string "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "fromname"
+    t.index ["uid"], name: "index_inmails_on_uid", unique: true
   end
 
   create_table "is_abouts", force: :cascade do |t|
@@ -165,6 +188,7 @@ ActiveRecord::Schema.define(version: 20170629125421) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "attachments", "inmails"
   add_foreign_key "examined_bies", "examinators"
   add_foreign_key "examined_bies", "reports"
   add_foreign_key "is_abouts", "moduls"

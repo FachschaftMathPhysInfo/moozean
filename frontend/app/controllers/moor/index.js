@@ -8,6 +8,11 @@ export default Ember.Controller.extend({
       this.set('newfolder',this.store.createRecord('folder'));
       this.set("showDialog",true);
     },
+    deleteFolderSeries(folder){
+      if(folder.get("name")==prompt("Wirklich Ordnerreihe zerstören? Bitte trage den Namen der Ordnerserie ein:")){
+        folder.destroyRecord();
+      }
+    },
     closeDialog:function(option){
       if(option=="ok"){
         this.get('newfolder').save();

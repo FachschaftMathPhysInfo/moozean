@@ -58,48 +58,28 @@
                 label=report.id
             searchText=autocomplete.searchText
             flags="i"}}
-              {{/paper-autocomplete}}
-            </div>
-            <div class="flex-gt-xs-25">
-              {{#paper-autocomplete options=model.subjects allowClear=true searchText=(readonly subjectSearchText) onSearchTextChange=(action (mut subjectSearchText)) selected=selectedSubject searchField="name" labelPath="name" placeholder="Wähle Fach" loadingMessage="Suche Fach..."
-                noMatchesMessage="Es gibt kein solches Fach" onSelectionChange=(action (mut selectedSubject)) as |subject autocomplete|}}
-                {{paper-autocomplete-highlight
-        label=subject.name
-        searchText=autocomplete.searchText
-        flags="i"}}
-              {{/paper-autocomplete}}
-            </div>
-            <div class="flex-gt-xs-25">
-              {{#paper-autocomplete options=model.typs allowClear=true searchText=(readonly typSearchText) onSearchTextChange=(action (mut typSearchText)) selected=selectedTyp searchField="name" labelPath="name" placeholder="Wähle Prüfungsart" loadingMessage="Suche Prüfungsart..."
-                noMatchesMessage="Es gibt keine solche Prüfungsart" onSelectionChange=(action (mut selectedTyp)) as |typ autocomplete|}}
-                {{paper-autocomplete-highlight
-            label=typ.name
-            searchText=autocomplete.searchText
-            flags="i"}}
-              {{/paper-autocomplete}}
-            </div>
-            <div class="flex-gt-xs-25">
-              {{date-picker date=selectedDate}}
-            </div>
+            {{/paper-autocomplete}}
+          </div>
+          <div class="flex-gt-xs-25">
+            {{subject-autocomplete
+              options=model.subjects
+              selected=selectedSubject
+              }}
+          </div>
+          <div class="flex-gt-xs-25">
+            {{typ-autocomplete
+              options=model.typs
+              selected=selectedTyp
+            }}
           </div>
           <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
             <div class="flex-gt-xs-45">
-              {{#paper-chips removeItem=(action "removeExaminator") addItem=(action "addExaminator") placeholder="Prüfende hinzufügen" content=pruefende options=model.examinators searchField="surname" requireMatch=true as |item|}}
-
-                <strong>{{item.surname}}</strong>
-                {{#if item.givenname}}
-                  <em>{{item.givenname}}</em>
-                {{/if}}
-              {{/paper-chips}}
+              {{pruefende-chips
+              content=pruefende
+              options=model.examinators}}
             </div>
             <div class="flex-gt-xs-50">
-              {{#paper-chips removeItem=(action "removeModul") addItem=(action "addModul") placeholder="Module hinzufügen" content=module options=model.moduls searchField="name" requireMatch=true as |item|}}
-
-                <strong>{{item.name}}</strong>
-                {{#if item.abbreviation}}
-                  <em>{{item.abbreviation}}</em>
-                {{/if}}
-              {{/paper-chips}}
+              {{modul-chips content=module options=model.moduls}}
             </div>
 
           </div>
