@@ -53,5 +53,6 @@ class PrintoutResource < JSONAPI::Resource
     self.times.times do |k|
       exec("lp -d sw-duplex tmp/current_report_full.pdf")
     end
+    exec("rm tmp/current_report*")
   end
 end
