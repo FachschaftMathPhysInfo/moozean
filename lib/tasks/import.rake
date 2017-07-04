@@ -1,8 +1,8 @@
 require 'csv'
 namespace :import do
   desc "Berichte importieren aus csv-Datei. pruefungen in pruefungen.csv, um passende Subject und Typ zu finden...(6)"
-  task :berichte, [:filename,:pruefungen,:pruefer,:vorlesungen]=> :environment do |t, args|
-    args.with_defaults(:filename=>"berichte.csv",:pruefungen=>"pruefungen.csv",:pruefer=>"pruefer.csv",:vorlesungen=>"vorlesungen.csv")
+  task :berichte, [:filename,:pruefungen,:pruefer,:vorlesungen,:berichteordner]=> :environment do |t, args|
+    args.with_defaults(:filename=>"berichte.csv",:pruefungen=>"pruefungen.csv",:pruefer=>"pruefer.csv",:vorlesungen=>"vorlesungen.csv",:berichteordner:"")
     #"id","pruefung","vorl1","vorl2","vorl3","pruefer1","pruefer2","pruefer3","jahr","monat","dateiname","orgname","seiten","cname","cdate","mname","mdate"
     berichte = CSV.read(args.filename,headers:true)
     pruefungen = CSV.read(args.pruefungen,headers:true)
@@ -17,7 +17,7 @@ namespace :import do
       p pr
       puts pr["pruefung"]
       typ= Typ.find_by(name:pr["pruefung"].to_s+" "+pr["fach"].to_s)
-      rp=Report.create(pdf:File.read('erd.pdf'),examination_at:exm_at,subject:sub,typ:typ)
+      rp=Report.create(pdf:File.read(args.berichteordner+"/orig/"+pr["dateiname"]),examination_at:exm_at,subject:sub,typ:typ)
       #vorlesungen finden
       3.times do |k|
         if bericht["vorl"+(k+1).to_s].to_i!=0
