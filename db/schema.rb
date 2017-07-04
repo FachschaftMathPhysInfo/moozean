@@ -10,7 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
 ActiveRecord::Schema.define(version: 20170629125421) do
 
   # These are extensions that must be enabled in order to support this database
@@ -25,7 +24,6 @@ ActiveRecord::Schema.define(version: 20170629125421) do
     t.string "content_type"
     t.index ["inmail_id"], name: "index_attachments_on_inmail_id"
   end
-
 
   create_table "emails", id: :serial, force: :cascade do |t|
     t.string "address"

@@ -49,10 +49,11 @@ class PrintoutResource < JSONAPI::Resource
           buffer << '\null\newpage'
         end
       buffer << '\end{document}'
-    Open3.capture2e("pdflatex -halt-on-error -output-directory=tmp -jobname=current_report_full", :stdin_data => buffer, :binmode=>true)
+    Dir.mktmpdir {|dir|
+    Open3.capture2e("pdflatex -halt-on-error -output-directory=#{dir} -jobname=current_report_full", :stdin_data => buffer, :binmode=>true)
     self.times.times do |k|
-      exec("lp -d sw-duplex tmp/current_report_full.pdf")
+      Open3.capture2e("lp -d sw-duplex - < #{dir}/current_report_full.pdf")
     end
-    exec("rm tmp/current_report*")
+  }
   end
 end
