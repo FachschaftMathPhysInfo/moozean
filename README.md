@@ -16,7 +16,7 @@ The recommended software versions are
 ## Database & Ember install
 
    Run `bundle install` to install all gems
-   Run `rake db:create db:migrate` and `rake ember:install`. Optionally run `rake ember:compile` to speed up.
+   Run `rake db:drop db:create db:migrate` and `rake ember:install`. Optionally run `rake ember:compile` to speed up.
 
 ## All in One for production
 
