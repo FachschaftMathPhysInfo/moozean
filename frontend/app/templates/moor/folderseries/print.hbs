@@ -27,9 +27,9 @@
       {{#paper-list}}
         {{#each printselection as |item|}}
           {{#paper-item}}
-            #{{item.report.id}}
-            {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}},
-            {{#each (take 1 item.report.examinators) as |exm|}}{{exm.surname}}{{/each}}<span class="flex"></span>
+            #{{item.report.id}}&nbsp;
+            {{#each (take 1 item.report.moduls) as |mod|}}{{mod.abbreviation}}{{/each}}&nbsp; {{item.examinator.surname}}
+            <span class="flex"></span>
             {{#paper-button iconButton=true onClick=(action "decreaseTimes" item)}}
               {{paper-icon "remove"}}
             {{/paper-button}}
@@ -50,18 +50,10 @@
         {{/title.text}}
       {{/card.title}}
       {{#card.content}}
-        <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+        <div class="layout-column layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+          <div class="layout flex-100">
           <div class="flex-gt-xs-20">
-            {{#paper-autocomplete
-              options=model.reports
-              allowClear=true
-              searchText=(readonly IDSearchText)
-              onSearchTextChange=(action (mut IDSearchText))
-               selected=selectedID
-               searchField="id"
-               labelPath="id" placeholder="ID"
-               loadingMessage="Suche ID"
-               noMatchesMessage="Es gibt keine solche ID"
+            {{#paper-autocomplete options=model.reports allowClear=true searchText=(readonly IDSearchText) onSearchTextChange=(action (mut IDSearchText)) selected=selectedID searchField="id" labelPath="id" placeholder="ID" loadingMessage="Suche ID" noMatchesMessage="Es gibt keine solche ID"
               onSelectionChange=(action (mut selectedID)) as |report autocomplete|}}
               {{paper-autocomplete-highlight
                 label=report.id
@@ -69,23 +61,20 @@
             flags="i"}}
             {{/paper-autocomplete}}
           </div>
-          <div class="flex-gt-xs-25">
+          <div class="flex-gt-xs-30">
             {{subject-autocomplete
               options=model.subjects
               selected=selectedSubject
               }}
           </div>
-          <div class="flex-gt-xs-25">
+          <div class="flex-gt-xs-45">
             {{typ-autocomplete
               options=model.typs
               selected=selectedTyp
             }}
           </div>
-          <div class="flex-gt-xs-25">
-{{date-picker date=selectedDate}}
- </div>
         </div>
-          <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+          <div class="layout-gt-xs-row layout-wrap flex-100" style="justify-content: space-around">
             <div class="flex-gt-xs-45">
               {{pruefende-chips
               content=pruefende
@@ -95,17 +84,20 @@
               {{modul-chips content=module options=model.moduls}}
             </div>
 
+          </div>
+          <div class="layout-column flex-100">
+          <h3>Legende</h3>
+          <p class="layout-gt-xs-row layout-wrap">
+            <div class="flex-gt-xs-20">{{paper-icon "text fields"}} TEX</div>
+            <div class="flex-gt-xs-20">{{paper-icon "print"}} Drucken</div>
+            <div class="flex-gt-xs-20">{{paper-icon "perm media"}} Modul</div>
+            <div class="flex-gt-xs-20">{{paper-icon "perm identity"}} Prüfende</div>
+            <div class="flex-gt-xs-20">{{paper-icon "today"}} Prüfungsdatum</div>
+            <div class="flex-gt-xs-20">{{paper-icon "bubble chart"}} Prüfungsart</div>
+            <div class="flex-gt-xs-20">{{paper-icon "book"}} Fach</div>
+          </p>
         </div>
-        <h3>Legende</h3>
-        <p class="layout-gt-xs-row layout-wrap">
-          <div class="flex-gt-xs-20">{{paper-icon "text fields"}} TEX</div>
-          <div class="flex-gt-xs-20">{{paper-icon "print"}} Drucken</div>
-          <div class="flex-gt-xs-20">{{paper-icon "perm media"}} Modul</div>
-          <div class="flex-gt-xs-20">{{paper-icon "perm identity"}} Prüfende</div>
-          <div class="flex-gt-xs-20">{{paper-icon "today"}} Prüfungsdatum</div>
-          <div class="flex-gt-xs-20">{{paper-icon "bubble chart"}} Prüfungsart</div>
-          <div class="flex-gt-xs-20">{{paper-icon "book"}} Fach</div>
-        </p>
+        </div>
       {{/card.content}}
       {{#card.actions}}
         {{#paper-button onClick=(action "printAll")}}ganzen Ordner drucken{{/paper-button}}
@@ -120,7 +112,7 @@
             {{#card.actions}}
               &emsp;#{{report.id}}<span class="flex"></span>
               {{#paper-button iconButton=true onClick=(action "toggleSelection" report)}}
-                {{#if (report-in-selection report printselection)}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
+                {{#if (report-in-selection printselection report)}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
               {{/paper-button}}
             {{/card.actions}}
             {{card.image src=report.picture alt="Washed Out" title="Washed Out"}}
@@ -172,7 +164,7 @@
                   {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
                 {{/email-share}}
               {{/if}}
-              {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
+              {{#paper-button iconButton=true onClick=(action "printReport" report)}}{{paper-icon "print"}}{{/paper-button}}
             {{/card.actions}}
           {{/paper-card}}
         </div>
@@ -180,3 +172,4 @@
     </div>
   {{/paper-content}}
 {{/paper-sidenav-container}}
+{{#if showPruefDialog}}{{print-examinators-dialog closeDialogDrucken=(action "closeDialogDrucken") closeDialogAuswahl=(action "closeDialogAuswahl") reportslist=reportslist auswahl=auswahl pruefauswahl=pruefauswahl}}{{/if}}

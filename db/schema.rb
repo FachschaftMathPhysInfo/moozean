@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170627155218) do
+ActiveRecord::Schema.define(version: 20170629125421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,10 @@ ActiveRecord::Schema.define(version: 20170627155218) do
     t.bigint "times"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "folderseries_id"
+    t.bigint "examinator_id"
+    t.index ["examinator_id"], name: "index_printouts_on_examinator_id"
+    t.index ["folderseries_id"], name: "index_printouts_on_folderseries_id"
     t.index ["report_id"], name: "index_printouts_on_report_id"
   end
 
@@ -191,6 +195,8 @@ ActiveRecord::Schema.define(version: 20170627155218) do
   add_foreign_key "is_ins", "reports"
   add_foreign_key "lents", "folders"
   add_foreign_key "lents", "students"
+  add_foreign_key "printouts", "examinators"
+  add_foreign_key "printouts", "folderseries"
   add_foreign_key "printouts", "reports"
   add_foreign_key "reports", "subjects"
   add_foreign_key "reports", "typs"

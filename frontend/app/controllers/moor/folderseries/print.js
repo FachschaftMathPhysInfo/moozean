@@ -6,6 +6,9 @@ export default Ember.Controller.extend({
   module:Ember.A(),
   printselection:Ember.A(),
   selectedDate:null,
+  pruefauswahl:Ember.A(),
+  reportslist:Ember.A(),
+  auswahl:false,
   gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedDate','selectedID','selectedSubject','model.reports.[]', function() {
     let pruefende= this.get('pruefende');
     let module = this.get('module');
@@ -65,9 +68,22 @@ export default Ember.Controller.extend({
      return reports;
   }),
   actions:{
-    printReport:function(report, times){
-      let printout=this.store.createRecord('printout',{report:report,times:times});
-      printout.save();
+    removeExaminator:function(examinator){
+      this.get('pruefende').removeObject(examinator);
+    },
+    addExaminator: function(examinator){
+      this.get('pruefende').pushObject(examinator);
+    },
+    removeModul:function(modul){
+      this.get('module').removeObject(modul);
+    },
+    addModul: function(modul){
+      this.get('module').pushObject(modul);
+    },
+    printReport:function(report) {
+      this.set('reportslist',[report]);
+      this.set('auswahl',false);
+      this.set('showPruefDialog',true);
     },
     toggleSelection:function(report){
       let a=this.get('printselection').filter(function(item){return item.get('report.id')==report.get('id')});
@@ -75,7 +91,9 @@ export default Ember.Controller.extend({
         this.get('printselection').removeObject(a[0]);
       }
       else{
-        this.get('printselection').pushObject(this.store.createRecord('printout',{report:report,times:1}));
+        this.set('reportslist',[report]);
+        this.set('auswahl',true);
+        this.set('showPruefDialog',true);
       }
       this.set('printselection',this.get('printselection').slice());
     },
@@ -92,24 +110,40 @@ export default Ember.Controller.extend({
       }
     },
     printAll:function(){
-      let _this=this;
-      this.get('model.reports').forEach(function(report){
-        let printout=_this.store.createRecord('printout',{report:report,times:1});
-        printout.save();
-      });
+      this.set('reportslist',this.get('model.reports'));
+      this.set('auswahl',false);
+      this.set('showPruefDialog',true);
     },
     printShown:function(){
-      let _this=this;
-      this.get('gefilterte').forEach(function(report){
-        let printout=_this.store.createRecord('printout',{report:report,times:1});
-        printout.save();
-      });
+      this.set('reportslist',this.get('gefilterte'));
+      this.set('auswahl',false);
+      this.set('showPruefDialog',true);
     },
     printSelection:function(){
-      this.get('printselection').forEach(function(printout){
+      this.get('printselection').forEach((printout)=>{
         printout.save();
       });
-      this.set('printselection',Ember.A());
+      this.set('printselection',[]);
+    },
+    closeDialogAuswahl:function(option){
+      if(option=="ok"){
+        this.get('pruefauswahl').forEach((item)=>{
+          let a=this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+          this.get('printselection').pushObject(a);
+        });
+      }
+      this.set('reportslist',[]);
+      this.set('showPruefDialog',false);
+    },
+    closeDialogDrucken:function(option){
+      if(option=="ok"){
+        this.get('pruefauswahl').forEach((item)=>{
+          let pr=this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+          pr.save();
+        });
+      }
+      this.set('reportslist',[]);
+      this.set('showPruefDialog',false);
     }
   }
 });
