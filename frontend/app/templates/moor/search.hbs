@@ -1,1 +1,142 @@
-{{outlet}}
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+    <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Prüfungsbericht <span class="hide-sm"></span></h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true}}
+      {{paper-icon "more_vert"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{#paper-content class="md-padding" }}
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}
+          {{paper-icon "search"}} Suchen
+        {{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content}}
+    <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+      <div class="flex-gt-xs-45">
+        {{subject-autocomplete options=model.subjects selected=subject}}
+      </div>
+      <div class="flex-gt-xs-50">
+      {{typ-autocomplete options=model.typs selected=typ}}
+    </div>
+
+  </div>
+      {{! Prüfende }}
+      <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+        <div class="flex-gt-xs-45">
+      {{pruefende-chips options=model.examinators content=examinatora }}
+        {{!Module}}
+      </div>
+        <div class="flex-gt-xs-50">
+        {{modul-chips options=model.moduls content=modula}}
+          {{!Folderseries}}
+</div>
+</div>
+<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+  <div class="flex-90">
+          {{folderseries-chips options=model.folderseries content=folderseriesa}}
+</div>
+</div>
+<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+  <div class="flex-90">
+            {{timespan-slider min=(readonly minDate) from=beginExamAt to=endExamAt max=(readonly maxDate)}}
+          </div>
+        </div>
+    {{/card.content}}
+    {{#card.actions}}
+      {{paper-data-paginator
+limit=limit
+limitOptions=limitOptions
+page=page
+pages=pages
+onChangePage=(action (mut page))
+onChangeLimit=(action (mut limit))
+onIncrementPage=(action 'incrementPage')
+onDecrementPage=(action 'decrementPage')}}
+    {{/card.actions}}
+    {{#if loading}}
+      {{paper-progress-linear}}
+    {{/if}}
+  {{/paper-card}}
+  <div class="layout-row layout-wrap">
+    {{#each paginatedResults as |report|}}
+      <div class="flex-xs-100 flex-gt-xs-33-noshrink flex-gt-l-25-noshrink">
+        {{#paper-card as |card| }}
+          {{#card.actions}}
+            &emsp;#{{report.id}}
+          {{/card.actions}}
+          {{card.image src=report.picture alt="Washed Out" title="Washed Out"}}
+          {{#card.content}}
+            {{#paper-list}}
+              {{#each report.folderseries as |fs|}}
+                {{#paper-item class="md-2-line" }}
+                  {{paper-icon "folder" class="md-avatar-icon"}}
+                  <div class="md-list-item-text">
+                    <h3>{{fs.name}}</h3>
+                  </div>
+                {{/paper-item}}
+              {{/each}}
+              {{paper-divider}}
+              {{#each report.moduls as |modul|}}
+                {{#paper-item class="md-2-line" }}
+                  {{paper-icon "perm media" class="md-avatar-icon"}}
+                  <div class="md-list-item-text">
+                    <h3>{{modul.name}}</h3>
+                  </div>
+                {{/paper-item}}
+              {{/each}}
+              {{paper-divider}}
+              {{#each report.examinators as |exm|}}
+                {{#paper-item class="md-2-line" }}
+                  {{paper-icon "perm identity" class="md-avatar-icon"}}
+                  <div class="md-list-item-text">
+                    <h3>{{exm.surname}} <em>{{exm.givenname}}</em></h3>
+                  </div>
+                {{/paper-item}}
+              {{/each}}
+              {{paper-divider}}
+              {{#paper-item class="md-2-line" }}
+                {{paper-icon "today" class="md-avatar-icon"}}
+                <div class="md-list-item-text">
+                  <h3>{{moment-format report.examinationAt "MM.YYYY" }}</h3>
+                </div>
+              {{/paper-item}}
+              {{paper-divider}}
+              {{#paper-item class="md-2-line" }}
+                {{paper-icon "bubble chart" class="md-avatar-icon"}}
+                <div class="md-list-item-text flex">
+                  <h3 class="layout-wrap"><span class="flex">{{report.typ.name}}</span></h3>
+                </div>
+              {{/paper-item}}
+              {{paper-divider}}
+              {{#paper-item class="md-2-line" }}
+                {{paper-icon "book" class="md-avatar-icon"}}
+                <div class="md-list-item-text flex">
+                  <h3 class="layout-wrap"><span class="flex">{{report.subject.name}}</span></h3>
+                </div>
+              {{/paper-item}}
+            {{/paper-list}}
+          {{/card.content}}
+          {{#card.actions}}
+            {{#if report.texAvailable}}
+              {{#email-share subject='Prüfungsbericht-TeX-Datei' url=report.id body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:" }}
+                {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
+              {{/email-share}}
+            {{/if}}
+            {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
+          {{/card.actions}}
+        {{/paper-card}}
+      </div>
+    {{/each}}
+  </div>
+{{/paper-content}}

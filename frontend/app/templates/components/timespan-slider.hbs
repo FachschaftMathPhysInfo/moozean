@@ -1,0 +1,9 @@
+<span class="flex-noshrink-5 vertical-center">
+  {{moment-format from "MM/YY"}}
+</span>
+<span class="flex-90">
+  {{paper-dual-slider from=statefrom to=stateto min=(readonly statemin) max=(readonly statemax) onChange=(action "calculate") }}
+</span>
+<span class="flex-noshrink-5 vertical-center" style="text-align: -webkit-right">
+  {{moment-format to "MM/YY"}}
+</span>

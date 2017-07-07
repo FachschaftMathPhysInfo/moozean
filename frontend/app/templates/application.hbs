@@ -18,6 +18,7 @@ flex-layout="column" flex=true }}
       {{#menu-item onClick=(pipe (action "toggleExpandedItem" "expandedMenu")(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Moor{{/menu-item}}
 <div class="submenu">
     {{#liquid-if menuExpanded}}
+    {{#submenu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.search")}}{{paper-icon "search" class="site-nav-icon"}}Suchen{{/submenu-item}}
     {{#submenu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "inbox" class="site-nav-icon"}}Mails{{/submenu-item}}
     {{#submenu-item active=(is-active "moor.report" currentRouteName) onClick=(transition-to "moor.report")}}{{paper-icon "view carousel" class="site-nav-icon"}}Prüfungsbericht erstellen{{/submenu-item}}
     {{#each model.folderseries as |f|}}

@@ -93,6 +93,14 @@ md-autocomplete{
   min-width: 5px;
 }
 
+
 md-content{
   width: 100%;
+}
+
+.vertical-center{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0px 10px;
 }
