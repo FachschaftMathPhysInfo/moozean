@@ -66,5 +66,6 @@
     {{/card.actions}}
   {{/paper-card}}
 {{/paper-content}}
-{{#if showCreateFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Erstelle Ordner' folder=newfolder}}{{/if}}
-{{#if showEditFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Bearbeite Ordner' folder=newfolder}}{{/if}}
+{{#if showCreateFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Erstelle Ordner' folder=thisfolder}}{{/if}}
+{{#if showEditFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Bearbeite Ordner' folder=thisfolder}}{{/if}}
+{{#if showDeleteFolderDialog}}{{folder-delete-dialog closeDialog=(action "closeDeleteFolderDialog") title='Lösche Ordner' folder=thisfolder}}{{/if}}

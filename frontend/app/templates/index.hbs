@@ -68,6 +68,7 @@
           {{/paper-button}}
     {{/step.actions}}
   {{/stepper.step}}
+  {{#unless studentselected}}
   {{#stepper.step label="Ordner" summary=sumordner as |step|}}
     {{#step.body}}
     {{#paper-chips
@@ -99,6 +100,7 @@
           {{/paper-button}}
     {{/step.actions}}
   {{/stepper.step}}
+  {{/unless}}
 {{/paper-stepper}}
 {{/card.content}}
 {{/paper-card}}

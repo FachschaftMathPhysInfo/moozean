@@ -9,20 +9,20 @@
   {{#paper-form onSubmit=(action "exitDialog" "ok") as |form|}}
   {{#paper-dialog-content}}
       <div class="flex layout-column">
-    {{form.input flex=30 label="Name" value=student.name required=true onChange=(action (mut student.name))}}
-    {{form.input flex=30 label="Uni-ID"  maxlength=5 minlength=5 required=true value=student.uniid onChange=(action (mut student.uniid))}}
-    {{#paper-switch flex=30 value=student.refund onChange=(action (mut student.refund))}}
+    {{form.input flex=30 label="Name" id="nameinput" tabindex=1 value=student.name required=true onChange=(action (mut student.name))}}
+    {{form.input flex=30 label="Uni-ID" tabindex=2 maxlength=5 minlength=5 required=true value=student.uniid onChange=(action (mut student.uniid))}}
+    {{#paper-switch tabindex=5 flex=30 value=student.refund onChange=(action (mut student.refund))}}
      {{#unless  student.refund}}<strong>kein</strong>{{/unless}} Pfand {{#if student.refund}}<strong>vorhanden</strong>{{/if}}
     {{/paper-switch}}
-    {{#paper-switch flex=30 value=student.report onChange=(action (mut student.report))}}
+    {{#paper-switch tabindex=6 flex=30 value=student.report onChange=(action (mut student.report))}}
     Bericht {{#unless student.report}}<strong>nicht</strong>{{/unless}} abgegeben
     {{/paper-switch}}
     </div>
   {{/paper-dialog-content}}
   {{#paper-dialog-actions class="layout-row"}}
     <span class="flex"></span>
-    {{#paper-button onClick=(action "exitDialog" "cancel")}}Cancel{{/paper-button}}
-    {{#paper-button  onClick=(action "exitDialog" "ok" student) disabled=form.isInvalid}}{{#if saving}}{{paper-icon "rotate-right" spin=true}}{{/if}} OK{{/paper-button }}
+    {{#paper-button tabindex=4 onClick=(action "exitDialog" "cancel")}}Cancel{{/paper-button}}
+    {{#paper-button tabindex=3 onClick=(action "exitDialog" "ok" student) disabled=form.isInvalid}}{{#if saving}}{{paper-icon "rotate-right" spin=true}}{{/if}} OK{{/paper-button }}
   {{/paper-dialog-actions}}
   {{/paper-form}}
 {{/paper-dialog}}
