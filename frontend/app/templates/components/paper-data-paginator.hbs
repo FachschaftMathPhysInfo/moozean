@@ -1,0 +1,23 @@
+{{#if onChangePage}}
+<div class="page-select">
+	<div class="md-table-label">Seite:</div>
+	{{#paper-table-selected options=(readonly pages) selected=page onChange=onChangePage as |pageNumber|}}
+		{{pageNumber}}
+	{{/paper-table-selected}}
+</div>
+{{/if}}
+<div class="limit-select">
+	<div class="md-table-label">Berichte pro Seite:</div>
+	{{#paper-table-selected options=limitOptions selected=limit onChange=onChangeLimit as |limit|}}
+		{{limit}}
+	{{/paper-table-selected}}
+</div>
+<div class="buttons">
+	{{#if total}}<div class="label">{{startOffset}} - {{endOffset}} of {{total}}</div>{{/if}}
+	{{#paper-button iconButton=true onClick=onDecrementPage}}
+		{{paper-icon "navigate before"}}
+	{{/paper-button}}
+	{{#paper-button iconButton=true onClick=onIncrementPage}}
+		{{paper-icon "navigate next"}}
+	{{/paper-button}}
+</div>
