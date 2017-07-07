@@ -5,6 +5,7 @@ class ReportResource < JSONAPI::Resource
   has_many :examinators,acts_as_set:true
   has_many :moduls,acts_as_set: true
   has_many :folderseries,acts_as_set: true
+
   def tex_available
     @model.tex!=''
   end
