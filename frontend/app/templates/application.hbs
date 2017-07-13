@@ -15,7 +15,7 @@ flex-layout="column" flex=true }}
   {{#paper-content padding=true}}
     {{#paper-list}}
       {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{svg-jar "ocean" class="site-nav-icon" height="24px" width="24px"}}Ausleihe{{/menu-item}}
-      {{#menu-item onClick=(pipe (action (toggle "menuExpanded" this))(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Ordnerreihe{{/menu-item}}
+      {{#menu-item onClick=(pipe (action (toggle "menuExpanded" this))(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Ordnerreihen{{/menu-item}}
 <div class="submenu">
 
 {{#liquid-if menuExpanded}}
@@ -30,7 +30,7 @@ flex-layout="column" flex=true }}
 
       {{#menu-item active=(is-active "moor.management" currentRouteName) onClick=(transition-to "moor.management")}}{{paper-icon "settings" class="site-nav-icon"}}Allgemein{{/menu-item}}
       {{#menu-item active=(is-active "moor.management.examinators" currentRouteName) onClick=(transition-to "moor.management.examinators")}}{{paper-icon "perm identity" class="site-nav-icon"}}Prüfende{{/menu-item}}
-      {{#menu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "perm identity" class="site-nav-icon"}}Studierende{{/menu-item}}
+      {{#menu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "face" class="site-nav-icon"}}Studierende{{/menu-item}}
 
 
     {{/paper-list}}
