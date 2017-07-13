@@ -51,3 +51,4 @@ gem 'rails_12factor', group: [:staging, :production]
 gem "rails-erd"
 gem 'mail'
 gem 'whenever', :require => false
+gem 'iconv'

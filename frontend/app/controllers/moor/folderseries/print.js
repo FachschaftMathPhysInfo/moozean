@@ -85,18 +85,6 @@ export default Ember.Controller.extend({
       this.set('auswahl',false);
       this.set('showPruefDialog',true);
     },
-    toggleSelection:function(report){
-      let a=this.get('printselection').filter(function(item){return item.get('report.id')==report.get('id')});
-      if(a.length>0){
-        this.get('printselection').removeObject(a[0]);
-      }
-      else{
-        this.set('reportslist',[report]);
-        this.set('auswahl',true);
-        this.set('showPruefDialog',true);
-      }
-      this.set('printselection',this.get('printselection').slice());
-    },
     increaseTimes:function(select){
       select.set('times',select.get('times')+1);
     },

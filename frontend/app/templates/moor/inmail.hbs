@@ -12,11 +12,12 @@
      {{/paper-button}}
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
+ {{#paper-content}}
 {{#paper-sidenav-container class="inner-sidenav"}}
 
   {{#paper-sidenav
-    class="md-whiteframe-z2"
-    name="mailbar"
+    class="md-whiteframe-z1"
+    name="mailbars"
     open=leftSideBarOpen2
     lockedOpen=true
     onToggle=(action (mut leftSideBarOpen2))}}
@@ -43,3 +44,5 @@
       {{outlet}}
 {{/paper-card-content}}
 {{/paper-sidenav-container}}
+
+{{/paper-content}}

@@ -20,8 +20,8 @@
   {{/paper-dialog-content}}
   {{#paper-dialog-actions class="layout-row"}}
     <span class="flex"></span>
-    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
-    {{#paper-button onClick=(action "exitDialog" "ok" student)}}Bezahlt{{/paper-button}}
+    {{#paper-button tabindex=2 onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
+    {{#paper-button tabindex=1 onClick=(action "exitDialog" "ok" student)}}Bezahlt{{/paper-button}}
   {{/paper-dialog-actions}}
 {{/paper-dialog}}
 {{yield}}
