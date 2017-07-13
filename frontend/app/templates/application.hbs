@@ -26,6 +26,7 @@ flex-layout="column" flex=true }}
     {{/each}}
       {{#submenu-item active=(is-active "moor.management" currentRouteName) onClick=(transition-to "moor.management")}}{{paper-icon "settings" class="site-nav-icon"}}Allgemein{{/submenu-item}}
       {{#submenu-item active=(is-active "moor.management.examinators" currentRouteName) onClick=(transition-to "moor.management.examinators")}}{{paper-icon "perm identity" class="site-nav-icon"}}Prüfende{{/submenu-item}}
+      {{#submenu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "perm identity" class="site-nav-icon"}}Studierende{{/submenu-item}}
 
       {{/liquid-if}} </div>
     {{/paper-list}}

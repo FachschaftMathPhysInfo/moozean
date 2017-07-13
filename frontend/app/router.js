@@ -14,6 +14,7 @@ Router.map(function() {
     });
     this.route('management', function() {
       this.route('examinators');
+      this.route('students');
     });
     this.route('search');
     this.route('report');
@@ -22,6 +23,8 @@ Router.map(function() {
     });
   });
   this.route('recentlyreturned');
+
+  this.route('management', function() {});
 });
 
 export default Router;

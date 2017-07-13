@@ -22,19 +22,19 @@
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
       {{#title.text as |text|}}
-        {{#text.headline}}Einstellungen{{/text.headline}}
+        {{#text.headline}}Einstellungen{{#paper-button iconButton=true onClick=(action "toggleEditable")}}{{paper-icon "edit"}}{{/paper-button}}{{/text.headline}}
       {{/title.text}}
     {{/card.title}}
     {{#card.content}}
-      {{paper-input  label="Name" flex=100  value=model.name onChange=(action (mut model.name))}} {{paper-input textarea=true block=true label="Beschreibung"  passThru=(hash rows=3 maxRows=3)
+      {{paper-input disabled=noneditable label="Name" flex=100  value=model.name onChange=(action (mut model.name))}} {{paper-input disabled=noneditable textarea=true block=true label="Beschreibung"  passThru=(hash rows=3 maxRows=3)
     value=model.description onChange=(action (mut model.description))}}
-      {{#paper-switch value=model.obligationtoreport onChange=(action (mut model.obligationtoreport))}}
+      {{#paper-switch disabled=noneditable value=model.obligationtoreport onChange=(action (mut model.obligationtoreport))}}
         {{if model.obligationtoreport "Pfand pflichtig" "Pfandfrei"}}
       {{/paper-switch}}
     {{/card.content}}
     {{#card.actions}}
-      {{#paper-button warn=true}}Löschen{{/paper-button}}
-      {{#paper-button onClick=(action "saveFolderseries")}}Speichern{{/paper-button}}
+      {{#paper-button disabled=noneditable warn=true}}Löschen{{/paper-button}}
+      {{#paper-button disabled=noneditable onClick=(action "saveFolderseries")}}Speichern{{/paper-button}}
     {{/card.actions}}
   {{/paper-card}}
   {{#paper-card as |card|}}
@@ -42,6 +42,7 @@
       {{#title.text as |text|}}
         {{#text.headline}}Ordner{{/text.headline}}
       {{/title.text}}
+
     {{/card.title}}
     {{#card.content}}
       {{#paper-list}}
@@ -66,5 +67,6 @@
     {{/card.actions}}
   {{/paper-card}}
 {{/paper-content}}
-{{#if showCreateFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Erstelle Ordner' folder=newfolder}}{{/if}}
-{{#if showEditFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Bearbeite Ordner' folder=newfolder}}{{/if}}
+{{#if showCreateFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Erstelle Ordner' folder=thisfolder}}{{/if}}
+{{#if showEditFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Bearbeite Ordner' folder=thisfolder}}{{/if}}
+{{#if showDeleteFolderDialog}}{{folder-delete-dialog closeDialog=(action "closeDeleteFolderDialog") title='Lösche Ordner' folder=thisfolder}}{{/if}}
