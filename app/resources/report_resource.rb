@@ -80,4 +80,7 @@ class ReportResource < JSONAPI::Resource
   def pdf
     @model.pdf
   end
+  def picture
+    @model.picture
+  end
 end

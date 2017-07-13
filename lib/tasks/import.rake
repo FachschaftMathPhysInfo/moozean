@@ -15,9 +15,11 @@ namespace :import do
       end
       sub= Subject.find_by(name:pr["studiengang"])
       p pr
-      puts pr["pruefung"]
       typ= Typ.find_by(name:pr["pruefung"].to_s+" "+pr["fach"].to_s)
-      rp=Report.create(pdf:File.read(args.berichteordner+"/orig/"+pr["dateiname"]),examination_at:exm_at,subject:sub,typ:typ)
+      p bericht["dateiname"]
+      #
+      rp=Report.create(pdf:args.berichteordner+"/orig/"+bericht["dateiname"],examination_at:exm_at,subject:sub,typ:typ)
+      rp.save!
       #vorlesungen finden
       3.times do |k|
         if bericht["vorl"+(k+1).to_s].to_i!=0
