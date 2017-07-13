@@ -1,8 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  noneditable:true,
   thisfolder:{},
   actions:{
+    toggleEditable: function(){
+      this.set('noneditable',!this.get('noneditable'));
+    },
     saveFolderseries:function(){
       this.get("model").save();
     },
@@ -16,6 +20,7 @@ export default Ember.Controller.extend({
     },
     closeDeleteFolderDialog:function(option){
       if(option=="löschen"){
+        console.log(this.get('thisfolder'));
         this.get('thisfolder').destroyRecord();
       }
       this.set('thisfolder',{});
