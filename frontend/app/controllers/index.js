@@ -54,7 +54,7 @@ export default Ember.Controller.extend({
           _this.set('currentStep',0);
           _this.set('student',null);
           _this.get('ordner').removeObject(f);
-        }}(this,folders[i]));
+        }}(this,folders[i]),this.ajaxError.bind(this));
       }
     },
     addFolder:function(data){

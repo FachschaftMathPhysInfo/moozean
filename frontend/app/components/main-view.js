@@ -77,15 +77,12 @@ export default Ember.Component.extend({
                 }
               };
               if (this.get('newstudent').save != null)
-                this.get('newstudent').save().then(foo(this), function(reason) {
-                  alert(reason); //TODO: FIXME
-                })
-              else this.get('newstudent').content.save().then(foo(this), function(reason) {
-                alert(reason); //TODO: FIXME
-              });
+                this.get('newstudent').save().then(foo(this),this.actions.ajaxError.bind(this))
+              else this.get('newstudent').content.save().then(foo(this),this.actions.ajaxError.bind(this));
             }
             else if(option == 'delete'){
               this.get('newstudent').then((item)=>{
+                this.set('showPfandDialog', false);
                 item.destroyRecord().then(()=>{
                   this.sendAction('reload_lents');
                 });
@@ -98,7 +95,6 @@ export default Ember.Component.extend({
 
 
             }
-            this.set("showDialog", false);
             $('md-autocomplete-wrap input').focus();
           },
           addStudent: function() {
@@ -115,7 +111,7 @@ export default Ember.Component.extend({
               page: {
                 limit: 10
               }
-            }).catch(this.ajaxError.bind(this))
+            }).catch(this.actions.ajaxError.bind(this))
           },
           saveModel: function(student) {
             if(!this.get('nicht_ausleihbar')){
@@ -189,10 +185,12 @@ export default Ember.Component.extend({
             }
           },
           closepfand: function(option, student) {
-            this.set('showPfandDialog', false);
+
             if (option == "ok") {
               student.set('refund', true);
-              student.save();
+              student.save().then(()=>{
+                this.set('showPfandDialog', false);
+              },this.actions.ajaxError.bind(this));
               this.send('saveModel');
             }
             else {

@@ -22,7 +22,7 @@ export default Ember.Mixin.create({
       var errorMessage= "Fehler in den Daten:\n";
         for(var i=0;i<error.errors.length;i++){
             let y=error.errors[i];
-           errorMessage+= "["+(i+1)+"]"+" "+y.title +":"+y.description+"\n";
+           errorMessage+= "["+(i+1)+"]"+" "+y.title +(y.detail!=undefined)?(":"+y.detail+"\n"):"\n";
          }
         alert(errorMessage);
         couldHandleError=true;
