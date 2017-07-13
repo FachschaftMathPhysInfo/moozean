@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713100655) do
+
+
+ActiveRecord::Schema.define(version: 20170713123445) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -195,7 +197,7 @@ ActiveRecord::Schema.define(version: 20170713100655) do
   add_foreign_key "is_ins", "folderseries"
   add_foreign_key "is_ins", "reports"
   add_foreign_key "lents", "folders"
-  add_foreign_key "lents", "students"
+  add_foreign_key "lents", "students", on_delete: :cascade
   add_foreign_key "printouts", "examinators"
   add_foreign_key "printouts", "folderseries"
   add_foreign_key "printouts", "reports"

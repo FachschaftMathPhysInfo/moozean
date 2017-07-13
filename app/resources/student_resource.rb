@@ -3,7 +3,7 @@ class StudentResource < JSONAPI::Resource
   # Relationen zu bisher und aktuell ausgeliehene Ordner
   has_many :folders_lents, class_name:"Folder"
   has_many :folders_returneds, class_name:"Folder"
-  filter :name
+  filters :nameoruniid, :name
   paginator :offset
   def self.apply_filter(records, filter, value, options = {})
     strategy = _allowed_filters.fetch(filter.to_sym, Hash.new)[:apply]
@@ -20,7 +20,11 @@ class StudentResource < JSONAPI::Resource
         verb="="
       end
       value_regex = Array.wrap(value).join('|')
-      records.where("#{filter} #{verb} '#{value_regex}'")
+      if filter == :nameoruniid
+        records.where("name #{verb} '#{value_regex}' OR uniid #{verb} '#{value_regex}'");
+      else
+        records.where("#{filter} #{verb} '#{value_regex}'");
+      end
     end
   end
 end

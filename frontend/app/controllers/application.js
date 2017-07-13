@@ -11,16 +11,7 @@ export default Controller.extend({
       this.set('expandedItem', value);
       ev.stopPropagation();
     }
-  },
+  }
 
-  expandedItem: computed('currentRouteName', function() {
-    if (this.get('currentRouteName').substr(0, 6) === 'layout') {
-      return 'layout';
-    } else {
-      return 'expandedMenu';
-    }
-  }),
 
-  menuExpanded: computed.equal('expandedItem', 'expandedMenu'),
-  layoutExpanded: computed.equal('expandedItem', 'layout')
-});
+  });

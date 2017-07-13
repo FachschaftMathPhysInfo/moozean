@@ -1,6 +1,6 @@
-{{#paper-sidenav-container  class="layout-row layout-xs-column"}}
+{{#paper-sidenav-container class="layout-row layout-xs-column"}}
 {{#paper-sidenav
-  class="md-whiteframe-z2 site-sidenav flex"
+  class="md-whiteframe-z2 site-sidenav flex overflow-x-hidden"
   name="left2"
   open=open
   closeOnClick=true
@@ -14,21 +14,25 @@ flex-layout="column" flex=true }}
   {{/paper-toolbar}}
   {{#paper-content padding=true}}
     {{#paper-list}}
-      {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{svg-jar "ocean" class="site-nav-icon" height="24px" width="24px"}}Ozean{{/menu-item}}
-      {{#menu-item onClick=(pipe (action "toggleExpandedItem" "expandedMenu")(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Moor{{/menu-item}}
+      {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{svg-jar "ocean" class="site-nav-icon" height="24px" width="24px"}}Ausleihe{{/menu-item}}
+      {{#menu-item onClick=(pipe (action (toggle "menuExpanded" this))(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Ordnerreihe{{/menu-item}}
 <div class="submenu">
-    {{#liquid-if menuExpanded}}
-    {{#submenu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.search")}}{{paper-icon "search" class="site-nav-icon"}}Suchen{{/submenu-item}}
-    {{#submenu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "inbox" class="site-nav-icon"}}Mails{{/submenu-item}}
-    {{#submenu-item active=(is-active "moor.report" currentRouteName) onClick=(transition-to "moor.report")}}{{paper-icon "view carousel" class="site-nav-icon"}}Prüfungsbericht erstellen{{/submenu-item}}
-    {{#each model.folderseries as |f|}}
-          {{#submenu-item active=(is-active "moor.folderseries" currentRouteName) onClick=(transition-to "moor.folderseries" f)}}{{paper-icon "folder" class="site-nav-icon"}}{{f.name}}{{/submenu-item}}
-    {{/each}}
-      {{#submenu-item active=(is-active "moor.management" currentRouteName) onClick=(transition-to "moor.management")}}{{paper-icon "settings" class="site-nav-icon"}}Allgemein{{/submenu-item}}
-      {{#submenu-item active=(is-active "moor.management.examinators" currentRouteName) onClick=(transition-to "moor.management.examinators")}}{{paper-icon "perm identity" class="site-nav-icon"}}Prüfende{{/submenu-item}}
-      {{#submenu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "perm identity" class="site-nav-icon"}}Studierende{{/submenu-item}}
 
-      {{/liquid-if}} </div>
+{{#liquid-if menuExpanded}}
+  {{#each model.folderseries as |f|}}
+        {{#submenu-item active=(is-active "moor.folderseries" currentRouteName) onClick=(transition-to "moor.folderseries" f)}}{{paper-icon "folder" class="site-nav-icon"}}{{f.name}}{{/submenu-item}}
+  {{/each}}
+  {{/liquid-if}} </div>
+
+    {{#menu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.search")}}{{paper-icon "search" class="site-nav-icon"}}Suchen{{/menu-item}}
+    {{#menu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "inbox" class="site-nav-icon"}}Mails{{/menu-item}}
+    {{#menu-item active=(is-active "moor.report" currentRouteName) onClick=(transition-to "moor.report")}}{{paper-icon "view carousel" class="site-nav-icon"}}neuer Bericht{{/menu-item}}
+
+      {{#menu-item active=(is-active "moor.management" currentRouteName) onClick=(transition-to "moor.management")}}{{paper-icon "settings" class="site-nav-icon"}}Allgemein{{/menu-item}}
+      {{#menu-item active=(is-active "moor.management.examinators" currentRouteName) onClick=(transition-to "moor.management.examinators")}}{{paper-icon "perm identity" class="site-nav-icon"}}Prüfende{{/menu-item}}
+      {{#menu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "perm identity" class="site-nav-icon"}}Studierende{{/menu-item}}
+
+
     {{/paper-list}}
   {{/paper-content}}
 {{/paper-sidenav}}

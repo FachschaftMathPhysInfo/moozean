@@ -1,0 +1,33 @@
+{{#paper-content class="md-padding" }}
+  {{#paper-card as |card|}}
+    {{#card.title as |title|}}
+      {{#title.text as |text|}}
+        {{#text.headline}}
+          {{paper-icon "search"}} Auswahl
+        {{/text.headline}}
+      {{/title.text}}
+    {{/card.title}}
+    {{#card.content}}
+    {{#paper-autocomplete
+            disabled=firstDisabled
+            onCreate=(action "addStudent")
+            allowClear=true
+            searchText=(readonly student.name)
+            selected=student
+            search= (action "searchStudent")
+            searchField="name"
+            labelPath="name"
+            placeholder="Studierendes aussuchen"
+            loadingMessage="Suche Studierendes..."
+            noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
+            onSelectionChange=(pipe (action (mut student))(action "editStudent")) as |country autocomplete|}}
+            {{paper-autocomplete-highlight
+              label=country.name
+              searchText=autocomplete.searchText
+              flags="i"}} <em>{{country.uniid}}</em>
+    {{/paper-autocomplete}}
+    {{/card.content}}
+  {{/paper-card}}
+
+{{/paper-content}}
+{{#if showDialog}}{{student-create-dialog student=newstudent deletable=deletable closeDialog=(action "closeDialog") title="Studierendes bearbeiten"}}{{/if}}

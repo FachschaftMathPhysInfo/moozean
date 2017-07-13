@@ -46,7 +46,7 @@
   {{#stepper.step label="Studierendes" summary=student.name as |step|}}
     {{#step.body}}
     {{#step.actions as |nextStep previousStep|}}
-    {{#paper-autocomplete 
+    {{#paper-autocomplete
             disabled=firstDisabled
             onCreate=(action "addStudent")
             allowClear=true
@@ -70,7 +70,7 @@
   {{#unless studentselected}}
   {{#stepper.step label="Ordner" summary=sumordner as |step|}}
     {{#step.body}}
-    {{#paper-chips tabindex=1
+    {{#paper-chips
       readOnly=false
       removeItem=(action "removeFolder")
       addItem=(action "addFolder")
@@ -84,12 +84,12 @@
         {{paper-icon "attach money" size=18}}
       {{/if}}
     {{/paper-chips}}
-    {{/step.body}}
-    {{#step.actions as |nextStep previousStep|}}
-          {{#paper-button tabindex=2 primary=true raised=true disabled=no_lent_selected onClick=(action "saveModel" student)}}
+    {{!#step.actions as |nextStep previousStep|}}
+          {{#paper-button primary=true raised=true disabled=no_lent_selected onClick=(action "saveModel" student)}}
             Ausleihen
           {{/paper-button}}
-    {{/step.actions}}
+    {{!/step.actions}}
+    {{/step.body}}
   {{/stepper.step}}
   {{/unless}}
 {{/paper-stepper}}
