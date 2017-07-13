@@ -8,7 +8,7 @@ export default Ember.Controller.extend({
       this.set('noneditable',!this.get('noneditable'));
     },
     saveFolderseries:function(){
-      this.get("model").save();
+      this.get("model").save().then(null,this.ajaxError.bind(this))
     },
     addFolder:function(){
       this.set('thisfolder',this.store.createRecord('folder',{folderseries:this.get('model'),suffix:''}));
@@ -32,7 +32,10 @@ export default Ember.Controller.extend({
     },
     closeFolderDialog:function(option){
       if(option=="ok"){
-        this.get('thisfolder').save();
+        this.get('thisfolder').save().then(null,this.ajaxError.bind(this))
+      }
+      else {
+        this.get('thisfolder').unloadRecord();
       }
       this.set('showCreateFolderDialog',false);
       this.set('showEditFolderDialog',false);

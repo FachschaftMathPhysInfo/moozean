@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
     },
     closeModulDialog:function(option){
       if(option=="ok"){
-        this.get('newmodul').save();
+        this.get('newmodul').save().then(null,this.ajaxError.bind(this))
       } else
       {
         if(this.get('showCreateModulDialog')){
@@ -41,7 +41,7 @@ export default Ember.Controller.extend({
     },
     closeSubjectDialog:function(option){
       if(option=="ok"){
-        this.get('newsubject').save();
+        this.get('newsubject').save().then(null,this.ajaxError.bind(this))
       } else
       {
         if(this.get('showCreateSubjectDialog')){
@@ -64,7 +64,7 @@ export default Ember.Controller.extend({
     },
     closeTypDialog:function(option){
       if(option=="ok"){
-        this.get('newtyp').save();
+        this.get('newtyp').save().then(null,this.ajaxError.bind(this))
       } else
       {
         if(this.get('showCreateTypDialog'))

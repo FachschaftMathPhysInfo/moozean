@@ -2,6 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   model:function(params){
-    return this.store.find('folderseries',params.id);
+    return this.store.find('folderseries',params.id).catch(this.ajaxError.bind(this));
   }
 });

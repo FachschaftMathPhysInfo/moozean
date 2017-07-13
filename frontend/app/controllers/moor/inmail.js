@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     },
     toogleRead:function(mail){
       mail.set('read',!mail.get("read"));
-      mail.save();
+      mail.save().then(null,this.ajaxError.bind(this))
     }
   }
 });

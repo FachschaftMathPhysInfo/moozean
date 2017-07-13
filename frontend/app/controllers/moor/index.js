@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
     },
     closeDialog:function(option){
       if(option=="ok"){
-        this.get('newfolder').save();
+        this.get('newfolder').save().then(null,this.ajaxError.bind(this))
       }
       this.set('showDialog',false);
     }

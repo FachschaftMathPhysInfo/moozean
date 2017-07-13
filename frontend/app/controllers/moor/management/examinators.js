@@ -16,7 +16,7 @@ export default Ember.Controller.extend({
     },
     closeExaminatorDialog:function(option){
       if(option=="ok"){
-        this.get('newexaminator').save();
+        this.get('newexaminator').save().then(null,this.ajaxError.bind(this))
       } else
       {
         if(this.get('showCreateExaminatorDialog'))

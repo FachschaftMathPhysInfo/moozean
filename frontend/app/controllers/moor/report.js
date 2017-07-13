@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
         this.set('model.report',this.store.createRecord('report'));
         this.set('fileName',"Datei hochladen");
         this.set('filetexName',"Datei hochladen");
-      });
+      },this.ajaxError.bind(this));
     }
   }
 });
