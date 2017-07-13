@@ -95,13 +95,10 @@ namespace :import do
     args.with_defaults(:filename =>"studenten.csv")
     students = CSV.read(args.filename,headers:true)
     students.each do |studente|
-      p studente
-      uniid="jb007"
       if studente["uniid"]!=""
-        uniid=studente["uniid"]
+        s=Student.create(name:studente["name"], uniid:studente["uniid"].to_s.downcase,matriculationnumber:studente["matrikelnummer"],refund:studente["refund"],report:studente["bericht1"]!="")
+        s.save!
       end
-      s=Student.create(name:studente["name"], uniid:uniid.downcase,matriculationnumber:studente["matrikelnummer"],refund:studente["refund"],report:studente["bericht1"]!="")
-      s.save!
     end
   end
 
