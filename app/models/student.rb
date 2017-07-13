@@ -4,6 +4,7 @@ class Student < ApplicationRecord
   validates :refund, inclusion: { in: [ true, false ] }
   validates :report, inclusion: { in: [ true, false ] }
   validates :uniid, uniqueness: { message:"Es kann nur ein Studierendes geben, dass diese Uni-ID hat." }
+
   has_many :lents, :dependent => :delete_all
   has_many :returneds, :dependent => :delete_all
   # Relationen zu bisher und aktuell ausgeliehene Ordner

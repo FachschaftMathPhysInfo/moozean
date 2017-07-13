@@ -27,14 +27,14 @@
     {{#paper-content padding=true}}
         {{#paper-list}}
           {{#each (reverse model) as |mail|}}
-            {{#menu-item class="md-3-line" active=(is-active "moor.inmail.view" currentRouteName mail) onClick=(transition-to "moor.inmail.view" mail.id)}}
-              {{paper-icon "mail" class="md-avatar"}}
+            {{#paper-link-item "moor.inmail.view" mail.id class="md-3-line" }}
               <div class="md-list-item-text">
-                <h3>{{mail.fromname}}</h3>
-                <h4>{{mail.subject}}</h4>
-                <p>{{#each mail.attachments as |attachment|}}{{attachment.name}},{{else}}Kein Anhang{{/each}}<span class="flex"></span>{{#paper-button iconButton=true onClick=(action "deleteInmail" mail)}}{{paper-icon "delete forever"}}{{/paper-button}}</p>
+                <h3>{{#paper-button iconButton=true onClick=(action "toogleRead" mail)}}{{paper-icon "flag" warn=mail.read class="md-avatar"}}{{/paper-button}}
+{{mail.fromname}}</h3>
+                <h4>{{#paper-button iconButton=true onClick=(action "deleteInmail" mail)}}{{paper-icon "delete forever"}}{{/paper-button}}{{mail.subject}}</h4>
+                <p>{{#each mail.attachments as |attachment|}}{{attachment.name}},{{else}}Kein Anhang{{/each}}<span class="flex"></span></p>
               </div>
-            {{/menu-item}}
+            {{/paper-link-item}}
           {{/each}}
         {{/paper-list}}
     {{/paper-content}}

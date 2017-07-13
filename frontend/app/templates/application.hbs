@@ -17,6 +17,7 @@ flex-layout="column" flex=true }}
       {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{svg-jar "ocean" class="site-nav-icon" height="24px" width="24px"}}Ausleihe{{/menu-item}}
       {{#menu-item onClick=(pipe (action (toggle "menuExpanded" this))(transition-to "moor")) expanded=menuExpanded canExpand=true}}{{paper-icon "language" class="site-nav-icon"}}Ordnerreihe{{/menu-item}}
 <div class="submenu">
+
 {{#liquid-if menuExpanded}}
   {{#each model.folderseries as |f|}}
         {{#submenu-item active=(is-active "moor.folderseries" currentRouteName) onClick=(transition-to "moor.folderseries" f)}}{{paper-icon "folder" class="site-nav-icon"}}{{f.name}}{{/submenu-item}}
