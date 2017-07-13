@@ -56,7 +56,7 @@ export default Ember.Controller.extend({
     });
     ergebnis.then(() => {
       this.set("loading", false);
-    });
+    },this.ajaxError.bind(this));
     return ergebnis;
   }),
   filteredResults: Ember.computed('results.[]', 'beginExamAt', 'endExamAt', function() {
@@ -96,7 +96,7 @@ export default Ember.Controller.extend({
         report: report,
         times: times
       });
-      printout.save();
+      printout.save().then(null,this.ajaxError.bind(this))
     },
     decrementPage() {
       let page = this.get('page');

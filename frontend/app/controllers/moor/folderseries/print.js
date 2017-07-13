@@ -121,7 +121,7 @@ export default Ember.Controller.extend({
     },
     printSelection:function(){
       this.get('printselection').forEach((printout)=>{
-        printout.save();
+        printout.save().then(null,this.ajaxError.bind(this))
       });
       this.set('printselection',[]);
     },
@@ -139,7 +139,7 @@ export default Ember.Controller.extend({
       if(option=="ok"){
         this.get('pruefauswahl').forEach((item)=>{
           let pr=this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
-          pr.save();
+          pr.save().then(null,this.ajaxError.bind(this))
         });
       }
       this.set('reportslist',[]);

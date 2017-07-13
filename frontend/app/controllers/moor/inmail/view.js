@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
           page:{
             limit:10
           }
-        })
+        }).catch(this.ajaxError.bind(this))
       },
       setTexFile:function(attachment){
         this.set("filetexName",attachment.get("name"));
@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
           this.set('filetexName',"Datei hochladen");
         });
         this.set("student.report",true);
-        this.get("student").save();
+        this.get("student").save().then(null,this.ajaxError.bind(this))
       }
     }
 });

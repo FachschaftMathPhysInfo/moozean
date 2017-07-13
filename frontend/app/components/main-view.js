@@ -115,7 +115,7 @@ export default Ember.Component.extend({
               page: {
                 limit: 10
               }
-            })
+            }).catch(this.ajaxError.bind(this))
           },
           saveModel: function(student) {
             if(!this.get('nicht_ausleihbar')){

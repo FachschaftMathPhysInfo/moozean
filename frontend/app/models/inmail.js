@@ -6,5 +6,6 @@ export default DS.Model.extend({
   fromaddress: attr('string'),
   body: attr('string'),
   uid: attr('string'),
-  attachments: hasMany('attachment',{async: true})
+  attachments: hasMany('attachment',{async: true}),
+  read:attr('boolean')
 });

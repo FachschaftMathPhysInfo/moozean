@@ -6,6 +6,15 @@ export default Ember.Route.extend({
     moment.locale('de');
   },
   model:function(){
-    return Ember.RSVP.hash({folderseries:this.store.findAll('folderseries')});
+    return Ember.RSVP.hash({folderseries:this.store.findAll('folderseries').catch(this.ajaxError.bind(this))});
+  },
+  actions: {
+  error: function(error) {
+    this.send('ajaxError', error);
+  },
+
+  ajaxError: function(error) {
+    this.ajaxError(error);
   }
+}
 });

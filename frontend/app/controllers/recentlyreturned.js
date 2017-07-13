@@ -4,7 +4,7 @@ export default Ember.Controller.extend({
   actions:{
     undoReturn(returned){
       let lent=this.store.createRecord('lent',{student:returned.get('student'),folder:returned.get('folder')});
-      lent.save();
+      lent.save().then(null,this.ajaxError.bind(this))
       returned.destroyRecord();
     }
   }
