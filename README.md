@@ -29,8 +29,12 @@ For Anonymization (and later email retrieval): `rake qc:work`
 
 # Dockerimage
 
-Build the image using docker-compose:
+- Copy config file: `cp config/database.yml.docker config/database.yml`
+- Build the image using docker-compose:
 `docker-compose up --build`
+- Run `docker-compose run website bundle exec rake RAILS_ENV=production  SECRET_TOKEN=dummytoken db:crea
+te db:migrate ember:install ember:compile`
+- Start network with `docker-compose up`
 
 # Tasks: `classic-queue`
 
