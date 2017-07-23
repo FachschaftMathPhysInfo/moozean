@@ -12,6 +12,7 @@ The recommended software versions are
    - `ember`, see [emberjs.com]
    - `rails` and `bundler`
    - `postgresql`
+   - `pdftk` and `texlive-extra` for printing
 
 ## Database & Ember install
 
@@ -28,18 +29,22 @@ For Anonymization (and later email retrieval): `rake qc:work`
 
 # Dockerimage
 
-Build the image using docker-compose:
+- Copy config file: `cp config/database.yml.docker config/database.yml`
+- Build the image using docker-compose:
 `docker-compose up --build`
+- Run `docker-compose run website bundle exec rake RAILS_ENV=production  SECRET_TOKEN=dummytoken db:crea
+te db:migrate ember:install ember:compile`
+- Start network with `docker-compose up`
 
 # Tasks: `classic-queue`
 
 This project uses `classic-queue` for out-of-order tasks. Run `rake qc:update` after setup to update the tables and `rake qc:work` to start a worker.
 
-#Email--support
+# Email--support
 
 In `config/email.yml` is the configuration of the email inbox. The programm automatically flages imported emails. Currently, it does **not** delete Emails in the INBOX at any point.
 
-#Cronjob for Email support
+# Cronjob for Email support
 
 As configured in config/schedule.rb this programm will check every 5 minutes for new mail.
 Run `whenever` to see config. `whenever --update-crontab` will udate your crontab-file.
