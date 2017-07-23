@@ -79,23 +79,26 @@ export default Ember.Component.extend({
               if (this.get('newstudent').save != null)
                 this.get('newstudent').save().then(foo(this),this.actions.ajaxError.bind(this))
               else this.get('newstudent').content.save().then(foo(this),this.actions.ajaxError.bind(this));
+              this.set('currentStep',1)
+              $('md-chip-input-container input').focus();
             }
             else if(option == 'delete'){
               this.get('newstudent').then((item)=>{
-                this.set('showPfandDialog', false);
+                this.set('showDialog', false);
                 item.destroyRecord().then(()=>{
                   this.sendAction('reload_lents');
                 });
+                this.set('currentStep',0);
+                this.set('showDialog', false);
+                $('md-autocomplete-wrap input').focus();
               });
-
             }
             else {
               if (this.get('newstudent').unloadRecord != null)
                 this.get('newstudent').unloadRecord();
-
-
-            }
-            $('md-autocomplete-wrap input').focus();
+                this.set('showDialog', false);
+                $('md-autocomplete-wrap input').focus();
+            };
           },
           addStudent: function() {
             var store = this.get('store');
@@ -184,7 +187,7 @@ export default Ember.Component.extend({
                 this.get('newmail').unloadRecord();
             }
           },
-          closepfand: function(option, student) {
+          closePfand: function(option, student) {
 
             if (option == "ok") {
               student.set('refund', true);

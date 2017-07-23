@@ -15,19 +15,37 @@
 {{#paper-content class="md-padding"}}
 {{#paper-card as |card|}}
   {{#card.content}}
+  <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+    <div class="flex-gt-xs-45">
   {{subject-autocomplete selected=model.report.subject options=model.subjects}}
+</div>
+<div class="flex-gt-xs-50">
   {{typ-autocomplete selected=model.report.typ options=model.typs}}
+</div>
+</div>
+<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+  <div class="flex-gt-xs-45">
     {{! Prüfende }}
   {{pruefende-chips options=model.examinators content=model.report.examinators }}
-        {{!Module}}
+</div>
+<div class="flex-gt-xs-50">
+      {{!Module}}
   {{modul-chips options=model.moduls content=model.report.moduls}}
+</div>
+</div>
+<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+<div class="flex-gt-xs-45">
     {{!Folderseries}}
   {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
+</div>
+<div class="flex-gt-xs-50">
 {{paper-pikaday label="Prüfungsdatum"
                 required=true
                 value=(readonly (moment-format model.report.examinationA "MM.YYYY"))
                 onSelection=(action (mut model.report.examinationAt))
                 onChange=(action (mut someThing)) }}
+              </div>
+            </div>
   {{/card.content}}
   {{#card.actions}}
     {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex"}}
