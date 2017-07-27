@@ -16,22 +16,25 @@
     {{#if model.attachments}}
       {{paper-divider}}
       {{#paper-subheader}}Anhänge{{/paper-subheader}}
-      {{#paper-tabs borderBottom=true autoSelect=true dynamicHeight=true as |tabs|}}
+      {{#paper-tabs borderBottom=true  selected=selectedAttachment onChange=(action "setSelected") as |tabs|}}
         {{#each attachments as |attachment|}}
-          {{#tabs.tab label=attachment.name as |tab|}}
-            {{#if (eq attachment.contentType "application/pdf")}}
-              <div class="pdf-container">
-                {{pdf-document  src=attachment.pdf}}
-              </div>
-              {{#paper-button onClick=(action setPdfFile attachment)}} ALS PDF verwenden{{/paper-button}}
-            {{else}}
-              {{simple-format  attachment.attachment}}
-              {{#paper-button onClick=(action setTexFile attachment)}} ALS Tex verwenden{{/paper-button}}
-            {{/if}}
+          {{#tabs.tab as |tab|}}
+            {{attachment.name}}
           {{/tabs.tab}}
         {{/each}}
       {{/paper-tabs}}
     {{/if}}
+    {{#liquid-bind (hash attachment=(object-at selectedAttachment attachments)) class="md-padding" as |current|}}
+      {{#if (eq current.attachment.contentType "application/pdf")}}
+        <div class="pdf-container">
+          {{pdf-document  src=current.attachment.pdf}}
+        </div>
+        {{#paper-button onClick=(action setPdfFile current.attachment)}} ALS PDF verwenden{{/paper-button}}
+      {{else}}
+        {{simple-format  current.attachment.attachment}}
+        {{#paper-button onClick=(action setTexFile current.attachment)}} ALS Tex verwenden{{/paper-button}}
+      {{/if}}
+    {{/liquid-bind}}
   {{/card.content}}
 {{/paper-card}}
 {{yield}}

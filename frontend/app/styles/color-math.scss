@@ -1,4 +1,5 @@
 // For use in app/styles/color-palette.scss
+$light-contrast-color:rgba(255, 255, 255, 0.87);
 $color-mathphys: (
     '50' : #f3e0e0,
     '100' : #e0b3b3,
@@ -14,7 +15,10 @@ $color-mathphys: (
     'A200' : #ff6767,
     'A400' : #ff3434,
     'A700' : #ff1a1a,
-    'contrast': #ffffff
+    'contrastDefaultColor': $light-contrast-color,
+    'contrastDarkColors': ('50', '100', '200', 'A100', 'A200'),
+    'contrastStrongLightColors': ('300', '400')
+
 ) !default;
 
 $color-secondary: (
@@ -32,5 +36,7 @@ $color-secondary: (
     'A200' : #6dff99,
     'A400' : #3aff76,
     'A700' : #20ff64,
-    'contrast': #ffffff
+    'contrastDefaultColor': $light-contrast-color,
+    'contrastDarkColors': ('50', '100', '200', 'A100', 'A200'),
+    'contrastStrongLightColors': ('300', '400')
 ) !default;
