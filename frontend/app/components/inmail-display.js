@@ -17,5 +17,11 @@ export default Ember.Component.extend({
       this.get("attachments").addObject(this.get("toBeInserted")[0]);
       this.get("toBeInserted").removeAt(0);
     }
+  },
+  actions:{
+    setSelected(opt){
+      console.log(opt);
+      this.set('selectedAttachment',opt);
+    }
   }
 });
