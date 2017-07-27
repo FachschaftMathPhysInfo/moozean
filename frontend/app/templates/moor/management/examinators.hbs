@@ -15,7 +15,8 @@
      {{/paper-button}}
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
+ <div class="overflow-y-scroll">
+{{#paper-content}}
 {{#paper-card as |card|}}
     {{#paper-list}}
       {{#each model as |examinator|}}
@@ -37,6 +38,8 @@
     {{#paper-button primary=true onClick=(action "addExaminator")}}Neuen Prüfenden{{/paper-button}}
   {{/card.actions}}
 {{/paper-card}}
+
 {{/paper-content}}
+</div>
 {{#if showCreateExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Erstelle Prüfendes' examinator=newexaminator}}{{/if}}
 {{#if showEditExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Bearbeite Prüfendes' examinator=newexaminator}}{{/if}}

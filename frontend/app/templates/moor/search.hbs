@@ -12,7 +12,9 @@
     {{/paper-button}}
   {{/paper-toolbar-tools}}
 {{/paper-toolbar}}
-{{#paper-content class="md-padding" }}
+<div class="overflow-y-scroll">
+{{#paper-content  }}
+
   {{#paper-card as |card|}}
     {{#card.title as |title|}}
       {{#title.text as |text|}}
@@ -139,4 +141,6 @@ onDecrementPage=(action 'decrementPage')}}
       </div>
     {{/each}}
   </div>
+
 {{/paper-content}}
+</div>

@@ -12,7 +12,8 @@
      {{/paper-button}}
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
+ <div class="overflow-y-scroll">
+{{#paper-content}}
 {{#paper-card as |card|}}
   {{#card.title as |title|}}
         {{#title.text as |text|}}
@@ -94,6 +95,7 @@
   {{/card.actions}}
 {{/paper-card}}
 {{/paper-content}}
+</div>
 {{#if showCreateSubjectDialog}}{{subject-dialog closeDialog=(action "closeSubjectDialog") title='Erstelle Prüfungsfach' subject=newsubject}}{{/if}}
 {{#if showEditSubjectDialog}}{{subject-dialog closeDialog=(action "closeSubjectDialog") title='Bearbeite Prüfungsfach' subject=newsubject}}{{/if}}
 {{#if showCreateTypDialog}}{{typ-dialog closeDialog=(action "closeTypDialog") title='Erstelle Prüfungsart' typ=newtyp}}{{/if}}
