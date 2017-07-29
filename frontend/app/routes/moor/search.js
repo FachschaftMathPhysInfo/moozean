@@ -6,7 +6,6 @@ export default Ember.Route.extend({
      typs: this.store.findAll('typ').catch(this.ajaxError.bind(this)), moduls: this.store.findAll('modul').catch(this.ajaxError.bind(this))});
   },
   serializeQueryParam: function(value, urlKey, defaultValueType) {
-    console.log("Seri", value, urlKey, defaultValueType);
     if (Ember.typeOf(value) == "instance") {
       return value.get("id");
     }
@@ -27,7 +26,6 @@ export default Ember.Route.extend({
     return '' + value;
   },
   deserializeQueryParam: function(value, urlKey, defaultValueType) {
-    console.log(value, urlKey, defaultValueType);
     if (defaultValueType === 'array') {
       var typus = (urlKey[urlKey.length - 1] == 's')
         ? urlKey

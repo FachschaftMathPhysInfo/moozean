@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import moment from 'moment';
 export default Ember.Controller.extend({
   actions:{
     reload_lents: function(){
       this.get('model.lents').forEach((item)=>{
-        item.reload().catch((reason)=>{
+        item.reload().catch(()=>{
           item.unloadRecord();
         });
       });

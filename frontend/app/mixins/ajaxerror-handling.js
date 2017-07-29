@@ -12,29 +12,30 @@ export default Ember.Mixin.create({
     // we need to use different methods.
     var transitionFunc = this.transitionToRoute || this.transitionTo,
         couldHandleError = false;
-
+        var errorMessage = ""
+        var i = 0;
     switch (this._getStatusCode(error)) {
       case 401:
         transitionFunc.call(this, 'auth.logout');
         couldHandleError = true;
         break;
       case 422:
-      var errorMessage= "Fehler in den Daten:\n";
-        for(var i=0;i<error.errors.length;i++){
+        errorMessage= "Fehler in den Daten:\n";
+        for(i=0;i<error.errors.length;i++){
             let y=error.errors[i];
            errorMessage+= "["+(i+1)+"]"+" "+y.title +(y.detail!=undefined)?(":"+y.detail+"\n"):"\n";
          }
         alert(errorMessage);
         couldHandleError=true;
-      break;
+        break;
       case 404:
-
+        break;
       case 500:
         // Here we trigger a service to show an server error message.
         // This is just an example and currently not the final implementation.
         // this.get('notificationService').show();
-        var errorMessage= "Fehler auf dem Server:\n";
-          for(var i=0;i<error.errors.length;i++){
+        errorMessage= "Fehler auf dem Server:\n";
+          for(i=0;i<error.errors.length;i++){
               let y=error.errors[i];
              errorMessage+= "["+(i+1)+"]"+" "+y.title +":"+y.description+"\n";
            }

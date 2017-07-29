@@ -1,150 +1,131 @@
 {{#paper-toolbar}}
-   {{#paper-toolbar-tools}}
+  {{#paper-toolbar-tools}}
     {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-      {{paper-icon icon="menu"}}
+      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon icon="menu"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
-     <h2>Ozean <span class="hide-xs hide-sm">- Organ zur Entnahme allerlei nützlicher Ordner</span></h2>
-     <span class="flex"></span>
-     {{#paper-button iconButton=true onClick=(action "addStudent")}}
-       {{paper-icon "person add"}}
-     {{/paper-button}}
-     {{#paper-menu isOpen=dreipunktemenuisopen position="target-right target" as |menu|}}
-        {{#menu.trigger}}
-          {{#paper-button onClick=null iconButton=true}}
-            {{paper-icon "more_vert" class="md-menu-origin"}}
-          {{/paper-button}}
-        {{/menu.trigger}}
+    <h2>Ozean <span class="hide-xs hide-sm">- Organ zur Entnahme allerlei nützlicher Ordner</span></h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true onClick=(action "addStudent")}}
+      {{paper-icon "person add"}}
+    {{/paper-button}}
+    {{#paper-menu isOpen=dreipunktemenuisopen position="target-right target" as |menu|}}
+      {{#menu.trigger}}
+        {{#paper-button onClick=null iconButton=true}}
+          {{paper-icon "more_vert" class="md-menu-origin"}}
+        {{/paper-button}}
+      {{/menu.trigger}}
 
-        {{#menu.content as |content|}}
-            {{#content.menu-item onClick=(transition-to "recentlyreturned")}}
-              {{paper-icon "folder_shared" class="md-menu-align-target"}}
-              letzte Ausleihen
-            {{/content.menu-item}}
-        {{/menu.content}}
-      {{/paper-menu}}
-   {{/paper-toolbar-tools}}
- {{/paper-toolbar}}
+      {{#menu.content as |content|}}
+        {{#content.menu-item onClick=(transition-to "recentlyreturned")}}
+          {{paper-icon "folder_shared" class="md-menu-align-target"}} letzte Ausleihen
+        {{/content.menu-item}}
+      {{/menu.content}}
+    {{/paper-menu}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
 
-{{#paper-content class="md-padding column flex-100"}}
-{{#if showDialog closeDialog=(action "closeDialog") action="closeDialog"}}
-{{student-create-dialog student=newstudent deletable=deletable closeDialog=(action "closeDialog") title=titlestudent}}
-{{/if}}
+{{#paper-content class="md-padding column flex-100" }}
+  {{#if showDialog closeDialog=(action "closeDialog") action="closeDialog" }}
+    {{student-create-dialog student=newstudent deletable=deletable closeDialog=(action "closeDialog") title=titlestudent}}
+  {{/if}}
 
-{{#if showMailDialog closeDialog=(action "closeMailDialog") action="closeMailDialog"}}
-{{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
-{{/if}}
+  {{#if showMailDialog closeDialog=(action "closeMailDialog") action="closeMailDialog" }}
+    {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
+  {{/if}}
 
-{{#each model.folders as |m|}}
-<li style="display: none">{{m.name}}</li>
-{{/each}}
-<div class="flex">
-{{#paper-card as |card|}}
-	{{#card.content}}
-{{#paper-stepper  currentStep=currentStep onStepChange=(pipe (action (mut currentStep))(action "clearWhenBack" currentStep)) mobileStepper=true linear=false vertical=true class="flex" as |stepper|}}
-  {{#stepper.step label="Studierendes" summary=student.name as |step|}}
-    {{#step.body}}
-    {{#step.actions as |nextStep previousStep|}}
-    {{#paper-autocomplete
-            disabled=firstDisabled
-            onCreate=(action "addStudent")
-            allowClear=true
-            searchText=(readonly student.name)
-            selected=student
-            search= (action "searchStudent")
-            searchField="name"
-            labelPath="name"
-            placeholder="Studierendes aussuchen"
-            loadingMessage="Suche Studierendes..."
-            noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
-            onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))) as |country autocomplete|}}
-            {{paper-autocomplete-highlight
+  {{#each model.folders as |m|}}
+    <li style="display: none">{{m.name}}</li>
+  {{/each}}
+  <div class="flex">
+    {{#paper-card as |card|}}
+      {{#card.content}}
+        {{#paper-stepper currentStep=currentStep onStepChange=(pipe (action (mut currentStep))(action "clearWhenBack" currentStep)) mobileStepper=true linear=false vertical=true class="flex" as |stepper|}}
+          {{#stepper.step label="Studierendes" summary=student.name as |step|}}
+            {{#step.body}}
+              {{#step.actions as |nextStep previousStep|}}
+                {{#paper-autocomplete disabled=firstDisabled onCreate=(action "addStudent") allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
+                  noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))) as |country autocomplete|}}
+                  {{paper-autocomplete-highlight
               label=country.name
               searchText=autocomplete.searchText
               flags="i"}} <em>{{country.uniid}}</em>
-    {{/paper-autocomplete}}
-    {{/step.actions}}
-    {{/step.body}}
-  {{/stepper.step}}
-  {{#unless studentselected}}
-  {{#stepper.step label="Ordner" summary=sumordner as |step|}}
-    {{#step.body}}
-    {{#paper-chips
-      readOnly=false
-      removeItem=(action "removeFolder")
-      addItem=(action "addFolder")
-      placeholder="Ordner hinzufügen"
-      content=ordner
-      options=model.folders
-      searchField="name"
-      noMatchesMessage="Kein Ordner gefunden" as |item|}}
-      <strong>{{item.name}}</strong>
-      {{#if item.folderseries.obligationtoreport}}
-        {{paper-icon "attach money" size=18}}
-      {{/if}}
-    {{/paper-chips}}
-    {{!#step.actions as |nextStep previousStep|}}
-          {{#paper-button primary=true raised=true disabled=no_lent_selected onClick=(action "saveModel" student)}}
-            Ausleihen
-          {{/paper-button}}
-    {{!/step.actions}}
-    {{/step.body}}
-  {{/stepper.step}}
-  {{/unless}}
-{{/paper-stepper}}
-{{/card.content}}
-{{/paper-card}}
-{{outlet}}
-{{!Table in Card}}
-{{#paper-card as |card|}}
-	{{#card.content }}
-  {{#paper-data-table sortProp="folder" sortDir="desc" selectable=true as |table|}}
-  {{#table.head as |head|}}
-    {{!#head.column checkbox=true}}
-      {{!#paper-checkbox disabled=true onChange=null}}{{!/paper-checkbox}}
-    {{!/head.column}}
-    {{#head.column sortProp="folder.name"}}Ordner{{/head.column}}
-    {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
-    {{#head.column sortProp="createdAt" }}ausgeliehen{{/head.column}}
-    {{#head.column}}Optionen{{/head.column}}
-  {{/table.head}}
-  {{#table.body as |body|}}
-    {{#each (sort-by table.sortDesc model.lents) as |m|}}
-      {{#body.row edit=true as |row|}}
-        {{!#row.cell checkbox=true}}
-          {{!#paper-checkbox
+                {{/paper-autocomplete}}
+              {{/step.actions}}
+            {{/step.body}}
+          {{/stepper.step}}
+          {{#unless studentselected}}
+            {{#stepper.step label="Ordner" summary=sumordner as |step|}}
+              {{#step.body}}
+                {{#paper-chips readOnly=false removeItem=(action "removeFolder") addItem=(action "addFolder") placeholder="Ordner hinzufügen" content=ordner options=model.folders searchField="name" noMatchesMessage="Kein Ordner gefunden" as |item|}}
+                  <strong>{{item.name}}</strong>
+                  {{#if item.folderseries.obligationtoreport}}
+                    {{paper-icon "attach money" size=18}}
+                  {{/if}}
+                {{/paper-chips}}
+                {{!#step.actions as |nextStep previousStep|}}
+                {{#paper-button primary=true raised=true disabled=no_lent_selected onClick=(action "saveModel" student)}}
+                  Ausleihen
+                {{/paper-button}}
+                {{!/step.actions}}
+              {{/step.body}}
+            {{/stepper.step}}
+          {{/unless}}
+        {{/paper-stepper}}
+      {{/card.content}}
+    {{/paper-card}}
+    {{!Table in Card}}
+    {{#paper-card as |card|}}
+      {{#card.content }}
+        {{#paper-data-table sortProp="folder" sortDir="desc" selectable=true as |table|}}
+          {{#table.head as |head|}}
+            {{!#head.column checkbox=true}}
+            {{!#paper-checkbox disabled=true onChange=null}}{{!/paper-checkbox}}
+            {{!/head.column}}
+            {{#head.column sortProp="folder.name" }}Ordner{{/head.column}}
+            {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
+            {{#head.column sortProp="createdAt" }}ausgeliehen{{/head.column}}
+            {{#head.column}}Optionen{{/head.column}}
+          {{/table.head}}
+          {{#table.body as |body|}}
+            {{#each (sort-by table.sortDesc model.lents) as |m|}}
+              {{#body.row edit=true as |row|}}
+                {{!#row.cell checkbox=true}}
+                {{!#paper-checkbox
             value=m.checked
             onChange=(action (mut m.checked))}}
-          {{!/paper-checkbox}}
-        {{!/row.cell}}
-        {{#row.cell}}{{m.folder.name}}{{/row.cell}}
-        {{#row.cell}}
-          {{m.student.name}}
-            {{#paper-button iconButton=true onClick=(action "editStudent" m.student)}}
-              {{paper-icon "edit" }}
-            {{/paper-button}}
-        {{/row.cell}}
-        {{#row.cell}}{{moment-from-now m.createdAt interval=1000}}{{/row.cell}}
-        {{#row.cell edit=true as |cell|}}
-          {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
-          {{#paper-button raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}} {{#if m.emails.length }}Erneut
-          {{#tooltip-on-element}}
-            <ul>
-              {{#each m.emails as |em|}}
-              <li>{{moment em.createdAt}}</li>
-              {{/each}}
-            </ul>
-            {{/tooltip-on-element}}{{/if}}   Mailen{{/paper-button}}
-        {{/row.cell}}
-      {{/body.row}}
-    {{/each}}
-  {{/table.body}}
-  {{/paper-data-table}}
-  {{/card.content}}
-{{/paper-card}}
-</div>
-{{outlet}}
+                {{!/paper-checkbox}}
+                {{!/row.cell}}
+                {{#row.cell}}{{m.folder.name}}{{/row.cell}}
+                {{#row.cell}}
+                  {{m.student.name}}
+                  {{#paper-button iconButton=true onClick=(action "editStudent" m.student)}}
+                    {{paper-icon "edit" }}
+                  {{/paper-button}}
+                {{/row.cell}}
+                {{#row.cell}}{{moment-from-now m.createdAt interval=1000}}{{/row.cell}}
+                {{#row.cell edit=true as |cell|}}
+                  {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
+                  {{#paper-button raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}}
+                    {{#if m.emails.length }}Erneut
+                      {{#tooltip-on-element}}
+                        <ul>
+                          {{#each m.emails as |em|}}
+                            <li>{{moment em.createdAt}}</li>
+                          {{/each}}
+                        </ul>
+                      {{/tooltip-on-element}}
+                    {{/if}} Mailen{{/paper-button}}
+                {{/row.cell}}
+              {{/body.row}}
+            {{/each}}
+          {{/table.body}}
+        {{/paper-data-table}}
+      {{/card.content}}
+    {{/paper-card}}
+  </div>
+  {{outlet}}
 {{/paper-content}}
 {{yield}}
 {{#if showPfandDialog}}{{pfand-dialog closeDialog=(action "closePfand") student=student}}{{/if}}

@@ -80,7 +80,7 @@ export default Ember.Controller.extend({
     addModul: function(modul){
       this.get('module').pushObject(modul);
     },
-    printReport:function(report) {
+    printReportCon:function(report) {
       this.set('reportslist',[report]);
       this.set('auswahl',false);
       this.set('showPruefDialog',true);

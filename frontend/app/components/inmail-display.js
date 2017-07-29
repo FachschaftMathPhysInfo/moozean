@@ -20,7 +20,6 @@ export default Ember.Component.extend({
   },
   actions:{
     setSelected(opt){
-      console.log(opt);
       this.set('selectedAttachment',opt);
     }
   }

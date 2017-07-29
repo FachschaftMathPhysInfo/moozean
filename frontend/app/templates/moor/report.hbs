@@ -1,69 +1,69 @@
 {{#paper-toolbar}}
-   {{#paper-toolbar-tools}}
+  {{#paper-toolbar-tools}}
     {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-      {{paper-icon icon="menu"}}
+      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon icon="menu"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
-     <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Prüfungsbericht <span class="hide-sm"></span></h2>
-     <span class="flex"></span>
-     {{#paper-button iconButton=true}}
-       {{paper-icon "more_vert"}}
-     {{/paper-button}}
-   {{/paper-toolbar-tools}}
- {{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
-{{#paper-card as |card|}}
-  {{#card.content}}
-  <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-    <div class="flex-gt-xs-45">
-  {{subject-autocomplete selected=model.report.subject options=model.subjects}}
-</div>
-<div class="flex-gt-xs-50">
-  {{typ-autocomplete selected=model.report.typ options=model.typs}}
-</div>
-</div>
-<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-  <div class="flex-gt-xs-45">
-    {{! Prüfende }}
-  {{pruefende-chips options=model.examinators content=model.report.examinators }}
-</div>
-<div class="flex-gt-xs-50">
-      {{!Module}}
-  {{modul-chips options=model.moduls content=model.report.moduls}}
-</div>
-</div>
-<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-<div class="flex-gt-xs-45">
-    {{!Folderseries}}
-  {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
-</div>
-<div class="flex-gt-xs-50">
-{{paper-pikaday label="Prüfungsdatum"
+    <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Prüfungsbericht <span class="hide-sm"></span></h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true}}
+      {{paper-icon "more_vert"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{#paper-content class="md-padding" }}
+  {{#paper-card as |card|}}
+    {{#card.content}}
+      <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+        <div class="flex-gt-xs-45">
+          {{subject-autocomplete selected=model.report.subject options=model.subjects}}
+        </div>
+        <div class="flex-gt-xs-50">
+          {{typ-autocomplete selected=model.report.typ options=model.typs}}
+        </div>
+      </div>
+      <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+        <div class="flex-gt-xs-45">
+          {{! Prüfende }}
+          {{pruefende-chips options=model.examinators content=model.report.examinators }}
+        </div>
+        <div class="flex-gt-xs-50">
+          {{!Module}}
+          {{modul-chips options=model.moduls content=model.report.moduls}}
+        </div>
+      </div>
+      <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+        <div class="flex-gt-xs-45">
+          {{!Folderseries}}
+          {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
+        </div>
+        <div class="flex-gt-xs-50">
+          {{paper-pikaday label="Prüfungsdatum"
                 required=true
-                value=(readonly (moment-format model.report.examinationA "MM.YYYY"))
+                value=(readonly (moment-format model.report.examinationAt "MM.YYYY"))
                 onSelection=(action (mut model.report.examinationAt))
                 onChange=(action (mut someThing)) }}
-              </div>
-            </div>
-  {{/card.content}}
-  {{#card.actions}}
-    {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex"}}
-      {{#paper-button}}
+        </div>
+      </div>
+    {{/card.content}}
+    {{#card.actions}}
+      {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex" }}
+        {{#paper-button}}
           {{paper-icon "text fields"}} {{filetexName}}
-          {{/paper-button}}
-    {{/file-picker}}
-
-      {{#file-picker preview=false  readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded"}}
-            {{#paper-button}}
-            {{paper-icon "picture as pdf"}}{{fileName}}
-            {{/paper-button}}
+        {{/paper-button}}
       {{/file-picker}}
-    {{#paper-button onClick=(action "save") disabled=(not model.report.pdf)}}
-      Speichern
-    {{/paper-button}}
-  {{/card.actions}}
-{{/paper-card}}
+
+      {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded" }}
+        {{#paper-button}}
+          {{paper-icon "picture as pdf"}}{{fileName}}
+        {{/paper-button}}
+      {{/file-picker}}
+      {{#paper-button onClick=(action "save") disabled=(not model.report.pdf)}}
+        Speichern
+      {{/paper-button}}
+    {{/card.actions}}
+  {{/paper-card}}
 {{/paper-content}}
 
 {{outlet}}

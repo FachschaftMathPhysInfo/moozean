@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   store: Ember.inject.service(),
   didInsertElement(){
     if (this.get('student')==null) {
-      $('md-autocomplete-wrap input').focus();
+      this.$('md-autocomplete-wrap input').focus();
     }
   },
   newstudent:{},
@@ -15,13 +15,12 @@ export default Ember.Component.extend({
   actions:{
     closeDialog: function(option) {
       var store = this.get('store');
-      let foo = (what)=>{
-
-        Ember.run.schedule('afterRender', this, (how)=>{
+      let foo = ()=>{
+        Ember.run.schedule('afterRender', this, ()=>{
           this.set('student', store.createRecord('student'));
           this.set('newstudent','');
           this.set("showDialog", false);
-        $('md-autocomplete-wrap input').focus();
+        this.$('md-autocomplete-wrap input').focus();
           });
       }
       if (option == "ok") {
@@ -42,7 +41,7 @@ export default Ember.Component.extend({
         foo();
       }
       else if(option == 'delete'){
-        this.get('student').destroyRecord().then((item)=>{
+        this.get('student').destroyRecord().then(()=>{
           foo();
         });
       }

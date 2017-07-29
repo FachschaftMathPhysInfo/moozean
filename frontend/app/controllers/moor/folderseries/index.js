@@ -20,7 +20,6 @@ export default Ember.Controller.extend({
     },
     closeDeleteFolderDialog:function(option){
       if(option=="löschen"){
-        console.log(this.get('thisfolder'));
         this.get('thisfolder').destroyRecord();
       }
       this.set('thisfolder',{});

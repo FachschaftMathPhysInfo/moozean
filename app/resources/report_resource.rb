@@ -75,7 +75,9 @@ class ReportResource < JSONAPI::Resource
     super - [:tex_available]
   end
   before_save do
-    @model.pdf = Base64.decode64(@model.pdf['data:application/pdf;base64,'.length .. -1])
+    if @model.pdf_changed?
+      @model.pdf = Base64.decode64(@model.pdf['data:application/pdf;base64,'.length .. -1])
+    end
   end
   def pdf
     @model.pdf

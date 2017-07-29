@@ -31,7 +31,7 @@ export default Ember.Controller.extend({
         this.set('filetexName',file.filename);
       },
       save:function(){
-        this.get('model.report').save().then((data)=>{
+        this.get('model.report').save().then(()=>{
           alert("Erfolgreich gespeichert!");
           this.set('model.report',this.store.createRecord('report'));
           this.set('fileName',"Datei hochladen");

@@ -6,7 +6,6 @@ export default Ember.Component.extend({
     toggleSelection:function(){
       this.set('selected',!this.get('selected'));
       let a=this.get('printselection').filter((item)=>{
-        console.log(item);
         return item.get('report.id')==this.get('report.id');
       });
       if(a.length>0){
@@ -20,7 +19,7 @@ export default Ember.Component.extend({
       this.set('printselection',this.get('printselection').slice());
     },
     printReport:function(){
-      this.sendAction('printReport',this.get('report'));
+      this.sendAction('printReportComp',this.get('report'));
     }
 
   }

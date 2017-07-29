@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-const { attr,belongsTo } = DS;
+const { belongsTo } = DS;
 
 export default DS.Model.extend({
   //lentat:attr('date'), TODO: FIXMe

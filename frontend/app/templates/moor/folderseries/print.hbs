@@ -107,7 +107,7 @@
     {{/paper-card}}
     <div class="layout-row layout-wrap">
       {{#each gefilterte as |report|}}
-        {{report-print-view report=report showPruefDialog=showPruefDialog auswahl=auswahl reportslist=reportslist printselection=printselection}}
+        {{report-print-view printReportComp=(action "printReportCon") report=report showPruefDialog=showPruefDialog auswahl=auswahl reportslist=reportslist printselection=printselection}}
       {{/each}}
     </div>
   {{/paper-content}}
