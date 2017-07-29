@@ -118,7 +118,7 @@ export default Ember.Component.extend({
         let folders = this.get('ordner');
         var store = this.get('store');
         folders.forEach((folder)=>{
-          store.query('lent', {
+          /* B store.query('lent', {
             filter: {
               folder: folder.id
             }}).then((lents)=>{
@@ -127,7 +127,7 @@ export default Ember.Component.extend({
               console.log(lent);
               if(lent!=null){
                 lent.destroyRecord().then(()=>{
-                  let lent = store.createRecord('lent', {
+                  */let lent = store.createRecord('lent', {
                     student: this.get('student'),
                     folder: folder
                   });
@@ -137,10 +137,11 @@ export default Ember.Component.extend({
                       _this.set('student', null);
                       _this.get('ordner').removeObject(f);
                       $('md-autocomplete-wrap input').focus();
+                      // A _this.sendAction('reload_lents');
                     }
                   }(this, folder));
                 });
-              }
+              /* B }
               else {
                 let lent = store.createRecord('lent', {
                   student: this.get('student'),
@@ -156,7 +157,7 @@ export default Ember.Component.extend({
                 }(this, folder));
               }
         });
-      });
+      });*/
       } else {
         this.set('showPfandDialog', true);
       }
