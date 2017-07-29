@@ -3,4 +3,5 @@ class LentResource < JSONAPI::Resource
   has_one :student, always_include_linkage_data:true
   has_one :folder
   has_many :emails
+  filters :folder
 end

@@ -60,7 +60,7 @@
               {{#step.body}}
                 {{#paper-chips readOnly=false removeItem=(action "removeFolder") addItem=(action "addFolder") placeholder="Ordner hinzufügen" content=ordner options=model.folders searchField="name" noMatchesMessage="Kein Ordner gefunden" as |item|}}
                   <strong>{{item.name}}</strong>
-                  {{#if item.folderseries.obligationtoreport}}
+                  {{#if item.obligationtoreport}}
                     {{paper-icon "attach money" size=18}}
                   {{/if}}
                 {{/paper-chips}}

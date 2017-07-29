@@ -116,21 +116,47 @@ export default Ember.Component.extend({
     saveModel: function() {
       if (!this.get('nicht_ausleihbar')) {
         let folders = this.get('ordner');
-        for (var i = 0; i < folders.length; i++) {
-          var store = this.get('store');
-          let lent = store.createRecord('lent', {
-            student: this.get('student'),
-            folder: folders[i]
-          });
-          lent.save().then(function(_this, f) {
-            return function() {
-              _this.set('currentStep', 0);
-              _this.set('student', null);
-              _this.get('ordner').removeObject(f);
-              this.$('md-autocomplete-wrap input').focus();
-            }
-          }(this, folders[i]));
-        }
+        var store = this.get('store');
+        folders.forEach((folder)=>{
+          store.query('lent', {
+            filter: {
+              folder: folder.id
+            }}).then((lents)=>{
+             return lents.get('firstObject');
+           }).then((lent)=>{
+              console.log(lent);
+              if(lent!=null){
+                lent.destroyRecord().then(()=>{
+                  let lent = store.createRecord('lent', {
+                    student: this.get('student'),
+                    folder: folder
+                  });
+                  lent.save().then(function(_this, f) {
+                    return function() {
+                      _this.set('currentStep', 0);
+                      _this.set('student', null);
+                      _this.get('ordner').removeObject(f);
+                      $('md-autocomplete-wrap input').focus();
+                    }
+                  }(this, folder));
+                });
+              }
+              else {
+                let lent = store.createRecord('lent', {
+                  student: this.get('student'),
+                  folder: folder
+                });
+                lent.save().then(function(_this, f) {
+                  return function() {
+                    _this.set('currentStep', 0);
+                    _this.set('student', null);
+                    _this.get('ordner').removeObject(f);
+                    $('md-autocomplete-wrap input').focus();
+                  }
+                }(this, folder));
+              }
+        });
+      });
       } else {
         this.set('showPfandDialog', true);
       }
