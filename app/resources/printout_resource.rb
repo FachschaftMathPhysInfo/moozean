@@ -61,8 +61,6 @@ class PrintoutResource < JSONAPI::Resource
       puts buffer
       File.write("current_report_full.tex",buffer)
     make_log, s=Open3.capture2e("pdflatex -halt-on-error -enable-write18 -output-directory=#{dir} current_report_full.tex")
-    p make_log
-    p s
     self.times.times do |k|
       Open3.capture2e("lp -d sw-duplex - < #{dir}/current_report_full.pdf")
     end

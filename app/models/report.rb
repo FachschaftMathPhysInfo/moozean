@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
   belongs_to :subject
   belongs_to :typ
-  before_save :render_picture
+  before_save :no_loose_ends, :render_picture
   has_many :is_ins, dependent: :delete_all
   has_many :folderseries, through: :is_ins
   has_many :examined_bies, dependent: :delete_all
@@ -9,9 +9,15 @@ class Report < ApplicationRecord
   has_many :is_abouts, dependent: :delete_all
   has_many :moduls, through: :is_abouts
   def render_picture
-    if pdf_changed?
       o, s = Open3.capture2('pdftk A=- cat A1 output - | convert -density 72 - -trim -quality 100 -flatten -sharpen 0x1.0 -crop 100%x50% png:-', stdin_data: pdf, binmode: true)
       self.picture = 'data:image/png;base64,' + Base64.encode64(o)
+  end
+  def no_loose_ends
+    if(self.pdf==nil)
+      self.pdf=self.pdf_was
+    end
+    if(self.tex==nil)
+      self.tex=self.tex_was
     end
   end
 end

@@ -35,9 +35,6 @@
     {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
   {{/if}}
 
-  {{#each model.folders as |m|}}
-    <li style="display: none">{{m.name}}</li>
-  {{/each}}
   <div class="flex">
     {{#paper-card as |card|}}
       {{#card.content}}

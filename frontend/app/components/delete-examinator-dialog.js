@@ -16,12 +16,10 @@ export default Ember.Component.extend({
       }
       else {
         report.get('examinators').removeObject(this.get('examinator'));
-          this.get('store').getReference('examinator', 33).then((item)=>{
-            report.get('examinators').pushObject(item);
-          });
+        report.get('examinators').pushObject(this.get('store').peekRecord('examinator', 33));
         report.save();
       }
-      },
+    },
     deleteReport:function(report){
       report.destroyRecord();
     }
