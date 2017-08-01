@@ -9,6 +9,20 @@ export default Ember.Controller.extend({
   pruefauswahl:Ember.A(),
   reportslist:Ember.A(),
   auswahl:false,
+  limitOptions: Ember.A([5, 10, 15]),
+  limit: 5,
+  pages: Ember.computed('limit', 'gefilterte.[]', function() {
+    let e = Ember.A();
+    for (let i = 1; i < Math.ceil(this.get("gefilterte.length") / this.get("limit")); i++) {
+      e.pushObject(i);
+    }
+    return e;
+  }),
+  page: 1,
+  paginatedResults: Ember.computed('gefilterte.[]', 'page', 'limit', function() {
+    let ind = (this.get('page') - 1) * this.get('limit');
+    return Ember.A(this.get("gefilterte").toArray().slice(ind, ind + this.get('limit')));
+  }),
   gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedDate','selectedID','selectedSubject','model.reports.[]', function() {
     let pruefende= this.get('pruefende');
     let module = this.get('module');
@@ -132,6 +146,21 @@ export default Ember.Controller.extend({
       }
       this.set('reportslist',[]);
       this.set('showPruefDialog',false);
+    },
+    decrementPage() {
+      let page = this.get('page');
+      if (page > 0) {
+        this.set('page', page - 1);
+      }
+    },
+    incrementPage() {
+      let page = this.get('page');
+      let max = this.get('pages').reduce((prev, curr) => curr > prev
+        ? curr
+        : prev, 0);
+      if (page < max) {
+        this.set('page', page + 1);
+      }
     }
   }
 });

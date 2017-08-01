@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
     closeDeleteDialog:function(option){
       this.set('showDeleteDialog',false);
       if(option=="ok"){
-        this.get('newobjekt').destroyRecord();
+        this.get('newobject').destroyRecord();
       }
       this.set('newobject',null);
     },
