@@ -9,12 +9,20 @@ export default Ember.Controller.extend({
       this.set('newmodul',this.store.createRecord('modul'));
       this.set("showCreateModulDialog",true);
     },
-    editModul:function(modul){
-      this.set('newmodul',modul);
+    editModul:function(m){
+      this.set('newmodul',m);
       this.set("showEditModulDialog",true);
     },
-    deleteModul:function(modul){
-      modul.destroyRecord();
+    deleteObject:function(subject){
+      this.set('newobject',subject);
+      this.set('showDeleteDialog',true);
+    },
+    closeDeleteDialog:function(option){
+      this.set('showDeleteDialog',false);
+      if(option=="ok"){
+        this.get('newobjekt').destroyRecord();
+      }
+      this.set('newobject',null);
     },
     closeModulDialog:function(option){
       if(option=="ok"){
@@ -36,9 +44,6 @@ export default Ember.Controller.extend({
       this.set('newsubject',subject);
       this.set("showEditSubjectDialog",true);
     },
-    deleteSubject:function(subject){
-      subject.destroyRecord();
-    },
     closeSubjectDialog:function(option){
       if(option=="ok"){
         this.get('newsubject').save().then(null,this.ajaxError.bind(this))
@@ -58,9 +63,6 @@ export default Ember.Controller.extend({
     editTyp:function(typ){
       this.set('newtyp',typ);
       this.set("showEditTypDialog",true);
-    },
-    deleteTyp:function(typ){
-      typ.destroyRecord();
     },
     closeTypDialog:function(option){
       if(option=="ok"){
