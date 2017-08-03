@@ -43,7 +43,7 @@
             {{#step.body}}
               {{#step.actions as |nextStep previousStep|}}
                 {{#paper-autocomplete disabled=firstDisabled onCreate=(action "addStudent") allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
-                  noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))) as |country autocomplete|}}
+                  noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))(action "focusFolderSelection" currentStep)) as |country autocomplete|}}
                   {{paper-autocomplete-highlight
               label=country.name
               searchText=autocomplete.searchText

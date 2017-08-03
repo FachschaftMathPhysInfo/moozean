@@ -1,0 +1,61 @@
+{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>{{title}}</h2>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-form onSubmit=(action "exitDialog" "ok") as |form|}}
+  {{#paper-dialog-content}}
+  <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+    <div class="flex-gt-xs-45">
+      {{subject-autocomplete selected=report.subject options=model.subjects}}
+    </div>
+    <div class="flex-gt-xs-50">
+      {{typ-autocomplete selected=report.typ options=model.typs}}
+    </div>
+  </div>
+  <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+    <div class="flex-gt-xs-45">
+      {{! Prüfende }}
+      {{pruefende-chips options=model.examinators content=report.examinators }}
+    </div>
+    <div class="flex-gt-xs-50">
+      {{!Module}}
+      {{modul-chips options=model.moduls content=report.moduls}}
+    </div>
+  </div>
+  <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+    <div class="flex-gt-xs-45">
+      {{!Folderseries}}
+      {{folderseries-chips options=model.folderseries content=report.folderseries}}
+    </div>
+    <div class="flex-gt-xs-50">
+      {{paper-pikaday label="Prüfungsdatum"
+            required=true
+            value=(readonly (moment-format report.examinationAt "MM.YYYY"))
+            onSelection=(action (mut report.examinationAt))
+            onChange=(action (mut someThing)) }}
+    </div>
+  </div>
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions class="layout-row"}}
+    <span class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+    {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex" }}
+      {{#paper-button}}
+        {{paper-icon "text fields"}} {{filetexName}}
+      {{/paper-button}}
+    {{/file-picker}}
+    {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded" }}
+      {{#paper-button}}
+        {{paper-icon "picture as pdf"}}{{fileName}}
+      {{/paper-button}}
+    {{/file-picker}}
+    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
+    {{#paper-button onClick=(action "exitDialog" "ok")}}Speichern{{/paper-button }}
+    </span>
+  {{/paper-dialog-actions}}
+  {{/paper-form}}
+{{/paper-dialog}}
+{{yield}}

@@ -90,6 +90,8 @@ export default Ember.Controller.extend({
     });
     return max;
   }),
+  reporttoedit: null,
+  editReport: false,
   actions: {
     printReport: function(report, times) {
       let printout = this.store.createRecord('printout', {
@@ -112,6 +114,26 @@ export default Ember.Controller.extend({
       if (page < max) {
         this.set('page', page + 1);
       }
+    },
+    editReport:function(report){
+      this.set('reporttoedit',report);
+      this.set('editReport',true);
+    },
+    deleteReport:function(report){
+      report.destroyRecord();
+    },
+    closeReportDialog:function(option, report){
+      if(option=="ok"){
+      report.save().then(()=>{
+        alert("Erfolgreich gespeichert!");
+      },this.ajaxError.bind(this));
+
+    }
+    else {
+      report.rollback();
+    }
+    this.set('reporttoedit',null);
+    this.set('editReport',false);
     }
   }
 });

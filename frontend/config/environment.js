@@ -4,6 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'ember-ozean',
     environment: environment,
+    changeTracker: { trackHasMany: true, auto: true, enableIsDirty: true },
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {

@@ -7,13 +7,6 @@ export default Ember.Component.extend({
       this.$('md-autocomplete-wrap input').focus();
     }
   },
-  focusStudentSelection: Ember.observer('studentselected', function() {
-    if (!this.get('studentselected')) {
-      Ember.run.schedule('afterRender', this, function() {
-        this.$('div.md-chip-input-container input').focus();
-      });
-    }
-  }),
   store: Ember.inject.service(),
   items: [],
   titlestudent: "Studierendes eintragen",
@@ -81,18 +74,21 @@ export default Ember.Component.extend({
         this.set('currentStep', 1)
         this.$('md-chip-input-container input').focus();
       } else if (option == 'delete') {
-        this.get('newstudent').then((item) => {
-          this.set('showDialog', false);
-          item.destroyRecord().then(() => {
-            this.sendAction('reload_lents');
+        this.get('newstudent').then((item)=>{
+          item.get('lents').then((item)=>{
+            item.forEach((lent)=>{
+              lent.unloadRecord();
+            });
           });
-          this.set('currentStep', 0);
-          this.set('showDialog', false);
-          this.$('md-autocomplete-wrap input').focus();
+          item.destroyRecord();
         });
+          this.set('showDialog', false);
+          this.set('currentStep', 0);
+          this.$('md-autocomplete-wrap input').focus();
       } else {
-        if (this.get('newstudent').unloadRecord != null)
-          this.get('newstudent').unloadRecord();
+        this.get('newstudent').then((item)=>{
+          item.rollback();
+        });
         this.set('showDialog', false);
         this.$('md-autocomplete-wrap input').focus();
       }
@@ -118,16 +114,7 @@ export default Ember.Component.extend({
         let folders = this.get('ordner');
         var store = this.get('store');
         folders.forEach((folder)=>{
-          /* B store.query('lent', {
-            filter: {
-              folder: folder.id
-            }}).then((lents)=>{
-             return lents.get('firstObject');
-           }).then((lent)=>{
-              console.log(lent);
-              if(lent!=null){
-                lent.destroyRecord().then(()=>{
-                  */let lent = store.createRecord('lent', {
+          let lent = store.createRecord('lent', {
                     student: this.get('student'),
                     folder: folder
                   });
@@ -136,28 +123,11 @@ export default Ember.Component.extend({
                       _this.set('currentStep', 0);
                       _this.set('student', null);
                       _this.get('ordner').removeObject(f);
-                      $('md-autocomplete-wrap input').focus();
-                      // A _this.sendAction('reload_lents');
+                      _this.$('md-autocomplete-wrap input').focus();
+                      // _this.sendAction('reload_lents');
                     }
                   }(this, folder));
                 });
-              /* B }
-              else {
-                let lent = store.createRecord('lent', {
-                  student: this.get('student'),
-                  folder: folder
-                });
-                lent.save().then(function(_this, f) {
-                  return function() {
-                    _this.set('currentStep', 0);
-                    _this.set('student', null);
-                    _this.get('ordner').removeObject(f);
-                    $('md-autocomplete-wrap input').focus();
-                  }
-                }(this, folder));
-              }
-        });
-      });*/
       } else {
         this.set('showPfandDialog', true);
       }
@@ -234,6 +204,13 @@ export default Ember.Component.extend({
         this.set('student', null);
         Ember.run.schedule('afterRender', this, function() {
           this.$('md-autocomplete-wrap input').focus();
+        });
+      }
+    },
+    focusFolderSelection:function(step){
+      if (this.get('student') && step == 1) {
+        Ember.run.schedule('afterRender', this, function() {
+          this.$('div.md-chip-input-container input').focus();
         });
       }
     }

@@ -14,7 +14,7 @@
           <tr>
             <td><strong>Legende:&nbsp;&nbsp;</strong></td>
             <td>{{paper-icon "block"}}&nbsp;Prüfendes aus Bericht ausklammern&nbsp;&nbsp;</td>
-            <td>{{paper-icon "clear"}}&nbsp;Bericht löschen</td>
+            <td>{{paper-icon "delete"}}&nbsp;Bericht löschen</td>
           </tr>
         </table>
         <br>
@@ -39,7 +39,7 @@
                 {{/row.cell}}
                 {{#row.cell}}
                 {{#paper-button iconButton=true onClick=(action "excludeExaminator" report)}}{{paper-icon "block"}}{{/paper-button}}
-                {{#paper-button iconButton=true onClick=(action "deleteReport" report)}}{{paper-icon "clear"}}{{/paper-button}}
+                {{#paper-button iconButton=true onClick=(action "deleteReport" report)}}{{paper-icon "delete"}}{{/paper-button}}
                 {{/row.cell}}
 
               {{/body.row}}
