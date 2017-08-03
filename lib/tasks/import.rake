@@ -109,15 +109,11 @@ namespace :import do
     folders.each do |folder|
       p folder
       fo= Folderseries.find_by(name:folder["name"].split(/[0-9]/)[0])
-      sf =folder["name"].split(/[0-9]/)[1]
-      if sf==nil
-        sf=""
-      end
       if fo ==nil
         fs=Folderseries.create(name:folder["name"].split(/[0-9]/)[0],obligationtoreport:folder["berichtpflicht"],description:folder["inhalt"])
-        Folder.create(barcode:folder["barcode"],folderseries:fs,suffix:sf)
+        Folder.create(barcode:folder["barcode"],folderseries:fs,suffix:folder["name"].split(/[0-9]/)[1])
       else
-        Folder.create(barcode:folder["barcode"],folderseries:fo,suffix:sf)
+        Folder.create(barcode:folder["barcode"],folderseries:fo,suffix:folder["name"].split(/[0-9]/)[1])
       end
     end
   end
