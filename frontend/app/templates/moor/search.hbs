@@ -130,17 +130,19 @@ onDecrementPage=(action 'decrementPage')}}
             {{/paper-list}}
           {{/card.content}}
           {{#card.actions}}
+          {{#paper-button iconButton=true onClick=(action "deleteReport" report)}}{{paper-icon "delete"}}{{/paper-button}}
             {{#if report.texAvailable}}
               {{#email-share subject='Prüfungsbericht-TeX-Datei' url=report.id body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:" }}
                 {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
               {{/email-share}}
             {{/if}}
+            {{#paper-button iconButton=true onClick=(action "editReport" report)}}{{paper-icon "edit"}}{{/paper-button}}
             {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
           {{/card.actions}}
         {{/paper-card}}
       </div>
     {{/each}}
   </div>
-
 {{/paper-content}}
 </div>
+{{#if editReport}}{{edit-report-dialog model=model closeDialog="closeReportDialog" title="Bericht bearbeiten" report=reporttoedit}}{{/if}}

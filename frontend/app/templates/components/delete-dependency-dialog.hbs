@@ -10,8 +10,7 @@
   {{#paper-dialog-content}}
     <div class="flex layout-column">
       <p class="md-warn md-button">ACHTUNG !</p>
-      <p> Aufgrund von Verweisen müssten beim Löschen {{dieseselements}} folgende Änderungen an den Prüfungsberichten vorgenommen werden: </p>
-        <br>
+      <p> Aufgrund von Verweisen müssten beim Löschen {{dieseselements}} folgende Änderungen an den Prüfungsberichten vorgenommen werden: </p>        <br>
         {{#paper-data-table sortProp="examinationAt" sortDir="desc" selectable=true as |table|}}
           {{#table.head as |head|}}
             {{#head.column}}Prüfungsart{{/head.column}}

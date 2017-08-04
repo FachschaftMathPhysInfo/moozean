@@ -27,11 +27,9 @@ export default Ember.Controller.extend({
     closeModulDialog:function(option){
       if(option=="ok"){
         this.get('newmodul').save().then(null,this.ajaxError.bind(this))
-      } else
-      {
-        if(this.get('showCreateModulDialog')){
-          this.get('newmodul').unloadRecord();
       }
+      else{
+        this.get('newmodul').rollback();
       }
       this.set('showCreateModulDialog',false);
       this.set('showEditModulDialog',false);

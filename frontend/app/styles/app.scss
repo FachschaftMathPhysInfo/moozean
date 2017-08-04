@@ -1,4 +1,3 @@
-
 @import 'color-math';
 $primary: $color-mathphys;//orange
 $accent: $color-secondary;
@@ -117,4 +116,7 @@ md-content{
 }
  .z1{
    z-index: 1;
+ }
+ .md-chip-input-container{
+   width: 100%;
  }
