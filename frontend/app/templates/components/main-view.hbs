@@ -101,7 +101,7 @@
                     {{paper-icon "edit" }}
                   {{/paper-button}}
                 {{/row.cell}}
-                {{#row.cell}}{{moment-from-now m.createdAt interval=1000}}{{/row.cell}}
+                {{#row.cell}}{{moment-format m.createdAt interval=1000}}{{/row.cell}}
                 {{#row.cell edit=true as |cell|}}
                   {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
                   {{#paper-button raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}}

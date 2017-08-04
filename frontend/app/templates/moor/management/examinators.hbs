@@ -47,4 +47,4 @@
 </div>
 {{#if showCreateExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Erstelle Prüfendes' examinator=newexaminator}}{{/if}}
 {{#if showEditExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Bearbeite Prüfendes' examinator=newexaminator}}{{/if}}
-{{#if showReportDialog}}{{delete-examinator-dialog store=store closeDialog=(action "closeDeleteExaminatorDialog") examinator=newexaminator}}{{/if}}
+{{#if showReportDialog}}{{delete-dependency-dialog store=store closeDialog=(action "closeDeleteExaminatorDialog") objekt=newexaminator}}{{/if}}
