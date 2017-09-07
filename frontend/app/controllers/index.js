@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import moment from 'moment';
 export default Ember.Controller.extend({
+  paperToaster:Ember.inject.service(),
   actions:{
     reload_lents: function(){
       this.get('model.lents').forEach((item)=>{

@@ -117,7 +117,7 @@ namespace :import do
         fs=Folderseries.create(name:folder["name"].split(/(?<=[0-9])/)[0],obligationtoreport:folder["berichtpflicht"],description:folder["inhalt"])
         Folder.create(barcode:folder["barcode"],folderseries:fs,suffix:sf)
       else
-        Folder.create(barcode:folder["barcode"],folderseries:fo,suffix:sf)
+        Folder.create(barcode:folder["barcode"],folderseries:fo,suffix:folder["name"].split(/[0-9]/)[1])
       end
     end
   end

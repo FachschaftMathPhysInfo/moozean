@@ -38,8 +38,7 @@ export default Ember.Controller.extend({
         this.get('newexaminator').save().then(null,this.ajaxError.bind(this))
       } else
       {
-        if(this.get('showCreateExaminatorDialog'))
-        this.get('newexaminator').unloadRecord();
+        this.get('newexaminator').rollback();
       }
       this.set('showCreateExaminatorDialog',false);
       this.set('showEditExaminatorDialog',false);

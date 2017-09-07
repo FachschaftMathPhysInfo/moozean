@@ -1,7 +1,7 @@
 {{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
   {{#paper-toolbar}}
     {{#paper-toolbar-tools}}
-      <h2>Prüfendes löschen</h2>
+      <h2>{{elemente}} löschen?</h2>
       <span class="flex"></span>
       {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
     {{/paper-toolbar-tools}}
@@ -9,25 +9,18 @@
 
   {{#paper-dialog-content}}
     <div class="flex layout-column">
-      <p> An folgenden Prüfungsberichten ist das zu löschende Prüfende noch beteiligt: </p>
-        <table>
-          <tr>
-            <td><strong>Legende:&nbsp;&nbsp;</strong></td>
-            <td>{{paper-icon "block"}}&nbsp;Prüfendes aus Bericht ausklammern&nbsp;&nbsp;</td>
-            <td>{{paper-icon "clear"}}&nbsp;Bericht löschen</td>
-          </tr>
-        </table>
-        <br>
+      <p class="md-warn md-button">ACHTUNG !</p>
+      <p> Aufgrund von Verweisen müssten beim Löschen {{dieseselements}} folgende Änderungen an den Prüfungsberichten vorgenommen werden: </p>        <br>
         {{#paper-data-table sortProp="examinationAt" sortDir="desc" selectable=true as |table|}}
           {{#table.head as |head|}}
             {{#head.column}}Prüfungsart{{/head.column}}
             {{#head.column}}Fach{{/head.column}}
             {{#head.column}}Datum{{/head.column}}
             {{#head.column}}Prüfende{{/head.column}}
-            {{#head.column}}Optionen{{/head.column}}
+            {{#head.column}}Änderung{{/head.column}}
           {{/table.head}}
           {{#table.body as |body|}}
-            {{#each (sort-by table.sortDesc examinator.reports) as |report|}}
+            {{#each (sort-by table.sortDesc objekt.reports) as |report|}}
               {{#body.row edit=true as |row|}}
                 {{#row.cell}}{{report.typ.name}}{{/row.cell}}
                 {{#row.cell}}{{report.subject.name}}{{/row.cell}}
@@ -38,8 +31,8 @@
                   {{/each}}
                 {{/row.cell}}
                 {{#row.cell}}
-                {{#paper-button iconButton=true onClick=(action "excludeExaminator" report)}}{{paper-icon "block"}}{{/paper-button}}
-                {{#paper-button iconButton=true onClick=(action "deleteReport" report)}}{{paper-icon "clear"}}{{/paper-button}}
+                  {{#if (compute (action "multiple") report)}}{{elemente}} aus Liste entfernen{{/if}}
+                  {{#unless (compute (action "multiple") report)}}Bericht löschen{{/unless}}
                 {{/row.cell}}
 
               {{/body.row}}
@@ -50,7 +43,7 @@
   {{/paper-dialog-content}}
   {{#paper-dialog-actions class="layout-row"}}
     <span class="flex"></span>
-    {{#unless examinator.reports.length}}{{#paper-button onClick=(action "exitDialog" "ok")}}Löschen{{/paper-button}}{{/unless}}
+    {{#paper-button onClick=(action "exitDialog" "ok")}}OK{{/paper-button}}
     {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
   {{/paper-dialog-actions}}
 {{/paper-dialog}}

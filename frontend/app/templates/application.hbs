@@ -3,7 +3,7 @@
   class="md-whiteframe-z2 site-sidenav flex overflow-x-hidden"
   name="left2"
   open=open
-  closeOnClick=true
+  closeOnClick=false
   onToggle=(action (mut open))
 flex-layout="column" flex=true }}
   {{#paper-toolbar tall=true as |toolbar|}}
@@ -39,6 +39,7 @@ flex-layout="column" flex=true }}
 
   {{#paper-content flex-layout="column" class="flex row layout-column overflow-x-hidden"}}
     {{outlet}}
+    {{paper-toaster}}
     {{/paper-content}}
 
  {{/paper-sidenav-container}}

@@ -10,6 +10,9 @@ export default Ember.Controller.extend({
     saveFolderseries:function(){
       this.get("model").save().then(null,this.ajaxError.bind(this))
     },
+    deleteFolderseries:function(){
+      this.get("model").destroyRecord();
+    },
     addFolder:function(){
       this.set('thisfolder',this.store.createRecord('folder',{folderseries:this.get('model'),suffix:''}));
       this.set("showCreateFolderDialog",true);
@@ -34,7 +37,7 @@ export default Ember.Controller.extend({
         this.get('thisfolder').save().then(null,this.ajaxError.bind(this))
       }
       else {
-        this.get('thisfolder').unloadRecord();
+        this.get('thisfolder').rollback();
       }
       this.set('showCreateFolderDialog',false);
       this.set('showEditFolderDialog',false);

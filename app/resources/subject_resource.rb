@@ -1,4 +1,4 @@
 class SubjectResource < JSONAPI::Resource
   attributes :name
-  has_many :report
+  has_many :reports,acts_as_set:true
 end

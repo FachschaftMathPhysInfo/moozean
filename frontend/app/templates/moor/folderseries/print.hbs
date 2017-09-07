@@ -20,7 +20,6 @@
         {{#paper-button onClick=(action "printSelection") iconButton=true}}
           {{paper-icon "print" class="md-avatar-icon"}}
         {{/paper-button}}
-
       {{/paper-toolbar-tools}}
     {{/paper-toolbar}}
     {{#paper-content padding=true}}
@@ -104,12 +103,27 @@
         {{#paper-button onClick=(action "printShown")}}Angezeigtes drucken{{/paper-button}}
         {{#paper-button onClick=(action (mut rightSidebar))}}Auswahl anzeigen{{/paper-button}}
       {{/card.actions}}
-    {{/paper-card}}
+      {{/paper-card}}
+      {{#paper-card as |card|}}
+    {{#card.actions}}
+        {{paper-data-paginator
+    limit=limit
+    limitOptions=limitOptions
+    page=page
+    pages=pages
+    onChangePage=(action (mut page))
+    onChangeLimit=(action (mut limit))
+    onIncrementPage=(action 'incrementPage')
+    onDecrementPage=(action 'decrementPage')}}
+      {{/card.actions}}
+    {{#card.content}}
     <div class="layout-row layout-wrap">
-      {{#each gefilterte as |report|}}
+      {{#each paginatedResults as |report|}}
         {{report-print-view printReportComp=(action "printReportCon") report=report showPruefDialog=showPruefDialog auswahl=auswahl reportslist=reportslist printselection=printselection}}
       {{/each}}
     </div>
+    {{/card.content}}
+    {{/paper-card}}
   {{/paper-content}}
 {{/paper-sidenav-container}}
 {{#if showPruefDialog}}{{print-examinators-dialog closeDialogDrucken=(action "closeDialogDrucken") closeDialogAuswahl=(action "closeDialogAuswahl") reportslist=reportslist auswahl=auswahl pruefauswahl=pruefauswahl}}{{/if}}
