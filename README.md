@@ -1,50 +1,46 @@
-# README
+# Kummerkasten
+
+# Requirements
 
 ## Ruby version
 The recommended software versions are
   - rails `>=5.1`
   - ruby `>=2.3`
+  - node `>=7`
 
 ## System dependencies
+You should have the following packages installed (see Dockerfile)
+  - `build-essential`
+  - `nodejs`
+  - `npm`
+  - `libpq-dev`
+  - `wget`
+  - `git`
+  - `cron`
 
- Please have the following installed:
-   - `npm`
-   - `ember`, see [emberjs.com]
-   - `rails` and `bundler`
-   - `postgresql`
-   - `pdftk` and `texlive-extra` for printing
+You should provide a redis instance and an SMTP server.
 
-## Database & Ember install
+We strongly recommend using the Docker--approach:
 
-   Run `bundle install` to install all gems
-   Run `rake db:drop db:create db:migrate` and `rake ember:install`. Optionally run `rake ember:compile` to speed up.
+# Installation
+## Non-Docker (Development environment)
 
-## All in One for production
+1. Install all needed packages (see above)
+1a. Update node to version 8: `sudo npm install -g n && sudo n 8`
+1b. Install ember: `sudo npm install -g ember bower`
+2. Clone this repository
+3. set the needed environment variables(use `source development.sh` for a quickstart)
+4. Create the needed database: `rake db:create db:migrate`
+5. Precompile the assets: `rake assets:precompile`
+6. Start the engines: `rails s`
 
-`bundle exec rake RAILS_ENV=production  SECRET_TOKEN=dummytoken db:create db:migrate ember:install ember:compile`
+## Docker
 
-Then run: `rails -e production`
-
-For Anonymization (and later email retrieval): `rake qc:work`
-
-# Dockerimage
-
-- Copy config file: `cp config/database.yml.docker config/database.yml`
-- Build the image using docker-compose:
-`docker-compose up --build`
-- Run `docker-compose run website bundle exec rake RAILS_ENV=production  SECRET_TOKEN=dummytoken db:crea
-te db:migrate ember:install ember:compile`
-- Start network with `docker-compose up`
-
-# Tasks: `classic-queue`
-
-This project uses `classic-queue` for out-of-order tasks. Run `rake qc:update` after setup to update the tables and `rake qc:work` to start a worker.
-
-# Email--support
-
-In `config/email.yml` is the configuration of the email inbox. The programm automatically flages imported emails. Currently, it does **not** delete Emails in the INBOX at any point.
-
-# Cronjob for Email support
-
-As configured in config/schedule.rb this programm will check every 5 minutes for new mail.
-Run `whenever` to see config. `whenever --update-crontab` will udate your crontab-file.
+1. Have an running instance of postgresql
+2. Edit the `development.env` accordingly
+3. Build the docker-image `docker build .`
+4. Create the docker container: `docker create --env-file=development.env --name kummerkasten -p 3008:3000 <hash of the image>`
+5. Start the container `docker start kummerkasten`
+6. Create the database, if needed, `docker exec kummerkasten bundle exec rake db:create`
+7. Migrate the database, if needed, `docker exec kummerkasten bundle exec rake db:migrate`
+8. Done! Visit `localhost:3008`

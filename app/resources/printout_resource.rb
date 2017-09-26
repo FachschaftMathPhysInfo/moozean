@@ -20,6 +20,7 @@ class PrintoutResource < JSONAPI::Resource
     buffer << '\usepackage{pst-barcode}'<<"\n"
     buffer << '\begin{document}'<<"\n"
   Dir.mktmpdir{ |dir|
+    puts buffer
     Dir.chdir dir
     pages_s, error = Open3.capture2("pdftk - dump_data | grep 'NumberOfPages' | sed 's/[^0-9]//g'", :stdin_data=>@model.report.pdf, :binmode=>true)
     Open3.capture2("pdftk - burst output #{dir}/current_report_%02d.pdf",:stdin_data => @model.report.pdf,:binmode=>true)
@@ -61,8 +62,11 @@ class PrintoutResource < JSONAPI::Resource
       puts buffer
       File.write("current_report_full.tex",buffer)
     make_log, s=Open3.capture2e("pdflatex -halt-on-error -enable-write18 -output-directory=#{dir} current_report_full.tex")
+    puts make_log
     self.times.times do |k|
-      Open3.capture2e("lp -d sw-duplex - < #{dir}/current_report_full.pdf")
+      p "lp -d #{ENV['PRINTER_NAME']} -h #{ENV['PRINTER_HOST']}  - < #{dir}/current_report_full.pdf"
+      print_log, s=Open3.capture2e("lp -d #{ENV['PRINTER_NAME']} -h #{ENV['PRINTER_HOST']}   < #{dir}/current_report_full.pdf")
+      puts print_log
     end
   }
   end

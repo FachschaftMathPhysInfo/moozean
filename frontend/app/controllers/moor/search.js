@@ -94,10 +94,18 @@ export default Ember.Controller.extend({
   editReport: false,
   actions: {
     printReport: function(report, times) {
+      console.log(report);
+      let exam = report.get("examinators").toArray()[0];
+      let folds=report.get("folderseries").toArray()[0];
+      console.log(exam);
+      console.log(folds);
       let printout = this.store.createRecord('printout', {
         report: report,
-        times: times
+        times: times,
+        examinator:exam,
+        folderseries: folds
       });
+      console.log(printout);
       printout.save().then(null,this.ajaxError.bind(this))
     },
     decrementPage() {

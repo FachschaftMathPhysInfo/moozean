@@ -1,11 +1,11 @@
 defaults: &defaults
-  imap_server: "webmail.henrixapp.com"
-  imap_port: 993
+  imap_server: <%= ENV['PRODUCTION_IMAP_SERVER'] %>
+  imap_port: <%= ENV['PRODUCTION_IMAP_PORT'] %>
   use_ssl: true
   ignore_ssl_error: false
-  email: "pruefungsberichte@henrixapp.com"
-  password: "FachschaftMathPhysrules!"
-  box: "INBOX"
+  email: <%= ENV['PRODUCTION_EMAIL_ADDRESS'] %>
+  password: <%= ENV['PRODUCTION_EMAIL_PASSWORD'] %>
+  box: <%= ENV['PRODUCTION_EMAIL_BOX'] %>
 
 development:
   <<: *defaults

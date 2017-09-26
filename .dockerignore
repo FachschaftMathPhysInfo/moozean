@@ -6,3 +6,4 @@
 tmp/*
 frontend/tmp/*
 frontend/node_modules/*
+*.env
