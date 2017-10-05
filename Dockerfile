@@ -33,4 +33,4 @@ WORKDIR ..
 RUN RAILS_ENV=production PRODUCTION_DATABASE_ADAPTER="postgresql" bundle exec rake assets:precompile
 #RUN whenever --update-crontab
 VOLUME ["$INSTALL_PATH/public"]
-CMD whenever --update-crontab & bundle exec rake qc:work & bundle exec rails s
+CMD rm -f /ozean/tmp/pids/server.pid && whenever --update-crontab & bundle exec rake qc:work & bundle exec rails s
