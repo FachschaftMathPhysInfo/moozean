@@ -13,21 +13,32 @@ namespace :import do
       pr =  pruefungen.find do |row|
         row["id"]==bericht["pruefung"]
       end
+      puts "Finde subject"
       sub= Subject.find_by(name:pr["studiengang"])
       p pr
+      puts "Finde typ"
       typ= Typ.find_by(name:pr["pruefung"].to_s+" "+pr["fach"].to_s)
-      p bericht["dateiname"]
+      puts "Berichtdateiname:"+bericht["dateiname"]
       #
-      rp=Report.create(pdf:args.berichteordner+"/orig/"+bericht["dateiname"],examination_at:exm_at,subject:sub,typ:typ)
+      puts "Erstelle report"
+      if not File.exist?(args.berichteordner+"/orig/"+bericht["dateiname"])
+        puts "Skipping!"
+        next
+      end
+      rp=Report.create(pdf:File.read(args.berichteordner+"/orig/"+bericht["dateiname"]),examination_at:exm_at,subject:sub,typ:typ)
+      puts "speichern"
       rp.save!
+      puts "gespeichert"
       #vorlesungen finden
       3.times do |k|
         if bericht["vorl"+(k+1).to_s].to_i!=0
           m =  vorlesungen.find do |row|
             row["id"]==bericht["vorl"+(k+1).to_s]
           end
+          puts "suche modul "+k.to_s+ " mit ID"+bericht["vorl"+(k+1).to_s]
           modl=Modul.find_by(name:m["vorlesung"])
           IsAbout.create(report:rp,modul:modl)
+          puts "gespeichert"
         end
       end
       #pruefer hinzufügen
@@ -36,12 +47,18 @@ namespace :import do
           p =  pruefer.find do |row|
             row["id"]==bericht["pruefer"+(k+1).to_s]
           end
+          puts "suche pruefer "+k.to_s+ " mit ID"+bericht["pruefer"+(k+1).to_s]
           exal=Examinator.find_by(surname:p["nachname"],givenname:p["vorname"])
           ExaminedBy.create(report:rp,examinator:exal)
         end
       end
       #is Ins anlegen
+      puts "Suche signatur"+pr["signatur"]
+      p Folderseries.find_by(name:pr["signatur"])
+      if not Folderseries.find_by(name:pr["signatur"])==nil
       IsIn.create(folderseries:Folderseries.find_by(name:pr["signatur"]),report:rp)
+      puts "gefunden"
+    end
     end
   end
 
