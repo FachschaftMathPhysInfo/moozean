@@ -54,9 +54,9 @@ namespace :import do
       end
       #is Ins anlegen
       puts "Suche signatur"+pr["signatur"]
-      p Folderseries.find_by(name:pr["signatur"])
-      if not Folderseries.find_by(name:pr["signatur"])==nil
-      IsIn.create(folderseries:Folderseries.find_by(name:pr["signatur"]),report:rp)
+      p Folderseries.find_by("name ILIKE '%?%'",pr["signatur"] )
+      if not Folderseries.find_by("name ILIKE '%?%'",pr["signatur"] )==nil
+      IsIn.create(folderseries:Folderseries.find_by("name ILIKE '%?%'",pr["signatur"] ),report:rp)
       puts "gefunden"
     end
     end
