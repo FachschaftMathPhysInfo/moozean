@@ -4,7 +4,8 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let disabledAddons=[];
   console.log(process.env);
-  if (EmberApp.env() !== 'production' && !process.env.ENABLE_SW) {
+  //if (EmberApp.env() == 'production' && !process.env.ENABLE_SW)
+   {
     // disable service workers by default for dev and testing
     console.log('blacklisted');
     disabledAddons.push('ember-service-worker');
