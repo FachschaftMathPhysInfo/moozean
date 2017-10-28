@@ -4,6 +4,7 @@ defaults: &defaults
   use_ssl: true
   ignore_ssl_error: false
   email: <%= ENV['PRODUCTION_EMAIL_ADDRESS'] %>
+  email_username: <%= ENV['PRODUCTION_EMAIL_USERNAME'] %>
   password: <%= ENV['PRODUCTION_EMAIL_PASSWORD'] %>
   box: <%= ENV['PRODUCTION_EMAIL_BOX'] %>
 

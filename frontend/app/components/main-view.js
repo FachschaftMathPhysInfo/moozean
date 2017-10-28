@@ -2,11 +2,6 @@ import Ember from 'ember';
 import moment from 'moment';
 
 export default Ember.Component.extend({
-  didInsertElement() {
-    if (this.get('studentselected')) {
-      this.$('md-autocomplete-wrap input').focus();
-    }
-  },
   store: Ember.inject.service(),
   items: [],
   titlestudent: "Studierendes eintragen",
@@ -73,7 +68,7 @@ export default Ember.Component.extend({
         else this.get('newstudent').content.save().then(foo(this), this.actions.ajaxError.bind(this));
         this.set('currentStep', 1)
         this.$('md-chip-input-container input').focus();
-      } else if (option == 'delete') {
+      }else if(option == 'delete'){
         this.get('newstudent').then((item)=>{
           item.get('lents').then((item)=>{
             item.forEach((lent)=>{
@@ -85,10 +80,16 @@ export default Ember.Component.extend({
           this.set('showDialog', false);
           this.set('currentStep', 0);
           this.$('md-autocomplete-wrap input').focus();
-      } else {
-        this.get('newstudent').then((item)=>{
-          item.rollback();
-        });
+      }else{
+        if(this.get('newstudent.id')!=null){
+          this.get('newstudent').then((item)=>{
+            item.rollback();
+          });
+        }
+        else{
+          this.get('newstudent').destroyRecord();
+        }
+
         this.set('showDialog', false);
         this.$('md-autocomplete-wrap input').focus();
       }
@@ -102,7 +103,7 @@ export default Ember.Component.extend({
       var store = this.get('store');
       return store.query('student', {
         filter: {
-          name: '%' + data + '%'
+          nameoruniid: '%' + data + '%'
         },
         page: {
           limit: 10
@@ -155,19 +156,19 @@ export default Ember.Component.extend({
       this.set('newmail', store.createRecord('email', {
         referencable: lent,
         subject: "Ordner " + lent.get('folder.name'),
-        body: "Hallo " + lent.get('student.name') + ",\n\nLaut unserer Datenbank hast du seit dem " + moment(lent.get('createdAt')).format("ll") +
+        body: "Hallo " + lent.get('student.name').split(" ")[0] + ",\nlaut unserer Datenbank hast du seit dem " + moment(lent.get('createdAt')).format("ll") +
           " den Ordner " + lent.get('folder.name') + " ausgeliehen.\n" +
-          "\n " +
-          "Das ist generell auch noch kein großes Problem. Allerdings haben wir nur wenige Ordner, die \n " +
-          "eigentlich nur zum Kopieren ausgeliehen werden sollten. Deswegen wäre es schön, wenn du ihn \n " +
-          "bald wieder zurückbringst :))\n " +
           "\n" +
-          "Falls du von dieser Mail unglaublich verwirrt bist, weil du dich nicht erinnern kannst, jemals \n " +
-          "einen solchen Ordner ausgeliehen zu haben, sag uns, dass wir wohl der falschen Person \n " +
-          "geschrieben haben ;)\n " +
-          "\n " +
-          "Viele Grüße\n " +
-          "Deine Fachschaft-MathPhys",
+          "Das ist generell auch noch kein großes Problem. Allerdings haben wir nur wenige Ordner, die " +
+          "eigentlich nur zum Kopieren ausgeliehen werden sollten. Deswegen wäre es schön, wenn du ihn " +
+          "bald wieder zurückbringst. :))\n " +
+          "\n" +
+          "Falls du von dieser Mail unglaublich verwirrt bist, weil du dich nicht erinnern kannst, jemals " +
+          "einen solchen Ordner ausgeliehen zu haben, sag uns, dass wir wohl der falschen Person " +
+          "geschrieben haben. ;)\n " +
+          "\n" +
+          "Viele Grüße,\n" +
+          "deine Fachschaft MathPhysInfo",
         address: lent.get('student.uniid') + "@ix.urz.uni-heidelberg.de"
       }));
     },

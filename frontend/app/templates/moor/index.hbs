@@ -19,19 +19,26 @@
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
 {{#paper-content class="md-padding"}}
-      {{#paper-list}}
-      {{#each model as |folder|}}
-      {{#paper-item }}
-            {{#paper-button iconButton=true onClick=(action (transition-to "moor.folderseries" folder))}}{{paper-icon "folder" }}{{/paper-button}}
-            <div class="md-list-item-text">
-              <h3>{{folder.name}}</h3>
-              <p>{{if folder.obligationtoreport "pfandpflichtig" "pfandfrei"}}</p>
-            </div>
-            <span class="flex"></span>
-            {{#paper-button iconButton=true onClick=(action (transition-to "moor.folderseries.print" folder))}}{{paper-icon "print"}}{{/paper-button}}
-            {{#paper-button iconButton=true onClick=(action "deleteFolderSeries" folder)}}{{paper-icon "delete forever"}}{{/paper-button}}
-      {{/paper-item}}
-        {{/each}}
-      {{/paper-list}}
+      {{#paper-data-table sortProp="folder.name" sortDir="desc" selectable=true as |table|}}
+        {{#table.head as |head|}}
+          {{#head.column}}{{/head.column}}
+          {{#head.column sortProp="name" }}Name{{/head.column}}
+          {{#head.column sortProp="obligationtoreport"}}pfandpflichtig{{/head.column}}
+          {{#head.column}}Optionen{{/head.column}}
+        {{/table.head}}
+        {{#table.body as |body|}}
+          {{#each (sort-by table.sortDesc model) as |m|}}
+            {{#body.row edit=true onClick=(action (transition-to "moor.folderseries" m)) as |row|}}
+              {{#row.cell}}{{paper-icon "folder"}}{{/row.cell}}
+              {{#row.cell}}{{m.name}}{{/row.cell}}
+              {{#row.cell}}{{#if m.obligationtoreport}}ja{{else}}nein{{/if}}{{/row.cell}}
+              {{#row.cell}}
+              {{#paper-button iconButton=true onClick=(action (transition-to "moor.folderseries.print" m))}}{{paper-icon "print"}}{{/paper-button}}
+              {{#paper-button iconButton=true onClick=(action "deleteFolderSeries" m)}}{{paper-icon "delete forever"}}{{/paper-button}}
+              {{/row.cell}}
+            {{/body.row}}
+          {{/each}}
+        {{/table.body}}
+      {{/paper-data-table}}
 {{outlet}}
 {{/paper-content}}

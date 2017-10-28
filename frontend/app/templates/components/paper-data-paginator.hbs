@@ -1,17 +1,17 @@
 <div class="space-around">
-	<div class="md-table-label">Ergebnisse:{{count}} &nbsp;</div>
+		<div class="md-table-label">Ergebnisse:&nbsp;{{count}}</div>
 </div>
 {{#if onChangePage}}
-<div class="page-select">
-	<div class="md-table-label">Seite:</div>
-	{{#paper-table-selected options=(readonly pages) selected=page onChange=onChangePage as |pageNumber|}}
+<div class="page-select" style="margin: 30px;">
+	<div class="md-table-label">Seite:&nbsp;</div>
+	{{#paper-table-selected class="no-min-wdith" options=(readonly pages) selected=page onChange=onChangePage as |pageNumber|}}
 		{{pageNumber}}
 	{{/paper-table-selected}}
 </div>
 {{/if}}
-<div class="limit-select">
-	<div class="md-table-label">Berichte pro Seite:</div>
-	{{#paper-table-selected options=limitOptions selected=limit onChange=onChangeLimit as |limit|}}
+<div class="limit-select" style="margin: 0px;">
+	<div class="md-table-label">Berichte pro Seite:&nbsp;</div>
+	{{#paper-table-selected class="no-min-wdith" options=limitOptions selected=limit onChange=onChangeLimit as |limit|}}
 		{{limit}}
 	{{/paper-table-selected}}
 </div>
