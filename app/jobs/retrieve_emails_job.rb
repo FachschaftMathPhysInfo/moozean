@@ -13,7 +13,7 @@ class RetrieveEmailsJob < ApplicationJob
     # create the imap connection
     imap = Net::IMAP.new(EMAIL_CONFIG["imap_server"], EMAIL_CONFIG["imap_port"], EMAIL_CONFIG["use_ssl"], nil, EMAIL_CONFIG["ignore_ssl_error"])
     #login
-    imap.login(EMAIL_CONFIG["email"], EMAIL_CONFIG["password"])
+    imap.login(EMAIL_CONFIG["email_username"], EMAIL_CONFIG["password"])
     #mail box laden
     imap.select(EMAIL_CONFIG["box"])
     #iterieren durch alle nicht gesehen nachrichten

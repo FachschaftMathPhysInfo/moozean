@@ -11,12 +11,29 @@
       <div class="flex layout-column">
     {{form.input flex=30 label="Name" id="nameinput" tabindex=1 value=student.name required=true onChange=(action (mut student.name))}}
     {{form.input flex=30 label="Uni-ID" tabindex=2 maxlength=5 minlength=5 required=true value=student.uniid onChange=(action (mut student.uniid))}}
-    {{#paper-switch tabindex=5 flex=30 value=student.refund onChange=(action (mut student.refund))}}
-     {{#unless  student.refund}}<strong>kein</strong>{{/unless}} Pfand {{#if student.refund}}<strong>vorhanden</strong>{{/if}}
-    {{/paper-switch}}
-    {{#paper-switch tabindex=6 flex=30 value=student.report onChange=(action (mut student.report))}}
-    Bericht {{#unless student.report}}<strong>nicht</strong>{{/unless}} abgegeben
-    {{/paper-switch}}
+    {{#if (and (not student.refund) (not student.report))}}
+      {{#paper-switch tabindex=5 flex=30 value=student.refund onChange=(action (mut student.refund))}}
+        {{#unless student.refund}}<strong>kein</strong>{{/unless}} Pfand {{#if student.refund}}<strong>vorhanden</strong>{{/if}}
+      {{/paper-switch}}
+      {{#paper-switch tabindex=6 flex=30 value=student.report onChange=(action (mut student.report))}}
+        Bericht {{#unless student.report}}<strong>nicht</strong>{{/unless}} abgegeben
+      {{/paper-switch}}
+      {{/if}}
+      {{#if (and student.refund (not student.report))}}
+        {{#paper-switch tabindex=5 flex=30 value=student.refund onChange=(action (mut student.refund))}}
+          {{#unless student.refund}}<strong>kein</strong>{{/unless}} Pfand {{#if student.refund}}<strong>vorhanden</strong>{{/if}}
+        {{/paper-switch}}
+        {{#paper-switch tabindex=6 flex=30 value=student.report onChange=(action (mut student.report))}}
+          Bericht {{#unless student.report}}<strong>nicht</strong>{{/unless}} abgegeben
+        {{/paper-switch}}
+      {{/if}}
+      {{#if (and student.refund student.report)}}
+        Bericht vorhanden,<br>
+      {{#paper-button onClick=(action "repay" student)}}Pfand zurückerstatten{{/paper-button}}
+      {{/if}}
+      {{#if (and (not student.refund) student.report)}}
+      Studi hat Pfandrückzahlung erhalten.
+      {{/if}}
     </div>
   {{/paper-dialog-content}}
   {{#paper-dialog-actions class="layout-row"}}
