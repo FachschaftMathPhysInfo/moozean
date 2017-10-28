@@ -12,7 +12,7 @@ build-essential  nodejs npm libpq-dev wget git cron
 ENV HOME /root
 
 # Use baseimage-docker's init process.
-CMD ["/bin/bash","-c","/sbin/my_init | tee /home/app/kummerkasten/log/stdout.log"]
+CMD ["/bin/bash","-c","/sbin/my_init | tee /home/app/ozean/log/stdout.log"]
 #update nodejs
 RUN npm cache clean -f
 RUN npm install -g n
