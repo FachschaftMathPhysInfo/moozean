@@ -2,7 +2,7 @@ require 'net/imap'
 class RetrieveEmailsJob < ApplicationJob
   queue_as :default
   def decode_utf8(str)
-    if m = /=\?([A-Za-z0-9\-]+)\?(B|Q)\?([!->@-~]+)\?=/i.match(fromname)
+    if m = /=\?([A-Za-z0-9\-]+)\?(B|Q)\?([!->@-~]+)\?=/i.match(str)
       decoded = m[3].unpack("M").first.gsub('_',' ')
       return Iconv.conv('utf-8',m[1],decoded) # to convert to utf-8
     else
@@ -11,11 +11,12 @@ class RetrieveEmailsJob < ApplicationJob
   end
   def perform(*args)
     # create the imap connection
-    imap = Net::IMAP.new(EMAIL_CONFIG["imap_server"], EMAIL_CONFIG["imap_port"], EMAIL_CONFIG["use_ssl"], nil, EMAIL_CONFIG["ignore_ssl_error"])
+    p EMAIL_CONFIG["imap_server"]
+    imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
     #login
-    imap.login(EMAIL_CONFIG["email"], EMAIL_CONFIG["password"])
+    imap.login(ENV['PRODUCTION_EMAIL_ADDRESS'], ENV['PRODUCTION_EMAIL_PASSWORD'])
     #mail box laden
-    imap.select(EMAIL_CONFIG["box"])
+    imap.select(ENV['PRODUCTION_EMAIL_BOX'] )
     #iterieren durch alle nicht gesehen nachrichten
     imap.search(["NOT","DELETED","NOT","FLAGGED"]).each do |message_id|
       imap_message=imap.fetch(message_id,['ENVELOPE','UID','RFC822'])[0]

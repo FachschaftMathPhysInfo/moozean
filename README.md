@@ -1,4 +1,4 @@
-# Kummerkasten
+# Moozean
 
 # Requirements
 
@@ -39,8 +39,8 @@ We strongly recommend using the Docker--approach:
 1. Have an running instance of postgresql
 2. Edit the `development.env` accordingly
 3. Build the docker-image `docker build .`
-4. Create the docker container: `docker create --env-file=development.env --name kummerkasten -p 3008:3000 <hash of the image>`
-5. Start the container `docker start kummerkasten`
-6. Create the database, if needed, `docker exec kummerkasten bundle exec rake db:create`
-7. Migrate the database, if needed, `docker exec kummerkasten bundle exec rake db:migrate`
+4. Create the docker container: `docker create --env-file=development.env --name Moozean -p 3008:3000 <hash of the image>`
+5. Start the container `docker start Moozean`
+6. Create the database, if needed, `docker exec Moozean bundle exec rake db:create`
+7. Migrate the database, if needed, `docker exec Moozean bundle exec rake db:migrate qc:update`
 8. Done! Visit `localhost:3008`
