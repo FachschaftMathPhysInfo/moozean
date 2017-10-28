@@ -42,7 +42,7 @@ group :production do
 #   gem 'heroku-deflater'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data'
 gem "ember-cli-rails", '~> 0.8.0'
 gem "queue_classic", '~> 3.1'
 gem 'jsonapi-resources'
