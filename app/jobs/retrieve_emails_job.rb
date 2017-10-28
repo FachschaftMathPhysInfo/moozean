@@ -12,6 +12,7 @@ class RetrieveEmailsJob < ApplicationJob
   def perform(*args)
     # create the imap connection
     p EMAIL_CONFIG["imap_server"]
+    p ENV['PRODUCTION_IMAP_SERVER']
     imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
     #login
     imap.login(ENV['PRODUCTION_EMAIL_ADDRESS'], ENV['PRODUCTION_EMAIL_PASSWORD'])

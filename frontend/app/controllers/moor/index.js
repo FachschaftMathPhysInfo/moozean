@@ -4,8 +4,8 @@ export default Ember.Controller.extend({
   leftSideBarOpen2:true,
   newfolder:{},
   actions:{
-    addFolder:function(){
-      this.set('newfolder',this.store.createRecord('folder'));
+    addFolderseries:function(){
+      this.set('newfolderseries',this.store.createRecord('folderseries'));
       this.set("showDialog",true);
     },
     deleteFolderSeries(folder){
@@ -15,7 +15,7 @@ export default Ember.Controller.extend({
     },
     closeDialog:function(option){
       if(option=="ok"){
-        this.get('newfolder').save().then(null,this.ajaxError.bind(this))
+        this.get('newfolderseries').save().then(null,this.ajaxError.bind(this))
       }
       this.set('showDialog',false);
     }
