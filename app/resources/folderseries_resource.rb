@@ -7,4 +7,10 @@ class FolderseriesResource < JSONAPI::Resource
   has_many :reports
   has_many :moduls
   has_many :is_abouts
+  def self.creatable_fields(context)
+    super - [:folders,:subjects,:typs,:examinators,:reports,:moduls,:is_abouts]
+  end
+  def self.updatable_fields(context)
+    super - [:folders,:subjects,:typs,:examinators,:reports,:moduls,:is_abouts]
+  end
 end

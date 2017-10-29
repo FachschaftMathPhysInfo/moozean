@@ -24,10 +24,10 @@
     {{#paper-toolbar as |toolbar|}}
       {{#paper-toolbar-tools}}INBOX{{/paper-toolbar-tools}}
     {{/paper-toolbar}}
-    {{#paper-content padding=true}}
+    {{#paper-content}}
         {{#paper-list}}
           {{#each (reverse model) as |mail|}}
-            {{#paper-link-item "moor.inmail.view" mail.id class="md-3-line" }}
+            {{#paper-link-item "moor.inmail.view" mail.id  }}
               <div class="md-list-item-text">
                 <h3>{{#paper-button iconButton=true onClick=(action "toogleRead" mail)}}{{paper-icon "flag" warn=mail.read class="md-avatar"}}{{/paper-button}}
 {{mail.fromname}}</h3>

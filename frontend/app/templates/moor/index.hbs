@@ -1,5 +1,5 @@
 {{#if showDialog closeDialog=(action "closeDialog") action="closeDialog"}}
-{{folder-create-dialog folder=newfolder closeDialog=(action "closeDialog") title="Ordner eintragen"}}
+{{folderseries-create-dialog folderseries=newfolderseries closeDialog=(action "closeDialog") title="Ordnerreihe  eintragen"}}
 {{/if}}
 {{#paper-toolbar}}
    {{#paper-toolbar-tools}}
@@ -10,7 +10,7 @@
     {{/paper-sidenav-toggle}}
      <h2>Moor <span class="hide-sm"></span></h2>
      <span class="flex"></span>
-     {{#paper-button iconButton=true onClick=(action "addFolder")}}
+     {{#paper-button iconButton=true onClick=(action "addFolderseries")}}
        {{paper-icon "create new folder"}}
      {{/paper-button}}
      {{#paper-button iconButton=true}}
