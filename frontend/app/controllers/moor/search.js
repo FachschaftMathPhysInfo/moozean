@@ -52,7 +52,7 @@ export default Ember.Controller.extend({
         moduls: moduls,
         examinators: examinators,
         folderseries: folderseries
-      }, page: {limit: 50}
+      }, page: {limit: 20}
     });
     ergebnis.then(() => {
       this.set("loading", false);
