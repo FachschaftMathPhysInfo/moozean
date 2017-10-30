@@ -32,15 +32,13 @@ export default Ember.Component.extend({
     return (this.get("studentselected") || this.get('ordner') == []);
   }),
   nicht_ausleihbar: Ember.computed('studentselected', 'student.refund', 'ordner.length', 'ordner', 'ordner.[]', function() {
-    var refund = this.get('student.refund');
+    if (this.get('student.refund') || this.get('student.report')) {
+      return false;
+    }
     var contains_obligation = false;
-    var folders = this.get('ordner');
-    folders.forEach(function(item) {
+    this.get('ordner').forEach(function(item) {
       contains_obligation |= item.get('folderseries.obligationtoreport');
     });
-    if (refund) {
-      contains_obligation = false;
-    }
     return contains_obligation;
   }),
   showDialog: false,
@@ -195,6 +193,7 @@ export default Ember.Component.extend({
           if (item.get('folderseries.obligationtoreport')) folders.removeObject(item);
         })
         this.$('div.md-chip-input-container input').focus();
+        this.set('showPfandDialog', false);
       }
     },
     showPfandDialog: function() {
