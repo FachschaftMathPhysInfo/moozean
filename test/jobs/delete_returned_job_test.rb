@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AnonymizeReturnedJobTest < ActiveJob::TestCase
+class DeleteReturnedJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end

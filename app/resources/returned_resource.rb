@@ -1,10 +1,10 @@
 class ReturnedResource < JSONAPI::Resource
-  attributes :lentat
+  attributes :lentat, :created_at
   has_one :student
   has_one :folder
-  after_save :anonymize_student
-  def anonymize_student
+  after_save :delete_returned
+  def delete_returned
     # eine Stunde warten bis anonymisiert wird.
-    AnonymizeReturnedJob.set(wait: 1.hour).perform_later @model
+    DeleteReturnedJob.set(wait: 10.minutes).perform_later @model
   end
 end

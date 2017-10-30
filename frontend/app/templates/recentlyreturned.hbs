@@ -16,30 +16,23 @@
 {{!Table in Card}}
 {{#paper-card as |card|}}
 	{{#card.content }}
-  {{#paper-data-table   sortProp="folder" sortDir="desc" selectable=true as |table|}}
+  {{#paper-data-table sortProp="createdAt" sortDir="desc" selectable=true as |table|}}
   {{#table.head as |head|}}
-    {{#head.column checkbox=true}}
-      {{#paper-checkbox disabled=true onChange=null}}{{/paper-checkbox}}
-    {{/head.column}}
     {{#head.column sortProp="folder.name"}}Ordner{{/head.column}}
-    {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
-    {{#head.column sortProp="createdAt" }}ausgeliehen{{/head.column}}
+    {{#head.column sortProp="student.name"}}Studierendes{{/head.column}}
+    {{#head.column sortProp="createdAt"}}zurückgegeben am{{/head.column}}
     {{#head.column}}Optionen{{/head.column}}
   {{/table.head}}
   {{#table.body as |body|}}
     {{#each (sort-by table.sortDesc model) as |m|}}
       {{#body.row edit=true as |row|}}
-        {{#row.cell checkbox=true}}
-          {{#paper-checkbox
-            value=m.checked
-            onChange=(action (mut m.checked))}}
-          {{/paper-checkbox}}
-        {{/row.cell}}
         {{#row.cell}}{{m.folder.name}}{{/row.cell}}
-        {{#row.cell}}
-          {{m.student.name}}
+        {{#row.cell}}{{m.student.name}}{{/row.cell}}
+        {{#row.cell}}{{moment-from-now m.createdAt}}
+              {{#tooltip-on-element}}
+              {{moment-format m.createdAt 'DD.MM.YY HH:mm'}}
+              {{/tooltip-on-element}}
         {{/row.cell}}
-        {{#row.cell}}{{moment-from-now m.createdAt interval=1000}}{{/row.cell}}
         {{#row.cell edit=true as |cell|}}
           {{#paper-button raised=true primary=true onClick=(action "undoReturn" m)}}Rückgängig machen{{/paper-button}}
         {{/row.cell}}
