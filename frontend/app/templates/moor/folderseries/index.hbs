@@ -44,8 +44,20 @@
       {{/title.text}}
     {{/card.title}}
     {{#card.content}}
+    {{paper-data-paginator
+      count=resultsLength
+    limit=limit
+    limitOptions=limitOptions
+    page=page
+    pages=pages
+    onChangePage=(action (mut page))
+    onChangeLimit=(action (mut limit))
+    onIncrementPage=(action 'incrementPage')
+    onDecrementPage=(action 'decrementPage')
+    plural="Ordner"
+    meta=meta}}
       {{#paper-list}}
-        {{#each model.folders as |folder|}}
+        {{#each paginatedResults as |folder|}}
           {{#paper-item class="md-2-line" }}
             {{paper-icon "folder" class="md-avatar-icon"}}
             <div class="md-list-item-text">

@@ -1,4 +1,4 @@
-{{#paper-autocomplete options=options allowClear=true searchText=(readonly typSearchText) onSearchTextChange=(action (mut typSearchText)) selected=selected searchField="name" labelPath="name" placeholder="Wähle einen Typ" loadingMessage="Suche Typ..."
+{{#paper-autocomplete options=options allowClear=true searchText=(readonly typSearchText) onSearchTextChange=(action (mut typSearchText)) selected=selected searchField="name" labelPath="name" placeholder="Wähle einen Typ" loadingMessage="Suche Typ..." search=(action "searchTyps")
   noMatchesMessage="Es gibt kein solchen Typ" onSelectionChange=(action (mut selected)) as |typ autocomplete|}}
   {{paper-autocomplete-highlight
       label=typ.name

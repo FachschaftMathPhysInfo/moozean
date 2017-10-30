@@ -63,13 +63,13 @@
           <div class="flex-gt-xs-30">
             {{subject-autocomplete
               options=model.subjects
-              selected=selectedSubject
+              selected=subject
               }}
           </div>
           <div class="flex-gt-xs-45">
             {{typ-autocomplete
               options=model.typs
-              selected=selectedTyp
+              selected=typ
             }}
           </div>
         </div>
@@ -107,6 +107,7 @@
       {{#paper-card as |card|}}
     {{#card.actions}}
         {{paper-data-paginator
+          count=resultsLength
     limit=limit
     limitOptions=limitOptions
     page=page
@@ -114,11 +115,12 @@
     onChangePage=(action (mut page))
     onChangeLimit=(action (mut limit))
     onIncrementPage=(action 'incrementPage')
-    onDecrementPage=(action 'decrementPage')}}
+    onDecrementPage=(action 'decrementPage')
+    meta=meta}}
       {{/card.actions}}
     {{#card.content}}
     <div class="layout-row layout-wrap">
-      {{#each paginatedResults as |report|}}
+      {{#each results as |report|}}
         {{report-print-view printReportComp=(action "printReportCon") report=report showPruefDialog=showPruefDialog auswahl=auswahl reportslist=reportslist printselection=printselection}}
       {{/each}}
     </div>

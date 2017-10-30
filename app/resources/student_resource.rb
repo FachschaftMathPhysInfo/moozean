@@ -5,7 +5,6 @@ class StudentResource < JSONAPI::Resource
   has_many :folders_returneds, class_name:"Folder"
   has_many :lents, class_name:"Lent"
   filters :nameoruniid, :name
-  paginator :offset
   def self.apply_filter(records, filter, value, options = {})
     strategy = _allowed_filters.fetch(filter.to_sym, Hash.new)[:apply]
 

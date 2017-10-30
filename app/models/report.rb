@@ -12,7 +12,6 @@ class Report < ApplicationRecord
     if(self.pdf!=nil)
       o, s = Open3.capture2('pdftk A=- cat A1 output - | convert -density 72 - -trim -quality 100 -flatten -sharpen 0x1.0 -crop 100%x50% png:-', stdin_data: self.pdf, binmode: true)
       self.picture = 'data:image/png;base64,' + Base64.encode64(o)
-      p self.picture
     end
   end
   def no_loose_ends

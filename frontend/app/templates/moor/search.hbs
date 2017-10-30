@@ -57,7 +57,7 @@
     {{/card.content}}
     {{#card.actions}}
       {{paper-data-paginator
-        count=results.length
+        count=resultsLength
 limit=limit
 limitOptions=limitOptions
 page=page
@@ -72,7 +72,7 @@ onDecrementPage=(action 'decrementPage')}}
     {{/if}}
   {{/paper-card}}
   <div class="layout-row layout-wrap">
-    {{#each paginatedResults as |report|}}
+    {{#each results as |report|}}
       <div class="flex-xs-100 flex-gt-xs-33-noshrink flex-gt-l-25-noshrink">
         {{#paper-card as |card| }}
           {{#card.actions}}

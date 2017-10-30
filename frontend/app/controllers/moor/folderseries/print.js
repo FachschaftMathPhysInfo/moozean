@@ -11,75 +11,48 @@ export default Ember.Controller.extend({
   auswahl:false,
   limitOptions: Ember.A([5, 10, 15]),
   limit: 5,
-  pages: Ember.computed('limit', 'gefilterte.[]', function() {
+  resultsLength:Ember.computed('meta.record-count', function() {
+    return this.get("meta.record-count");
+  }),
+  pages: Ember.computed('meta.page-count', function() {
     let e = Ember.A();
-    for (let i = 1; i < Math.ceil(this.get("gefilterte.length") / this.get("limit")); i++) {
+    console.log(this.get("meta.page-count"));
+    for (let i = 1; i <=this.get("meta.page-count"); i++) {
       e.pushObject(i);
     }
     return e;
   }),
   page: 1,
-  paginatedResults: Ember.computed('gefilterte.[]', 'page', 'limit', function() {
-    let ind = (this.get('page') - 1) * this.get('limit');
-    return Ember.A(this.get("gefilterte").toArray().slice(ind, ind + this.get('limit')));
-  }),
-  gefilterte:Ember.computed('pruefende.[]','module.[]','selectedTyp','selectedDate','selectedID','selectedSubject','model.reports.[]', function() {
-    let pruefende= this.get('pruefende');
-    let module = this.get('module');
-    let selectedTyp=this.get('selectedTyp');
-    let selectedID=this.get('selectedID');
-    let selectedSubject=this.get('selectedSubject');
-    let selectedDate = this.get('selectedDate');
-    let reports=this.get('model.reports');
-    if(pruefende.length>0) {
-      reports = reports.filter(function(report){
-        let result = true;
-        pruefende.forEach(function(pruefer){
-          let examers= report.get('examinators');
-          let is_included=false;
-          examers.forEach(function(examer){
-            is_included |=examer.get('id')==pruefer.get('id');
-          });
-          result &= is_included;
-        });
-        return result;
+  results: Ember.computed('pruefende.[]', 'module.[]', 'subject', 'typ','page','limit', function() {
+    this.set("loading", true);
+    let moduls = [];
+    let examinators = [];
+    let folderseries = [this.get("model.id")];
+    if (this.get("pruefende") != null) {
+      this.get("pruefende").forEach((item) => {
+        examinators.pushObject(item.get("id"));
       });
     }
-    if(module.length>0) {
-      reports= reports.filter(function(report){
-        let result = true;
-        module.forEach(function(modul){
-          let moduls= report.get('moduls');
-          let is_included=false;
-          moduls.forEach(function(m){
-            is_included |=m.get('id')==modul.get('id');
-          });
-          result &= is_included;
-        });
-        return result;
+    if (this.get("module") != null) {
+      this.get("module").forEach((item) => {
+        moduls.pushObject(item.get("id"));
       });
     }
-    if(selectedTyp){
-      reports= reports.filter(function(report){
-        return report.get('typ.id')== selectedTyp.get('id');
-      });
-    }
-    if(selectedID){
-      reports= reports.filter(function(report){
-        return report.get('id') == selectedID.get('id');
-      });
-    }
-    if(selectedSubject){
-      reports= reports.filter(function(report){
-        return report.get('subject.id')== selectedSubject.get('id');
-      });
-    }
-    if(selectedDate){
-      reports= reports.filter(function(report){
-        return moment(selectedDate).isBefore(moment(report.get('examinationAt')));
-      });
-    }
-     return reports;
+    let ergebnis = this.get('store').query('report', {
+      filter: {
+        subject: this.get('subject.id'),
+        typ: this.get('typ.id'),
+        moduls: moduls,
+        examinators: examinators,
+        folderseries: folderseries
+      }, page: {size: this.get("limit"),number:this.get("page")}
+    });
+    ergebnis.then((data) => {
+      console.log(data);
+      this.set("meta",data.meta);
+      this.set("loading", false);
+    },this.ajaxError.bind(this));
+    return ergebnis;
   }),
   actions:{
     removeExaminator:function(examinator){

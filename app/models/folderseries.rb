@@ -8,4 +8,5 @@ class Folderseries < ApplicationRecord
   has_many :examinators, :through => :examined_bies
   has_many :is_abouts, :through => :reports
   has_many :moduls, :through => :is_abouts
+  scope :name_like, ->(name){ where("name ILIKE ?","%"+name[0]+"%")}
 end

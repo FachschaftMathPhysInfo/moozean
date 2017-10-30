@@ -13,4 +13,7 @@ class FolderseriesResource < JSONAPI::Resource
   def self.updatable_fields(context)
     super - [:folders,:subjects,:typs,:examinators,:reports,:moduls,:is_abouts]
   end
+  filter :name, apply: ->(records, value, _options) {
+  records.name_like(value)
+}
 end

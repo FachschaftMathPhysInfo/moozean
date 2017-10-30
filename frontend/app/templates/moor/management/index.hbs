@@ -21,8 +21,13 @@
         {{/title.text}}
       {{/card.title}}
     {{#paper-list}}
+    {{paper-data-paginator
+    limit=limitSubject
+    page=pageSubject
+    meta=metaSubject
+    plural="Fächer"}}
     {{paper-divider}}
-      {{#each model.subjects as |subject|}}
+      {{#each paginatedSubjects as |subject|}}
         {{#paper-item class="md-1-line"}}
           {{paper-icon "book" class="md-avatar-icon"}}
             <div class="md-list-item-text">
@@ -47,8 +52,13 @@
         {{/title.text}}
       {{/card.title}}
     {{#paper-list}}
+    {{paper-data-paginator
+    limit=limitTyp
+    page=pageTyp
+    meta=metaTyp
+    plural="Typen"}}
     {{paper-divider}}
-      {{#each model.typs as |typ|}}
+      {{#each paginatedTyps as |typ|}}
         {{#paper-item class="md-1-line"}}
           {{paper-icon "bubble chart" class="md-avatar-icon"}}
             <div class="md-list-item-text">
@@ -73,8 +83,13 @@
         {{/title.text}}
       {{/card.title}}
     {{#paper-list}}
+    {{paper-data-paginator
+    limit=limitModul
+    page=pageModul
+    meta=metaModul
+    plural="Module"}}
     {{paper-divider}}
-      {{#each model.moduls as |modul|}}
+      {{#each paginatedModuls as |modul|}}
         {{#paper-item class="md-3-line"}}
           {{paper-icon "bubble chart" class="md-avatar-icon"}}
             <div class="md-list-item-text">

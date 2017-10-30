@@ -4,4 +4,7 @@ class ModulResource < JSONAPI::Resource
   def self.default_sort
     [{field: 'name', direction: :asc}]
   end
+  filter :name, apply: ->(records, value, _options) {
+  records.name_like(value)
+}
 end

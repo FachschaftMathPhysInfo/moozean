@@ -4,6 +4,33 @@ export default Ember.Controller.extend({
   newsubject:{},
   newtyp:{},
   newmodul:{},
+  limitSubject:5,
+  pageSubject:1,
+  paginatedSubjects:Ember.computed('limitSubject','pageSubject','model.subjects.[]', function() {
+    let q= this.store.query('subject', { page:{number:this.get("pageSubject"),size:this.get("limitSubject")}});
+    q.then((data)=>{
+      this.set("metaSubject",data.get("meta"));
+    });
+    return q;
+  }),
+  limitTyp:5,
+  pageTyp:1,
+  paginatedTyps:Ember.computed('limitTyp','pageTyp','model.typs.[]', function() {
+    let q= this.store.query('typ', { page:{number:this.get("pageTyp"),size:this.get("limitTyp")}});
+    q.then((data)=>{
+      this.set("metaTyp",data.get("meta"));
+    });
+    return q;
+  }),
+  limitModul:5,
+  pageModul:1,
+  paginatedModuls:Ember.computed('limitModul','pageModul','model.moduls.[]', function() {
+    let q= this.store.query('modul', { page:{number:this.get("pageModul"),size:this.get("limitModul")}});
+    q.then((data)=>{
+      this.set("metaModul",data.get("meta"));
+    });
+    return q;
+  }),
   actions:{
     addModul:function(){
       this.set('newmodul',this.store.createRecord('modul'));

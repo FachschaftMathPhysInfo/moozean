@@ -1,26 +1,24 @@
 <div class="space-around">
-		<div class="md-table-label">Ergebnisse:&nbsp;{{count}}</div>
+		<div class="md-table-label">Ergebnisse:&nbsp;{{resultsLength}}</div>
 </div>
-{{#if onChangePage}}
 <div class="page-select" style="margin: 30px;">
 	<div class="md-table-label">Seite:&nbsp;</div>
-	{{#paper-table-selected class="no-min-wdith" options=(readonly pages) selected=page onChange=onChangePage as |pageNumber|}}
+	{{#paper-table-selected class="no-min-wdith" options=(readonly pagesA) selected=page onChange=(action (mut page)) as |pageNumber|}}
 		{{pageNumber}}
 	{{/paper-table-selected}}
 </div>
-{{/if}}
 <div class="limit-select" style="margin: 0px;">
-	<div class="md-table-label">Berichte pro Seite:&nbsp;</div>
-	{{#paper-table-selected class="no-min-wdith" options=limitOptions selected=limit onChange=onChangeLimit as |limit|}}
+	<div class="md-table-label">{{plural}} pro Seite:&nbsp;</div>
+	{{#paper-table-selected class="no-min-wdith" options=limitOptions selected=limit onChange=(action (mut limit)) as |limit|}}
 		{{limit}}
 	{{/paper-table-selected}}
 </div>
 <div class="buttons">
 	{{#if total}}<div class="label">{{startOffset}} - {{endOffset}} of {{total}}</div>{{/if}}
-	{{#paper-button iconButton=true onClick=onDecrementPage}}
+	{{#paper-button iconButton=true onClick=(action "decrease")}}
 		{{paper-icon "navigate before"}}
 	{{/paper-button}}
-	{{#paper-button iconButton=true onClick=onIncrementPage}}
+	{{#paper-button iconButton=true onClick=(action "increase")}}
 		{{paper-icon "navigate next"}}
 	{{/paper-button}}
 </div>

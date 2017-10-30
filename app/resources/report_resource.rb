@@ -33,12 +33,12 @@ class ReportResource < JSONAPI::Resource
         end
         records
       else
-        records.joins('INNER JOIN is_abouts m' + value.to_s + ' ON m' + value.to_s + '.report_id = reports.id').where('m' + value.to_s + '.modul_id' => value)
+        records.joins('INNER JOIN is_abouts ia' + value.to_s + ' ON ia' + value.to_s + '.report_id = reports.id').where('ia' + value.to_s + '.modul_id' => value)
       end
     when 'folderseries.id'
       if value.is_a?(Array)
         value.each do |val|
-          records = records.joins('INNER JOIN is_ins m' + val.to_s + ' ON m' + val.to_s + '.report_id = reports.id').where('m' + val.to_s + '.folderseries_id' => val)
+          records = records.joins('INNER JOIN is_ins ii' + val.to_s + ' ON ii' + val.to_s + '.report_id = reports.id').where('ii' + val.to_s + '.folderseries_id' => val)
         end
         records
       else
@@ -47,11 +47,11 @@ class ReportResource < JSONAPI::Resource
     when 'examinators.id'
       if value.is_a?(Array)
         value.each do |val|
-          records = records.joins('INNER JOIN examined_bies m' + val.to_s + ' ON m' + val.to_s + '.report_id = reports.id').where('m' + val.to_s + '.examinator_id' => val)
+          records = records.joins('INNER JOIN examined_bies eb' + val.to_s + ' ON eb' + val.to_s + '.report_id = reports.id').where('eb' + val.to_s + '.examinator_id' => val)
         end
         records
       else
-        records.joins('INNER JOIN examined_bies m' + value.to_s + ' ON m' + value.to_s + '.report_id = reports.id').where('m' + value.to_s + '.examinator_id' => value)
+        records.joins('INNER JOIN examined_bies eb' + value.to_s + ' ON eb' + value.to_s + '.report_id = reports.id').where('eb' + value.to_s + '.examinator_id' => value)
       end
     else
       super(records, filter, value)

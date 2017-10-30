@@ -3,9 +3,10 @@ import moment from 'moment';
 export default Ember.Controller.extend({
   limitOptions: Ember.A([5, 10, 15]),
   limit: 5,
-  pages: Ember.computed('limit', 'filteredResults.[]', function() {
+  pages: Ember.computed('meta.page-count', function() {
     let e = Ember.A();
-    for (let i = 1; i < Math.ceil(this.get("filteredResults.length") / this.get("limit")); i++) {
+    console.log(this.get("meta.page-count"));
+    for (let i = 1; i <=this.get("meta.page-count"); i++) {
       e.pushObject(i);
     }
     return e;
@@ -25,7 +26,10 @@ export default Ember.Controller.extend({
     'beginExamAt',
     'endExamAt'
   ],
-  results: Ember.computed('examinatora.[]', 'modula.[]', 'folderseriesa.[]', 'subject', 'typ', function() {
+  resultsLength:Ember.computed('meta.record-count', function() {
+    return this.get("meta.record-count");
+  }),
+  results: Ember.computed('examinatora.[]', 'modula.[]', 'folderseriesa.[]', 'subject', 'typ','page','limit', function() {
     this.set("loading", true);
     let moduls = [];
     let examinators = [];
@@ -52,9 +56,15 @@ export default Ember.Controller.extend({
         moduls: moduls,
         examinators: examinators,
         folderseries: folderseries
-      }, page: {limit: 20}
+      },
+      page: {
+        size: this.get("limit"),
+        number:this.get("page")
+      }
     });
-    ergebnis.then(() => {
+    ergebnis.then((data) => {
+      console.log(data);
+      this.set("meta",data.meta);
       this.set("loading", false);
     },this.ajaxError.bind(this));
     return ergebnis;
@@ -67,10 +77,6 @@ export default Ember.Controller.extend({
       return moment(item.get("examinationAt")).isBefore(this.get("endExamAt")) && this.get("beginExamAt").isBefore(moment(item.get("examinationAt")));
     });
     return results;
-  }),
-  paginatedResults: Ember.computed('filteredResults.[]', 'page', 'limit', function() {
-    let ind = (this.get('page') - 1) * this.get('limit');
-    return Ember.A(this.get("filteredResults").toArray().slice(ind, ind + this.get('limit')));
   }),
   minDate: Ember.computed('results.[]', function() {
     let min = moment();

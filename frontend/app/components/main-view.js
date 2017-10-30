@@ -31,6 +31,12 @@ export default Ember.Component.extend({
   no_lent_selected: Ember.computed('studentselected', 'ordner', function() {
     return (this.get("studentselected") || this.get('ordner') == []);
   }),
+  limit:5,
+  limitOptions:Ember.A([5,10,15]),
+  page:1,
+  lents:Ember.computed('limit','page','student', function() {
+    return this.store.query('lent', { page: {number:this.get("page"),size:this.get("limit")}});
+  }),
   nicht_ausleihbar: Ember.computed('studentselected', 'student.refund', 'ordner.length', 'ordner', 'ordner.[]', function() {
     var refund = this.get('student.refund');
     var contains_obligation = false;
@@ -50,6 +56,18 @@ export default Ember.Component.extend({
       this.set('newstudent', student);
       this.set('titlestudent', 'Studierendes bearbeiten');
       this.set("showDialog", true);
+    },
+    incrementPage:function() {
+
+    },
+    decrementPage:function(){
+
+    },
+    onChangeLimit:function(limit){
+
+    },
+    onChangePage:function(page){
+
     },
     closeDialog: function(option) {
       var store = this.get('store');
@@ -207,6 +225,9 @@ export default Ember.Component.extend({
           this.$('md-autocomplete-wrap input').focus();
         });
       }
+    },
+    searchFolders:function(data){
+      return this.store.query('folder', { filter: {name:data}});
     },
     focusFolderSelection:function(step){
       if (this.get('student') && step == 1) {
