@@ -20,7 +20,6 @@ export default Component.extend({
 		for(;i<=this.get("meta.page-count");i++){
 			result.push(i);
 		}
-		console.log(result);
 		return result;
 	}),
 	resultsLength:computed('meta.record-count','count', function() {

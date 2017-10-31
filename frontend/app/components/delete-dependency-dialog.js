@@ -19,7 +19,6 @@ export default Ember.Component.extend({
     }
   }),
   dieseselements: Ember.computed('objekt',function() {
-    //console.log(this.get('objekt'));
     if(this.get('objekt')==null) return '';
     switch (this.get('objekt').get('constructor.modelName')){
       case 'modul' :
