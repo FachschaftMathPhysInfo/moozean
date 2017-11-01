@@ -56,7 +56,7 @@
             {{#stepper.step label="Ordner" summary=sumordner as |step|}}
               {{#step.body}}
                 {{teste}}
-                {{#paper-chips readOnly=false removeItem=(action "removeFolder") addItem=(action "addFolder") placeholder="Ordner hinzufügen" content=ordner options=model.lents search=(action "searchFolders") searchField="name" noMatchesMessage="Kein Ordner gefunden" as |item|}}
+                {{#paper-chips readOnly=false removeItem=(action "removeFolder") addItem=(action "addFolder") placeholder="Ordner hinzufügen" content=ordner options=model.folders search=(action "searchFolders") searchField="name" noMatchesMessage="Kein Ordner gefunden" as |item|}}
                   <strong>{{item.name}}</strong>
                   {{#if item.obligationtoreport}}
                     {{paper-icon "attach money" size=18}}
