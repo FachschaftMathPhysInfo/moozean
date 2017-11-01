@@ -8,6 +8,11 @@ export default Controller.extend({
     toogleRead:function(mail){
       mail.set('read',!mail.get("read"));
       mail.save().then(null)
+    },
+    addStudent:function(){
+      var store = this.get('store');
+      this.set('newstudent',store.createRecord('student'));
+      this.set("showCreate",true);
     }
   }
 });

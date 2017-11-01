@@ -7,6 +7,8 @@
       {{#text.title}}{{model.fromname}}{{/text.title}}
       {{#text.subhead}}{{model.fromaddress}}{{/text.subhead}}
     {{/header.text}}
+
+    {{#paper-button onClick=(action reply) warn=model.emails.length}}{{#if model.emails}}Erneut {{/if}}Antworten{{/paper-button}}
   {{/card.header}}
   {{#card.content}}
     {{#paper-subheader}}{{model.subject}}{{/paper-subheader}}

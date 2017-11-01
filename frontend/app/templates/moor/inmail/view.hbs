@@ -1,4 +1,5 @@
-{{inmail-display model=(readonly model.mail) setTexFile=(action "setPdfFile") setPdfFile=(action "setPdfFile")}}
+{{inmail-display model=(readonly model.mail) setTexFile=(action "setPdfFile") setPdfFile=(action "setPdfFile")
+reply=(action "reply")}}
 {{#paper-card as |card|}}
   {{#card.title as |title|}}
     {{#title.text as |text|}}
@@ -44,4 +45,7 @@
     {{/paper-button}}
   {{/card.actions}}
 {{/paper-card}}
+{{#if showReplyDialog closeDialog=(action "closeMailDialog") action="closeMailDialog" }}
+  {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
+{{/if}}
 {{outlet}}

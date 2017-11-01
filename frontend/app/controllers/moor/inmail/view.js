@@ -4,6 +4,24 @@ export default Controller.extend({
   fileName:"Datei hochladen",
     filetexName:"Datei hochladen",
     actions:{
+      reply(){
+        this.set("showReplyDialog",true);
+        console.log(this.get("model"));
+        this.set('newmail', this.store.createRecord('email', {
+          referencable: this.get("model.mail"),
+          subject: "RE: "+this.get("model.mail.subject"),
+          body: "Hallo " + this.get("model.mail.fromname").split(" ")[0] + ",\nvielen Dank für dein Protokoll! Falls du mal Pfand gezahlt hattest, kannst du das gegen Vorlage der Quittung im Fachschaftsraum 1.301 im Mathematikon abholen. Komm' einfach so vorbei oder ruf vorher an unter 06221 5414999, um sicher zu gehen, dass jemand da ist. Du kannst uns natürlich auch eine Mail [1] schreiben und einen Termin ausmachen.\n\nDanke und viele Grüße\nNAMENAMENAME\nFachschaft MathPhysInfo\n\n[1] fachschaft@mathphys.stura.uni-heidelberg.de\nDeine Nachricht:\n===\n "+this.get("model.mail.body"),
+          address: this.get("model.mail.fromaddress")
+        }));
+      },
+      closeMailDialog(){
+        this.get("newmail").save();
+        this.set("showReplyDialog",false);
+      },addStudent:function(){
+        var store = this.get('store');
+        this.set('newstudent',store.createRecord('student'));
+        this.set("showDialog",true);
+      },
       searchStudent:function(data){
         return this.store.query('student', {
           filter: {
