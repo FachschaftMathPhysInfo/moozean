@@ -7,6 +7,9 @@
     {{/paper-sidenav-toggle}}
      <h2>Moor {{paper-icon "chevron-right"}} Mail</h2>
      <span class="flex"></span>
+     {{#paper-button iconButton=true onClick=(action "addStudent")}}
+       {{paper-icon "person add"}}
+     {{/paper-button}}
      {{#paper-button iconButton=true}}
        {{paper-icon "more_vert"}}
      {{/paper-button}}
@@ -44,5 +47,5 @@
       {{outlet}}
 {{/paper-card-content}}
 {{/paper-sidenav-container}}
-
 {{/paper-content}}
+{{#if showCreate}}{{student-create-dialog student=newstudent deletable=false closeDialog=(action "closeDialog") title=titlestudent}}{{/if}}
