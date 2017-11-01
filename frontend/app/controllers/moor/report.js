@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   fileName:"Datei hochladen",
   filetexName:"Datei hochladen",
   actions:{
@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
         this.set('model.report',this.store.createRecord('report'));
         this.set('fileName',"Datei hochladen");
         this.set('filetexName',"Datei hochladen");
-      },this.ajaxError.bind(this));
+      });
     }
   }
 });

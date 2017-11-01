@@ -27,7 +27,7 @@
     {{#liquid-bind (hash attachment=(object-at selectedAttachment attachments)) class="md-padding" as |current|}}
       {{#if (eq current.attachment.contentType "application/pdf")}}
         <div class="pdf-container">
-          {{pdf-document  src=current.attachment.pdf}}
+          {{pdf-js  pdf=current.attachment.pdf}}
         </div>
         {{#paper-button onClick=(action setPdfFile current.attachment)}} ALS PDF verwenden{{/paper-button}}
       {{else}}

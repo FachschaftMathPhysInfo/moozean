@@ -1,23 +1,25 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   leftSideBarOpen2: true,
   newfolder: {},
   page: 1,
-  resultsLength:Ember.computed('meta.record-count',function(){
+  resultsLength:computed('meta.record-count',function(){
     return this.get("meta.record-count");
   }),
-  pages: Ember.computed('meta.page-count', function() {
-    let e = Ember.A();
+  pages: computed('meta.page-count', function() {
+    let e = A();
     console.log(this.get("meta.page-count"));
     for (let i = 1; i <= this.get("meta.page-count"); i++) {
       e.pushObject(i);
     }
     return e;
   }),
-  limitOptions: Ember.A([5, 10, 15]),
+  limitOptions: A([5, 10, 15]),
   limit:5,
-  paginatedResults: Ember.computed('page', 'limit', function() {
+  paginatedResults: computed('page', 'limit', function() {
     let result= this.store.query("folderseries", {
       page: {
         number: this.get('page'),
@@ -41,7 +43,7 @@ export default Ember.Controller.extend({
     },
     closeDialog: function(option) {
       if (option == "ok") {
-        this.get('newfolderseries').save().then(null, this.ajaxError.bind(this))
+        this.get('newfolderseries').save().then(null)
       }
       this.set('showDialog', false);
     },

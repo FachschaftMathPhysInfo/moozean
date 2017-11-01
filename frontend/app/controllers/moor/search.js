@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import Controller from '@ember/controller';
 import moment from 'moment';
-export default Ember.Controller.extend({
-  limitOptions: Ember.A([5, 10, 15]),
+export default Controller.extend({
+  limitOptions: A([5, 10, 15]),
   limit: 5,
-  pages: Ember.computed('meta.page-count', function() {
-    let e = Ember.A();
+  pages: computed('meta.page-count', function() {
+    let e = A();
     console.log(this.get("meta.page-count"));
     for (let i = 1; i <=this.get("meta.page-count"); i++) {
       e.pushObject(i);
@@ -12,9 +14,9 @@ export default Ember.Controller.extend({
     return e;
   }),
   page: 1,
-  examinatora: Ember.A(),
-  modula: Ember.A(),
-  folderseriesa: Ember.A(),
+  examinatora: A(),
+  modula: A(),
+  folderseriesa: A(),
   beginExamAt: "date",
   endExamAt: "date",
   queryParams: [
@@ -26,10 +28,10 @@ export default Ember.Controller.extend({
     'beginExamAt',
     'endExamAt'
   ],
-  resultsLength:Ember.computed('meta.record-count', function() {
+  resultsLength:computed('meta.record-count', function() {
     return this.get("meta.record-count");
   }),
-  results: Ember.computed('examinatora.[]', 'modula.[]', 'folderseriesa.[]', 'subject', 'typ','page','limit', function() {
+  results: computed('examinatora.[]', 'modula.[]', 'folderseriesa.[]', 'subject', 'typ','page','limit', function() {
     this.set("loading", true);
     let moduls = [];
     let examinators = [];
@@ -66,10 +68,10 @@ export default Ember.Controller.extend({
       console.log(data);
       this.set("meta",data.meta);
       this.set("loading", false);
-    },this.ajaxError.bind(this));
+    });
     return ergebnis;
   }),
-  filteredResults: Ember.computed('results.[]', 'beginExamAt', 'endExamAt', function() {
+  filteredResults: computed('results.[]', 'beginExamAt', 'endExamAt', function() {
     if ((this.get("beginExamAt") == null) || (this.get("endExamAt") == null)) {
       return this.get('results');
     }
@@ -78,7 +80,7 @@ export default Ember.Controller.extend({
     });
     return results;
   }),
-  minDate: Ember.computed('results.[]', function() {
+  minDate: computed('results.[]', function() {
     let min = moment();
     this.get('results').forEach((item) => {
       if (moment(item.get('examinationAt')).isBefore(min)) {
@@ -87,7 +89,7 @@ export default Ember.Controller.extend({
     });
     return min;
   }),
-  maxDate: Ember.computed('results.[]', function() {
+  maxDate: computed('results.[]', function() {
     let max = moment(new Date(1900));
     this.get('results').forEach((item) => {
       if (max.isBefore(moment(item.get('examinationAt')))) {
@@ -112,7 +114,7 @@ export default Ember.Controller.extend({
         folderseries: folds
       });
       console.log(printout);
-      printout.save().then(null,this.ajaxError.bind(this))
+      printout.save().then(null)
     },
     decrementPage() {
       let page = this.get('page');
@@ -140,7 +142,7 @@ export default Ember.Controller.extend({
       if(option=="ok"){
       report.save().then(()=>{
         alert("Erfolgreich gespeichert!");
-      },this.ajaxError.bind(this));
+      });
 
     }
     else {

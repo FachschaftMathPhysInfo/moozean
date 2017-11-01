@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Controller from '@ember/controller';
 import moment from 'moment';
-export default Ember.Controller.extend({
-  paperToaster:Ember.inject.service(),
+export default Controller.extend({
+  paperToaster:service(),
   actions:{
     reload_lents: function(){
       this.get('model.lents').forEach((item)=>{
@@ -30,8 +31,8 @@ export default Ember.Controller.extend({
           _this.set("showDialog",false);
       }};
         if(this.get('newstudent').save!=null)
-        this.get('newstudent').save().then(foo(this),this.ajaxError.bind(this))
-  else this.get('newstudent').content.save().then(foo(this),this.ajaxError.bind(this));
+        this.get('newstudent').save().then(foo(this))
+  else this.get('newstudent').content.save().then(foo(this));
 }else{
       if(this.get('newstudent').unloadRecord!=null)
       this.get('newstudent').unloadRecord();
@@ -46,7 +47,7 @@ export default Ember.Controller.extend({
         page:{
           limit:10
         }
-      }).catch(this.ajaxError.bind(this))
+      })
     },
     saveModel:function(){
       let folders = this.get('ordner');
@@ -56,7 +57,7 @@ export default Ember.Controller.extend({
           _this.set('currentStep',0);
           _this.set('student',null);
           _this.get('ordner').removeObject(f);
-        }}(this,folders[i]),this.ajaxError.bind(this));
+        }}(this,folders[i]));
       }
     },
     addFolder:function(data){
@@ -67,7 +68,7 @@ export default Ember.Controller.extend({
     },
     giveBack:function(lent){
       let returned=this.store.createRecord('returned',{lentat:lent.get('createdAt'),student:lent.get('student'),folder:lent.get('folder')});
-      returned.save().then(null,this.ajaxError.bind(this))
+      returned.save().then(null)
       lent.destroyRecord();
     },
     mail:function(lent){
@@ -95,7 +96,7 @@ export default Ember.Controller.extend({
     closeMailDialog:function(option){
       this.set('showMailDialog',false);
       if(option=="ok"){
-        this.get('newmail').save().then(null,this.ajaxError.bind(this));
+        this.get('newmail').save().then(null);
       } else
       {
         if(this.get('newmail').unloadRecord!=null)
@@ -106,7 +107,7 @@ export default Ember.Controller.extend({
       this.set('showPfandDialog', false);
       if(option=="ok"){
           student.set('refund', true);
-          student.save().then(null,this.ajaxError.bind(this));
+          student.save().then(null);
       }
     },
     showPfandDialog:function(){

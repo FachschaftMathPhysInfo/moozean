@@ -1,8 +1,12 @@
-import Ember from 'ember';
+import { schedule } from '@ember/runloop';
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import moment from 'moment';
 
-export default Ember.Component.extend({
-  store: Ember.inject.service(),
+export default Component.extend({
+  store: service(),
   items: [],
   titlestudent: "Studierendes eintragen",
   bleibendeOrdner: [{
@@ -13,7 +17,7 @@ export default Ember.Component.extend({
   ordner: [],
   toggleMenu: true,
   newstudent: {},
-  sumordner: Ember.computed('ordner.[]', function() {
+  sumordner: computed('ordner.[]', function() {
     var result = [];
     var ordner = this.get('ordner');
     ordner.forEach(function(item) {
@@ -22,22 +26,22 @@ export default Ember.Component.extend({
     return result;
   }),
   student: null,
-  deletable: Ember.computed('newstudent', function() {
+  deletable: computed('newstudent', function() {
     return this.get('newstudent.uniid') != undefined;
   }),
-  studentselected: Ember.computed('student', function() {
+  studentselected: computed('student', function() {
     return this.get('student') == null;
   }),
-  no_lent_selected: Ember.computed('studentselected', 'ordner', function() {
+  no_lent_selected: computed('studentselected', 'ordner', function() {
     return (this.get("studentselected") || this.get('ordner') == []);
   }),
   limit:5,
-  limitOptions:Ember.A([5,10,15]),
+  limitOptions:A([5,10,15]),
   page:1,
-  lents:Ember.computed('limit','page','student', function() {
+  lents:computed('limit','page','student', function() {
     return this.store.query('lent', { page: {number:this.get("page"),size:this.get("limit")}});
   }),
-  nicht_ausleihbar: Ember.computed('studentselected', 'student.refund', 'ordner.length', 'ordner', 'ordner.[]', function() {
+  nicht_ausleihbar: computed('studentselected', 'student.refund', 'ordner.length', 'ordner', 'ordner.[]', function() {
     if (this.get('student.refund') || this.get('student.report')) {
       return false;
     }
@@ -80,8 +84,8 @@ export default Ember.Component.extend({
           }
         };
         if (this.get('newstudent').save != null)
-          this.get('newstudent').save().then(foo(this), this.actions.ajaxError.bind(this))
-        else this.get('newstudent').content.save().then(foo(this), this.actions.ajaxError.bind(this));
+          this.get('newstudent').save().then(foo(this))
+        else this.get('newstudent').content.save().then(foo(this));
         this.set('currentStep', 1)
         this.$('md-chip-input-container input').focus();
       }else if(option == 'delete'){
@@ -124,7 +128,7 @@ export default Ember.Component.extend({
         page: {
           limit: 10
         }
-      }).catch(this.actions.ajaxError.bind(this))
+      })
     },
     saveModel: function() {
       if (!this.get('nicht_ausleihbar')) {
@@ -203,7 +207,7 @@ export default Ember.Component.extend({
         student.set('refund', true);
         student.save().then(() => {
           this.set('showPfandDialog', false);
-        }, this.actions.ajaxError.bind(this));
+        });
         this.send('saveModel');
       } else {
         var folders = this.get('ordner');
@@ -220,7 +224,7 @@ export default Ember.Component.extend({
     clearWhenBack: function(step) {
       if (!this.get('studentselected') && step == 0) {
         this.set('student', null);
-        Ember.run.schedule('afterRender', this, function() {
+        schedule('afterRender', this, function() {
           this.$('md-autocomplete-wrap input').focus();
         });
       }
@@ -230,7 +234,7 @@ export default Ember.Component.extend({
     },
     focusFolderSelection:function(step){
       if (this.get('student') && step == 1) {
-        Ember.run.schedule('afterRender', this, function() {
+        schedule('afterRender', this, function() {
           this.$('div.md-chip-input-container input').focus();
         });
       }

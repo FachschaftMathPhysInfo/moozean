@@ -1,13 +1,17 @@
-import Ember from 'ember';
+import { schedule } from '@ember/runloop';
+import { observer } from '@ember/object';
+import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  attachments: Ember.A([]),
-  toBeInserted: Ember.A([]),
+export default Component.extend({
+  attachments: A([]),
+  toBeInserted: A([]),
   setTexFile(){},
   setPdfFile(){},
-  fullAttention: Ember.on('init', Ember.observer('model.attachments.[]', 'model.subject', function() {
+  fullAttention: on('init', observer('model.attachments.[]', 'model.subject', function() {
     this.get("attachments").clear();
-    Ember.run.schedule('afterRender', this, function() {
+    schedule('afterRender', this, function() {
       this.set("toBeInserted", this.get("model.attachments").slice());
     });
   })),

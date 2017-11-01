@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function isActive([routeName, activeRoute,mail]/*, hash*/) {
     //console.log(routeName,activeRoute,mail);
@@ -8,4 +8,4 @@ export function isActive([routeName, activeRoute,mail]/*, hash*/) {
      return (activeRoute)==(routeName+"/"+mail.get('id'));
    }
 }
-export default Ember.Helper.helper(isActive);
+export default helper(isActive);

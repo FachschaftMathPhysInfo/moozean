@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
+import { htmlSafe } from '@ember/string';
 
 export function simpleFormat(input/*, hash*/) {
   if (input) {
@@ -10,10 +11,10 @@ export function simpleFormat(input/*, hash*/) {
         str = str.replace(/\n/g, '<br />');
         str = '<p>' + str + '</p>';
       }
-      return Ember.String.htmlSafe(str);
+      return htmlSafe(str);
     }
   }
   return "";
 }
 
-export default Ember.Helper.helper(simpleFormat);
+export default helper(simpleFormat);

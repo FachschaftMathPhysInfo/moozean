@@ -1,5 +1,8 @@
 {
   "directory": "bower_components",
   "analytics": false,
-  "allow_root":true
+  "allow_root":true,
+  "scripts": {
+    "postinstall": "./installpdfes6.sh"
+  }
 }

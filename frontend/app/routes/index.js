@@ -1,8 +1,9 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model:function(){
-    return Ember.RSVP.hash({folders:this.store.findAll('folder').catch(this.ajaxError.bind(this)),lents:this.store.findAll('lent').catch(this.ajaxError.bind(this))});
+    return hash({folders:this.store.findAll('folder'),lents:this.store.findAll('lent')});
   }
   
 });

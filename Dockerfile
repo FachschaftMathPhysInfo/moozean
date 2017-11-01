@@ -7,7 +7,7 @@ RUN /pd_build/redis.sh
 # Enable the Redis service.
 RUN rm -f /etc/service/redis/down
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
-build-essential  nodejs npm libpq-dev wget git cron
+build-essential  nodejs npm libpq-dev wget git cron pdftk imagemagick libmagickwand-dev ghostscript
 
 ENV HOME /root
 
@@ -33,7 +33,8 @@ RUN DEBUG_RESOLVER=1 bundler install --binstubs --verbose
 #und den rest kopieren
 COPY . .
 ENV RAILS_ENV production
-RUN RAILS_ENV=production PRODUCTION_DATABASE_ADAPTER="postgresql" bundle exec rake assets:precompile
+RUN chown -R app /home/app
+RUN RAILS_ENV=production PRODUCTION_DATABASE_ADAPTER="postgresql" /sbin/setuser app bundle exec rake assets:precompile
 RUN bash gem install whenever
 RUN rm -rf /home/app/ozean/tmp/pids && bundle exec whenever --update-crontab
 RUN rm -f /etc/service/nginx/down

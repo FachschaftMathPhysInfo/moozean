@@ -1,23 +1,25 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   noneditable:true,
   thisfolder:{},
   page: 1,
-  resultsLength:Ember.computed('meta.record-count',function(){
+  resultsLength:computed('meta.record-count',function(){
     return this.get("meta.record-count");
   }),
-  pages: Ember.computed('meta.page-count', function() {
-    let e = Ember.A();
+  pages: computed('meta.page-count', function() {
+    let e = A();
     console.log(this.get("meta.page-count"));
     for (let i = 1; i <= this.get("meta.page-count"); i++) {
       e.pushObject(i);
     }
     return e;
   }),
-  limitOptions: Ember.A([5, 10, 15]),
+  limitOptions: A([5, 10, 15]),
   limit:5,
-  paginatedResults: Ember.computed('page', 'limit','model.folders.[]', function() {
+  paginatedResults: computed('page', 'limit','model.folders.[]', function() {
     let result= this.store.query("folder", {
       filter:{
         folderseries:this.get("model.id")
@@ -37,7 +39,7 @@ export default Ember.Controller.extend({
       this.set('noneditable',!this.get('noneditable'));
     },
     saveFolderseries:function(){
-      this.get("model").save().then(null,this.ajaxError.bind(this))
+      this.get("model").save().then(null)
     },
     deleteFolderseries:function(){
       this.get("model").destroyRecord();
@@ -63,7 +65,7 @@ export default Ember.Controller.extend({
     },
     closeFolderDialog:function(option){
       if(option=="ok"){
-        this.get('thisfolder').save().then(null,this.ajaxError.bind(this))
+        this.get('thisfolder').save().then(null)
       }
       else {
         this.get('thisfolder').rollback();

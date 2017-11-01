@@ -1,12 +1,13 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import Controller from '@ember/controller';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   newsubject:{},
   newtyp:{},
   newmodul:{},
   limitSubject:5,
   pageSubject:1,
-  paginatedSubjects:Ember.computed('limitSubject','pageSubject','model.subjects.[]', function() {
+  paginatedSubjects:computed('limitSubject','pageSubject','model.subjects.[]', function() {
     let q= this.store.query('subject', { page:{number:this.get("pageSubject"),size:this.get("limitSubject")}});
     q.then((data)=>{
       this.set("metaSubject",data.get("meta"));
@@ -15,7 +16,7 @@ export default Ember.Controller.extend({
   }),
   limitTyp:5,
   pageTyp:1,
-  paginatedTyps:Ember.computed('limitTyp','pageTyp','model.typs.[]', function() {
+  paginatedTyps:computed('limitTyp','pageTyp','model.typs.[]', function() {
     let q= this.store.query('typ', { page:{number:this.get("pageTyp"),size:this.get("limitTyp")}});
     q.then((data)=>{
       this.set("metaTyp",data.get("meta"));
@@ -24,7 +25,7 @@ export default Ember.Controller.extend({
   }),
   limitModul:5,
   pageModul:1,
-  paginatedModuls:Ember.computed('limitModul','pageModul','model.moduls.[]', function() {
+  paginatedModuls:computed('limitModul','pageModul','model.moduls.[]', function() {
     let q= this.store.query('modul', { page:{number:this.get("pageModul"),size:this.get("limitModul")}});
     q.then((data)=>{
       this.set("metaModul",data.get("meta"));
@@ -53,7 +54,7 @@ export default Ember.Controller.extend({
     },
     closeModulDialog:function(option){
       if(option=="ok"){
-        this.get('newmodul').save().then(null,this.ajaxError.bind(this))
+        this.get('newmodul').save().then(null)
       }
       else{
         this.get('newmodul').rollback();
@@ -71,7 +72,7 @@ export default Ember.Controller.extend({
     },
     closeSubjectDialog:function(option){
       if(option=="ok"){
-        this.get('newsubject').save().then(null,this.ajaxError.bind(this))
+        this.get('newsubject').save().then(null)
       } else
       {
         if(this.get('showCreateSubjectDialog')){
@@ -91,7 +92,7 @@ export default Ember.Controller.extend({
     },
     closeTypDialog:function(option){
       if(option=="ok"){
-        this.get('newtyp').save().then(null,this.ajaxError.bind(this))
+        this.get('newtyp').save().then(null)
       } else
       {
         if(this.get('showCreateTypDialog'))

@@ -112,38 +112,38 @@
                   {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
                   {{#if (eq m.emails.length 0)}}{{#paper-button raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}}
                   {{#if m.emails.length}}
-                    {{#tooltip-on-element}}
+                    {{#paper-tooltip}}
                       <ul style="padding: 0px 2px; line-height:150%;">
                         <li style="list-style-type: none;">zuletzt gemailt:</li>
                         {{#each m.emails as |em|}}
                         <li>{{moment-format em.createdAt 'DD.MM.YY HH:mm'}}</li>
                         {{/each}}
                       </ul>
-                    {{/tooltip-on-element}}
+                    {{/paper-tooltip}}
                   {{/if}} Mailen{{/paper-button}}
                   {{/if}}
                   {{#if (eq m.emails.length 1)}}{{#paper-button class="orange" raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}}
                   {{#if m.emails.length}}
-                    {{#tooltip-on-element}}
+                    {{#paper-tooltip}}
                       <ul style="padding: 0px 2px; line-height:150%;">
                         <li style="list-style-type: none;">zuletzt gemailt:</li>
                         {{#each m.emails as |em|}}
                         <li>{{moment-format em.createdAt 'DD.MM.YY HH:mm'}}</li>
                         {{/each}}
                       </ul>
-                    {{/tooltip-on-element}}
+                    {{/paper-tooltip}}
                   {{/if}} Mailen{{/paper-button}}
                   {{/if}}
                   {{#if (gt m.emails.length 1)}}{{#paper-button class="tomato" raised=true warn=true onClick=(action "mail" m)}}{{paper-icon "contact mail"}}
                   {{#if m.emails.length}}
-                    {{#tooltip-on-element}}
+                    {{#paper-tooltip}}
                       <ul style="padding: 0px 2px; line-height:150%;">
                         <li style="list-style-type: none;">zuletzt gemailt:</li>
                         {{#each m.emails as |em|}}
                         <li>{{moment-format em.createdAt 'DD.MM.YY HH:mm'}}</li>
                         {{/each}}
                       </ul>
-                    {{/tooltip-on-element}}
+                    {{/paper-tooltip}}
                   {{/if}} Mailen{{/paper-button}}
                   {{/if}}
 

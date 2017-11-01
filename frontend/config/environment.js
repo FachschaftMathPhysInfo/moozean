@@ -1,10 +1,10 @@
 /* eslint-env node */
+'use strict';
 
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
     modulePrefix: 'ember-ozean',
-    environment: environment,
-    changeTracker: { trackHasMany: true, auto: true, enableIsDirty: true },
+    environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -21,24 +21,9 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    },
-    moment:{
-      locale:'de',
-      defaultFormat: 'MM.YYYY',
-      includeLocales: ['de']
     }
   };
-  ENV.contentSecurityPolicy = {
-  'default-src': "'none'",
-  'script-src': "'self' 'unsafe-inline'",
-  'style-src': "'self' 'unsafe-inline' https://fonts.googleapis.com",
-  'font-src': "'self' fonts.gstatic.com",
-  'connect-src': "'self'",
-  'img-src': "'self' data:",
-  'media-src': "'self'"
-}
-ENV['ember-paper']={};
-ENV['ember-paper'].insertFontLinks=false;
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -59,8 +44,7 @@ ENV['ember-paper'].insertFontLinks=false;
   }
 
   if (environment === 'production') {
-
+    // here you can enable a production-specific feature
   }
-
   return ENV;
 };

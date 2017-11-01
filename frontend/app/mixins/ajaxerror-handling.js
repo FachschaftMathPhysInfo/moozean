@@ -1,6 +1,7 @@
+import Mixin from '@ember/object/mixin';
 import Ember from 'ember';
 
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   ajaxError: function(error) {
     if (!error) {

@@ -1,8 +1,11 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
+import { on } from '@ember/object/evented';
+import { A } from '@ember/array';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  pruefauswahl: Ember.A(),
-  reportslistDidChange: Ember.on('init', Ember.observer('reportslist', function() {
+export default Component.extend({
+  pruefauswahl: A(),
+  reportslistDidChange: on('init', observer('reportslist', function() {
     let pruefauswahl = this.get('pruefauswahl');
     pruefauswahl.clear();
       this.get('reportslist').forEach((item)=>{

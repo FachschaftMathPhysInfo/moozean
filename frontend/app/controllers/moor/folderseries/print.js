@@ -1,21 +1,23 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import Controller from '@ember/controller';
 import moment from 'moment';
 
-export default Ember.Controller.extend({
-  pruefende:Ember.A(),
-  module:Ember.A(),
-  printselection:Ember.A(),
+export default Controller.extend({
+  pruefende:A(),
+  module:A(),
+  printselection:A(),
   selectedDate:null,
-  pruefauswahl:Ember.A(),
-  reportslist:Ember.A(),
+  pruefauswahl:A(),
+  reportslist:A(),
   auswahl:false,
-  limitOptions: Ember.A([5, 10, 15]),
+  limitOptions: A([5, 10, 15]),
   limit: 5,
-  resultsLength:Ember.computed('meta.record-count', function() {
+  resultsLength:computed('meta.record-count', function() {
     return this.get("meta.record-count");
   }),
-  pages: Ember.computed('meta.page-count', function() {
-    let e = Ember.A();
+  pages: computed('meta.page-count', function() {
+    let e = A();
     console.log(this.get("meta.page-count"));
     for (let i = 1; i <=this.get("meta.page-count"); i++) {
       e.pushObject(i);
@@ -23,7 +25,7 @@ export default Ember.Controller.extend({
     return e;
   }),
   page: 1,
-  results: Ember.computed('pruefende.[]', 'module.[]', 'subject', 'typ','page','limit', function() {
+  results: computed('pruefende.[]', 'module.[]', 'subject', 'typ','page','limit', function() {
     this.set("loading", true);
     let moduls = [];
     let examinators = [];
@@ -51,7 +53,7 @@ export default Ember.Controller.extend({
       console.log(data);
       this.set("meta",data.meta);
       this.set("loading", false);
-    },this.ajaxError.bind(this));
+    });
     return ergebnis;
   }),
   actions:{
@@ -96,7 +98,7 @@ export default Ember.Controller.extend({
     },
     printSelection:function(){
       this.get('printselection').forEach((printout)=>{
-        printout.save().then(null,this.ajaxError.bind(this))
+        printout.save().then(null)
       });
       this.set('printselection',[]);
     },
@@ -114,7 +116,7 @@ export default Ember.Controller.extend({
       if(option=="ok"){
         this.get('pruefauswahl').forEach((item)=>{
           let pr=this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
-          pr.save().then(null,this.ajaxError.bind(this))
+          pr.save().then(null)
         });
       }
       this.set('reportslist',[]);

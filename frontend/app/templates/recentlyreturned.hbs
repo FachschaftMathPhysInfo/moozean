@@ -29,9 +29,9 @@
         {{#row.cell}}{{m.folder.name}}{{/row.cell}}
         {{#row.cell}}{{m.student.name}}{{/row.cell}}
         {{#row.cell}}{{moment-from-now m.createdAt}}
-              {{#tooltip-on-element}}
+              {{#paper-tooltip}}
               {{moment-format m.createdAt 'DD.MM.YY HH:mm'}}
-              {{/tooltip-on-element}}
+              {{/paper-tooltip}}
         {{/row.cell}}
         {{#row.cell edit=true as |cell|}}
           {{#paper-button raised=true primary=true onClick=(action "undoReturn" m)}}Rückgängig machen{{/paper-button}}

@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
   model:function(){
-    return this.store.findAll('returned').catch(this.ajaxError.bind(this));
+    return this.store.findAll('returned');
   }
 });

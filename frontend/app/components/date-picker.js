@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import moment from 'moment';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames:['layout-row','md-whiteframe-z1'],
   tagName:'md-datepicker',
   actions:{

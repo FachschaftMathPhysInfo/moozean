@@ -1,20 +1,14 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import Route from '@ember/routing/route';
 import moment from 'moment';
-export default Ember.Route.extend({
+export default Route.extend({
   beforeModel() {
     // sets the application locale to Spanish
     moment.locale('de');
   },
   model:function(){
-    return Ember.RSVP.hash({folderseries:this.store.findAll('folderseries').catch(this.ajaxError.bind(this))});
+    return hash({folderseries:this.store.findAll('folderseries')});
   },
   actions: {
-  error: function(error) {
-    this.send('ajaxError', error);
-  },
-
-  ajaxError: function(error) {
-    this.ajaxError(error);
-  }
 }
 });

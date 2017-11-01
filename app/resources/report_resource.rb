@@ -80,6 +80,7 @@ class ReportResource < JSONAPI::Resource
     unless @model.pdf.nil?
       @model.pdf = Base64.decode64(@model.pdf['data:application/pdf;base64,'.length..-1])
       @model.render_picture()
+      puts "Rendered"
     end
   end
   def picture

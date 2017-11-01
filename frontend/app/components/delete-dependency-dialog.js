@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import DS from 'ember-data';
-export default Ember.Component.extend({
-  store: Ember.inject.service(),
-  elemente: Ember.computed('objekt',function(){
+export default Component.extend({
+  store: service(),
+  elemente: computed('objekt',function(){
     switch(this.get('objekt').get('constructor.modelName')){
       case 'modul' :
         return 'Modul';
@@ -18,7 +20,7 @@ export default Ember.Component.extend({
         break;
     }
   }),
-  dieseselements: Ember.computed('objekt',function() {
+  dieseselements: computed('objekt',function() {
     //console.log(this.get('objekt'));
     if(this.get('objekt')==null) return '';
     switch (this.get('objekt').get('constructor.modelName')){

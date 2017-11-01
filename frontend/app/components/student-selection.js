@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import { schedule } from '@ember/runloop';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
-  store: Ember.inject.service(),
+export default Component.extend({
+  store: service(),
   didInsertElement(){
     if (this.get('student')==null) {
       this.$('md-autocomplete-wrap input').focus();
@@ -9,14 +12,14 @@ export default Ember.Component.extend({
   },
   newstudent:{},
   showDialog: false,
-  deletable: Ember.computed('newstudent', function() {
+  deletable: computed('newstudent', function() {
     return this.get('newstudent.uniid') != undefined ;
   }),
   actions:{
     closeDialog: function(option) {
       var store = this.get('store');
       let foo = ()=>{
-        Ember.run.schedule('afterRender', this, ()=>{
+        schedule('afterRender', this, ()=>{
           this.set('student', store.createRecord('student'));
           this.set('newstudent','');
           this.set("showDialog", false);

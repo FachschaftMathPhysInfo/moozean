@@ -1,13 +1,14 @@
-import Ember from 'ember';
+import { hash } from 'rsvp';
+import Route from '@ember/routing/route';
 import moment from 'moment';
-export default Ember.Route.extend({
+export default Route.extend({
   model:function(){
-    return Ember.RSVP.hash({
-      examinators:this.store.findAll('examinator').catch(this.ajaxError.bind(this)),
-      folderseries:this.store.findAll('folderseries').catch(this.ajaxError.bind(this)),
-      subjects:this.store.findAll('subject').catch(this.ajaxError.bind(this)),
-      typs:this.store.findAll('typ').catch(this.ajaxError.bind(this)),
-      moduls:this.store.findAll('modul').catch(this.ajaxError.bind(this)),
+    return hash({
+      examinators:this.store.findAll('examinator'),
+      folderseries:this.store.findAll('folderseries'),
+      subjects:this.store.findAll('subject'),
+      typs:this.store.findAll('typ'),
+      moduls:this.store.findAll('modul'),
       report: this.store.createRecord('report',{pdf:'',tex:'',examinationDate:moment()})
     });
   }

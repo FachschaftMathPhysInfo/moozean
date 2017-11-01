@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function contains([pruefauswahl,rep,exm]) {
   let a = pruefauswahl.filter(function(item) {
@@ -7,4 +7,4 @@ export function contains([pruefauswahl,rep,exm]) {
   return a.length>0;
 }
 
-export default Ember.Helper.helper(contains);
+export default helper(contains);

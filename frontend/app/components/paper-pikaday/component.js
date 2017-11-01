@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
 import PikadayMixin from 'ember-pikaday/mixins/pikaday';
 import PaperInput from 'ember-paper/components/paper-input';
 import layout from 'ember-paper/templates/components/paper-input';
@@ -18,7 +18,7 @@ format:"MM.YYYY",
 
   onPikadayClose: function() {
     this.get('onSelection')(this.get('pikaday').getDate());
-    if (this.get('pikaday').getDate() === null || Ember.isEmpty(this.$(this.field).val())) {
+    if (this.get('pikaday').getDate() === null || isEmpty(this.$(this.field).val())) {
       this.set('value', null);
       this.get('onSelection')(null);
     } else {

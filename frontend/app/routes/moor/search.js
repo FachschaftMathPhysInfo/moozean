@@ -1,12 +1,15 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { typeOf } from '@ember/utils';
+import { hash } from 'rsvp';
+import Route from '@ember/routing/route';
 import moment from 'moment';
-export default Ember.Route.extend({
+export default Route.extend({
   model: function() {
-    return Ember.RSVP.hash({examinators: this.store.findAll('examinator').catch(this.ajaxError.bind(this)), folderseries: this.store.findAll('folderseries').catch(this.ajaxError.bind(this)), subjects: this.store.findAll('subject').catch(this.ajaxError.bind(this)),
-     typs: this.store.findAll('typ').catch(this.ajaxError.bind(this)), moduls: this.store.findAll('modul').catch(this.ajaxError.bind(this))});
+    return hash({examinators: this.store.findAll('examinator'), folderseries: this.store.findAll('folderseries'), subjects: this.store.findAll('subject'),
+     typs: this.store.findAll('typ'), moduls: this.store.findAll('modul')});
   },
   serializeQueryParam: function(value, urlKey, defaultValueType) {
-    if (Ember.typeOf(value) == "instance") {
+    if (typeOf(value) == "instance") {
       return value.get("id");
     }
     if (moment.isMoment(value)) {
@@ -14,7 +17,7 @@ export default Ember.Route.extend({
       return JSON.stringify(date);
     }
     if (defaultValueType === 'array') {
-      let va = Ember.A();
+      let va = A();
       value.forEach((item) => {
         va.pushObject(item.get("id"));
       });

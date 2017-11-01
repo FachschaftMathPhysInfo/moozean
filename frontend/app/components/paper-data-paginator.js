@@ -1,14 +1,12 @@
-import Ember from 'ember';
-const {
-	Component,
-	computed,
- } = Ember;
+import { A } from '@ember/array';
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
 export default Component.extend({
 	tagName: 'md-table-pagination',
 	classNames: ['md-table-pagination'],
 	page:1,
-	limitOptions:Ember.A([5,10,15]),
+	limitOptions:A([5,10,15]),
 	limit:5,
 	plural:"Berichte",
 	pagesA:computed('meta.page-count','pages', function() {

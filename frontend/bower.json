@@ -1,6 +1,6 @@
 {
   "name": "ember-ozean",
   "dependencies": {
-    "pdfjs-dist": "1.7.316"
+    "pdfjs-dist": "^1.10.95"
   }
 }
