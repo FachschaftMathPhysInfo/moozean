@@ -9,7 +9,7 @@
 </div>
 <div class="limit-select" style="margin: 0px;">
 	<div class="md-table-label">{{plural}} pro Seite:&nbsp;</div>
-	{{#paper-table-selected class="no-min-wdith" options=limitOptions selected=limit onChange=(action (mut limit)) as |limit|}}
+	{{#paper-table-selected class="no-min-wdith" options=limitOptions selected=limit onChange=(pipe (action (mut limit))(action "resetPage")) as |limit|}}
 		{{limit}}
 	{{/paper-table-selected}}
 </div>

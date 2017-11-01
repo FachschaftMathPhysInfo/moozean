@@ -65,7 +65,6 @@ export default Controller.extend({
       }
     });
     ergebnis.then((data) => {
-      console.log(data);
       this.set("meta",data.meta);
       this.set("loading", false);
     });
@@ -136,7 +135,14 @@ export default Controller.extend({
       this.set('editReport',true);
     },
     deleteReport:function(report){
-      report.destroyRecord();
+      this.set("reporttoedit",report);
+      this.set("deleteReport",true);
+    },
+    closeDeleteDialog:function(report,option){
+      if(option){
+        report.destroyRecord();
+      }
+      this.set("deleteReport",false);
     },
     closeReportDialog:function(option, report){
       if(option=="ok"){

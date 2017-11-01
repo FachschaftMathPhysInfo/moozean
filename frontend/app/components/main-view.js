@@ -6,7 +6,7 @@ import Component from '@ember/component';
 import moment from 'moment';
 
 export default Component.extend({
-  store: service(),
+  store: Ember.inject.service(),
   items: [],
   titlestudent: "Studierendes eintragen",
   bleibendeOrdner: [{
@@ -35,11 +35,27 @@ export default Component.extend({
   no_lent_selected: computed('studentselected', 'ordner', function() {
     return (this.get("studentselected") || this.get('ordner') == []);
   }),
-  limit:5,
+  limit:10,
   limitOptions:A([5,10,15]),
-  page:1,
-  lents:computed('limit','page','student', function() {
-    return this.store.query('lent', { page: {number:this.get("page"),size:this.get("limit")}});
+  resultsLength: computed('meta.record-count',function(){
+    return this.get("meta.record-count");
+  }),
+  pages: computed('meta.page-count', function() {
+    return Array.from({length: this.get("meta.page-count")}, (v, k) => k+1);
+  }),
+  page: 1,
+  lents:computed('limit','page', function() {
+    let ergebnis = this.get('store').query('lent',{
+      page: {
+        size: this.get("limit"),
+        number:this.get("page")
+      }
+    });
+    ergebnis.then((data) => {
+      this.set("meta",data.meta);
+      this.set("loading", false);
+    });
+    return ergebnis;
   }),
   nicht_ausleihbar: computed('studentselected', 'student.refund', 'ordner.length', 'ordner', 'ordner.[]', function() {
     if (this.get('student.refund') || this.get('student.report')) {
@@ -59,25 +75,12 @@ export default Component.extend({
       this.set('titlestudent', 'Studierendes bearbeiten');
       this.set("showDialog", true);
     },
-    incrementPage:function() {
-
-    },
-    decrementPage:function(){
-
-    },
-    onChangeLimit:function(limit){
-
-    },
-    onChangePage:function(page){
-
-    },
     closeDialog: function(option) {
       var store = this.get('store');
       if (option == "ok") {
         let foo = function(_this) {
           return function() {
             _this.set('student', _this.get('newstudent'));
-
             _this.set('newstudent', store.createRecord('student'));
             _this.set("showDialog", false);
             _this.set('currentStep', 1);
@@ -103,13 +106,12 @@ export default Component.extend({
       }else{
         if(this.get('newstudent.id')!=null){
           this.get('newstudent').then((item)=>{
-            item.rollback();
+            item.rollbackAttributes();
           });
         }
         else{
           this.get('newstudent').destroyRecord();
         }
-
         this.set('showDialog', false);
         this.$('md-autocomplete-wrap input').focus();
       }

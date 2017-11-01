@@ -147,3 +147,4 @@ onDecrementPage=(action 'decrementPage')}}
 {{/paper-content}}
 </div>
 {{#if editReport}}{{edit-report-dialog model=model closeDialog="closeReportDialog" title="Bericht bearbeiten" report=reporttoedit}}{{/if}}
+{{#if deleteReport}}{{delete-report-dialog closeDialog="closeDeleteDialog" title="Bericht löschen" report=reporttoedit}}{{/if}}

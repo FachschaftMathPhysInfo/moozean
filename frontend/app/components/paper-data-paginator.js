@@ -26,14 +26,15 @@ export default Component.extend({
 		} else return this.get("meta.record-count");
 	}),
 	startOffset: computed('page', 'limit', 'meta',function() {
-
-		console.log(this.get("meta"));
 		return Math.max((this.get('page') - 1) * this.get('limit') + 1, 1); // 1-based index
 	}),
 	endOffset: computed('startOffset', 'limit', function() {
 		return this.get('startOffset') + this.get('limit');
 	}),
 	actions: {
+		resetPage(){
+			this.set('page',1);
+		},
 		increase(){
 			if(this.get("page")<this.get("meta.page-count")){
 				this.set("page",this.get("page")+1);

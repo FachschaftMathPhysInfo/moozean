@@ -1,0 +1,57 @@
+{{#paper-dialog class="flex-77" onClose=(action "exitDialog" 0) origin=dialogOrigin clickOutsideToClose=true}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>{{title}}</h2>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(action "exitDialog" 0)}}{{paper-icon icon="close"}}{{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-form onSubmit=(action "exitDialog" 1) as |form|}}
+  {{#paper-dialog-content}}
+  <div class="flex layout-column">
+    <p> Sie sind im Begriff einen Prüfungsbericht aus der Datenbank der Fachschaft endgültig zu löschen.</p>
+    <br/>
+    <p> Sind Sie sich sicher, dass sie den folgenden Prüfungsbericht löschen wollen:
+</p><br/>
+  <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+      <div class="flex-gt-xs-50">
+    {{#paper-data-table selectable=false as |table|}}
+      {{#table.body as |body|}}
+      {{#body.row edit=false as |row|}}
+          {{#row.cell}}Prüfungstyp:{{/row.cell}}
+            {{#row.cell}}{{report.typ.name}}{{/row.cell}}
+            {{/body.row}}
+            {{#body.row edit=false as |row|}}
+            {{#row.cell}}Studienfach:{{/row.cell}}
+            {{#row.cell}}{{report.subject.name}}{{/row.cell}}
+            {{/body.row}}
+            {{#body.row edit=false as |row|}}
+            {{#row.cell}}Prüfungsdatum:{{/row.cell}}
+            {{#row.cell}}{{moment-format report.examinationAt "MM.YYYY"}}{{/row.cell}}
+            {{/body.row}}
+            {{#body.row edit=false as |row|}}
+            {{#row.cell}}Prüfende:{{/row.cell}}
+            {{#row.cell}}
+              {{#each report.examinators as |exm index|}}
+                {{if index ", "}}{{exm.surname}}
+              {{/each}}
+            {{/row.cell}}
+            {{/body.row}}
+      {{/table.body}}
+    {{/paper-data-table}}
+  </div>
+    <div class="flex-gt-xs-50">
+      <img src={{report.picture}} style="width:100%;" alt="Bild konnte nicht geladen werden." title="Vorschau"/>
+    </div>
+    </div>
+  </div>
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions class="layout-row"}}
+    <span class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+    {{#paper-button onClick=(action "exitDialog" 0)}}Abbrechen{{/paper-button}}
+    {{#paper-button warn=true onClick=(action "exitDialog" 1)}}Löschen{{/paper-button }}
+    </span>
+  {{/paper-dialog-actions}}
+  {{/paper-form}}
+{{/paper-dialog}}
+{{yield}}
