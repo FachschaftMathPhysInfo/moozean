@@ -3,6 +3,13 @@ class ReportResource < JSONAPI::Resource
   has_one :subject
   has_one :typ
   filters :typ, :subject
+  filter :daterange, verify: ->(values, _context) {
+                            werte = []
+                            values.flatten.each do |elem|
+                              werte << elem.to_i
+                            end
+                            werte
+                          }
   filter :moduls, verify: ->(values, _context) {
                             werte = []
                             values.flatten.each do |elem|
@@ -26,6 +33,9 @@ class ReportResource < JSONAPI::Resource
                                }
   def self.apply_filter(records, filter, value, _options)
     case filter
+    when 'daterange'
+      records = records.where(examination_at: value[0]..value[1])
+      records
     when 'moduls.id'
       if value.is_a?(Array)
         value.each do |val|
@@ -85,5 +95,8 @@ class ReportResource < JSONAPI::Resource
   end
   def picture
     @model.picture
+  end
+  def self.sortable_fields(context)
+    super
   end
 end
