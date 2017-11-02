@@ -3,39 +3,32 @@ class ReportResource < JSONAPI::Resource
   has_one :subject
   has_one :typ
   filters :typ, :subject
-  filter :daterange, verify: ->(values, _context) {
-                            werte = []
-                            values.flatten.each do |elem|
-                              werte << elem.to_i
-                            end
-                            werte
-                          }
+  filter :daterange,apply: ->(records, value, _options) {
+    records.where("examination_at >= ?",DateTime.parse(value[0][:"0"])).where("examination_at <= ?",DateTime.parse(value[0][:"1"]))
+  }
   filter :moduls, verify: ->(values, _context) {
-                            werte = []
-                            values.flatten.each do |elem|
-                              werte << elem.to_i
-                            end
-                            werte
-                          }
+    werte = []
+    values.flatten.each do |elem|
+      werte << elem.to_i
+    end
+    werte
+  }
   filter :folderseries, verify: ->(values, _context) {
-                                  werte = []
-                                  values.flatten.each do |elem|
-                                    werte << elem.to_i
-                                  end
-                                  werte
-                                }
+    werte = []
+    values.flatten.each do |elem|
+      werte << elem.to_i
+    end
+    werte
+  }
   filter :examinators, verify: ->(values, _context) {
-                                 werte = []
-                                 values.flatten.each do |elem|
-                                   werte << elem.to_i
-                                 end
-                                 werte
-                               }
+    werte = []
+    values.flatten.each do |elem|
+      werte << elem.to_i
+    end
+    werte
+  }
   def self.apply_filter(records, filter, value, _options)
     case filter
-    when 'daterange'
-      records = records.where(examination_at: value[0]..value[1])
-      records
     when 'moduls.id'
       if value.is_a?(Array)
         value.each do |val|
