@@ -63,10 +63,17 @@ export default Controller.extend({
       },
     closeExaminatorDialog:function(option){
       if(option=="ok"){
-        this.get('newexaminator').save().then(null)
+        this.get('newexaminator').save().then(null);
       } else
       {
-        this.get('newexaminator').rollback();
+        if(this.get('newexaminator.id')!=null){
+          this.get('newexaminator').then((item)=>{
+            item.rollbackAttributes();
+          });
+        }
+        else {
+          this.get('newexaminator').destroyRecord();
+        }
       }
       this.set('showCreateExaminatorDialog',false);
       this.set('showEditExaminatorDialog',false);
