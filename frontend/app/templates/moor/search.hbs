@@ -50,6 +50,9 @@
 </div>
 </div>
 <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+<p style="margin-top:30px;margin-bottom:0px;color: rgba(0, 0, 0, 0.5);">Prüfungsdatum (MM.YYYY) einschränken:</p>
+</div>
+<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
   <div class="flex-90">
             {{timespan-slider min=(readonly minDate) from=beginExamAt to=endExamAt max=(readonly maxDate)}}
           </div>
@@ -57,15 +60,14 @@
     {{/card.content}}
     {{#card.actions}}
       {{paper-data-paginator
+        meta=meta
         count=resultsLength
 limit=limit
 limitOptions=limitOptions
 page=page
 pages=pages
 onChangePage=(action (mut page))
-onChangeLimit=(action (mut limit))
-onIncrementPage=(action 'incrementPage')
-onDecrementPage=(action 'decrementPage')}}
+onChangeLimit=(action (mut limit))}}
     {{/card.actions}}
     {{#if loading}}
       {{paper-progress-linear}}

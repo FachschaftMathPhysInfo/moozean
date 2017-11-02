@@ -3,27 +3,30 @@ class ReportResource < JSONAPI::Resource
   has_one :subject
   has_one :typ
   filters :typ, :subject
+  filter :daterange,apply: ->(records, value, _options) {
+    records.where("examination_at >= ?",DateTime.parse(value[0][:"0"])).where("examination_at <= ?",DateTime.parse(value[0][:"1"]))
+  }
   filter :moduls, verify: ->(values, _context) {
-                            werte = []
-                            values.flatten.each do |elem|
-                              werte << elem.to_i
-                            end
-                            werte
-                          }
+    werte = []
+    values.flatten.each do |elem|
+      werte << elem.to_i
+    end
+    werte
+  }
   filter :folderseries, verify: ->(values, _context) {
-                                  werte = []
-                                  values.flatten.each do |elem|
-                                    werte << elem.to_i
-                                  end
-                                  werte
-                                }
+    werte = []
+    values.flatten.each do |elem|
+      werte << elem.to_i
+    end
+    werte
+  }
   filter :examinators, verify: ->(values, _context) {
-                                 werte = []
-                                 values.flatten.each do |elem|
-                                   werte << elem.to_i
-                                 end
-                                 werte
-                               }
+    werte = []
+    values.flatten.each do |elem|
+      werte << elem.to_i
+    end
+    werte
+  }
   def self.apply_filter(records, filter, value, _options)
     case filter
     when 'moduls.id'
@@ -85,5 +88,8 @@ class ReportResource < JSONAPI::Resource
   end
   def picture
     @model.picture
+  end
+  def self.sortable_fields(context)
+    super
   end
 end
