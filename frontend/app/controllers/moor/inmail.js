@@ -3,7 +3,10 @@ import Controller from '@ember/controller';
 export default Controller.extend({
   actions:{
     archiveMail:function(mail){
-      mail.destroyRecord();
+      mail.set("archived",true);
+      mail.save().then(()=>{
+        this.send("modelReload");
+      });
     },
     deleteMail:function(mail){
       mail.destroyRecord();

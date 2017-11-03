@@ -9,5 +9,6 @@ export default Referencable.extend({
   body: attr('string'),
   uid: attr('string'),
   attachments: hasMany('attachment',{async: true}),
-  read:attr('boolean')
+  read:attr('boolean'),
+  archived:attr('boolean')
 });

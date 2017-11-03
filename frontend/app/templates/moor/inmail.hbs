@@ -50,7 +50,7 @@ totalItemsCount=model.length as |mails|}}
         {{/paper-checkbox}}
       {{/row.cell}}
           {{#row.cell}}
-          {{#paper-button iconButton=true onClick=(action 'archiveMail' d)}}
+          {{#paper-button iconButton=true onClick=(pipe (transition-to "moor.inmail.index")(action 'archiveMail' d))}}
             {{paper-icon "archive"}}
               {{#paper-tooltip position="top"}}
                 Archivieren
