@@ -5,7 +5,7 @@ export default Controller.extend({
   newsubject:{},
   newtyp:{},
   newmodul:{},
-  limitSubject:5,
+  limitSubject:10,
   pageSubject:1,
   paginatedSubjects:computed('limitSubject','pageSubject','model.subjects.[]', function() {
     let q= this.store.query('subject', { page:{number:this.get("pageSubject"),size:this.get("limitSubject")}});
@@ -14,7 +14,7 @@ export default Controller.extend({
     });
     return q;
   }),
-  limitTyp:5,
+  limitTyp:10,
   pageTyp:1,
   paginatedTyps:computed('limitTyp','pageTyp','model.typs.[]', function() {
     let q= this.store.query('typ', { page:{number:this.get("pageTyp"),size:this.get("limitTyp")}});
@@ -23,7 +23,7 @@ export default Controller.extend({
     });
     return q;
   }),
-  limitModul:5,
+  limitModul:10,
   pageModul:1,
   paginatedModuls:computed('limitModul','pageModul','model.moduls.[]', function() {
     let q= this.store.query('modul', { page:{number:this.get("pageModul"),size:this.get("limitModul")}});

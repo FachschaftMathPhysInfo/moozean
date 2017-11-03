@@ -3,8 +3,8 @@ import { A } from '@ember/array';
 import Controller from '@ember/controller';
 import moment from 'moment';
 export default Controller.extend({
-  limitOptions: A([5, 10, 15]),
-  limit: 5,
+  limitOptions: A([10,20,30]),
+  limit: 10,
   minDate:moment(new Date(0)),
   beginExamAt:moment(new Date(0)),
   maxDate:moment(new Date()),

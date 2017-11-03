@@ -50,8 +50,18 @@ totalItemsCount=model.length as |mails|}}
         {{/paper-checkbox}}
       {{/row.cell}}
           {{#row.cell}}
-          {{#paper-button iconButton=true onClick=(action 'archiveMail' d)}}{{paper-icon "archive"}}{{/paper-button}}
-          {{#paper-button iconButton=true onClick=(action 'deleteMail' d)}}{{paper-icon "delete forever"}}{{/paper-button}}
+          {{#paper-button iconButton=true onClick=(action 'archiveMail' d)}}
+            {{paper-icon "archive"}}
+              {{#paper-tooltip position="top"}}
+                Archivieren
+              {{/paper-tooltip}}
+          {{/paper-button}}
+          {{#paper-button iconButton=true onClick=(action 'deleteMail' d)}}
+            {{paper-icon "delete forever"}}
+              {{#paper-tooltip position="top"}}
+                Löschen
+              {{/paper-tooltip}}
+          {{/paper-button}}
           {{/row.cell}}
         {{/body.row}}
   {{/each}}
