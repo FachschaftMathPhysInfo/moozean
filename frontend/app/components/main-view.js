@@ -35,28 +35,6 @@ export default Component.extend({
   no_lent_selected: computed('studentselected', 'ordner', function() {
     return (this.get("studentselected") || this.get('ordner') == []);
   }),
-  limit:10,
-  limitOptions:A([5,10,15]),
-  resultsLength: computed('meta.record-count',function(){
-    return this.get("meta.record-count");
-  }),
-  pages: computed('meta.page-count', function() {
-    return Array.from({length: this.get("meta.page-count")}, (v, k) => k+1);
-  }),
-  page: 1,
-  lents:computed('limit','page', function() {
-    let ergebnis = this.get('store').query('lent',{
-      page: {
-        size: this.get("limit"),
-        number:this.get("page")
-      }
-    });
-    ergebnis.then((data) => {
-      this.set("meta",data.meta);
-      this.set("loading", false);
-    });
-    return ergebnis;
-  }),
   nicht_ausleihbar: computed('studentselected', 'student.refund', 'ordner.length', 'ordner', 'ordner.[]', function() {
     if (this.get('student.refund') || this.get('student.report')) {
       return false;

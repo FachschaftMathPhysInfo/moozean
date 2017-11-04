@@ -2,7 +2,13 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
   actions:{
-    deleteInmail:function(mail){
+    archiveMail:function(mail){
+      mail.set("archived",true);
+      mail.save().then(()=>{
+        this.send("modelReload");
+      });
+    },
+    deleteMail:function(mail){
       mail.destroyRecord();
     },
     toogleRead:function(mail){
@@ -26,7 +32,7 @@ export default Controller.extend({
         };
         this.get('newstudent').save().then(foo(this));
       }else{
-          this.get('newstudent').destroyRecord();
+        this.get('newstudent').destroyRecord();
       }
       this.set('showCreate', false);
     },

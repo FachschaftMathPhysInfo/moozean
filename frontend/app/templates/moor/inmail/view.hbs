@@ -1,5 +1,9 @@
+<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+  <div class="flex-gt-xs-50">
 {{inmail-display model=(readonly model.mail) setTexFile=(action "setPdfFile") setPdfFile=(action "setPdfFile")
 reply=(action "reply")}}
+</div>
+<div class="flex-gt-xs-50">
 {{#paper-card as |card|}}
   {{#card.title as |title|}}
     {{#title.text as |text|}}
@@ -45,6 +49,8 @@ reply=(action "reply")}}
     {{/paper-button}}
   {{/card.actions}}
 {{/paper-card}}
+</div>
+</div>
 {{#if showReplyDialog closeDialog=(action "closeMailDialog") action="closeMailDialog" }}
   {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
 {{/if}}

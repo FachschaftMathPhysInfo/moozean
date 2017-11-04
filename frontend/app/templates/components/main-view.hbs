@@ -76,16 +76,6 @@
     {{!Table in Card}}
     {{#paper-card as |card|}}
       {{#card.content }}
-      {{paper-data-paginator
-        meta=meta
-        count=resultsLength
-  limit=limit
-  limitOptions=limitOptions
-  page=page
-  pages=pages
-  onChangePage=(action (mut page))
-  onChangeLimit=(action (mut limit))
-  plural="Ausleihen"}}
         {{#paper-data-table sortProp="folder" sortDir="desc" selectable=true as |table|}}
           {{#table.head as |head|}}
             {{!#head.column checkbox=true}}
@@ -97,7 +87,7 @@
             {{#head.column}}Optionen{{/head.column}}
           {{/table.head}}
           {{#table.body as |body|}}
-            {{#each (sort-by table.sortDesc lents) as |m|}}
+            {{#each (sort-by table.sortDesc model.lents) as |m|}}
               {{#body.row edit=true as |row|}}
                 {{#row.cell}}{{m.folder.name}}{{/row.cell}}
                 {{#row.cell}}

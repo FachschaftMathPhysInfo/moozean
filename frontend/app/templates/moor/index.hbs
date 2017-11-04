@@ -19,17 +19,6 @@
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
 {{#paper-content class="md-padding"}}
-{{paper-data-paginator
-  count=resultsLength
-limit=limit
-limitOptions=limitOptions
-page=page
-pages=pages
-onChangePage=(action (mut page))
-onChangeLimit=(action (mut limit))
-onIncrementPage=(action 'incrementPage')
-onDecrementPage=(action 'decrementPage')
-plural="Ordnerreihen"}}
       {{#paper-data-table sortProp="folder.name" sortDir="desc" selectable=true as |table|}}
         {{#table.head as |head|}}
           {{#head.column}}{{/head.column}}
@@ -38,7 +27,7 @@ plural="Ordnerreihen"}}
           {{#head.column}}Optionen{{/head.column}}
         {{/table.head}}
         {{#table.body as |body|}}
-          {{#each (sort-by table.sortDesc paginatedResults) as |m|}}
+          {{#each (sort-by table.sortDesc model) as |m|}}
             {{#body.row edit=true onClick=(action (transition-to "moor.folderseries" m)) as |row|}}
               {{#row.cell}}{{paper-icon "folder"}}{{/row.cell}}
               {{#row.cell}}{{m.name}}{{/row.cell}}

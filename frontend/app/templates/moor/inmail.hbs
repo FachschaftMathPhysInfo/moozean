@@ -15,37 +15,61 @@
      {{/paper-button}}
    {{/paper-toolbar-tools}}
  {{/paper-toolbar}}
- {{#paper-content}}
-{{#paper-sidenav-container class="inner-sidenav"}}
-
-  {{#paper-sidenav
-    class="md-whiteframe-z1 z1"
-    name="mailbars"
-    open=leftSideBarOpen2
-    lockedOpen=true
-    onToggle=(action (mut leftSideBarOpen2))}}
-    {{#paper-toolbar as |toolbar|}}
-      {{#paper-toolbar-tools}}INBOX{{/paper-toolbar-tools}}
-    {{/paper-toolbar}}
-    {{#paper-content}}
-        {{#paper-list}}
-          {{#each (reverse model) as |mail|}}
-            {{#paper-link-item "moor.inmail.view" mail.id  }}
-              <div class="md-list-item-text">
-                <h3>{{#paper-button iconButton=true onClick=(action "toogleRead" mail)}}{{paper-icon "flag" warn=mail.read class="md-avatar"}}{{/paper-button}}
-{{mail.fromname}}</h3>
-                <h4>{{#paper-button iconButton=true onClick=(action "deleteInmail" mail)}}{{paper-icon "delete forever"}}{{/paper-button}}{{mail.subject}}</h4>
-                <p>{{#each mail.attachments as |attachment|}}{{attachment.name}},{{else}}Kein Anhang{{/each}}<span class="flex"></span></p>
-              </div>
-            {{/paper-link-item}}
-          {{/each}}
-        {{/paper-list}}
-    {{/paper-content}}
-  {{/paper-sidenav}}
-
-  {{#paper-card-content class="flex mail-container"}}
-      {{outlet}}
-{{/paper-card-content}}
-{{/paper-sidenav-container}}
+{{#paper-content}}
+{{#paper-card as |card|}}
+{{#card.title}}
+  Posteingang
+{{/card.title}}
+{{#card.content}}
+{{#paper-virtual-repeat model
+height=200
+totalItemsCount=model.length as |mails|}}
+{{#paper-data-table sortProp="createdAt" sortDir="desc" selectable=true as |table|}}
+  {{#table.head as |head|}}
+    {{#head.column sortProp="createdAt" }}Datum{{/head.column}}
+    {{#head.column sortProp="fromname" }}von{{/head.column}}
+    {{#head.column sortProp="subject"}}Betreff{{/head.column}}
+    {{#head.column}}Anhänge{{/head.column}}
+    {{#head.column sortProp="read"}}gelesen{{/head.column}}
+    {{#head.column}}Optionen{{/head.column}}
+  {{/table.head}}
+  {{#table.body as |body|}}
+  {{#each mails as |d|}}
+        {{#body.row edit=true onClick=(action (transition-to "moor.inmail.view" d.id)) as |row|}}
+          {{#row.cell}}{{moment-format d.createdAt "DD.MM.YYYY"}}{{/row.cell}}
+          {{#row.cell}}{{d.fromname}}{{/row.cell}}
+          {{#row.cell}}{{d.subject}}{{/row.cell}}
+          {{#row.cell}}
+          {{#each d.attachments as |att index|}}
+            {{if index ", "}}{{att.name}}{{else}}kein Anhang{{/each}}
+          {{/row.cell}}
+          {{#row.cell checkbox=true}}
+        {{#paper-checkbox
+          value=d.read
+          onChange=(action (mut d.read))}}
+        {{/paper-checkbox}}
+      {{/row.cell}}
+          {{#row.cell}}
+          {{#paper-button iconButton=true onClick=(pipe (transition-to "moor.inmail.index")(action 'archiveMail' d))}}
+            {{paper-icon "archive"}}
+              {{#paper-tooltip position="top"}}
+                Archivieren
+              {{/paper-tooltip}}
+          {{/paper-button}}
+          {{#paper-button iconButton=true onClick=(action 'deleteMail' d)}}
+            {{paper-icon "delete forever"}}
+              {{#paper-tooltip position="top"}}
+                Löschen
+              {{/paper-tooltip}}
+          {{/paper-button}}
+          {{/row.cell}}
+        {{/body.row}}
+  {{/each}}
+  {{/table.body}}
+{{/paper-data-table}}
+{{/paper-virtual-repeat}}
+{{/card.content}}
+{{/paper-card}}
+{{outlet}}
 {{/paper-content}}
 {{#if showCreate}}{{student-create-dialog student=newstudent deletable=false closeDialog=(action "closeDialog") title="Studierendes erstellen"}}{{/if}}

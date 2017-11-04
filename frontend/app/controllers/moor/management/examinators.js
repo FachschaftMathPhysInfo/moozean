@@ -17,8 +17,8 @@ export default Controller.extend({
     }
     return e;
   }),
-  limitOptions: A([5, 10, 15]),
-  limit:5,
+  limitOptions: A([10, 20, 30]),
+  limit:20,
   paginatedResults: computed('page', 'limit','model.[]', function() {
     let result= this.store.query("examinator", {
       page: {

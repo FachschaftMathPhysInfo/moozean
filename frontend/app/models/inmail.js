@@ -5,8 +5,10 @@ export default Referencable.extend({
   subject: attr('string'),
   fromname:attr('string'),
   fromaddress: attr('string'),
+  createdAt:attr('date'),
   body: attr('string'),
   uid: attr('string'),
   attachments: hasMany('attachment',{async: true}),
-  read:attr('boolean')
+  read:attr('boolean'),
+  archived:attr('boolean')
 });
