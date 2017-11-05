@@ -9,7 +9,7 @@ export default Route.extend({
       subjects:this.store.findAll('subject'),
       typs:this.store.findAll('typ'),
       moduls:this.store.findAll('modul'),
-      report: this.store.createRecord('report',{pdf:'',tex:'',examinationDate:moment()})
+      report: this.store.createRecord('report',{pdf:'',tex:'',examinationAt:new Date()})
     });
   }
 });

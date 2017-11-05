@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-  fileName:"Datei hochladen",
-  filetexName:"Datei hochladen",
+  fileName:"PDF hochladen",
+  filetexName:"TeX hochladen",
   actions:{
     fileLoaded:function(file) {
       this.set('model.report.pdf',file.data);

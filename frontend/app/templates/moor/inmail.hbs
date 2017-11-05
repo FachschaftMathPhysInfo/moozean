@@ -35,11 +35,11 @@ totalItemsCount=model.length as |mails|}}
   {{/table.head}}
   {{#table.body as |body|}}
   {{#each mails as |d|}}
-        {{#body.row edit=true onClick=(action (transition-to "moor.inmail.view" d.id)) as |row|}}
-          {{#row.cell}}{{moment-format d.createdAt "DD.MM.YYYY"}}{{/row.cell}}
-          {{#row.cell}}{{d.fromname}}{{/row.cell}}
-          {{#row.cell}}{{d.subject}}{{/row.cell}}
-          {{#row.cell}}
+        {{#body.row edit=true as |row|}}
+          {{#row.cell onClick=(action (transition-to "moor.inmail.view" d.id))}}{{moment-format d.createdAt "DD.MM.YYYY"}}{{/row.cell}}
+          {{#row.cell onClick=(action (transition-to "moor.inmail.view" d.id))}}{{d.fromname}}{{/row.cell}}
+          {{#row.cell onClick=(action (transition-to "moor.inmail.view" d.id))}}{{d.subject}}{{/row.cell}}
+          {{#row.cell onClick=(action (transition-to "moor.inmail.view" d.id))}}
           {{#each d.attachments as |att index|}}
             {{if index ", "}}{{att.name}}{{else}}kein Anhang{{/each}}
           {{/row.cell}}

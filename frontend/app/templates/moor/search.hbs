@@ -25,32 +25,32 @@
     {{/card.title}}
     {{#card.content}}
     <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-      <div class="flex-gt-xs-45">
+      <div class="flex-gt-xs-40">
         {{subject-autocomplete options=model.subjects selected=subject}}
       </div>
-      <div class="flex-gt-xs-50">
+      <div class="flex-gt-xs-45">
       {{typ-autocomplete options=model.typs selected=typ}}
     </div>
 
   </div>
       {{! Prüfende }}
-      <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-        <div class="flex-gt-xs-45">
+      <div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
+        <div class="flex-gt-xs-40">
       {{pruefende-chips options=model.examinators content=examinatora }}
         {{!Module}}
       </div>
-        <div class="flex-gt-xs-50">
+        <div class="flex-gt-xs-45">
         {{modul-chips options=model.moduls content=modula}}
           {{!Folderseries}}
 </div>
 </div>
-<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+<div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
   <div class="flex-90">
           {{folderseries-chips options=model.folderseries content=folderseriesa}}
 </div>
 </div>
-<div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-<p style="margin-top:30px;margin-bottom:0px;color: rgba(0, 0, 0, 0.5);">Prüfungsdatum (MM.YYYY) einschränken:</p>
+<div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
+<p style="margin-bottom:0px;color: rgba(0, 0, 0, 0.5);">Prüfungsdatum (MM.YYYY) einschränken:</p>
 </div>
 <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
   <div class="flex-90">

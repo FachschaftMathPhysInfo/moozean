@@ -1,8 +1,8 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
-  fileName:"Datei hochladen",
-    filetexName:"Datei hochladen",
+  fileName:"PDF hochladen",
+    filetexName:"TeX hochladen",
     actions:{
       reply(){
         this.set("showReplyDialog",true);
@@ -50,7 +50,7 @@ export default Controller.extend({
       },
       save:function(){
         this.get('model.report').save().then(()=>{
-          alert("Erfolgreich gespeichert!");
+          alert("Erfolgreich gespeichert!\nJetzt bitte die Mail archivieren.\nDie Firma dankt.");
           this.set('model.report',this.store.createRecord('report'));
           this.set('fileName',"Datei hochladen");
           this.set('filetexName',"Datei hochladen");

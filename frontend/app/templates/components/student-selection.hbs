@@ -28,6 +28,7 @@
     {{#paper-autocomplete
             disabled=firstDisabled
             onCreate=(action "addStudent")
+            searchMessage="Zum Suchen tippen"
             allowClear=true
             searchText=(readonly student.name)
             selected=student
@@ -36,7 +37,7 @@
             labelPath="name"
             placeholder="Studierendes aussuchen"
             loadingMessage="Suche Studierendes..."
-            noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
+            noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
             onSelectionChange=(pipe (action (mut student))(action "editStudent")) as |country autocomplete|}}
             {{paper-autocomplete-highlight
               label=country.name
