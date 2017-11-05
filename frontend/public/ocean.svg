@@ -8,12 +8,12 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="16"
-   height="16"
-   viewBox="0 0 16 16"
+   width="12.314536"
+   height="6.6952929"
+   viewBox="0 0 12.314536 6.6952928"
    id="svg4605"
    sodipodi:docname="ocean.svg"
-   inkscape:version="0.92.1 r15371">
+   inkscape:version="0.92.2 5c3e80d, 2017-08-06">
   <metadata
      id="metadata4611">
     <rdf:RDF>
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -37,66 +37,48 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1362"
-     inkscape:window-height="729"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
      id="namedview4607"
      showgrid="false"
-     inkscape:zoom="4.2734375"
-     inkscape:cx="-46.883797"
-     inkscape:cy="-9.150793"
+     inkscape:zoom="34.1875"
+     inkscape:cx="3.0191756"
+     inkscape:cy="-5.613019"
      inkscape:window-x="0"
-     inkscape:window-y="18"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4605" />
   <g
      id="g4568"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4570"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4572"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
-  <g
-     id="g4576"
-     style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)">
-    <path
-       inkscape:connector-curvature="0"
-       id="path4574"
-       d="m 966.74384,1621.9667 q 0.0192,0.017 0.0383,0.034 0.9081,1.1703 1.83765,2.2666 v 0 L 970.88727,1622 h -1.9729 q -1.08661,-0.02 -2.16083,-0.033 z" />
-  </g>
-  <g
-     id="g4580"
-     style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)">
-    <path
-       inkscape:connector-curvature="0"
-       id="path4578"
-       d="m 865.37506,1659.6206 q -6.13592,4.488 -10.96252,6.9611 -0.52404,1.8719 -1.14424,3.5482 v 0 q 3.01857,-2.4379 6.11915,-5.0575 3.05689,-2.6858 5.99625,-5.4518 z" />
-  </g>
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4582"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4584"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4586"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4588"
      style="fill:#000000;fill-opacity:1;stroke-linejoin:miter"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-7.9866801)" />
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-12.639034)" />
   <g
      id="g4602"
-     transform="matrix(0.01646383,0,0,0.01646383,-5.1709162,-6.9272031)">
+     transform="matrix(0.01646383,0,0,0.01646383,-7.0136483,-11.579557)">
     <g
        id="g4592"
        style="fill:#000000;fill-opacity:1;stroke-linejoin:miter">
