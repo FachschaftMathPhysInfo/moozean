@@ -47,6 +47,9 @@ reply=(action "reply")}}
       Speichern
     {{/paper-button}}
   {{/card.actions}}
+    {{#if saving}}
+      {{paper-progress-linear}}
+    {{/if}}
 {{/paper-card}}
 </div>
 </div>

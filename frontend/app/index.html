@@ -1,58 +1,66 @@
 <!DOCTYPE html>
-<html lang="de-DE">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Moozean</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    <meta name="theme-color" content="#ff0000">
-    {{content-for "head"}}
-    <link rel="icon" type="image/png" href="{{rootURL}}favicon.png">
-    <link rel="shortcut icon" type="image/png" href="{{rootURL}}favicon.png">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/ember-ozean.css">
-    {{content-for "head-footer"}}
-  </head>
-  <body>
-    <style>
+<html lang="de">
+
+<head>
+  <style>
     @keyframes bounceIn {
-  0% {
-    transform: scale(0.1);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-.no-ember{
-  position: absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right:0;
-  background-color: #990000;
-  color:#ffffff;
-}
-.anim-box{
-  animation-duration: 2s;
-  animation-name: bounceIn;
-  animation-iteration-count: infinite;
-  vertical-align: middle;
-  margin-left: auto;
-  margin-right: auto;
-  fill:#FFFFFF;
-}
-.ember-application .no-ember {
-  display: none;
-}</style>
-<noscript>
+      0% {
+        transform: scale(0.1);
+        opacity: 0;
+      }
+      60% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .no-ember {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #990000;
+      color: #ffffff;
+    }
+
+    .anim-box {
+      animation-duration: 2s;
+      animation-name: bounceIn;
+      animation-iteration-count: infinite;
+      vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;
+      fill: #FFFFFF;
+    }
+
+    .ember-application .no-ember {
+      display: none;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Moozean</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ff0000">
+  {{content-for "head"}}
+  <link rel="icon" type="image/png" href="{{rootURL}}favicon.png">
+  <link rel="shortcut icon" type="image/png" href="{{rootURL}}favicon.png">
+  <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+  <link integrity="" rel="stylesheet" href="{{rootURL}}assets/ember-ozean.css">
+  {{content-for "head-footer"}}
+
+</head>
+
+<body>
+
+  <noscript>
       <div style=" position:absolute; width:100%; height:100%; background-color: #990000; text-align:center;">
-        <img src="/ocean.svg" height="300px" width="100%" style="position:absolute; top:0px;">
+        <img alt="das Logo" src="/ocean.svg" style="position:absolute; top:0px; height=300px; width=100%;"/>
         <h2 style="color: white; margin:5%; line-height:250%;">Offenbar ist JavaScript in Ihrem Browser nicht verfügbar.<br>
            Verwenden Sie einen neueren Browser oder aktivieren Sie JavaScript, <br>
            um diese Webseite zu benutzen.<br>
@@ -60,17 +68,16 @@
        </div>
     </noscript>
     {{content-for "body"}}
-    <div class="no-ember">
-      <center>
-    <svg  class="anim-box" xmlns="http://www.w3.org/2000/svg" width="40%" height="40%" viewBox="0 0 16 16"><path d="M10.745 18.717h.001l.03.038.038-.037h-.068zM9.076 19.337q-.1.074-.18.115l-.019.058q.05-.04.1-.083.051-.044.1-.09zM5.6 8.867q-.321 0-.478.322-.063.13-.093.338l-.046.622q-.032.157-.119.264-.096.116-.24.164-.12.046-.382.053-.036.006-.082.027-.115.055-.17.163-.086.183.013.354.108.168.313.174h.001q1.489 0 1.415-1.591l1.493 1.492q.076.074.192.094.028.003.055.003.132 0 .227-.077l.828-.825q.4.415.512.475.214.149.436.18.053.007.106.007.22 0 .44-.123.192-.092.613-.538.437.464.643.553.204.108.41.108.082 0 .165-.017.36-.053.888-.643l.806.802q.037.035.085.06.092.039.173.039.184 0 .314-.196.095-.213-.04-.393l-1.085-1.087q-.073-.068-.158-.09-.05-.01-.098-.01-.107 0-.193.057l-.633.618q-.106.09-.22.092-.117 0-.224-.09l-.633-.618q-.091-.06-.198-.06-.038 0-.079.008-.094.021-.161.081l-.603.595q-.11.084-.206.084H9.58q-.112 0-.226-.095l-.62-.61q-.092-.063-.206-.063-.03 0-.062.005-.098.015-.183.089l-.811.808-1.41-1.404q-.232-.2-.452-.2H5.6z"></path><path d="M4.546 6.76q-.321 0-.478.322-.063.13-.093.338l-.045.621q-.032.157-.12.265-.096.115-.239.163-.121.047-.383.054-.035.006-.082.026-.114.056-.17.164-.085.183.014.354.108.168.312.173h.002q1.488 0 1.414-1.59l1.494 1.492q.076.073.191.094.029.003.056.003.132 0 .226-.077l.828-.825q.401.415.512.474.214.15.436.18.053.008.106.008.22 0 .44-.124.193-.09.613-.538.437.465.644.554.203.108.41.108.082 0 .164-.017.36-.053.888-.644l.806.803q.037.035.085.06.092.038.174.038.184 0 .313-.196.096-.212-.04-.392l-1.085-1.088q-.072-.067-.157-.089-.052-.01-.099-.01-.107 0-.193.057l-.633.618q-.106.089-.22.091-.116 0-.224-.09l-.632-.618q-.092-.06-.198-.06-.039 0-.08.008-.094.022-.16.082l-.603.595q-.11.083-.206.083h-.008q-.112 0-.226-.094l-.62-.61q-.091-.063-.206-.063-.03 0-.062.004-.098.016-.183.09l-.811.807-1.41-1.403q-.232-.2-.452-.201h-.01z"></path><path d="M3.493 4.652q-.322 0-.479.322-.062.13-.093.338l-.045.622q-.032.157-.119.265-.097.115-.24.163-.12.046-.382.053-.036.006-.082.027-.115.056-.17.164-.086.183.013.354.108.167.312.173h.002q1.489 0 1.415-1.59l1.493 1.492q.076.073.191.093.029.004.056.004.132 0 .226-.078l.829-.825q.4.415.512.475.213.149.435.18.053.007.106.007.22 0 .44-.123.193-.091.613-.538.437.464.644.554.203.107.41.107.082 0 .165-.017.36-.053.888-.643l.806.802q.036.036.085.06.092.039.173.039.184 0 .313-.196.096-.213-.04-.392l-1.084-1.088q-.073-.068-.158-.089-.051-.011-.098-.011-.107 0-.193.058l-.633.617q-.107.09-.22.092-.117 0-.225-.09l-.632-.618q-.092-.06-.198-.06-.039 0-.079.008-.094.022-.162.081l-.602.596q-.11.083-.206.083h-.007q-.112 0-.226-.095l-.621-.609q-.09-.063-.205-.063-.03 0-.062.004-.098.015-.183.09l-.812.807-1.41-1.404q-.232-.199-.451-.2h-.01z"></path>
+  <div class="no-ember" style="text-align:center;">
+    <svg class="anim-box" xmlns="http://www.w3.org/2000/svg" width="40%" height="40%" viewBox="0 0 16 16"><path d="M10.745 18.717h.001l.03.038.038-.037h-.068zM9.076 19.337q-.1.074-.18.115l-.019.058q.05-.04.1-.083.051-.044.1-.09zM5.6 8.867q-.321 0-.478.322-.063.13-.093.338l-.046.622q-.032.157-.119.264-.096.116-.24.164-.12.046-.382.053-.036.006-.082.027-.115.055-.17.163-.086.183.013.354.108.168.313.174h.001q1.489 0 1.415-1.591l1.493 1.492q.076.074.192.094.028.003.055.003.132 0 .227-.077l.828-.825q.4.415.512.475.214.149.436.18.053.007.106.007.22 0 .44-.123.192-.092.613-.538.437.464.643.553.204.108.41.108.082 0 .165-.017.36-.053.888-.643l.806.802q.037.035.085.06.092.039.173.039.184 0 .314-.196.095-.213-.04-.393l-1.085-1.087q-.073-.068-.158-.09-.05-.01-.098-.01-.107 0-.193.057l-.633.618q-.106.09-.22.092-.117 0-.224-.09l-.633-.618q-.091-.06-.198-.06-.038 0-.079.008-.094.021-.161.081l-.603.595q-.11.084-.206.084H9.58q-.112 0-.226-.095l-.62-.61q-.092-.063-.206-.063-.03 0-.062.005-.098.015-.183.089l-.811.808-1.41-1.404q-.232-.2-.452-.2H5.6z"></path><path d="M4.546 6.76q-.321 0-.478.322-.063.13-.093.338l-.045.621q-.032.157-.12.265-.096.115-.239.163-.121.047-.383.054-.035.006-.082.026-.114.056-.17.164-.085.183.014.354.108.168.312.173h.002q1.488 0 1.414-1.59l1.494 1.492q.076.073.191.094.029.003.056.003.132 0 .226-.077l.828-.825q.401.415.512.474.214.15.436.18.053.008.106.008.22 0 .44-.124.193-.09.613-.538.437.465.644.554.203.108.41.108.082 0 .164-.017.36-.053.888-.644l.806.803q.037.035.085.06.092.038.174.038.184 0 .313-.196.096-.212-.04-.392l-1.085-1.088q-.072-.067-.157-.089-.052-.01-.099-.01-.107 0-.193.057l-.633.618q-.106.089-.22.091-.116 0-.224-.09l-.632-.618q-.092-.06-.198-.06-.039 0-.08.008-.094.022-.16.082l-.603.595q-.11.083-.206.083h-.008q-.112 0-.226-.094l-.62-.61q-.091-.063-.206-.063-.03 0-.062.004-.098.016-.183.09l-.811.807-1.41-1.403q-.232-.2-.452-.201h-.01z"></path><path d="M3.493 4.652q-.322 0-.479.322-.062.13-.093.338l-.045.622q-.032.157-.119.265-.097.115-.24.163-.12.046-.382.053-.036.006-.082.027-.115.056-.17.164-.086.183.013.354.108.167.312.173h.002q1.489 0 1.415-1.59l1.493 1.492q.076.073.191.093.029.004.056.004.132 0 .226-.078l.829-.825q.4.415.512.475.213.149.435.18.053.007.106.007.22 0 .44-.123.193-.091.613-.538.437.464.644.554.203.107.41.107.082 0 .165-.017.36-.053.888-.643l.806.802q.036.036.085.06.092.039.173.039.184 0 .313-.196.096-.213-.04-.392l-1.084-1.088q-.073-.068-.158-.089-.051-.011-.098-.011-.107 0-.193.058l-.633.617q-.107.09-.22.092-.117 0-.225-.09l-.632-.618q-.092-.06-.198-.06-.039 0-.079.008-.094.022-.162.081l-.602.596q-.11.083-.206.083h-.007q-.112 0-.226-.095l-.621-.609q-.09-.063-.205-.063-.03 0-.062.004-.098.015-.183.09l-.812.807-1.41-1.404q-.232-.199-.451-.2h-.01z"></path>
     </svg><br>
     <noscript><h1> Bitte aktiviere Javascript.</h1> </noscript>
     <h2>Lade...</h2>
-  </center>
   </div>
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/ember-ozean.js"></script>
+  <script src="{{rootURL}}assets/vendor.js"></script>
+  <script src="{{rootURL}}assets/ember-ozean.js"></script>
 
-    {{content-for "body-footer"}}
-  </body>
+  {{content-for "body-footer"}}
+</body>
+
 </html>

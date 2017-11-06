@@ -1,12 +1,12 @@
 import Controller from '@ember/controller';
 
 export default Controller.extend({
+  saving:false,
   fileName:"PDF hochladen",
     filetexName:"TeX hochladen",
     actions:{
       reply(){
         this.set("showReplyDialog",true);
-        console.log(this.get("model"));
         this.set('newmail', this.store.createRecord('email', {
           referencable: this.get("model.mail"),
           subject: "RE: "+this.get("model.mail.subject"),
@@ -49,6 +49,7 @@ export default Controller.extend({
         this.set('filetexName',file.filename);
       },
       save:function(){
+        this.set('saving',true);
         this.get('model.report').save().then(()=>{
           alert("Erfolgreich gespeichert!\nJetzt bitte die Mail archivieren.\nDie Firma dankt.");
           this.set('model.report',this.store.createRecord('report'));
@@ -56,7 +57,9 @@ export default Controller.extend({
           this.set('filetexName',"Datei hochladen");
         });
         this.set("student.report",true);
-        this.get("student").save().then(null)
+        this.get("student").save().then(()=>{
+          this.set('saving',false);
+        });
       }
     }
 });
