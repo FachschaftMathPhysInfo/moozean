@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 20171103120457) do
   add_foreign_key "is_ins", "folderseries"
   add_foreign_key "is_ins", "reports"
   add_foreign_key "lents", "folders"
-  add_foreign_key "lents", "students", on_delete: :cascade
+  add_foreign_key "lents", "students"
   add_foreign_key "printouts", "examinators"
   add_foreign_key "printouts", "folderseries"
   add_foreign_key "printouts", "reports"

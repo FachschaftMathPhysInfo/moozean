@@ -5,6 +5,20 @@ import Controller from '@ember/controller';
 export default Controller.extend({
   leftSideBarOpen2: true,
   newfolder: {},
+  limitFolders:5,
+  pageFolder:1,
+  fetched:computed('limitFolders','pageFolder','model.[]','model','showDialog', function() {
+    let result= this.store.query("folderseries", {
+      page: {
+        number: this.get('pageFolder'),
+        size: this.get("limitFolders")
+      }
+    });
+    result.then((data) => {
+      this.set("meta", data.get("meta"));
+    })
+    return result;
+  }),
   actions: {
     addFolderseries: function() {
       this.set('newfolderseries', this.store.createRecord('folderseries'));
@@ -17,7 +31,7 @@ export default Controller.extend({
     },
     closeDialog: function(option) {
       if (option == "ok") {
-        this.get('newfolderseries').save().then(null)
+        this.get('newfolderseries').save();
       }
       this.set('showDialog', false);
     },
