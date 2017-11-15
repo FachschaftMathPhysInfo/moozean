@@ -39,11 +39,11 @@
     {{#paper-card as |card|}}
       {{#card.content}}
         {{#paper-stepper currentStep=currentStep onStepChange=(pipe (action (mut currentStep))(action "clearWhenBack" currentStep)) mobileStepper=true linear=false vertical=true class="flex" as |stepper|}}
-          {{#stepper.step label="Studierendes" summary=student.name as |step|}}
+          {{#stepper.step label="Welches Studierendes leiht aus? (Name oder Uni-ID)" summary=student.name as |step|}}
             {{#step.body}}
               {{#step.actions as |nextStep previousStep|}}
-                {{#paper-autocomplete disabled=firstDisabled onCreate=(action "addStudent") allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
-                  noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))(action "focusFolderSelection" currentStep)) as |country autocomplete|}}
+                {{#paper-autocomplete searchMessage="Zum Suchen tippen" disabled=firstDisabled onCreate=(action "addStudent") allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
+                  noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))(action "focusFolderSelection" currentStep)) as |country autocomplete|}}
                   {{paper-autocomplete-highlight
               label=country.name
               searchText=autocomplete.searchText
@@ -53,7 +53,7 @@
             {{/step.body}}
           {{/stepper.step}}
           {{#unless studentselected}}
-            {{#stepper.step label="Ordner" summary=sumordner as |step|}}
+            {{#stepper.step label="Welche(n) Ordner? (Ordnerrückenbeschriftung)" summary=sumordner as |step|}}
               {{#step.body}}
                 {{teste}}
                 {{#paper-chips readOnly=false removeItem=(action "removeFolder") addItem=(action "addFolder") placeholder="Ordner hinzufügen" content=ordner options=model.folders search=(action "searchFolders") searchField="name" noMatchesMessage="Kein Ordner gefunden" as |item|}}
@@ -78,12 +78,9 @@
       {{#card.content }}
         {{#paper-data-table sortProp="folder" sortDir="desc" selectable=true as |table|}}
           {{#table.head as |head|}}
-            {{!#head.column checkbox=true}}
-            {{!#paper-checkbox disabled=true onChange=null}}{{!/paper-checkbox}}
-            {{!/head.column}}
             {{#head.column sortProp="folder.name" }}Ordner{{/head.column}}
             {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
-            {{#head.column sortProp="createdAt" }}ausgeliehen{{/head.column}}
+            {{#head.column sortProp="createdAt" }}ausgeliehen am{{/head.column}}
             {{#head.column}}Optionen{{/head.column}}
           {{/table.head}}
           {{#table.body as |body|}}

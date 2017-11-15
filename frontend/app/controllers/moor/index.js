@@ -1,5 +1,3 @@
-import { A } from '@ember/array';
-import { computed } from '@ember/object';
 import Controller from '@ember/controller';
 
 export default Controller.extend({
@@ -33,6 +31,10 @@ export default Controller.extend({
       if (option == "ok") {
         this.get('newfolderseries').save();
       }
+      else{
+        this.get("newfolderseries").destroyRecord();
+      }
+
       this.set('showDialog', false);
     },
   }

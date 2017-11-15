@@ -34,7 +34,7 @@ plural="Ordnernreihen"}}
         {{#table.body as |body|}}
           {{#each (sort-by table.sortDesc fetched) as |m|}}
             {{#body.row edit=true onClick=(action (transition-to "moor.folderseries" m)) as |row|}}
-              {{#row.cell}}{{paper-icon "folder"}}{{/row.cell}}
+              {{#row.cell}}{{paper-icon "dns"}}{{/row.cell}}
               {{#row.cell}}{{m.name}}{{/row.cell}}
               {{#row.cell}}{{#if m.obligationtoreport}}ja{{else}}nein{{/if}}{{/row.cell}}
               {{#row.cell}}

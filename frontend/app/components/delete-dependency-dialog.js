@@ -8,16 +8,12 @@ export default Component.extend({
     switch(this.get('objekt').get('constructor.modelName')){
       case 'modul' :
         return 'Modul';
-        break;
       case 'typ' :
         return 'Prüfungsart';
-        break;
       case 'examinator' :
         return 'Prüfendes';
-        break;
       case 'subject' :
         return 'Fach';
-        break;
     }
   }),
   dieseselements: computed('objekt',function() {
@@ -26,16 +22,12 @@ export default Component.extend({
     switch (this.get('objekt').get('constructor.modelName')){
       case 'modul' :
         return 'dieses Moduls';
-        break;
       case 'typ' :
         return 'dieser Prüfungsart';
-        break;
       case 'examinator' :
         return 'dieses Prüfenden';
-        break;
       case 'subject' :
         return 'dieses Fachs';
-        break;
     }
   }),
   actions: {

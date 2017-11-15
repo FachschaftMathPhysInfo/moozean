@@ -5,7 +5,8 @@ export default Controller.extend({
     archiveMail:function(mail){
       mail.set("archived",true);
       mail.save().then(()=>{
-        this.send("modelReload");
+        mail.unloadRecord();
+        alert("Die Mail ist nun archiviert.\nSie ist jetzt noch für 182 Tage aus der Datenbank abrufbar.\nDann wird sie nicht mehr existieren.")
       });
     },
     deleteMail:function(mail){

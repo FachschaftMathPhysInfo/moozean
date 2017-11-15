@@ -7,21 +7,21 @@
   onToggle=(action (mut open))
 flex-layout="column" flex=true }}
   {{#paper-toolbar tall=true as |toolbar|}}
-    {{#paper-toolbar-tools}}<center>
-      {{svg-jar "ocean"  height="140px" width="140px"}}<br/>
-      FACHSCHAFT MATHPHYS
-    </center>{{/paper-toolbar-tools}}
+    {{#paper-toolbar-tools}}<div style="text-align:center; margin:auto;">
+      {{svg-jar "ocean"  height="130px" width="140px"}}<br/>
+      <b>Moozean</b>
+    </div>{{/paper-toolbar-tools}}
   {{/paper-toolbar}}
   {{#paper-content padding=false}}
     {{#paper-list}}
       {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{paper-icon "swap horiz" class="site-nav-icon"}}Ausleihe{{/menu-item}}
-      {{#menu-item active=(is-active "moor.search" currentRouteName) onClick=(transition-to "moor.search")}}{{paper-icon "search" class="site-nav-icon"}}Suchen{{/menu-item}}
-      {{#menu-item active=(is-active "moor.report" currentRouteName) onClick=(transition-to "moor.report")}}{{paper-icon "assignment" class="site-nav-icon"}}neuer Bericht{{/menu-item}}
+      {{#menu-item active=(is-active "moor.search" currentRouteName) onClick=(transition-to "moor.search")}}{{paper-icon "search" class="site-nav-icon"}}Berichtssuche{{/menu-item}}
+      {{#menu-item active=(is-active "moor.report" currentRouteName) onClick=(transition-to "moor.report")}}{{paper-icon "assignment" class="site-nav-icon"}}Bericht eintragen{{/menu-item}}
       {{#menu-item active=(is-active "moor" currentRouteName) onClick=(transition-to "moor")}}{{paper-icon "dns" class="site-nav-icon"}}Ordnerreihen{{/menu-item}}
-    {{#menu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "email" class="site-nav-icon"}}Mails{{/menu-item}}
+    {{#menu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "email" class="site-nav-icon"}}Mails bearbeiten{{/menu-item}}
     {{#menu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "face" class="site-nav-icon"}}Studierende{{/menu-item}}
       {{#menu-item active=(is-active "moor.management.examinators" currentRouteName) onClick=(transition-to "moor.management.examinators")}}{{paper-icon "perm identity" class="site-nav-icon"}}Prüfende{{/menu-item}}
-      {{#menu-item active=(is-active "moor.management" currentRouteName) onClick=(transition-to "moor.management")}}{{paper-icon "settings" class="site-nav-icon"}}Verwaltung{{/menu-item}}
+      {{#menu-item active=(is-active "moor.management" currentRouteName) onClick=(transition-to "moor.management")}}{{paper-icon "settings" class="site-nav-icon"}}sonstige Verwaltung{{/menu-item}}
     {{/paper-list}}
   {{/paper-content}}
 {{/paper-sidenav}}

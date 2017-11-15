@@ -11,7 +11,7 @@ reply=(action "reply")}}
     {{/title.text}}
   {{/card.title}}
   {{#card.content}}
-  {{#paper-autocomplete allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..." noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
+  {{#paper-autocomplete searchMessage="Zum Suchen tippen" allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Wer hat den Bericht abgegeben?" loadingMessage="Suche Studierendes..." noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
     onSelectionChange=(action (mut student)) as |country autocomplete|}}
     {{paper-autocomplete-highlight
                         label=country.name
@@ -45,10 +45,13 @@ reply=(action "reply")}}
         {{paper-icon "picture as pdf"}} {{fileName}}
       {{/file-picker}}
     {{/paper-button}}
-    {{#paper-button onClick=(action "save")}}
+    {{#paper-button disabled=(or (or (not model.report.typ)(not model.report.subject))(not model.report.pdf)) onClick=(action "save")}}
       Speichern
     {{/paper-button}}
   {{/card.actions}}
+    {{#if saving}}
+      {{paper-progress-linear}}
+    {{/if}}
 {{/paper-card}}
 </div>
 </div>

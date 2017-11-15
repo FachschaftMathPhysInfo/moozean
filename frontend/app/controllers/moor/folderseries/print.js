@@ -1,7 +1,6 @@
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import Controller from '@ember/controller';
-import moment from 'moment';
 
 export default Controller.extend({
   pruefende:A(),
@@ -18,7 +17,6 @@ export default Controller.extend({
   }),
   pages: computed('meta.page-count', function() {
     let e = A();
-    console.log(this.get("meta.page-count"));
     for (let i = 1; i <=this.get("meta.page-count"); i++) {
       e.pushObject(i);
     }
@@ -50,7 +48,6 @@ export default Controller.extend({
       }, page: {size: this.get("limit"),number:this.get("page")}
     });
     ergebnis.then((data) => {
-      console.log(data);
       this.set("meta",data.meta);
       this.set("loading", false);
     });

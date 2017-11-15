@@ -1,6 +1,5 @@
 import { hash } from 'rsvp';
 import Route from '@ember/routing/route';
-import moment from 'moment';
 export default Route.extend({
   model:function(){
     return hash({
@@ -9,7 +8,7 @@ export default Route.extend({
       subjects:this.store.findAll('subject'),
       typs:this.store.findAll('typ'),
       moduls:this.store.findAll('modul'),
-      report: this.store.createRecord('report',{pdf:'',tex:'',examinationDate:moment()})
+      report: this.store.createRecord('report',{pdf:'',tex:'',examinationAt:new Date()})
     });
   }
 });

@@ -1,12 +1,10 @@
 import { schedule } from '@ember/runloop';
-import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
-
 export default Component.extend({
-  store: Ember.inject.service(),
+  store: service(),
   items: [],
   titlestudent: "Studierendes eintragen",
   bleibendeOrdner: [{
