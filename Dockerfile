@@ -7,7 +7,7 @@ RUN /pd_build/redis.sh
 # Enable the Redis service.
 RUN rm -f /etc/service/redis/down
 RUN apt-get update && apt-get install -qq -y --no-install-recommends \
-build-essential  nodejs npm libpq-dev wget git cron pdftk imagemagick libmagickwand-dev ghostscript texlive-latex-extra cups
+build-essential  nodejs npm libpq-dev wget git cron pdftk imagemagick libmagickwand-dev ghostscript texlive-latex-extra cups texlive-pstricks
 
 ENV HOME /root
 
