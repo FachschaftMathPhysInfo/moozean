@@ -27,7 +27,9 @@ reply=(action "reply")}}
     {{!Folderseries}}
   {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
     {{paper-pikaday label="Prüfungsdatum"
-                value=(readonly (moment-format model.report.examinationAt "MM.YYYY"))
+                required=true
+                value=model.report.examinationAt
+                format="MM.YYYY"
                 onSelection=(action (mut model.report.examinationAt))
                 onChange=(action (mut model.report.examinationAt)) }}
 

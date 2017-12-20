@@ -52,3 +52,12 @@ gem "rails-erd"
 gem 'mail'
 gem 'whenever', :require => false
 gem 'iconv'
+group :development, :test do
+  gem "rspec-rails", "~> 3.6.0"
+end
+
+#group :test do
+#  gem 'capybara'
+#  gem 'poltergeist'
+#  gem "capybara-webkit"
+#end
