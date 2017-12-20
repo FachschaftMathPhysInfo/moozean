@@ -1,9 +1,9 @@
 class Student < ApplicationRecord
-  validates :uniid, format: { with: /[a-z][a-z][0-9][0-9][0-9]|00007/,
+  validates :uniid, format: { with: /[a-z][a-z][0-9][0-9][0-9]/,
     message: "Uni-ID im falschen Format. Sollte so aussehen: jb007" }
   validates :refund, inclusion: { in: [ true, false ] }
   validates :report, inclusion: { in: [ true, false ] }
-  #validates :uniid, uniqueness: { message:"Es kann nur ein Studierendes geben, dass diese Uni-ID hat." }
+  validates :uniid, uniqueness: { message:"Es kann nur ein Studierendes geben, dass diese Uni-ID hat." }
   has_many :lents, :dependent => :delete_all
   has_many :returneds, :dependent => :delete_all
   # Relationen zu bisher und aktuell ausgeliehene Ordner

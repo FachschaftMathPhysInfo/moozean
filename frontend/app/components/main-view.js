@@ -39,7 +39,7 @@ export default Component.extend({
     }
     var contains_obligation = false;
     this.get('ordner').forEach(function(item) {
-      contains_obligation |= item.get('obligationtoreport');
+      contains_obligation |= item.get('folderseries.obligationtoreport');
     });
     return contains_obligation;
   }),
