@@ -1,5 +1,5 @@
 # Moozean
-
+[![Build Status](https://travis-ci.org/FachschaftMathPhys/moozean.svg?branch=master)](https://travis-ci.org/FachschaftMathPhys/moozean)
 # Requirements
 
 ## Ruby version
