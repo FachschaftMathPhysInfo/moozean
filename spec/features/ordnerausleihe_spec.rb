@@ -1,4 +1,5 @@
 require 'capybara/rspec'
+require 'database_cleaner'
 feature "Fachschaftler leiht einen Ordner aus.", js:true do
   before(:each) do
     DatabaseCleaner.clean_with(:truncation)
