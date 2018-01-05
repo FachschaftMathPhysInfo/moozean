@@ -1,7 +1,6 @@
 language: ruby
 rvm:
  - 2.3
- - rbx-3
 services:
  - redis-server
  - postgresql
