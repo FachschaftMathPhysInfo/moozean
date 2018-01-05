@@ -1,7 +1,6 @@
 language: ruby
 rvm:
  - 2.3
- - jruby
  - rbx-3
 services:
  - redis-server
@@ -9,6 +8,7 @@ services:
 before_script:
  - psql -c 'create database travis_ci_test;' -U postgres
  - cp config/database.yml.travis config/database.yml
+ - npm install -g bower
 script:
  - bin/rake db:migrate RAILS_ENV=test
  - bin/rake assets:precompile
