@@ -13,6 +13,8 @@ class PrintoutResource < JSONAPI::Resource
 \usepackage[runs=2, crop=off]{auto-pst-pdf}
 \usepackage{graphicx}
 \DeclareGraphicsExtensions{.pdf}'<<"\n"
+    buffer << '\usepackage[ngerman]{babel}'<<"\n"
+    buffer << '\usepackage[T1]{fontenc}'<<"\n"
     buffer << '\usepackage[utf8]{inputenc}'<<"\n"
     buffer << '\pagestyle{empty}'<<"\n"
     buffer << '\renewcommand{\familydefault}{\sfdefault}'<<"\n"
@@ -41,8 +43,8 @@ class PrintoutResource < JSONAPI::Resource
           @model.report.moduls.each do |mod|
             buffer << mod.name << ', '
           end
-          buffer = buffer.chop.chop
-          buffer << '}\put(145,-7.5){\tiny Ordner:}'<<"\n"
+          buffer = buffer.chop.chop unless @model.report.moduls.count==0
+          buffer << '}' << "\n" << '\put(145,-7.5){\tiny Ordner:}'<<"\n"
           buffer<<'\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)
           \psbarcode[scalex=0.8,scaley=0.8]{'<<@model.report.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}
           \end{pspicture}}'<<"\n"
@@ -53,7 +55,8 @@ class PrintoutResource < JSONAPI::Resource
           buffer << '\put(172,-15){\normalsize\bf ' << @model.report.id.to_s << '}'<<"\n"
           buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
           buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s << '}'<<"\n"
-          buffer << '\put(6,-297){\includegraphics*[width=198mm,height=280mm]{'<<dir<<'/current_report_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
+          buffer <
+          end< '\put(6,-297){\includegraphics*[width=198mm,height=280mm]{'<<dir<<'/current_report_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
           buffer << '\end{picture}'<<"\n"
           buffer << '\end{textblock*}'<<"\n"
           buffer << '\null\newpage'<<"\n"
