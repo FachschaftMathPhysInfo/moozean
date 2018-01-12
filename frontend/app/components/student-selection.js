@@ -15,6 +15,23 @@ export default Component.extend({
   deletable: computed('newstudent', function() {
     return this.get('newstudent.uniid') != undefined ;
   }),
+  closeOkDialog: function(store) {
+    let foo = function(_this) {
+      return function() {
+        _this.set('student', _this.get('newstudent'));
+        _this.set('newstudent', store.createRecord('student'));
+        _this.set("showDialog", false);
+      }
+    };
+    if (this.get('newstudent').save != null)
+      this.get('newstudent').save().then(foo(this), function(reason) {
+        alert(reason); //TODO: FIXME
+      })
+    else this.get('newstudent').content.save().then(foo(this), function(reason) {
+      alert(reason); //TODO: FIXME
+    });
+    foo();
+  }
   actions:{
     closeDialog: function(option) {
       var store = this.get('store');
@@ -27,21 +44,7 @@ export default Component.extend({
           });
       }
       if (option == "ok") {
-        let foo = function(_this) {
-          return function() {
-            _this.set('student', _this.get('newstudent'));
-            _this.set('newstudent', store.createRecord('student'));
-            _this.set("showDialog", false);
-          }
-        };
-        if (this.get('newstudent').save != null)
-          this.get('newstudent').save().then(foo(this), function(reason) {
-            alert(reason); //TODO: FIXME
-          })
-        else this.get('newstudent').content.save().then(foo(this), function(reason) {
-          alert(reason); //TODO: FIXME
-        });
-        foo();
+        this.closeOkDialog(atore);
       }
       else if(option == 'delete'){
         this.get('student').destroyRecord().then(()=>{
@@ -52,7 +55,6 @@ export default Component.extend({
         this.get('newstudent').rollbackAttributes();
         foo();
       }
-
     },
     searchStudent: function(data) {
       var store = this.get('store');

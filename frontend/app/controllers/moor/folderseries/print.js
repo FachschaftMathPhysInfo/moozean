@@ -23,6 +23,22 @@ export default Controller.extend({
     return e;
   }),
   page: 1,
+  queryReports:function(moduls,examinators,folderseries){
+    let ergebnis = this.get('store').query('report', {
+      filter: {
+        subject: this.get('subject.id'),
+        typ: this.get('typ.id'),
+        moduls: moduls,
+        examinators: examinators,
+        folderseries: folderseries
+      }, page: {size: this.get("limit"),number:this.get("page")}
+    });
+    ergebnis.then((data) => {
+      this.set("meta",data.meta);
+      this.set("loading", false);
+    });
+    return ergebnis;
+  },
   results: computed('pruefende.[]', 'module.[]', 'subject', 'typ','page','limit', function() {
     this.set("loading", true);
     let moduls = [];
@@ -38,19 +54,7 @@ export default Controller.extend({
         moduls.pushObject(item.get("id"));
       });
     }
-    let ergebnis = this.get('store').query('report', {
-      filter: {
-        subject: this.get('subject.id'),
-        typ: this.get('typ.id'),
-        moduls: moduls,
-        examinators: examinators,
-        folderseries: folderseries
-      }, page: {size: this.get("limit"),number:this.get("page")}
-    });
-    ergebnis.then((data) => {
-      this.set("meta",data.meta);
-      this.set("loading", false);
-    });
+    let ergebnis = this.queryReports
     return ergebnis;
   }),
   actions:{
