@@ -51,14 +51,6 @@ export default Component.extend({
     });
   })),
   checkBoundaries(){
-    if(this.get("statefrom")>this.get("stateto")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
-    if(this.get("statefrom")>this.get("statemax")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
     if(this.get("stateto")>this.get("statemax")){
       this.set("statefrom",this.get("statemin"));
       this.set("stateto",this.get("statemax"));
@@ -67,7 +59,7 @@ export default Component.extend({
       this.set("statefrom",this.get("statemin"));
       this.set("stateto",this.get("statemax"));
     }
-    if(this.get("stateto")<this.get("statemin")){
+    if(this.get("statefrom")>this.get("stateto")){
       this.set("statefrom",this.get("statemin"));
       this.set("stateto",this.get("statemax"));
     }
