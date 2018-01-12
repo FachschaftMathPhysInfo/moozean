@@ -44,7 +44,32 @@ export default Component.extend({
     return contains_obligation;
   }),
   showDialog: false,
-
+  closeOkDialog:function(store) {
+    let foo = function(_this) {
+      return function() {
+        _this.set('student', _this.get('newstudent'));
+        _this.set('newstudent', store.createRecord('student'));
+        _this.set("showDialog", false);
+        _this.set('currentStep', 1);
+      }
+    };
+    if (this.get('newstudent').save != null)
+      this.get('newstudent').save().then(foo(this))
+    else this.get('newstudent').content.save().then(foo(this));
+    this.set('currentStep', 1);
+  },
+  closeDeleteDialog: function(store) {
+    this.get('newstudent').then((item)=>{
+      item.get('lents').then((item)=>{
+        item.forEach((lent)=>{
+          lent.unloadRecord();
+        });
+      });
+      item.destroyRecord();
+    });
+      this.set('showDialog', false);
+      this.set('currentStep', 0);
+  },
   actions: {
     editStudent: function(student) {
       this.set('newstudent', student);
@@ -54,32 +79,10 @@ export default Component.extend({
     closeDialog: function(option) {
       var store = this.get('store');
       if (option == "ok") {
-        let foo = function(_this) {
-          return function() {
-            _this.set('student', _this.get('newstudent'));
-            _this.set('newstudent', store.createRecord('student'));
-            _this.set("showDialog", false);
-            _this.set('currentStep', 1);
-          }
-        };
-        if (this.get('newstudent').save != null)
-          this.get('newstudent').save().then(foo(this))
-        else this.get('newstudent').content.save().then(foo(this));
-        this.set('currentStep', 1)
-        this.$('md-chip-input-container input').focus();
+        this.closeOkDialog(store);
       }else if(option == 'delete'){
-        this.get('newstudent').then((item)=>{
-          item.get('lents').then((item)=>{
-            item.forEach((lent)=>{
-              lent.unloadRecord();
-            });
-          });
-          item.destroyRecord();
-        });
-          this.set('showDialog', false);
-          this.set('currentStep', 0);
-          this.$('md-autocomplete-wrap input').focus();
-      }else{
+        this.closeDeleteDialog(store);
+      } else{
         if(this.get('newstudent.id')!=null){
           this.get('newstudent').then((item)=>{
             item.rollbackAttributes();
@@ -89,8 +92,8 @@ export default Component.extend({
           this.get('newstudent').destroyRecord();
         }
         this.set('showDialog', false);
-        this.$('md-autocomplete-wrap input').focus();
       }
+      this.$('md-chip-input-container input').focus();
     },
     addStudent: function() {
       var store = this.get('store');

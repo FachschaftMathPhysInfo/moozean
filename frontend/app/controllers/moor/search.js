@@ -23,6 +23,26 @@ export default Controller.extend({
   resultsLength:computed('meta.record-count', function() {
     return this.get("meta.record-count");
   }),
+  queryReports: function(moduls,examinators,folderseries,start,end){
+    let ergebnis = this.get('store').query('report', {
+      filter: {
+        subject: this.get('subject.id'),
+        typ: this.get('typ.id'),
+        moduls: moduls,
+        examinators: examinators,
+        folderseries: folderseries,
+        daterange: [start,end],
+      },
+      page: {
+        size: this.get("limit"),
+        number:this.get("page")
+      }
+    });
+    ergebnis.then((data) => {
+      this.set("meta",data.meta);
+    });
+    return ergebnis;
+  },
   results: computed('examinatora.[]', 'modula.[]', 'folderseriesa.[]', 'subject', 'typ','page','limit','beginExamAt','endExamAt', function() {
     //this.set("loading", true);
     let moduls = [];
@@ -45,23 +65,7 @@ export default Controller.extend({
         moduls.pushObject(item.get("id"));
       });
     }
-    let ergebnis = this.get('store').query('report', {
-      filter: {
-        subject: this.get('subject.id'),
-        typ: this.get('typ.id'),
-        moduls: moduls,
-        examinators: examinators,
-        folderseries: folderseries,
-        daterange: [start,end],
-      },
-      page: {
-        size: this.get("limit"),
-        number:this.get("page")
-      }
-    });
-    ergebnis.then((data) => {
-      this.set("meta",data.meta);
-    });
+    let ergebnis =this.queryReports(moduls,examinators,folderseries,start,end);
     return ergebnis;
   }),
   reporttoedit: null,

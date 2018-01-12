@@ -38,27 +38,21 @@ export default Route.extend({
       for (var i = 0; i < value.length; i++) {
         arr.push(this.store.find(typus, parseInt(value[i], 10)));
       }
-
-      return arr;
-
+      value= arr;
       // Original: return Ember.A(JSON.parse(value));
-    }
-    if (defaultValueType === 'undefined') {
-      return this.store.find(urlKey, value);
-    }
-    if (moment(JSON.parse(value)).isValid()) {
-      return moment(JSON.parse(value));
-    }
-    //console.log(urlKey.slice(-2,urlKey.length));
-    if (urlKey.slice(-2, urlKey.length).toLowerCase() == 'at') {
+    } else if (defaultValueType === 'undefined') {
+      value= this.store.find(urlKey, value);
+    } else if (moment(JSON.parse(value)).isValid()) {
+      value= moment(JSON.parse(value));
+    }else if (urlKey.slice(-2, urlKey.length).toLowerCase() == 'at') {
       return value;
     }
     if (defaultValueType === 'boolean') {
-      return (value === 'true')
+      value= (value === 'true')
         ? true
         : false;
     } else if (defaultValueType === 'number') {
-      return (Number(value)).valueOf();
+      value= (Number(value)).valueOf();
     }
 
     return value;

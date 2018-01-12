@@ -4,27 +4,9 @@ class StudentResource < JSONAPI::Resource
   has_many :folders_lents, class_name:"Folder"
   has_many :folders_returneds, class_name:"Folder"
   has_many :lents, class_name:"Lent"
-  filters :nameoruniid, :name
-  def self.apply_filter(records, filter, value, options = {})
-    strategy = _allowed_filters.fetch(filter.to_sym, Hash.new)[:apply]
-
-    if strategy
-      if strategy.is_a?(Symbol) || strategy.is_a?(String)
-        send(strategy, records, value, options)
-      else
-        strategy.call(records, value, options)
-      end
-    else
-      verb="ILIKE"
-      if filter == "id"
-        verb="="
-      end
-      value_regex = Array.wrap(value).join('|')
-      if filter == :nameoruniid
-        records.where("name #{verb} '#{value_regex}' OR uniid #{verb} '#{value_regex}'");
-      else
-        records.where("#{filter} #{verb} '#{value_regex}'");
-      end
-    end
-  end
+  filters  :name,:id
+  filter :nameoruniid, apply: ->(records, value, _options) {
+    value_regex = Array.wrap(value).join('|')
+    records.where("name ILIKE '#{value_regex}' OR uniid ILIKE '#{value_regex}'")
+  }
 end
