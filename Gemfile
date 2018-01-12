@@ -56,8 +56,11 @@ group :development, :test do
   gem "rspec-rails", "~> 3.6.0"
 end
 
-#group :test do
-#  gem 'capybara'
+group :test do
+  gem 'capybara'
+  gem "chromedriver-helper"
+  gem "selenium-webdriver"
+  gem "database_cleaner"
 #  gem 'poltergeist'
 #  gem "capybara-webkit"
-#end
+end
