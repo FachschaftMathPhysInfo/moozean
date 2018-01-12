@@ -6,6 +6,9 @@ module.exports = function(environment) {
     modulePrefix: 'ember-ozean',
     environment,
     rootURL: '/',
+    'ember-paper':{
+      insertFontLinks: false
+    },
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
