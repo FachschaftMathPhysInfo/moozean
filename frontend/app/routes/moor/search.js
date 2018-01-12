@@ -7,55 +7,5 @@ export default Route.extend({
   model: function() {
     return hash({examinators: this.store.findAll('examinator'), folderseries: this.store.findAll('folderseries'), subjects: this.store.findAll('subject'),
      typs: this.store.findAll('typ'), moduls: this.store.findAll('modul')});
-  },
-  serializeQueryParam: function(value, urlKey, defaultValueType) {
-    if (typeOf(value) == "instance") {
-      return value.get("id");
-    }
-    if (moment.isMoment(value)) {
-      let date = value.format();
-      return JSON.stringify(date);
-    }
-    if (defaultValueType === 'array') {
-      let va = A();
-      value.forEach((item) => {
-        va.pushObject(item.get("id"));
-      });
-      return JSON.stringify(va);
-
-      // Original: return JSON.stringify(value);
-    }
-    //console.log(Ember.typeOf(value));
-    return '' + value;
-  },
-  deserializeQueryParam: function(value, urlKey, defaultValueType) {
-    if (defaultValueType === 'array') {
-      var typus = (urlKey[urlKey.length - 1] == 's')
-        ? urlKey
-        : urlKey.slice(0, -1);
-      var arr = [];
-      value = JSON.parse(value);
-      for (var i = 0; i < value.length; i++) {
-        arr.push(this.store.find(typus, parseInt(value[i], 10)));
-      }
-      value= arr;
-      // Original: return Ember.A(JSON.parse(value));
-    } else if (defaultValueType === 'undefined') {
-      value= this.store.find(urlKey, value);
-    } else if (moment(JSON.parse(value)).isValid()) {
-      value= moment(JSON.parse(value));
-    }else if (urlKey.slice(-2, urlKey.length).toLowerCase() == 'at') {
-      return value;
-    }
-    if (defaultValueType === 'boolean') {
-      value= (value === 'true')
-        ? true
-        : false;
-    } else if (defaultValueType === 'number') {
-      value= (Number(value)).valueOf();
-    }
-
-    return value;
   }
-
 });
