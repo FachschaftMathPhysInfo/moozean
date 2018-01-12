@@ -13,26 +13,21 @@ export default Component.extend({
   from:moment(new Date(2005,1,1)),
   max: moment(new Date(2015,1,1)),
   min:moment(new Date(2000,1,1)),
-  toDidChanged: on('init',observer('to', function() {
-    if(this.get("to")=="date"){
-      this.set("stateto",10);
+  didChanged: function(variable){
+    if(this.get(variable)=="date"){
+      this.set("state"+variable,10);
       return;
     }
-    this.set("stateto",this.get("to").month()-1+(this.get("to").year()-1900)*12);
+    this.set("state"+variable,this.get(variable).month()-1+(this.get(variable).year()-1900)*12);
+  },
+  toDidChanged: on('init',observer('to', function() {
+    this.didChanged("to");
   })),
   fromDidChanged: on('init',observer('from', function() {
-    if(this.get("from")=="date"){
-      this.set("statefrom",0);
-      return;
-    }
-    this.set("statefrom",this.get("from").month()-1+(this.get("from").year()-1900)*12);
+    this.didChanged("from");
   })),
   maxDidChanged: on('init',observer('max', function() {
-    if(this.get("max")=="date"){
-      this.set("statemax",0);
-      return;
-    }
-    this.set("statemax",this.get("max").month()-1+(this.get("max").year()-1900)*12);
+    this.didChanged("max");
 
     this.checkBoundaries();
     schedule("afterRender",this,function(){
@@ -40,11 +35,7 @@ export default Component.extend({
     });
   })),
   minDidChanged: on('init',observer('min', function() {
-    if(this.get("min")=="date"){
-      this.set("statemin",0);
-      return;
-    }
-    this.set("statemin",this.get("min").month()-1+(this.get("min").year()-1900)*12);
+    this.didChanged("min");
     this.checkBoundaries();
     schedule("afterRender",this,function(){
       this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
