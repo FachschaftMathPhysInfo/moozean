@@ -34,18 +34,7 @@ export default Component.extend({
     }
     this.set("statemax",this.get("max").month()-1+(this.get("max").year()-1900)*12);
 
-    if(this.get("statefrom")>this.get("stateto")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
-    if(this.get("statefrom")>this.get("statemax")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
-    if(this.get("stateto")>this.get("statemax")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
+    this.checkBoundaries();
     schedule("afterRender",this,function(){
       this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
     });
@@ -62,6 +51,18 @@ export default Component.extend({
     });
   })),
   checkBoundaries(){
+    if(this.get("statefrom")>this.get("stateto")){
+      this.set("statefrom",this.get("statemin"));
+      this.set("stateto",this.get("statemax"));
+    }
+    if(this.get("statefrom")>this.get("statemax")){
+      this.set("statefrom",this.get("statemin"));
+      this.set("stateto",this.get("statemax"));
+    }
+    if(this.get("stateto")>this.get("statemax")){
+      this.set("statefrom",this.get("statemin"));
+      this.set("stateto",this.get("statemax"));
+    }
     if(this.get("statefrom")<this.get("statemin")){
       this.set("statefrom",this.get("statemin"));
       this.set("stateto",this.get("statemax"));
