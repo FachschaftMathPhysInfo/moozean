@@ -49,6 +49,7 @@ export default Component.extend({
         });
       }
       else {
+        this.get('newstudent').rollbackAttributes();
         foo();
       }
 
