@@ -50,6 +50,27 @@ export default Component.extend({
       this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
     });
   })),
+  minDidChanged: on('init',observer('min', function() {
+    if(this.get("min")=="date"){
+      this.set("statemin",0);
+      return;
+    }
+    this.set("statemin",this.get("min").month()-1+(this.get("min").year()-1900)*12);
+    this.checkBoundaries();
+    schedule("afterRender",this,function(){
+      this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
+    });
+  })),
+  checkBoundaries(){
+    if(this.get("statefrom")<this.get("statemin")){
+      this.set("statefrom",this.get("statemin"));
+      this.set("stateto",this.get("statemax"));
+    }
+    if(this.get("stateto")<this.get("statemin")){
+      this.set("statefrom",this.get("statemin"));
+      this.set("stateto",this.get("statemax"));
+    }
+  },
   calculate(option) {
     this.set("state", option);
     {
@@ -63,37 +84,9 @@ export default Component.extend({
       this.set("from", moment(new Date(year, month + 1, 1)));
     }
   },
-  minDidChanged: on('init',observer('min', function() {
-    if(this.get("min")=="date"){
-      this.set("statemin",0);
-      return;
-    }
-    this.set("statemin",this.get("min").month()-1+(this.get("min").year()-1900)*12);
-    if(this.get("statefrom")<this.get("statemin")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
-    if(this.get("stateto")<this.get("statemin")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
-    }
-    schedule("afterRender",this,function(){
-      this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
-    });
-  })),
   actions: {
     calculate(option) {
-      this.set("state", option);
-      {
-        let year = 1900 + Math.floor(option.to / 12);
-        let month = option.to % 12;
-        this.set("to", moment(new Date(year, month + 1, 28)));
-      }
-      {
-        let year = 1900 + Math.floor(option.from / 12);
-        let month = option.from % 12;
-        this.set("from", moment(new Date(year, month + 1, 1)));
-      }
+      this.calculate(option);
     }
   }
 });
