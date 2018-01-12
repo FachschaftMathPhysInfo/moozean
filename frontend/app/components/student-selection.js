@@ -31,7 +31,7 @@ export default Component.extend({
       alert(reason); //TODO: FIXME
     });
     foo();
-  }
+  },
   actions:{
     closeDialog: function(option) {
       var store = this.get('store');
