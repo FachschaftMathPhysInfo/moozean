@@ -51,31 +51,28 @@ export default Component.extend({
     });
   })),
   checkBoundaries(){
+    let error= false;
     if(this.get("stateto")>this.get("statemax")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
+      error=true;
     }
     if(this.get("statefrom")<this.get("statemin")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
+      error=true;
     }
-    if(this.get("statefrom")>this.get("stateto")){
+    if(error||this.get("statefrom")>this.get("stateto")){
       this.set("statefrom",this.get("statemin"));
       this.set("stateto",this.get("statemax"));
     }
   },
   calculate(option) {
     this.set("state", option);
+    let recalc=(pos)=>
     {
-      let year = 1900 + Math.floor(option.to / 12);
-      let month = option.to % 12;
-      this.set("to", moment(new Date(year, month + 1, 28)));
+      let year = 1900 + Math.floor(option[pos] / 12);
+      let month = option[pos] % 12;
+      this.set(pos, moment(new Date(year, month + 1, 28)));
     }
-    {
-      let year = 1900 + Math.floor(option.from / 12);
-      let month = option.from % 12;
-      this.set("from", moment(new Date(year, month + 1, 1)));
-    }
+    recalc("to");
+    recalc("from");
   },
   actions: {
     calculate(option) {
