@@ -30,16 +30,11 @@ export default Component.extend({
     this.didChanged("max");
 
     this.checkBoundaries();
-    schedule("afterRender",this,function(){
-      this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
-    });
+
   })),
   minDidChanged: on('init',observer('min', function() {
     this.didChanged("min");
     this.checkBoundaries();
-    schedule("afterRender",this,function(){
-      this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
-    });
   })),
   checkBoundaries(){
     let error= false;
@@ -53,6 +48,9 @@ export default Component.extend({
       this.set("statefrom",this.get("statemin"));
       this.set("stateto",this.get("statemax"));
     }
+    schedule("afterRender",this,function(){
+      this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
+    });
   },
   calculate(option) {
     this.set("state", option);
