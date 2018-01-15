@@ -1,14 +1,15 @@
 import { computed } from '@ember/object';
 import Controller from '@ember/controller';
+import paginatedResults from "ember-ozean/mixins/paginated-result";
 
-export default Controller.extend({
+export default Controller.extend(paginatedResults,{
   newsubject:{},
   newtyp:{},
   newmodul:{},
   limitSubject:10,
   pageSubject:1,
   paginatedSubjects:computed('limitSubject','pageSubject','model.subjects.[]', function() {
-    let q= this.store.query('subject', { page:{number:this.get("pageSubject"),size:this.get("limitSubject")}});
+    let q= this.queryPaginated("subject", this.get("pageSubject"),this.get("limitSubject"));
     q.then((data)=>{
       this.set("metaSubject",data.get("meta"));
     });
@@ -17,7 +18,7 @@ export default Controller.extend({
   limitTyp:10,
   pageTyp:1,
   paginatedTyps:computed('limitTyp','pageTyp','model.typs.[]', function() {
-    let q= this.store.query('typ', { page:{number:this.get("pageTyp"),size:this.get("limitTyp")}});
+    let q= this.queryPaginated('typ',this.get("pageTyp"),this.get("limitTyp"));
     q.then((data)=>{
       this.set("metaTyp",data.get("meta"));
     });
@@ -26,7 +27,7 @@ export default Controller.extend({
   limitModul:10,
   pageModul:1,
   paginatedModuls:computed('limitModul','pageModul','model.moduls.[]', function() {
-    let q= this.store.query('modul', { page:{number:this.get("pageModul"),size:this.get("limitModul")}});
+    let q= this.queryPaginated('modul', this.get("pageModul"),this.get("limitModul"));
     q.then((data)=>{
       this.set("metaModul",data.get("meta"));
     });

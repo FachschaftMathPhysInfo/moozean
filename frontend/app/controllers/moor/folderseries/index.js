@@ -1,20 +1,13 @@
 import { A } from '@ember/array';
 import { computed } from '@ember/object';
 import Controller from '@ember/controller';
-
-export default Controller.extend({
+import paginatedResult from "ember-ozean/mixins/paginated-result";
+export default Controller.extend(paginatedResult,{
   noneditable:true,
   thisfolder:{},
   page: 1,
   resultsLength:computed('meta.record-count',function(){
     return this.get("meta.record-count");
-  }),
-  pages: computed('meta.page-count', function() {
-    let e = A();
-    for (let i = 1; i <= this.get("meta.page-count"); i++) {
-      e.pushObject(i);
-    }
-    return e;
   }),
   limitOptions: A([5, 10, 15]),
   limit:5,
@@ -72,21 +65,6 @@ export default Controller.extend({
       this.set('showCreateFolderDialog',false);
       this.set('showEditFolderDialog',false);
       this.set('thisfolder',{});
-    },
-    incrementPage: function() {
-      let page = this.get('page');
-      let max = this.get('pages').reduce((prev, curr) => curr > prev
-        ? curr
-        : prev, 0);
-      if (page < max) {
-        this.set('page', page + 1);
-      }
-    },
-    decrementPage: function() {
-      let page = this.get('page');
-      if (page > 0) {
-        this.set('page', page - 1);
-      }
     }
   }
 });
