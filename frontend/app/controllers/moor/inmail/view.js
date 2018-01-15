@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import texUploading from "ember-ozean/mixins/tex-uploading";
-
-export default Controller.extend(texUploading,{
+import studentManagment from "ember-ozean/mixins/student-managment";
+export default Controller.extend(texUploading,studentManagment,{
   saving:false,
   fileName:"PDF hochladen",
     filetexName:"TeX hochladen",
@@ -18,10 +18,6 @@ export default Controller.extend(texUploading,{
       closeMailDialog(){
         this.get("newmail").save();
         this.set("showReplyDialog",false);
-      },addStudent:function(){
-        var store = this.get('store');
-        this.set('newstudent',store.createRecord('student'));
-        this.set("showDialog",true);
       },
       searchStudent:function(data){
         return this.store.query('student', {

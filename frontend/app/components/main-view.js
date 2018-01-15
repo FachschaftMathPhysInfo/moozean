@@ -3,7 +3,8 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import moment from 'moment';
-export default Component.extend({
+import studentManagment from "ember-ozean/mixins/student-managment";
+export default Component.extend(studentManagment,{
   store: service(),
   items: [],
   titlestudent: "Studierendes eintragen",
@@ -82,23 +83,15 @@ export default Component.extend({
         this.closeOkDialog(store);
       }else if(option == 'delete'){
         this.closeDeleteDialog(store);
+      } else if(this.get('newstudent.id')!=null){
+        this.get('newstudent').then((item)=>{
+        item.rollbackAttributes();
+        });
       } else{
-        if(this.get('newstudent.id')!=null){
-          this.get('newstudent').then((item)=>{
-            item.rollbackAttributes();
-          });
-        }
-        else{
-          this.get('newstudent').destroyRecord();
-        }
-        this.set('showDialog', false);
+        this.get('newstudent').destroyRecord();
       }
+      this.set('showDialog', false);
       this.$('md-chip-input-container input').focus();
-    },
-    addStudent: function() {
-      var store = this.get('store');
-      this.set('newstudent', store.createRecord('student'));
-      this.set("showDialog", true);
     },
     searchStudent: function(data) {
       var store = this.get('store');

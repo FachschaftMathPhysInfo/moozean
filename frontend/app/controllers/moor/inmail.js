@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
+import studentManagment from "ember-ozean/mixins/student-managment";
 
-export default Controller.extend({
+export default Controller.extend(studentManagment,{
   actions:{
     archiveMail:function(mail){
       mail.set("archived",true);
@@ -15,11 +16,6 @@ export default Controller.extend({
     toogleRead:function(mail){
       mail.set('read',!mail.get("read"));
       mail.save().then(null)
-    },
-    addStudent:function(){
-      var store = this.get('store');
-      this.set('newstudent',store.createRecord('student'));
-      this.set("showCreate",true);
     },
     closeDialog: function(option) {
       var store = this.get('store');

@@ -2,8 +2,8 @@ import { schedule } from '@ember/runloop';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-
-export default Component.extend({
+import studentManagment from "ember-ozean/mixins/student-managment";
+export default Component.extend(studentManagment,{
   store: service(),
   didInsertElement(){
     if (this.get('student')==null) {
@@ -44,7 +44,7 @@ export default Component.extend({
           });
       }
       if (option == "ok") {
-        this.closeOkDialog(atore);
+        this.closeOkDialog(store);
       }
       else if(option == 'delete'){
         this.get('student').destroyRecord().then(()=>{
@@ -66,11 +66,6 @@ export default Component.extend({
           limit: 10
         }
       })
-    },
-    addStudent:function(){
-      var store = this.get('store');
-      this.set('newstudent',store.createRecord('student'));
-      this.set("showDialog",true);
     },
     editStudent: function(){
       if(this.get('student')!=null && this.get('student.name')!=''){
