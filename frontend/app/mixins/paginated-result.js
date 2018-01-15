@@ -9,7 +9,7 @@ export default Mixin.create({
     }
     return e;
   }),
-  queryPaginated: function( model,page,limit){
+  queryPaginated: function( model,page,limit,metaending=""){
     let result= this.store.query(model, {
       page: {
         number: page,
@@ -17,7 +17,7 @@ export default Mixin.create({
       }
     });
     result.then((data) => {
-      this.set("meta", data.get("meta"));
+      this.set("meta"+metaending, data.get("meta"));
     });
     return result;
   },

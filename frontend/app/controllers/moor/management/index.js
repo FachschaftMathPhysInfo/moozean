@@ -9,28 +9,19 @@ export default Controller.extend(paginatedResults,{
   limitSubject:10,
   pageSubject:1,
   paginatedSubjects:computed('limitSubject','pageSubject','model.subjects.[]', function() {
-    let q= this.queryPaginated("subject", this.get("pageSubject"),this.get("limitSubject"));
-    q.then((data)=>{
-      this.set("metaSubject",data.get("meta"));
-    });
+    let q= this.queryPaginated("subject", this.get("pageSubject"),this.get("limitSubject"),"Subject");
     return q;
   }),
   limitTyp:10,
   pageTyp:1,
   paginatedTyps:computed('limitTyp','pageTyp','model.typs.[]', function() {
-    let q= this.queryPaginated('typ',this.get("pageTyp"),this.get("limitTyp"));
-    q.then((data)=>{
-      this.set("metaTyp",data.get("meta"));
-    });
+    let q= this.queryPaginated('typ',this.get("pageTyp"),this.get("limitTyp"),"Typ");
     return q;
   }),
   limitModul:10,
   pageModul:1,
   paginatedModuls:computed('limitModul','pageModul','model.moduls.[]', function() {
-    let q= this.queryPaginated('modul', this.get("pageModul"),this.get("limitModul"));
-    q.then((data)=>{
-      this.set("metaModul",data.get("meta"));
-    });
+    let q= this.queryPaginated('modul', this.get("pageModul"),this.get("limitModul"),"Modul");
     return q;
   }),
   actions:{

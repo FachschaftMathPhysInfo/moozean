@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import texUploading from "ember-ozean/mixins/tex-uploading";
 
 export default Controller.extend({
   fileName:"PDF hochladen",
@@ -13,12 +14,7 @@ export default Controller.extend({
       this.set('filetexName',file.filename);
     },
     save:function(){
-      this.get('model.report').save().then(()=>{
-        alert("Erfolgreich gespeichert!");
-        this.set('model.report',this.store.createRecord('report'));
-        this.set('fileName',"Datei hochladen");
-        this.set('filetexName',"Datei hochladen");
-      });
+      this.saveFile();
     }
   }
 });

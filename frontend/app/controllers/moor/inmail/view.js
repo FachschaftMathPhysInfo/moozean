@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
+import texUploading from "ember-ozean/mixins/tex-uploading";
 
-export default Controller.extend({
+export default Controller.extend(texUploading,{
   saving:false,
   fileName:"PDF hochladen",
     filetexName:"TeX hochladen",
@@ -25,7 +26,7 @@ export default Controller.extend({
       searchStudent:function(data){
         return this.store.query('student', {
           filter: {
-            name: '%'+data+'%'
+            nameoruniid: '%'+data+'%'
           },
           page:{
             limit:10
@@ -50,12 +51,7 @@ export default Controller.extend({
       },
       save:function(){
         this.set('saving',true);
-        this.get('model.report').save().then(()=>{
-          alert("Erfolgreich gespeichert!\nJetzt bitte die Mail archivieren.\nDie Firma dankt.");
-          this.set('model.report',this.store.createRecord('report'));
-          this.set('fileName',"Datei hochladen");
-          this.set('filetexName',"Datei hochladen");
-        });
+        this.saveFile();
         this.set("student.report",true);
         this.get("student").save().then(()=>{
           this.set('saving',false);

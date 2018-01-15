@@ -47,7 +47,7 @@ export default Controller.extend(paginatedResult,{
         moduls.pushObject(item.get("id"));
       });
     }
-    let ergebnis = this.queryReports
+    let ergebnis = this.queryReports(moduls,examinators,folderseries);
     return ergebnis;
   }),
   createPrintout: function(item) {
