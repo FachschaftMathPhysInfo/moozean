@@ -1,8 +1,8 @@
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import Controller from '@ember/controller';
-
-export default Controller.extend({
+import paginatedResult from "ember-ozean/mixins/paginated-result";
+export default Controller.extend(paginatedResult,{
   pruefende:A(),
   module:A(),
   printselection:A(),
@@ -14,13 +14,6 @@ export default Controller.extend({
   limit: 5,
   resultsLength:computed('meta.record-count', function() {
     return this.get("meta.record-count");
-  }),
-  pages: computed('meta.page-count', function() {
-    let e = A();
-    for (let i = 1; i <=this.get("meta.page-count"); i++) {
-      e.pushObject(i);
-    }
-    return e;
   }),
   page: 1,
   queryReports:function(moduls,examinators,folderseries){
@@ -57,6 +50,14 @@ export default Controller.extend({
     let ergebnis = this.queryReports
     return ergebnis;
   }),
+  createPrintout: function(item) {
+    return this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+  },
+  printMany: function(query){
+    this.set('reportslist',this.get(query));
+    this.set('auswahl',false);
+    this.set('showPruefDialog',true);
+  },
   actions:{
     removeExaminator:function(examinator){
       this.get('pruefende').removeObject(examinator);
@@ -88,14 +89,10 @@ export default Controller.extend({
       }
     },
     printAll:function(){
-      this.set('reportslist',this.get('model.reports'));
-      this.set('auswahl',false);
-      this.set('showPruefDialog',true);
+      this.printMany('model.reports');
     },
     printShown:function(){
-      this.set('reportslist',this.get('gefilterte'));
-      this.set('auswahl',false);
-      this.set('showPruefDialog',true);
+      this.printMany('gefilterte');
     },
     printSelection:function(){
       this.get('printselection').forEach((printout)=>{
@@ -106,7 +103,7 @@ export default Controller.extend({
     closeDialogAuswahl:function(option){
       if(option=="ok"){
         this.get('pruefauswahl').forEach((item)=>{
-          let a=this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+          let a=this.createPrintout(item);
           this.get('printselection').pushObject(a);
         });
       }
@@ -116,27 +113,12 @@ export default Controller.extend({
     closeDialogDrucken:function(option){
       if(option=="ok"){
         this.get('pruefauswahl').forEach((item)=>{
-          let pr=this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+          let pr=this.createPrintout(item);
           pr.save().then(null)
         });
       }
       this.set('reportslist',[]);
       this.set('showPruefDialog',false);
-    },
-    decrementPage() {
-      let page = this.get('page');
-      if (page > 0) {
-        this.set('page', page - 1);
-      }
-    },
-    incrementPage() {
-      let page = this.get('page');
-      let max = this.get('pages').reduce((prev, curr) => curr > prev
-        ? curr
-        : prev, 0);
-      if (page < max) {
-        this.set('page', page + 1);
-      }
     }
   }
 });
