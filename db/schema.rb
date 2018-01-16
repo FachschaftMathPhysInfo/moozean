@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171103120457) do
+ActiveRecord::Schema.define(version: 20180116125509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,6 @@ ActiveRecord::Schema.define(version: 20171103120457) do
     t.string "fromname"
     t.boolean "read"
     t.boolean "archived", default: false
-    t.index ["uid"], name: "index_inmails_on_uid", unique: true
   end
 
   create_table "is_abouts", force: :cascade do |t|
