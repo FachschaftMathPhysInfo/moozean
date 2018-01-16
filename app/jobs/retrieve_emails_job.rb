@@ -15,7 +15,13 @@ class RetrieveEmailsJob < ApplicationJob
     p ENV['PRODUCTION_IMAP_SERVER']
     p ENV['PRODUCTION_IMAP_PORT']
     p ENV['PRODUCTION_EMAIL_ADDRESS']
-    imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
+    imap = nil
+    begin
+      imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
+    rescue
+      puts "No connection"
+      return 0
+    end
     #login
     imap.login(ENV['PRODUCTION_EMAIL_ADDRESS'], ENV['PRODUCTION_EMAIL_PASSWORD'])
     #mail box laden
