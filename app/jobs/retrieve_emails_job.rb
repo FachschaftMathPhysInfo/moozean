@@ -15,7 +15,6 @@ class RetrieveEmailsJob < ApplicationJob
     p ENV['PRODUCTION_IMAP_SERVER']
     p ENV['PRODUCTION_IMAP_PORT']
     p ENV['PRODUCTION_EMAIL_ADDRESS']
-    p ENV['PRODUCTION_EMAIL_PASSWORD']
     imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
     #login
     imap.login(ENV['PRODUCTION_EMAIL_ADDRESS'], ENV['PRODUCTION_EMAIL_PASSWORD'])
@@ -32,7 +31,7 @@ class RetrieveEmailsJob < ApplicationJob
         body=message.body.decoded
       end
       fromname = decode_utf8(imap_message.attr["ENVELOPE"].sender[0].name)
-      inmail=Inmail.create(fromaddress:message.from[0],fromname:fromname,subject:message.subject, body: body, uid:imap_message.attr['UID'])
+      inmail=Inmail.create(fromaddress:message.from[0].to_s,fromname:fromname.to_s,subject:message.subject.to_s, body: body.to_s, uid:imap_message.attr['UID'].to_s)
       message.attachments.each do |attachment|
         Attachment.create(content_type: attachment.content_type.split(';')[0],pdf:attachment.decoded,name:decode_utf8(attachment.content_type_parameters['name']),inmail:inmail)
       end
