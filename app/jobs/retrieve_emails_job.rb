@@ -31,7 +31,7 @@ class RetrieveEmailsJob < ApplicationJob
         body=message.body.decoded
       end
       fromname = decode_utf8(imap_message.attr["ENVELOPE"].sender[0].name)
-      inmail=Inmail.create(fromaddress:message.from[0].to_s,fromname:fromname.to_s,subject:message.subject.to_s, body: body.to_s, uid:imap_message.attr['UID'].to_s)
+      inmail=Inmail.create(fromaddress:message.from[0].to_s,fromname:decode_utf8(fromname),subject:decode_utf8(message.subject), body: decode_utf8(body), uid:imap_message.attr['UID'].to_s)
       message.attachments.each do |attachment|
         Attachment.create(content_type: attachment.content_type.split(';')[0],pdf:attachment.decoded,name:decode_utf8(attachment.content_type_parameters['name']),inmail:inmail)
       end
