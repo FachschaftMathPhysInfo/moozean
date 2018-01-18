@@ -13,7 +13,6 @@ class PrintoutResource < JSONAPI::Resource
 \usepackage[runs=2, crop=off]{auto-pst-pdf}
 \usepackage{graphicx}
 \DeclareGraphicsExtensions{.pdf}'<<"\n"
-    buffer << '\usepackage[ngerman]{babel}'<<"\n"
     buffer << '\usepackage[T1]{fontenc}'<<"\n"
     buffer << '\usepackage[utf8]{inputenc}'<<"\n"
     buffer << '\pagestyle{empty}'<<"\n"
