@@ -113,12 +113,22 @@ namespace :import do
     students = CSV.read(args.filename,headers:true)
     students.each do |studente|
       if studente["uniid"]!=""
-        s=Student.create(name:studente["name"], uniid:studente["uniid"].to_s.downcase,matriculationnumber:studente["matrikelnummer"],refund:studente["refund"],report:studente["bericht1"]!="")
+        s=Student.find_or_create_by(name:studente["name"], uniid:studente["uniid"].to_s.downcase,matriculationnumber:studente["matrikelnummer"],refund:studente["refund"],report:studente["bericht1"]!="")
         s.save!
       end
     end
   end
-
+  desc "restliche Studenten importieren aus csv-Datei (2a)"
+  task :studenten_without_uniid, [:filename] => :environment do |t,args|
+    args.with_defaults(:filename =>"studenten.csv")
+    students = CSV.read(args.filename,headers:true)
+    students.each do |studente|
+      if studente["uniid"]==""
+        s=Student.find_or_create_by(name:studente["name"], uniid:"00007",matriculationnumber:studente["matrikelnummer"],refund:studente["refund"],report:studente["bericht1"]!="")
+        s.save!
+      end
+    end
+  end
   desc "Ordner(reihen) importieren (1)"
   task :ordner, [:filename]=>:environment do |t,args|
     args.with_defaults(:filename=>"ordner.csv")
