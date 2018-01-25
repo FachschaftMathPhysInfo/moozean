@@ -9,6 +9,9 @@ class RetrieveEmailsJob < ApplicationJob
       return str
     end
   end
+  def force_decode(str)
+    str.encode(Encoding.find('UTF-8'), {invalid: :replace, undef: :replace, replace: ''})
+  end
   def perform(*args)
     # create the imap connection
     p EMAIL_CONFIG["imap_server"]
@@ -37,9 +40,9 @@ class RetrieveEmailsJob < ApplicationJob
         body=message.body.decoded
       end
       fromname = decode_utf8(imap_message.attr["ENVELOPE"].sender[0].name)
-      inmail=Inmail.create(fromaddress:message.from[0].to_s,fromname:decode_utf8(fromname),subject:decode_utf8(message.subject), body: decode_utf8(body), uid:imap_message.attr['UID'].to_s)
+      inmail=Inmail.create(fromaddress:message.from[0].to_s,fromname:decode_utf8(fromname),subject:decode_utf8(message.subject), body: force_decode(body), uid:imap_message.attr['UID'].to_s)
       message.attachments.each do |attachment|
-        Attachment.create(content_type: attachment.content_type.split(';')[0],pdf:attachment.decoded,name:decode_utf8(attachment.content_type_parameters['name']),inmail:inmail)
+        Attachment.create(content_type: attachment.content_type.split(';')[0],pdf:attachment.decoded,name:force_decode(attachment.content_type_parameters['name']),inmail:inmail)
       end
       uid = imap_message.attr['UID']
       imap.uid_store(uid, "+FLAGS", [:Flagged])
