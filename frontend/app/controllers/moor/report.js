@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import texUploading from "ember-ozean/mixins/tex-uploading";
 
-export default Controller.extend({
+export default Controller.extend(texUploading,{
   fileName:"PDF hochladen",
   filetexName:"TeX hochladen",
   actions:{
