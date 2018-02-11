@@ -18,7 +18,6 @@ class RetrieveEmailsJob < ApplicationJob
     p ENV['PRODUCTION_IMAP_SERVER']
     p ENV['PRODUCTION_IMAP_PORT']
     p ENV['PRODUCTION_EMAIL_ADDRESS']
-    p ENV['PRODUCTION_EMAIL_PASSWORD']
     imap = nil
     begin
       imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
@@ -27,7 +26,9 @@ class RetrieveEmailsJob < ApplicationJob
       return 0
     end
     #login
-    imap.login(ENV['PRODUCTION_EMAIL_ADDRESS'], ENV['PRODUCTION_EMAIL_PASSWORD'])
+    address=ENV['PRODUCTION_EMAIL_ADDRESS']
+    address="pruefungsberichte@mathphys.stura.uni-heidelberg.de" if address.nil?
+    imap.login(address, ENV['PRODUCTION_EMAIL_PASSWORD'])
     #mail box laden
     imap.select(ENV['PRODUCTION_EMAIL_BOX'] )
     #iterieren durch alle nicht gesehen nachrichten
