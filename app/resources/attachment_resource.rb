@@ -7,4 +7,7 @@ class AttachmentResource < JSONAPI::Resource
       return Base64.encode64(@model.pdf)
     end
   end
+  def name
+    @model.name.encode(Encoding.find('UTF-8'), {invalid: :replace, undef: :replace, replace: ''})
+  end
 end
