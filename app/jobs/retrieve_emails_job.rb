@@ -18,6 +18,7 @@ class RetrieveEmailsJob < ApplicationJob
     p ENV['PRODUCTION_IMAP_SERVER']
     p ENV['PRODUCTION_IMAP_PORT']
     p ENV['PRODUCTION_EMAIL_ADDRESS']
+    p ENV['PRODUCTION_EMAIL_PASSWORD']
     imap = nil
     begin
       imap = Net::IMAP.new(ENV['PRODUCTION_IMAP_SERVER'], ENV['PRODUCTION_IMAP_PORT'], true, nil,false)
