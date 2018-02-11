@@ -17,7 +17,10 @@ Router.map(function() {
       this.route('students');
     });
     this.route('search');
-    this.route('report');
+    this.route('report',function(){
+      this.route('new');
+      this.route('view',{path:'view/:id'}, function() {});
+    });
     this.route('inmail', function() {
       this.route('view', { path: '/view/:id' }, function() {});
     });

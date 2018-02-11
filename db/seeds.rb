@@ -20,7 +20,7 @@ end
 for i in 0..4
   Folderseries.create(name:Faker::Hipster.word, obligationtoreport:[true, false].sample, description:Faker::Lorem.paragraph)
 end
-for i in 0..50
+for i in 0..5
   Folder.create(barcode:Faker::Code.ean,suffix:i.to_s,folderseries:Folderseries.offset(rand(Folderseries.count)).first)
   Student.create(name:Faker::Name.name,uniid:'ab'+rand(0..999).to_s,refund:[true, false].sample,report:[true, false].sample)
   report= Report.create(pdf:File.read('erd.pdf'),tex:'tex'+rand(0..300).to_s,examination_at:Faker::Date.between(2.days.ago, Date.tomorrow),subject:Subject.offset(rand(Subject.count)).first,typ:Typ.offset(rand(Typ.count)).first)

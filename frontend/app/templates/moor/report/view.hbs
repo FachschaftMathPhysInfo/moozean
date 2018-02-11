@@ -1,0 +1,30 @@
+{{#paper-toolbar}}
+  {{#paper-toolbar-tools}}
+    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
+      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
+        {{paper-icon icon="menu"}}
+      {{/paper-button}}
+    {{/paper-sidenav-toggle}}
+    <h2>Moor {{paper-icon "chevron-right"}} #{{model.report.id}} <span class="hide-sm"></span></h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true onClick=(action "printReport")}}
+      {{paper-icon "print"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "more_vert"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+{{#paper-content class="md-padding" }}
+{{report-editable-view report=model.report model=model.others}}
+  {{#if printDialog}}
+    {{#paper-selection-dialog title="Welche Ordnerreihen?" class="flex-50" fullscreen=true multiple=true options=model.folderseries selected=folderseriesToBePrint onSelect=(action (mut folderseriesToBePrint)) onClose=(action (pipe (action (mut printDialog) false) (action (mut examinatorDialog) true))) as |option index selected|}}
+      {{option.name}}
+    {{/paper-selection-dialog}}
+  {{/if}}
+  {{#if examinatorDialog}}
+    {{#paper-selection-dialog title="Welche Prüfer?" class="flex-50" fullscreen=true multiple=true options=model.examinators selected=examinatorsToBePrint onSelect=(action (mut examinatorsToBePrint)) onClose=(action "printDialog") as |option index selected|}}
+      {{option.surname}}, {{option.givenname}}
+    {{/paper-selection-dialog}}
+  {{/if}}
+{{/paper-content}}

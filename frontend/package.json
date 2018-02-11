@@ -45,6 +45,7 @@
     "ember-paper": "^1.0.0-beta.3",
     "ember-paper-dual-slider": "^0.1.0",
     "ember-paper-link": "0.0.2",
+    "ember-paper-selection-dialog": "0.0.4",
     "ember-paper-stepper": "0.0.5",
     "ember-pdf-js": "^0.2.0",
     "ember-pikaday": "^2.2.3",

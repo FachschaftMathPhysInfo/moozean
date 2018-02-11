@@ -1,4 +1,4 @@
-{{#paper-chips removeItem=(action "removeFolderseries") addItem=(action "addFolderseries") placeholder="Ordnerreihen" content=content options=options search=(action "search") searchField="name" requireMatch=true as |item|}}
+{{#paper-chips removeItem=(action "removeFolderseries") addItem=(action "addFolderseries") placeholder="Ordnerreihen" content=content options=options search=(action "search") readOnly=disabled searchField="name" requireMatch=true as |item|}}
 
   <strong>{{item.name}}</strong>
 {{/paper-chips}}

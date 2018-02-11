@@ -16,7 +16,7 @@ flex-layout="column" flex=true }}
     {{#paper-list}}
       {{#menu-item active=(is-active "index" currentRouteName) onClick=(transition-to "index")}}{{paper-icon "swap horiz" class="site-nav-icon"}}Ausleihe{{/menu-item}}
       {{#menu-item active=(is-active "moor.search" currentRouteName) onClick=(transition-to "moor.search")}}{{paper-icon "search" class="site-nav-icon"}}Berichtssuche{{/menu-item}}
-      {{#menu-item active=(is-active "moor.report" currentRouteName) onClick=(transition-to "moor.report")}}{{paper-icon "assignment" class="site-nav-icon"}}Bericht eintragen{{/menu-item}}
+      {{#menu-item active=(is-active "moor.report.new" currentRouteName) onClick=(transition-to "moor.report.new")}}{{paper-icon "assignment" class="site-nav-icon"}}Bericht eintragen{{/menu-item}}
       {{#menu-item active=(is-active "moor" currentRouteName) onClick=(transition-to "moor")}}{{paper-icon "dns" class="site-nav-icon"}}Ordnerreihen{{/menu-item}}
     {{#menu-item active=(is-active "moor.inmail" currentRouteName) onClick=(transition-to "moor.inmail")}}{{paper-icon "email" class="site-nav-icon"}}Mails bearbeiten{{/menu-item}}
     {{#menu-item active=(is-active "moor.management.students" currentRouteName) onClick=(transition-to "moor.management.students")}}{{paper-icon "face" class="site-nav-icon"}}Studierende{{/menu-item}}

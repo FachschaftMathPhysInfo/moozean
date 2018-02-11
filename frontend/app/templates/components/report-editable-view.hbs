@@ -1,0 +1,65 @@
+<div class="flex-xs-100 flex-gt-xs-33 flex-gt-l-25 flex-noshrink">
+  {{#paper-card as |card| }}
+    {{#card.actions}}
+      &emsp;#{{report.id}}<span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(pipe (action "saveChanges")(toggle "editable" this))}}
+        {{#if editable}}{{paper-icon "save"}}{{else}}{{paper-icon "mode edit"}}{{/if}}
+      {{/paper-button}}
+    {{/card.actions}}
+    {{card.media size="sm" src=report.picture alt="erste PDF-Seite des Berichts" title="PDF-Seite"}}
+    {{#card.content}}
+    <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
+      <div class="flex-gt-xs-40">
+        {{subject-autocomplete selected=report.subject options=model.subjects disabled=(not editable)}}
+      </div>
+      <div class="flex-gt-xs-45">
+        {{typ-autocomplete selected=report.typ options=model.typs disabled=(not editable)}}
+      </div>
+    </div>
+    <div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
+      <div class="flex-gt-xs-40">
+        {{! Prüfende }}
+        {{pruefende-chips options=model.examinators content=report.examinators disabled=(not editable)}}
+      </div>
+      <div class="flex-gt-xs-45">
+        {{!Module}}
+        {{modul-chips options=model.moduls content=report.moduls disabled=(not editable)}}
+      </div>
+    </div>
+    <div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
+      <div class="flex-gt-xs-40">
+        {{!Folderseries}}
+        {{folderseries-chips options=model.folderseries content=report.folderseries disabled=(not editable)}}
+      </div>
+      <div class="flex-gt-xs-45">
+        {{paper-pikaday label="Prüfungsdatum"
+              value=(readonly (moment-format report.examinationAt "MM.YYYY"))
+              onSelection=(action (mut report.examinationAt))
+              onChange=(action (mut report.examinationAt))
+              disabled=(not editable)}}
+      </div>
+    </div>
+    {{/card.content}}
+    {{#card.actions}}
+    {{#if editable}}
+      {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex" }}
+        {{#paper-button}}
+          {{paper-icon "text fields"}} {{filetexName}}
+        {{/paper-button}}
+      {{/file-picker}}
+      <span class="flex-25"/>
+      {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded" }}
+        {{#paper-button}}
+          {{paper-icon "picture as pdf"}}{{fileName}}
+        {{/paper-button}}
+      {{/file-picker}}
+    {{else}}
+      {{#if report.texAvailable}}
+        {{#email-share subject='Prüfungsbericht-TeX-Datei' url=report.id body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:" }}
+          {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
+        {{/email-share}}
+      {{/if}}
+      {{/if}}
+    {{/card.actions}}
+  {{/paper-card}}
+</div>

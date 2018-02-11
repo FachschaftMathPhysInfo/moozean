@@ -22,8 +22,9 @@ RSpec.configure do |config|
 
   config.infer_spec_type_from_file_location!
   config.order = :random
+  config.include EmberPaperHelper, :type => :feature
 end
 Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)
 end
-Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.javascript_driver = :selenium_chrome
