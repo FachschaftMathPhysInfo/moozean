@@ -4,6 +4,7 @@ class ReportResource < JSONAPI::Resource
   has_one :typ
   filters :typ, :subject
   filter :daterange,apply: ->(records, value, _options) {
+    return records if value.empty?
     records.where("examination_at >= ?",DateTime.parse(value[0][:"0"])).where("examination_at <= ?",DateTime.parse(value[0][:"1"]))
   }
   filter :moduls, verify: ->(values, _context) {

@@ -50,13 +50,15 @@
 </div>
 </div>
 <div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
-<p style="margin-bottom:0px;color: rgba(0, 0, 0, 0.5);">Prüfungsdatum (MM.YYYY) einschränken:</p>
+{{#paper-checkbox value=setRangeDate onChange=(action (mut setRangeDate))}}<p style="margin-bottom:0px;color: rgba(0, 0, 0, 0.5);">Prüfungsdatum (MM.YYYY) einschränken:</p>{{/paper-checkbox}}
 </div>
+{{#if setRangeDate}}
 <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
   <div class="flex-90">
             {{timespan-slider min=(readonly minDate) from=beginExamAt to=endExamAt max=(readonly maxDate)}}
           </div>
         </div>
+        {{/if}}
     {{/card.content}}
     {{#card.actions}}
       {{paper-data-paginator

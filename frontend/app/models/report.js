@@ -2,7 +2,9 @@ import DS from 'ember-data';
 import moment from "moment";
 const { attr,belongsTo, hasMany } = DS;
 export default DS.Model.extend({
-  examinationAt:attr('date',{defaultValue:moment().toISOString()}),
+  examinationAt:attr('date',{
+    defaultValue() { return new Date(); }
+  }),
   subject:belongsTo('subject'),
   typ:belongsTo('typ'),
   createdAt:attr('date'),

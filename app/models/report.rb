@@ -10,7 +10,9 @@ class Report < ApplicationRecord
   has_many :moduls, through: :is_abouts
   def render_picture
     if(self.pdf!=nil)
-      o, s = Open3.capture2('pdftk A=- cat A1 output - | convert -density 72 - -trim -quality 100 -flatten -sharpen 0x1.0 -crop 100%x50% png:-', stdin_data: self.pdf, binmode: true)
+      o,e, s = Open3.capture3('pdftk A=- cat A1 output - | convert -density 72 - -trim -quality 100 -flatten -sharpen 0x1.0 -crop 100%x50% png:-', stdin_data: self.pdf, binmode: true)
+      puts e
+      puts s
       self.picture = 'data:image/png;base64,' + Base64.encode64(o)
     end
   end

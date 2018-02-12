@@ -24,6 +24,8 @@ export default Controller.extend({
     return this.get("meta.record-count");
   }),
   queryReports: function(moduls,examinators,folderseries,start,end){
+    let dr =[start,end];
+    if(start==null) dr=null;
     let ergebnis = this.get('store').query('report', {
       filter: {
         subject: this.get('subject.id'),
@@ -31,7 +33,7 @@ export default Controller.extend({
         moduls: moduls,
         examinators: examinators,
         folderseries: folderseries,
-        daterange: [start,end],
+        daterange: dr,
       },
       page: {
         size: this.get("limit"),
@@ -65,6 +67,7 @@ export default Controller.extend({
         moduls.pushObject(item.get("id"));
       });
     }
+    if(!this.get("setRangeDate")) start=null;
     let ergebnis =this.queryReports(moduls,examinators,folderseries,start,end);
     return ergebnis;
   }),
