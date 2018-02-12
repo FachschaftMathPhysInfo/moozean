@@ -10,6 +10,7 @@ class RetrieveEmailsJob < ApplicationJob
     end
   end
   def force_decode(str)
+    str= "" if str.nil?
     str.encode(Encoding.find('UTF-8'), {invalid: :replace, undef: :replace, replace: ''})
   end
   def perform(*args)
