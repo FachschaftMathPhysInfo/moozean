@@ -37,7 +37,7 @@ class RetrieveEmailsJob < ApplicationJob
       message= Mail.read_from_string imap_message.attr["RFC822"]
       body=""
       if message.multipart? then
-        body=message.parts.detect {|a| a.content_type.start_with? 'text/plain'}.decoded
+        body=message.parts.detect {|a| a.content_type.start_with? 'text/plain'}.decoded unless message.parts.detect {|a| a.content_type.start_with? 'text/plain'}.nil?
       else
         body=message.body.decoded
       end
