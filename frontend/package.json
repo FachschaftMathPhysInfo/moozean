@@ -59,8 +59,7 @@
     "ember-welcome-page": "^3.0.0",
     "liquid-fire": "^0.28.1",
     "loader.js": "^4.2.3",
-    "paper-data-table": "^0.1.4",
-    "paper-pikaday": "^0.1.13"
+    "paper-data-table": "^0.1.4"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"

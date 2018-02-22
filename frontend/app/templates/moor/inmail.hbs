@@ -21,9 +21,7 @@
   Posteingang
 {{/card.title}}
 {{#card.content}}
-{{#paper-virtual-repeat model
-height=200
-totalItemsCount=model.length as |mails|}}
+<div style="height:350px;overflow-y:scroll">
 {{#paper-data-table sortProp="createdAt" sortDir="desc" selectable=true as |table|}}
   {{#table.head as |head|}}
     {{#head.column sortProp="createdAt" }}Datum{{/head.column}}
@@ -34,7 +32,7 @@ totalItemsCount=model.length as |mails|}}
     {{#head.column}}Optionen{{/head.column}}
   {{/table.head}}
   {{#table.body as |body|}}
-  {{#each mails as |d|}}
+  {{#each model as |d|}}
         {{#body.row edit=true as |row|}}
           {{#row.cell onClick=(action (transition-to "moor.inmail.view" d.id))}}{{moment-format d.createdAt "DD.MM.YYYY"}}{{/row.cell}}
           {{#row.cell onClick=(action (transition-to "moor.inmail.view" d.id))}}{{d.fromname}}{{/row.cell}}
@@ -67,7 +65,7 @@ totalItemsCount=model.length as |mails|}}
   {{/each}}
   {{/table.body}}
 {{/paper-data-table}}
-{{/paper-virtual-repeat}}
+</div>
 {{/card.content}}
 {{/paper-card}}
 {{outlet}}
