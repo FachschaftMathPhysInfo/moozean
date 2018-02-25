@@ -5,7 +5,8 @@
       {{#text.subhead}}{{model.fromname}}{{/text.subhead}}
       {{#text.subhead}}{{model.fromaddress}}{{/text.subhead}}
     {{/header.text}}
-    {{#paper-button onClick=(action reply) warn=model.emails.length}}{{#if model.emails}}Erneut {{/if}}Antworten{{/paper-button}}
+    {{#paper-button onClick=(action reply) warn=model.emails.length}}
+      {{#if model.emails}}Erneut {{/if}}Antworten{{/paper-button}}
   {{/card.header}}
   {{#card.content}}
     <div class="md-padding">
@@ -14,7 +15,7 @@
     {{#if model.attachments}}
       {{paper-divider}}
       {{#paper-subheader}}Anhänge{{/paper-subheader}}
-      {{#paper-tabs borderBottom=true  selected=selectedAttachment onChange=(action "setSelected") as |tabs|}}
+      {{#paper-tabs borderBottom=true selected=selectedAttachment onChange=(action "setSelected") as |tabs|}}
         {{#each attachments as |attachment|}}
           {{#tabs.tab as |tab|}}
             {{attachment.name}}
@@ -30,8 +31,12 @@
 
         {{#paper-button onClick=(action setPdfFile current.attachment)}} ALS PDF verwenden{{/paper-button}}
       {{else}}
-        {{simple-format  current.attachment.attachment}}
+        {{#if (eq current.attachment.contentType "text/plain")}} {{simple-format  current.attachment.attachment}}
         {{#paper-button onClick=(action setTexFile current.attachment)}} ALS Tex verwenden{{/paper-button}}
+        {{else}}
+        <img alt="Bild" src={{concat "data:" current.attachment.contentType ";base64," current.attachment.attachment}} />
+        {{#paper-button href=(concat "data:" current.attachment.contentType ";base64," current.attachment.attachment)}}{{paper-icon "file download"}} Download{{/paper-button}}
+      {{/if}}
       {{/if}}
     {{/liquid-bind}}
   {{/card.content}}
