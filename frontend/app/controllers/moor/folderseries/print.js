@@ -89,7 +89,12 @@ export default Controller.extend(paginatedResult,{
       }
     },
     printAll:function(){
-      this.printMany('model.reports');
+      if(confirm("Möchtest du den gesamten Ordner ausdrucken?")) {
+        this.set("printing",true);
+        this.store.createRecord('printoutfolder',{times:1,folderseries:this.get("model")}).save().then(()=>{
+          this.set("printing",false);
+        });
+      }
     },
     printShown:function(){
       this.printMany('gefilterte');

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116125509) do
+ActiveRecord::Schema.define(version: 20180305100127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,14 @@ ActiveRecord::Schema.define(version: 20180116125509) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "printoutfolders", force: :cascade do |t|
+    t.bigint "folderseries_id"
+    t.bigint "times"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["folderseries_id"], name: "index_printoutfolders_on_folderseries_id"
+  end
+
   create_table "printouts", force: :cascade do |t|
     t.bigint "report_id"
     t.bigint "times"
@@ -196,6 +204,7 @@ ActiveRecord::Schema.define(version: 20180116125509) do
   add_foreign_key "is_ins", "reports"
   add_foreign_key "lents", "folders"
   add_foreign_key "lents", "students"
+  add_foreign_key "printoutfolders", "folderseries"
   add_foreign_key "printouts", "examinators"
   add_foreign_key "printouts", "folderseries"
   add_foreign_key "printouts", "reports"

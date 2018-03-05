@@ -99,9 +99,13 @@
         </div>
       {{/card.content}}
       {{#card.actions}}
+      {{#if printing}}
+      {{paper-progress-linear}}
+      {{else}}
         {{#paper-button onClick=(action "printAll")}}ganzen Ordner drucken{{/paper-button}}
         {{#paper-button onClick=(action "printShown")}}Angezeigtes drucken{{/paper-button}}
         {{#paper-button onClick=(action (mut rightSidebar))}}Auswahl anzeigen{{/paper-button}}
+        {{/if}}
       {{/card.actions}}
       {{/paper-card}}
       {{#paper-card as |card|}}
