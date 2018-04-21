@@ -22,12 +22,13 @@
     {{/title.text}}
   {{/card.title}}
     {{#card.content}}
+    Pflichtfelder: Studienfach, Prüfungstyp, Prüfungsdatum. Andere sehr empfohlen!
       <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
         <div class="flex-gt-xs-40">
-          {{subject-autocomplete selected=model.report.subject options=model.subjects}}
+          {{subject-autocomplete required=true selected=model.report.subject options=model.subjects}}
         </div>
         <div class="flex-gt-xs-45">
-          {{typ-autocomplete selected=model.report.typ options=model.typs}}
+          {{typ-autocomplete required=true selected=model.report.typ options=model.typs}}
         </div>
       </div>
       <div class="layout-gt-xs-row layout-wrap" style="margin-top:20px; justify-content: space-around">
@@ -46,7 +47,7 @@
           {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
         </div>
         <div class="flex-gt-xs-45">
-          {{paper-pikaday label="Prüfungsdatum"
+          {{paper-pikaday required=true label="Prüfungsdatum"
                 value=(readonly (moment-format model.report.examinationAt "MM.YYYY"))
                 onSelection=(action (mut model.report.examinationAt))
                 onChange=(action (mut model.report.examinationAt)) }}
