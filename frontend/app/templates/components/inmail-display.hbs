@@ -34,8 +34,12 @@
         {{#if (eq current.attachment.contentType "text/plain")}} {{simple-format  current.attachment.attachment}}
         {{#paper-button onClick=(action setTexFile current.attachment)}} ALS Tex verwenden{{/paper-button}}
         {{else}}
+        {{#if selectedAttachment}}
         <img alt="Bild" src={{concat "data:" current.attachment.contentType ";base64," current.attachment.attachment}} />
         {{#paper-button href=(concat "data:" current.attachment.contentType ";base64," current.attachment.attachment)}}{{paper-icon "file download"}} Download{{/paper-button}}
+        {{else}}
+        Bitte Datei wählen!
+        {{/if}}
       {{/if}}
       {{/if}}
     {{/liquid-bind}}

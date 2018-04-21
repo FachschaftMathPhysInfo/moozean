@@ -9,6 +9,7 @@ export default Component.extend({
   toBeInserted: A([]),
   setTexFile(){},
   setPdfFile(){},
+  selectedAttachment:null,
   fullAttention: on('init', observer('model.attachments.[]', 'model.subject', function() {
     this.get("attachments").clear();
     schedule('afterRender', this, function() {
