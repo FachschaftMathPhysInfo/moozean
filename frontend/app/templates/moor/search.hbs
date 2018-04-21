@@ -142,7 +142,7 @@ onChangeLimit=(action (mut limit))}}
               {{/email-share}}
             {{/if}}
             {{#paper-button iconButton=true onClick=(action "editReport" report)}}{{paper-icon "edit"}}{{/paper-button}}
-            {{#paper-button iconButton=true onClick=(action "printReport" report 1)}}{{paper-icon "print"}}{{/paper-button}}
+            {{#paper-button iconButton=true onClick=(action "printReport" report)}}{{paper-icon "print"}}{{/paper-button}}
           {{/card.actions}}
         {{/paper-card}}
       </div>
@@ -151,4 +151,5 @@ onChangeLimit=(action (mut limit))}}
 {{/paper-content}}
 </div>
 {{#if editReport}}{{edit-report-dialog model=model closeDialog="closeReportDialog" title="Bericht bearbeiten" report=reporttoedit}}{{/if}}
+{{#if prd}}{{print-report-dialog store=store closeDialog="closePrintDialog" report=reporttoprint}}{{/if}}
 {{#if deleteReport}}{{delete-report-dialog closeDialog="closeDeleteDialog" title="Bericht löschen" report=reporttoedit}}{{/if}}

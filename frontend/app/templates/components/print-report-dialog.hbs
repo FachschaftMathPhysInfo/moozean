@@ -1,0 +1,44 @@
+{{#paper-dialog onClose=(action "exitDialog" 0) origin=dialogOrigin clickOutsideToClose=true}}
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>Prüfende und Ordnerreihen auswählen</h2>
+      <span class="flex"></span>
+      {{#paper-button iconButton=true onClick=(action "exitDialog" 0)}}{{paper-icon icon="close"}}{{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+  {{#paper-dialog-content class="flex-66" }}
+    <div class='layout-row'>
+      <div align="center"class='flex-gt-xs-50'>
+<h3>Prüfende</h3>
+        {{#paper-list}}
+          {{#each report.examinators as |exm|}}
+            {{#paper-item}}
+              {{#paper-checkbox value=exm.selected onChange=(action (mut exm.selected)) }}
+              {{/paper-checkbox}}
+              <b>{{exm.surname}}</b>&nbsp; <em>{{exm.givenname}}</em>
+            {{/paper-item}}
+          {{/each}}
+        {{/paper-list}}
+      </div>
+      <div align="center" style="padding-left: 20px;border-left-style: solid;" class='flex-gt-xs-50'>
+        {{#paper-list }}
+        <h3>Ordnerreihen</h3>
+          {{#each report.folderseries as |fs|}}
+            {{#paper-item}}
+              {{#paper-checkbox value=fs.selected onChange=(action (mut fs.selected))}}
+              {{/paper-checkbox}}
+              <b>{{fs.name}}</b>
+            {{/paper-item}}
+          {{/each}}
+        {{/paper-list}}
+
+      </div>
+    </div>
+  {{/paper-dialog-content}}
+  {{#paper-dialog-actions class="layout-row" }}
+    <span class="flex"></span>
+    {{#paper-button onClick=(action "exitDialog" 0)}}Abbrechen{{/paper-button}}
+    {{#paper-button onClick=(action "exitDialog" 1)}}Drucken{{/paper-button}}
+  {{/paper-dialog-actions}}
+{{/paper-dialog}}
+{{yield}}

@@ -74,16 +74,13 @@ export default Controller.extend({
   reporttoedit: null,
   editReport: false,
   actions: {
-    printReport: function(report, times) {
-      let exam = report.get("examinators").toArray()[0];
-      let folds=report.get("folderseries").toArray()[0];
-      let printout = this.store.createRecord('printout', {
-        report: report,
-        times: times,
-        examinator:exam,
-        folderseries: folds
-      });
-      printout.save().then(null)
+    printReport: function(report) {
+      this.set('reporttoprint',report);
+      this.set('prd',true);
+    },
+    closePrintDialog: function(option){
+      this.set('reporttoprint',null);
+      this.set('prd',false);
     },
     editReport:function(report){
       this.set('reporttoedit',report);
