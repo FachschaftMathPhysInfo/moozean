@@ -76,5 +76,5 @@
     {{/if}}
   {{/paper-card}}
 {{/paper-content}}
-
+{{#if prd}}{{print-report-dialog store=store closeDialog="closePrintDialog" report=report2print}}{{/if}}
 {{outlet}}

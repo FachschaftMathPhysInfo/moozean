@@ -59,3 +59,4 @@ reply=(action "reply")}}
   {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
 {{/if}}
 {{outlet}}
+{{#if prd}}{{print-report-dialog store=store closeDialog="closePrintDialog" report=report2print}}{{/if}}

@@ -15,6 +15,9 @@ export default Controller.extend(texUploading,{
     },
     save:function(){
       this.saveFile();
+    },
+    closePrintDialog:function(){
+      this.set("prd",false);
     }
   }
 });

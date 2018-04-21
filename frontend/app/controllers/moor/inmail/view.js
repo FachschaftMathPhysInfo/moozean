@@ -52,6 +52,9 @@ export default Controller.extend(texUploading,studentManagment,{
         this.get("student").save().then(()=>{
           this.set('saving',false);
         });
+      },
+      closePrintDialog:function(){
+        this.set("prd",false);
       }
     }
 });
