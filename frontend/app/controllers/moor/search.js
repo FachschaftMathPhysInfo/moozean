@@ -5,7 +5,7 @@ import moment from 'moment';
 export default Controller.extend({
   limitOptions: A([10,20,30]),
   limit: 10,
-  minDate:moment(new Date(0)),
+  minDate:moment(new Date(1984,01,01)),
   beginExamAt:moment(new Date(0)),
   maxDate:moment(new Date()),
   endExamAt:moment(new Date()),
