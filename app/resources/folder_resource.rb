@@ -14,7 +14,14 @@ class FolderResource < JSONAPI::Resource
     super - [:name,:obligationtoreport]
   end
   filters  :barcode, :obligationtoreport,:folderseries
+
   filter :name, apply: ->(records, value, _options) {
-  records.name_like(value)
-}
+    records.name_like(value)
+  }
+
+  filter :lentsearch, apply: ->(records, value, _options) {
+    li=Folder.joins(:lents).ids
+    records.name_like(value).where.not(id: li)
+    }
+
 end
