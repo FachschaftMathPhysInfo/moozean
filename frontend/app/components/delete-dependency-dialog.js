@@ -17,7 +17,6 @@ export default Component.extend({
     }
   }),
   dieseselements: computed('objekt',function() {
-    //console.log(this.get('objekt'));
     if(this.get('objekt')==null) return '';
     switch (this.get('objekt').get('constructor.modelName')){
       case 'modul' :

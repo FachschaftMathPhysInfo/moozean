@@ -24,6 +24,7 @@ export default Component.extend(studentManagment,{
     });
     return result;
   }),
+  fkw:null,
   student: null,
   deletable: computed('newstudent', function() {
     return this.get('newstudent.uniid') != undefined;
@@ -70,6 +71,11 @@ export default Component.extend(studentManagment,{
     });
       this.set('showDialog', false);
       this.set('currentStep', 0);
+  },
+  foldersearch:function(keyword){
+    this.set('fkw',keyword);
+    let a=this.get('store').query('folder', { filter: {lentsearch:keyword}});
+    return a;
   },
   actions: {
     editStudent: function(student) {
@@ -204,7 +210,13 @@ export default Component.extend(studentManagment,{
       }
     },
     searchFolders:function(data){
-      return this.store.query('folder', { filter: {name:data}});
+      console.log(this.foldersearch(data));
+      return this.foldersearch(data);
+    },
+    firstFolder:function(test){
+      console.log("test");
+      console.log(this.foldersearch(this.get('fkw')));
+      return this.foldersearch(this.get('fkw')).get('firstObject');
     },
     focusFolderSelection:function(step){
       if (this.get('student') && step == 1) {
