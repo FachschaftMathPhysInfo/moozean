@@ -24,7 +24,7 @@ class Report < ApplicationRecord
       self.tex=self.tex_was
     end
   end
-  def print_document(folderseries,examinator, times)
+  def make_header(folderseries,examinator, times)
     buffer = ''
     buffer << '\documentclass[a4paper,twoside]{article}'<<"\n"
     buffer << '\usepackage[absolute]{textpos}
@@ -40,44 +40,44 @@ class Report < ApplicationRecord
     buffer << '\parindent0mm'<<"\n"
     buffer << '\usepackage{pst-barcode}'<<"\n"
     buffer << '\begin{document}'<<"\n"
+    buffer
+  end
+  def generate_page(folderseries,examinator,times, page)
+    buffer =  '\begin{textblock*}{1cm}(0mm,0mm)'<<"\n" << '\setlength{\unitlength}{1mm}'<<"\n"
+    buffer << '\begin{picture}(0,0)(0,0)'<<"\n"
+    buffer << '\thinlines'<<"\n"
+    buffer << '\put(5,-17){\line(1,0){200}}'<<"\n"
+    buffer << '\put(48,-17){\line(0,1){12}}'<<"\n"
+    buffer << '\fontsize{11pt}{21}\selectfont'<<"\n"
+    buffer << '\put(5,-11){\Huge $\mu\varphi$}'<<"\n"
+    buffer << '\put(18,-7){\scriptsize Fachschaft MathPhys}'<<"\n"
+    buffer << '\put(18,-10){\scriptsize Universität Heidelberg}'<<"\n"
+    buffer << '\put(18,-15){\bf Prüfungsbericht}'<<"\n"
+    buffer << '\put(67,-9){\Large{\bf ' << examinator.surname << '}, ' << examinator.givenname << '}'<<"\n"
+    buffer << '\put(67,-15){\scriptsize ' << self.typ.name << '{ $\triangleright$ }' << self.subject.name << '{ $\triangleright$ }'<<"\n"
+    buffer << self.moduls.collect{|mod| mod.name}.join(", ")
+    buffer << '}' << "\n" << '\put(145,-7.5){\tiny Ordner:}'<<"\n"
+    buffer<<'\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}\end{pspicture}}'<<"\n"
+    buffer << '\put(145,-15){\Huge\bf ' << folderseries.name << '}'<<"\n"
+    buffer << '\put(172,-5.6){\tiny Datum:}'<<"\n"
+    buffer << '\put(172,-9){\normalsize\bf ' << self.examination_at.strftime("%Y-%m") << '}'<<"\n" unless self.examination_at.nil?
+    buffer << '\put(172,-11.6){\tiny Nummer:}'<<"\n"
+    buffer << '\put(172,-15){\normalsize\bf ' << self.id.to_s << '}'<<"\n"
+    buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
+    buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s << '}'<<"\n"
+    buffer << '\put(6,-297){\includegraphics*[width=198mm,height=280mm]{'<<dir<<'/current_report_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
+    buffer << '\end{picture}'<<"\n" << '\end{textblock*}'<<"\n" << '\null\newpage'<<"\n"
+    buffer
+  end
+  def print_document(folderseries,examinator, times)
+  buffer= make_header(folderseries,examinator,times)
   Dir.mktmpdir{ |dir|
     puts buffer
     Dir.chdir dir
     pages_s, error = Open3.capture2("pdftk - dump_data | grep 'NumberOfPages' | sed 's/[^0-9]//g'", :stdin_data=>self.pdf, :binmode=>true)
     Open3.capture2("pdftk - burst output #{dir}/current_report_%02d.pdf",:stdin_data => self.pdf,:binmode=>true)
         pages_s.to_i.times do |page|
-          buffer << '\begin{textblock*}{1cm}(0mm,0mm)'<<"\n"
-          buffer << '\setlength{\unitlength}{1mm}'<<"\n"
-          buffer << '\begin{picture}(0,0)(0,0)'<<"\n"
-          buffer << '\thinlines'<<"\n"
-          buffer << '\put(5,-17){\line(1,0){200}}'<<"\n"
-          buffer << '\put(48,-17){\line(0,1){12}}'<<"\n"
-          buffer << '\fontsize{11pt}{21}\selectfont'<<"\n"
-          buffer << '\put(5,-11){\Huge $\mu\varphi$}'<<"\n"
-          buffer << '\put(18,-7){\scriptsize Fachschaft MathPhys}'<<"\n"
-          buffer << '\put(18,-10){\scriptsize Universität Heidelberg}'<<"\n"
-          buffer << '\put(18,-15){\bf Prüfungsbericht}'<<"\n"
-          buffer << '\put(67,-9){\Large{\bf ' << examinator.surname << '}, ' << examinator.givenname << '}'<<"\n"
-          buffer << '\put(67,-15){\scriptsize ' << self.typ.name << '{ $\triangleright$ }' << self.subject.name << '{ $\triangleright$ }'<<"\n"
-          self.moduls.each do |mod|
-            buffer << mod.name << ', '
-          end
-          buffer = buffer.chop.chop unless self.moduls.count==0
-          buffer << '}' << "\n" << '\put(145,-7.5){\tiny Ordner:}'<<"\n"
-          buffer<<'\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)
-          \psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}
-          \end{pspicture}}'<<"\n"
-          buffer << '\put(145,-15){\Huge\bf ' << folderseries.name << '}'<<"\n"
-          buffer << '\put(172,-5.6){\tiny Datum:}'<<"\n"
-          buffer << '\put(172,-9){\normalsize\bf ' << self.examination_at.strftime("%Y-%m") << '}'<<"\n" unless self.examination_at.nil?
-          buffer << '\put(172,-11.6){\tiny Nummer:}'<<"\n"
-          buffer << '\put(172,-15){\normalsize\bf ' << self.id.to_s << '}'<<"\n"
-          buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
-          buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s << '}'<<"\n"
-          buffer << '\put(6,-297){\includegraphics*[width=198mm,height=280mm]{'<<dir<<'/current_report_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
-          buffer << '\end{picture}'<<"\n"
-          buffer << '\end{textblock*}'<<"\n"
-          buffer << '\null\newpage'<<"\n"
+          buffer << generate_page(folderseries,examinator,times,page)
       end
       buffer << '\end{document}'
       puts buffer
