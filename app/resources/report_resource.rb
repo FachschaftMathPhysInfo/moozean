@@ -28,35 +28,24 @@ class ReportResource < JSONAPI::Resource
     end
     werte
   }
+  def self.filter_by(records,value, category,model)
+    if value.is_a?(Array)
+      value.each do |val|
+        records = records.joins("INNER JOIN #{category} #{category}" + val.to_s + " ON #{category}" + val.to_s + '.report_id = reports.id').where("#{category}" + val.to_s + ".#{model}_id" => val)
+      end
+      records
+    else
+      records.joins("INNER JOIN #{category} #{category}" + value.to_s + " ON #{category}" + value.to_s + '.report_id = reports.id').where("#{category}" + value.to_s + ".#{model}_id" => value)
+    end
+  end
   def self.apply_filter(records, filter, value, _options)
     case filter
     when 'moduls.id'
-      if value.is_a?(Array)
-        value.each do |val|
-          records = records.joins('INNER JOIN is_abouts m' + val.to_s + ' ON m' + val.to_s + '.report_id = reports.id').where('m' + val.to_s + '.modul_id' => val)
-        end
-        records
-      else
-        records.joins('INNER JOIN is_abouts ia' + value.to_s + ' ON ia' + value.to_s + '.report_id = reports.id').where('ia' + value.to_s + '.modul_id' => value)
-      end
+      records = filter_by(records,value,"is_abouts","modul")
     when 'folderseries.id'
-      if value.is_a?(Array)
-        value.each do |val|
-          records = records.joins('INNER JOIN is_ins ii' + val.to_s + ' ON ii' + val.to_s + '.report_id = reports.id').where('ii' + val.to_s + '.folderseries_id' => val)
-        end
-        records
-      else
-        records.joins('INNER JOIN is_ins m' + value.to_s + ' ON m' + value.to_s + '.report_id = reports.id').where('m' + value.to_s + '.folderseries_id' => value)
-      end
+      records = filter_by(records,value,"is_ins","folderseries")
     when 'examinators.id'
-      if value.is_a?(Array)
-        value.each do |val|
-          records = records.joins('INNER JOIN examined_bies eb' + val.to_s + ' ON eb' + val.to_s + '.report_id = reports.id').where('eb' + val.to_s + '.examinator_id' => val)
-        end
-        records
-      else
-        records.joins('INNER JOIN examined_bies eb' + value.to_s + ' ON eb' + value.to_s + '.report_id = reports.id').where('eb' + value.to_s + '.examinator_id' => value)
-      end
+      records = filter_by(records,value,"examined_bies","examinator")
     else
       super(records, filter, value)
     end
