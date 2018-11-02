@@ -1,6 +1,7 @@
 import {
   hash
 } from 'rsvp';
+import { later } from '@ember/runloop';
 import Route from '@ember/routing/route';
 
 export default Route.extend({
@@ -15,7 +16,7 @@ export default Route.extend({
   },
   renew: function() {
     var _this = this;
-    Ember.run.later(function() {
+    later(function() {
       _this.refresh();
       _this.renew();
     }, 30000);

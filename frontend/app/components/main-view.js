@@ -60,7 +60,7 @@ export default Component.extend(studentManagment,{
     else this.get('newstudent').content.save().then(foo(this));
     this.set('currentStep', 1);
   },
-  closeDeleteDialog: function(store) {
+  closeDeleteDialog: function() {
     this.get('newstudent').then((item)=>{
       item.get('lents').then((item)=>{
         item.forEach((lent)=>{
@@ -210,12 +210,9 @@ export default Component.extend(studentManagment,{
       }
     },
     searchFolders:function(data){
-      console.log(this.foldersearch(data));
       return this.foldersearch(data);
     },
-    firstFolder:function(test){
-      console.log("test");
-      console.log(this.foldersearch(this.get('fkw')));
+    firstFolder:function(){
       return this.foldersearch(this.get('fkw')).get('firstObject');
     },
     focusFolderSelection:function(step){

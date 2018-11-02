@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-import moment from "moment";
+
 const { attr,belongsTo, hasMany } = DS;
 export default DS.Model.extend({
   examinationAt:attr('date',{

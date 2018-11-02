@@ -1,6 +1,3 @@
-import { observer } from '@ember/object';
-import { on } from '@ember/object/evented';
-import { A } from '@ember/array';
 import Component from '@ember/component';
 
 export default Component.extend({

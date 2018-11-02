@@ -78,7 +78,7 @@ export default Controller.extend({
       this.set('reporttoprint',report);
       this.set('prd',true);
     },
-    closePrintDialog: function(option){
+    closePrintDialog: function(){
       this.set('reporttoprint',null);
       this.set('prd',false);
     },

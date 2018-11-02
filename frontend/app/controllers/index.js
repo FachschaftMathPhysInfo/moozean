@@ -1,6 +1,5 @@
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import moment from 'moment';
 export default Controller.extend({
   paperToaster:service(),
   actions:{

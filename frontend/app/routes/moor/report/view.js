@@ -1,6 +1,6 @@
 import { hash } from 'rsvp';
 import Route from '@ember/routing/route';
-import moment from 'moment';
+
 export default Route.extend({
   model:function(params){
     return hash({
