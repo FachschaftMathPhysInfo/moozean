@@ -1,4 +1,4 @@
-{{#paper-chips removeItem=(action "removeExaminator") addItem=(action "addExaminator") placeholder="Prüfende auswählen" content=content options=options searchField="surname" search=(action "search") readOnly=disabled requireMatch=true as |item|}}
+{{#paper-chips removeItem=(action "removeObj") addItem=(action "addObj") placeholder="Prüfende auswählen" content=content options=options searchField="surname" search=(action "search") readOnly=disabled requireMatch=true as |item|}}
   <strong>{{item.surname}}</strong>
   {{#if item.givenname}}
     <em>{{item.givenname}}</em>

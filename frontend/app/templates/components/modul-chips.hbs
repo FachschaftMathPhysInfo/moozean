@@ -1,4 +1,4 @@
-{{#paper-chips removeItem=(action "removeModul") addItem=(action "addModul") placeholder="Module auswählen" content=content options=options readOnly=disabled search=(action "searchModuls") searchField="name" requireMatch=true as |item|}}
+{{#paper-chips removeItem=(action "removeObj") addItem=(action "addObj") placeholder="Module auswählen" content=content options=options readOnly=disabled search=(action "search") searchField="name" requireMatch=true as |item|}}
   <strong>{{item.name}}</strong>
   {{#if item.abbreviation}}
     <em>{{item.abbreviation}}</em>
