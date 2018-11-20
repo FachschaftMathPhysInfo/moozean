@@ -42,7 +42,7 @@ class Report < ApplicationRecord
     buffer << '\begin{document}'<<"\n"
     buffer
   end
-  def generate_page(folderseries,examinator,times, page,pages_s)
+  def generate_page(folderseries,examinator,times, page,pages_s,dir)
     buffer =  '\begin{textblock*}{1cm}(0mm,0mm)'<<"\n" << '\setlength{\unitlength}{1mm}'<<"\n"
     buffer << '\begin{picture}(0,0)(0,0)'<<"\n"
     buffer << '\thinlines'<<"\n"
@@ -77,7 +77,7 @@ class Report < ApplicationRecord
     pages_s, error = Open3.capture2("pdftk - dump_data | grep 'NumberOfPages' | sed 's/[^0-9]//g'", :stdin_data=>self.pdf, :binmode=>true)
     Open3.capture2("pdftk - burst output #{dir}/current_report_%02d.pdf",:stdin_data => self.pdf,:binmode=>true)
         pages_s.to_i.times do |page|
-          buffer << generate_page(folderseries,examinator,times,page,pages_s.to_i)
+          buffer << generate_page(folderseries,examinator,times,page,pages_s.to_i, dir)
       end
       buffer << '\end{document}'
       puts buffer
