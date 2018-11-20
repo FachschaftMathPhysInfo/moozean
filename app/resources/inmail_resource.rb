@@ -10,4 +10,7 @@ class InmailResource < JSONAPI::Resource
       DeleteInmailJob.set(wait: 182.days).perform_later @model
     end
   end
+  def self.default_sort
+    [{field: 'id', direction: :desc}]
+  end
 end
