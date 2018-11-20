@@ -44,4 +44,9 @@ ADD postgres-env.conf /etc/nginx/main.d/postgres-env.conf
 # Queue classic für mails
 RUN mkdir -p /etc/service/queue_classic
 ADD queue_classic.sh /etc/service/queue_classic/run
+# Enable ssh
+RUN rm -f /etc/service/sshd/down
+ADD id_root.pub /tmp/your_key.pub
+RUN cat /tmp/your_key.pub >> /root/.ssh/authorized_keys && rm -f /tmp/your_key.pub
+#clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
