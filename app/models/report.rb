@@ -64,7 +64,7 @@ class Report < ApplicationRecord
     buffer << '\put(172,-11.6){\tiny Nummer:}'<<"\n"
     buffer << '\put(172,-15){\normalsize\bf ' << self.id.to_s << '}'<<"\n"
     buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
-    buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s << '}'<<"\n"
+    buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s.to_s << '}'<<"\n"
     buffer << '\put(6,-297){\includegraphics*[width=198mm,height=280mm]{'<<dir<<'/current_report_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
     buffer << '\end{picture}'<<"\n" << '\end{textblock*}'<<"\n" << '\null\newpage'<<"\n"
     buffer
