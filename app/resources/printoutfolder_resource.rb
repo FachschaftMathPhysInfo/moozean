@@ -26,12 +26,12 @@ class PrintoutfolderResource < JSONAPI::Resource
     index = 1
     @model.folderseries.reports.sort_by{ |r| 
       [r.moduls.empty? ? 'zzz' : r.moduls.first.name,
-        r.examinators.empty? ? 'zzz' : r.examinators.first.surname]
+       r.examinators.empty? ? 'zzz' : r.examinators.first.surname]
     }.each do |report|
-    report.examinators.each { |examinator|
+        next if report.examinators.empty?
+        examinator = report.examinators.first
         report.add_report(buffer,dir,@model.folderseries,examinator,index)
         index += 1
-      }
     end
   end
 
