@@ -60,7 +60,11 @@ class Report < ApplicationRecord
     buffer << '\put(18,-7){\scriptsize Fachschaft MathPhys}'<<"\n"
     buffer << '\put(18,-10){\scriptsize Universität Heidelberg}'<<"\n"
     buffer << '\put(18,-15){\bf Prüfungsbericht}'<<"\n"
-    buffer << '\put(67,-9){\Large{\bf ' << examinator.surname << '}, ' << examinator.givenname << '}'<<"\n"
+    if @examinator
+      buffer << '\put(67,-9){\Large{\bf ' << examinator.surname << '}, ' << examinator.givenname << '}'<<"\n"
+    else
+      buffer << '\put(67,-9){\Large{\bf unknown}, unbekannt}'<<"\n"
+    end
     buffer << '\put(67,-15){\scriptsize ' << self.typ.name << '{ $\triangleright$ }' << self.subject.name << '{ $\triangleright$ }'<<"\n"
     buffer << self.moduls.collect{|mod| mod.name}.join(", ")
     buffer << '}' << "\n" << '\put(145,-7.5){\tiny Ordner:}'<<"\n"
