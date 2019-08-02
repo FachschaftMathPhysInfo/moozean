@@ -26,6 +26,7 @@ RUN npm install -g bower
 RUN npm install -g ember-cli
 ENV INSTALL_PATH /home/app/ozean
 
+ENV EMBER_INSTALL_PATH /home/app/ozean/frontend
 #Ordner erstellen und wechseln
 RUN mkdir -p $INSTALL_PATH
 WORKDIR $INSTALL_PATH
@@ -40,7 +41,11 @@ COPY . .
 ENV RAILS_ENV production
 ENV EMBER_ENV development
 RUN chown -R app /home/app
-RUN RAILS_ENV=production PRODUCTION_DATABASE_ADAPTER="postgresql" /sbin/setuser app bundle exec rake assets:precompile
+WORKDIR ${EMBER_INSTALL_PATH}
+RUN npm install
+RUN bower install
+RUN ember build
+WORKDIR ${INSTALL_PATH}
 RUN bash gem install whenever
 RUN rm -rf /home/app/ozean/tmp/pids && bundle exec whenever --update-crontab
 RUN rm -f /etc/service/nginx/down
