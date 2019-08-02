@@ -1,5 +1,6 @@
 .git
 .dockerignore
+docker-compose.yml
 .byebug_history
 /log/*
 /tmp/*

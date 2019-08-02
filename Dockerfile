@@ -1,6 +1,11 @@
-FROM phusion/passenger-customizable
+FROM phusion/passenger-customizable:0.9.34
 LABEL vendor="Fachschaft MathPhys"
 MAINTAINER Henrik Reinstädtler <henrik@mathphys.fsk.uni-heidelberg.de>
+RUN apt-get update
+RUN apt-get install -y gnupg2
+RUN apt-get install -y dirmngr
+RUN gpg2 --recv-keys 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+RUN curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -
 RUN /pd_build/ruby-2.3.7.sh
 RUN /pd_build/redis.sh
 
