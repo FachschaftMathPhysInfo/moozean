@@ -39,7 +39,7 @@ RUN DEBUG_RESOLVER=1 bundler install --binstubs --verbose
 #und den rest kopieren
 COPY . .
 ENV RAILS_ENV production
-ENV EMBER_ENV development
+ENV EMBER_ENV production
 RUN chown -R app /home/app
 WORKDIR ${EMBER_INSTALL_PATH}
 RUN npm install
