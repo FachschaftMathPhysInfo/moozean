@@ -1,62 +1,107 @@
 {{#paper-toolbar}}
-   {{#paper-toolbar-tools}}
+  {{#paper-toolbar-tools}}
     {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-      {{paper-icon icon="menu"}}
+      {{#paper-button
+        classNames="hide-gt-sm"
+        iconButton=true
+        onClick=(action toggleAction)
+      }}
+        {{paper-icon icon="menu"}}
       {{/paper-button}}
     {{/paper-sidenav-toggle}}
-     <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Prüfende <span class="hide-sm"></span></h2>
-     <span class="flex"></span>
-     {{#paper-button iconButton=true onClick=(action "addExaminator")}}
-       {{paper-icon "person add"}}
-     {{/paper-button}}
-     {{#paper-button iconButton=true}}
-       {{paper-icon "more_vert"}}
-     {{/paper-button}}
-   {{/paper-toolbar-tools}}
- {{/paper-toolbar}}
- <div class="overflow-y-scroll">
-{{#paper-content}}
-{{#paper-card as |card|}}
-{{paper-data-paginator
-  count=resultsLength
-limit=limit
-limitOptions=limitOptions
-page=page
-pages=pages
-onChangePage=(action (mut page))
-onChangeLimit=(action (mut limit))
-onIncrementPage=(action 'incrementPage')
-onDecrementPage=(action 'decrementPage')
-plural="Prüfende"
-meta=meta}}
-      {{#paper-data-table sortProp="surname"  selectable=true as |table|}}
+    <h2>
+      Moor
+      {{paper-icon "chevron-right"}}
+      Verwaltung
+      {{paper-icon "chevron-right"}}
+      Prüfende
+      <span class="hide-sm"></span>
+    </h2>
+    <span class="flex"></span>
+    {{#paper-button iconButton=true onClick=(action "addExaminator")}}
+      {{paper-icon "person add"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "more_vert"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+{{/paper-toolbar}}
+<div class="overflow-y-scroll">
+  {{#paper-content}}
+    {{#paper-card as |card|}}
+      {{paper-data-paginator
+        count=resultsLength
+        limit=limit
+        limitOptions=limitOptions
+        page=page
+        pages=pages
+        onChangePage=(action (mut page))
+        onChangeLimit=(action (mut limit))
+        onIncrementPage=(action "incrementPage")
+        onDecrementPage=(action "decrementPage")
+        plural="Prüfende"
+        meta=meta
+      }}
+      {{#paper-data-table sortProp="surname" selectable=true as |table|}}
         {{#table.head as |head|}}
           {{#head.column}}{{/head.column}}
-          {{#head.column sortProp="givenname"}}Vorname{{/head.column}}
-          {{#head.column sortProp="surname"}}Nachname{{/head.column}}
-          {{#head.column sortProp="title"}}Titel{{/head.column}}
+          {{#head.column sortProp="givenname"}}
+            Vorname
+          {{/head.column}}
+          {{#head.column sortProp="surname"}}
+            Nachname
+          {{/head.column}}
+          {{#head.column sortProp="title"}}
+            Titel
+          {{/head.column}}
           {{#head.column}}Optionen{{/head.column}}
         {{/table.head}}
         {{#table.body as |body|}}
           {{#each (sort-by table.sortDesc paginatedResults) as |m|}}
             {{#body.row edit=true as |row|}}
-              {{#row.cell}}{{paper-icon "perm identity" }}{{/row.cell}}
+              {{#row.cell}}{{paper-icon "perm identity"}}{{/row.cell}}
               {{#row.cell}}{{m.givenname}}{{/row.cell}}
               {{#row.cell}}{{m.surname}}{{/row.cell}}
               {{#row.cell}}{{m.title}}{{/row.cell}}
               {{#row.cell edit=true as |cell|}}
-              {{#paper-button iconButton=true onClick=(action "editExaminator" m)}}{{paper-icon "edit"}}{{/paper-button}}
-              {{#paper-button iconButton=true onClick=(action "deleteExaminator" m)}}{{paper-icon "delete"}}{{/paper-button}}
+                {{#paper-button
+                  iconButton=true
+                  onClick=(action "editExaminator" m)
+                }}
+                  {{paper-icon "edit"}}
+                {{/paper-button}}
+                {{#paper-button
+                  iconButton=true
+                  onClick=(action "deleteExaminator" m)
+                }}
+                  {{paper-icon "delete"}}
+                {{/paper-button}}
               {{/row.cell}}
             {{/body.row}}
           {{/each}}
         {{/table.body}}
       {{/paper-data-table}}
-{{/paper-card}}
-
-{{/paper-content}}
+    {{/paper-card}}
+  {{/paper-content}}
 </div>
-{{#if showCreateExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Erstelle Prüfendes' examinator=newexaminator}}{{/if}}
-{{#if showEditExaminatorDialog}}{{examinator-dialog closeDialog=(action "closeExaminatorDialog") title='Bearbeite Prüfendes' examinator=newexaminator}}{{/if}}
-{{#if showReportDialog}}{{delete-dependency-dialog store=store closeDialog=(action "closeDeleteExaminatorDialog") objekt=newexaminator}}{{/if}}
+{{#if showCreateExaminatorDialog}}
+  {{examinator-dialog
+    closeDialog=(action "closeExaminatorDialog")
+    title="Erstelle Prüfendes"
+    examinator=newexaminator
+  }}
+{{/if}}
+{{#if showEditExaminatorDialog}}
+  {{examinator-dialog
+    closeDialog=(action "closeExaminatorDialog")
+    title="Bearbeite Prüfendes"
+    examinator=newexaminator
+  }}
+{{/if}}
+{{#if showReportDialog}}
+  {{delete-dependency-dialog
+    store=store
+    closeDialog=(action "closeDeleteExaminatorDialog")
+    objekt=newexaminator
+  }}
+{{/if}}

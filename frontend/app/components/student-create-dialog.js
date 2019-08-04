@@ -7,6 +7,7 @@ export default Component.extend({
   },
   actions:{
     exitDialog:function(option){
+      // eslint-disable-next-line ember/closure-actions
       this.sendAction('closeDialog',option,this.get('student'));
     },
     repay:function(stud){

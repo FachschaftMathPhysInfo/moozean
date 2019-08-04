@@ -3,8 +3,12 @@ import { computed } from '@ember/object';
 import Controller from '@ember/controller';
 import paginatedResult from "ember-ozean/mixins/paginated-result";
 export default Controller.extend(paginatedResult,{
+  init() {
+    this._super(...arguments);
+    
+    this.thisfolder = this.thisfolder || {};
+  },
   noneditable:true,
-  thisfolder:{},
   page: 1,
   resultsLength:computed('meta.record-count',function(){
     return this.get("meta.record-count");

@@ -3,9 +3,13 @@ import Controller from '@ember/controller';
 import paginatedResults from "ember-ozean/mixins/paginated-result";
 
 export default Controller.extend(paginatedResults,{
-  newsubject:{},
-  newtyp:{},
-  newmodul:{},
+  init() {
+    this._super(...arguments);
+    
+    this.newsubject = this.newsubject || {};
+    this.newtyp = this.newtyp || {};
+    this.newmodul = this.newmodul || {};
+  },
   limitSubject:10,
   pageSubject:1,
   paginatedSubjects:computed('limitSubject','pageSubject','model.subjects.[]', function() {

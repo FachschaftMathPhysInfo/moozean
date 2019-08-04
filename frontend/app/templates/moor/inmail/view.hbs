@@ -1,62 +1,117 @@
 <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
   <div class="flex-gt-xs-50">
-{{inmail-display model=(readonly model.mail) setTexFile=(action "setPdfFile") setPdfFile=(action "setPdfFile")
-reply=(action "reply")}}
-</div>
-<div class="flex-gt-xs-50">
-{{#paper-card as |card|}}
-  {{#card.title as |title|}}
-    {{#title.text as |text|}}
-      {{#text.headline}}Prüfungsbericht erstellen{{/text.headline}}
-    {{/title.text}}
-  {{/card.title}}
-  {{#card.content}}
-  {{#paper-autocomplete searchMessage="Zum Suchen tippen" allowClear=true searchText=(readonly student.name) selected=student search=( action "searchStudent") searchField="name" labelPath="name" placeholder="Wer hat den Bericht abgegeben?" loadingMessage="Suche Studierendes..." noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
-    onSelectionChange=(action (mut student)) as |country autocomplete|}}
-    {{paper-autocomplete-highlight
-                        label=country.name
-                        searchText=autocomplete.searchText
-                        flags="i"}} <em>{{country.uniid}}</em>
-  {{/paper-autocomplete}}
-  {{subject-autocomplete selected=model.report.subject options=model.subjects}}
-  {{typ-autocomplete selected=model.report.typ options=model.typs}}
-    {{! Prüfende }}
-  {{pruefende-chips options=model.examinators content=model.report.examinators }}
+    {{inmail-display
+      model=(readonly model.mail)
+      setTexFile=(action "setPdfFile")
+      setPdfFile=(action "setPdfFile")
+      reply=(action "reply")
+    }}
+  </div>
+  <div class="flex-gt-xs-50">
+    {{#paper-card as |card|}}
+      {{#card.title as |title|}}
+        {{#title.text as |text|}}
+          {{#text.headline}}Prüfungsbericht erstellen{{/text.headline}}
+        {{/title.text}}
+      {{/card.title}}
+      {{#card.content}}
+        {{#paper-autocomplete
+          searchMessage="Zum Suchen tippen"
+          allowClear=true
+          searchText=(readonly student.name)
+          selected=student
+          search=(action "searchStudent")
+          searchField="name"
+          labelPath="name"
+          placeholder="Wer hat den Bericht abgegeben?"
+          loadingMessage="Suche Studierendes..."
+          noMatchesMessage="Oops Dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
+          onSelectionChange=(action (mut student)) as |country autocomplete|
+        }}
+          {{paper-autocomplete-highlight
+            label=country.name
+            searchText=autocomplete.searchText
+            flags="i"
+          }}
+          <em>
+            {{country.uniid}}
+          </em>
+        {{/paper-autocomplete}}
+        {{subject-autocomplete
+          selected=model.report.subject
+          options=model.subjects
+        }}
+        {{typ-autocomplete selected=model.report.typ options=model.typs}}
+        {{! Prüfende }}
+        {{pruefende-chips
+          options=model.examinators
+          content=model.report.examinators
+        }}
         {{!Module}}
-  {{modul-chips options=model.moduls content=model.report.moduls}}
-    {{!Folderseries}}
-  {{folderseries-chips options=model.folderseries content=model.report.folderseries}}
-    {{paper-pikaday label="Prüfungsdatum"
-                required=true
-                value=(readonly (moment-format model.report.examinationAt "MM.YYYY"))
-                format="MM.YYYY"
-                onSelection=(action (mut model.report.examinationAt))
-                onChange=(action (mut model.report.examinationAt)) }}
-
-  {{/card.content}}
-  {{#card.actions}}
-    {{#paper-button}}
-      {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex" }}
-        {{paper-icon "text fields"}} {{filetexName}}
-      {{/file-picker}}
-    {{/paper-button}}
-    {{#paper-button}}
-      {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded" }}
-        {{paper-icon "picture as pdf"}} {{fileName}}
-      {{/file-picker}}
-    {{/paper-button}}
-    {{#paper-button disabled=(or (or (not model.report.typ)(not model.report.subject))(not model.report.pdf)) onClick=(action "save")}}
-      Speichern
-    {{/paper-button}}
-  {{/card.actions}}
-    {{#if saving}}
-      {{paper-progress-linear}}
-    {{/if}}
-{{/paper-card}}
+        {{modul-chips options=model.moduls content=model.report.moduls}}
+        {{!Folderseries}}
+        {{folderseries-chips
+          options=model.folderseries
+          content=model.report.folderseries
+        }}
+        {{paper-pikaday
+          label="Prüfungsdatum"
+          required=true
+          value=(readonly (moment-format model.report.examinationAt "MM.YYYY"))
+          format="MM.YYYY"
+          onSelection=(action (mut model.report.examinationAt))
+          onChange=(action (mut model.report.examinationAt))
+        }}
+      {{/card.content}}
+      {{#card.actions}}
+        {{#paper-button}}
+          {{#file-picker
+            preview=false
+            readAs="readAsBinaryString"
+            accept=".tex"
+            fileLoaded="fileLoadedTex"
+          }}
+            {{paper-icon "text fields"}}{{filetexName}}
+          {{/file-picker}}
+        {{/paper-button}}
+        {{#paper-button}}
+          {{#file-picker
+            preview=false
+            readAs="readAsDataURL"
+            accept=".pdf"
+            fileLoaded="fileLoaded"
+          }}
+            {{paper-icon "picture as pdf"}}{{fileName}}
+          {{/file-picker}}
+        {{/paper-button}}
+        {{#paper-button
+          disabled=(or
+            (or (not model.report.typ) (not model.report.subject))
+            (not model.report.pdf)
+          )
+          onClick=(action "save")
+        }}
+          Speichern
+        {{/paper-button}}
+      {{/card.actions}}
+      {{#if saving}}
+        {{paper-progress-linear}}
+      {{/if}}
+    {{/paper-card}}
+  </div>
 </div>
-</div>
-{{#if showReplyDialog closeDialog=(action "closeMailDialog") action="closeMailDialog" }}
+{{#if
+  showReplyDialog
+  closeDialog=(action "closeMailDialog")
+  action="closeMailDialog"
+}}
   {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
 {{/if}}
 {{outlet}}
-{{#if prd}}{{print-report-dialog store=store closeDialog="closePrintDialog" report=report2print}}{{/if}}
+{{#if prd}}
+  {{print-report-dialog
+    store=store
+    closeDialog="closePrintDialog"
+    report=report2print
+  }}
+{{/if}}

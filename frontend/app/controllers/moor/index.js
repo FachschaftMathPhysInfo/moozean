@@ -2,6 +2,11 @@ import Controller from '@ember/controller';
 import { computed } from '@ember/object';
 
 export default Controller.extend({
+  init() {
+    this._super(...arguments);
+    
+    this.newfolder = this.newfolder || {};
+  },
   leftSideBarOpen2: true,
   newfolder: {},
   limitFolders:5,
