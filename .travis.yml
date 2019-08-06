@@ -2,17 +2,12 @@ language: ruby
 rvm:
  - 2.3
 services:
- - redis-server
- - postgresql
-before_install:
- - sudo apt-get install -qq -y --no-install-recommends  wget  cron pdftk imagemagick libmagickwand-dev ghostscript texlive-latex-extra  texlive-pstricks
+  - docker
 before_script:
  - psql -c 'create database travis_ci_test;' -U postgres
- - cp config/database.yml.travis config/database.yml
- - npm install -g bower
+ - docker-compose up --build
 script:
- - bin/rake db:migrate RAILS_ENV=test
- - bin/rake assets:precompile
+ - docker exec ozean_web_1  bin/rake db:migrate RAILS_ENV=test
  - bin/rake
 addons:
   chrome: stable
