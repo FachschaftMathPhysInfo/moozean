@@ -1,3 +1,4 @@
+---
 version: '3'
 networks:
   app-tier:
@@ -15,10 +16,12 @@ services:
       - app-tier
   redis:
     image: "redis:alpine"
-    networks: 
+    networks:
       - app-tier
   web:
     build: .
+    image: moozean:latest
+    container_name: moozean
     ports:
       - "127.0.0.1:3000:3000"
       - "45422:22"
