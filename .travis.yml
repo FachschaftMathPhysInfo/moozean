@@ -1,13 +1,15 @@
+---
 language: ruby
 rvm:
- - 2.3
+   - 2.3
 services:
-  - docker
+   - docker
+   - postgresql
 before_script:
- - psql -c 'create database travis_ci_test;' -U postgres
- - docker-compose up --build
+   - psql -c 'create database travis_ci_test;' -U postgres
+   - docker-compose up --build
 script:
- - docker exec ozean_web_1  bin/rake db:migrate RAILS_ENV=test
- - bin/rake
+   - docker-compose exec web bin/rake db:migrate RAILS_ENV=test
+   - bin/rake
 addons:
-  chrome: stable
+   chrome: stable
