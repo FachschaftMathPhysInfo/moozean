@@ -4,12 +4,10 @@ rvm:
    - 2.3
 services:
    - docker
-   - postgresql
 before_script:
-   - psql -c 'create database travis_ci_test;' -U postgres
    - docker-compose up --build
 script:
-   - docker-compose exec web bin/rake db:migrate RAILS_ENV=test
+   - docker-compose exec web bin/rake db:create db:migrate RAILS_ENV=test
    - bin/rake
 addons:
    chrome: stable

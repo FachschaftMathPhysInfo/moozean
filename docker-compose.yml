@@ -8,7 +8,7 @@ services:
     image: 'postgres:9.6'
     labels:
       kompose.service.type: nodeport
-    #volumes:
+    # volumes:
     # TODO: Add postgresql
     environment:
       - POSTGRES_PASSWORD=WKJWajdaw
