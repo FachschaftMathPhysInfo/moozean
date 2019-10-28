@@ -1,7 +1,5 @@
 ---
-language: ruby
-services:
-   - docker
+language: generic
 before_script:
    - docker-compose build
 script:
