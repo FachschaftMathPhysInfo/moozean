@@ -1,7 +1,5 @@
 ---
 language: ruby
-rvm:
-   - 2.3
 services:
    - docker
 before_script:
