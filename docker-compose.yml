@@ -20,7 +20,7 @@ services:
       - app-tier
   web:
     build: .
-    image: moozean:latest, ${TAG_NAME}
+    image: moozean:latest
     container_name: moozean
     ports:
       - "127.0.0.1:3000:3000"
