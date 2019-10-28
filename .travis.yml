@@ -5,8 +5,7 @@ rvm:
 services:
    - docker
 before_script:
-   - docker-compose build
-   - export TAG_NAME="moozean:$(git rev-parse --short --verify HEAD)"
+   - TAG_NAME="moozean:$(git rev-parse --short --verify HEAD)" docker-compose build
 script:
    - docker-compose up -d
    - docker-compose exec web bin/rake db:create db:migrate RAILS_ENV=test
