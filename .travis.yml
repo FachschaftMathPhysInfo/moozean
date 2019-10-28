@@ -6,6 +6,3 @@ script:
    - docker-compose up -d
    - docker-compose exec web bin/rake db:create db:migrate RAILS_ENV=test
    - docker-compose stop
-   - docker-compose up
-addons:
-   chrome: stable
