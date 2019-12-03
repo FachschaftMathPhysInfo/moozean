@@ -6,16 +6,20 @@ import moment from 'moment';
 import studentManagment from "ember-ozean/mixins/student-managment";
 export default Component.extend(studentManagment,{
   store: service(),
-  items: [],
+  init() {
+    this._super(...arguments);
+    
+    this.items = this.items || [];
+    this.bleibendeOrdner = this.bleibendeOrdner || [{
+      name: "KP1A"
+    }, {
+      name: "KM1A"
+    }];
+    this.ordner = this.ordner || [];
+    this.newstudent = this.newstudent || {};
+  },
   titlestudent: "Studierendes eintragen",
-  bleibendeOrdner: [{
-    name: "KP1A"
-  }, {
-    name: "KM1A"
-  }],
-  ordner: [],
   toggleMenu: true,
-  newstudent: {},
   sumordner: computed('ordner.[]', function() {
     var result = [];
     var ordner = this.get('ordner');

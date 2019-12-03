@@ -10,7 +10,11 @@ export default Component.extend(studentManagment,{
       this.$('md-autocomplete-wrap input').focus();
     }
   },
-  newstudent:{},
+  init() {
+    this._super(...arguments);
+    
+    this.newstudent = this.newstudent || {};
+  },
   showDialog: false,
   deletable: computed('newstudent', function() {
     return this.get('newstudent.uniid') != undefined ;

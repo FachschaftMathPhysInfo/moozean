@@ -1,18 +1,8 @@
-language: ruby
-rvm:
- - 2.3
-services:
- - redis-server
- - postgresql
-before_install:
- - sudo apt-get install -qq -y --no-install-recommends  wget  cron pdftk imagemagick libmagickwand-dev ghostscript texlive-latex-extra  texlive-pstricks
+---
+language: generic
 before_script:
- - psql -c 'create database travis_ci_test;' -U postgres
- - cp config/database.yml.travis config/database.yml
- - npm install -g bower
+   - docker-compose build
 script:
- - bin/rake db:migrate RAILS_ENV=test
- - bin/rake assets:precompile
- - bin/rake
-addons:
-  chrome: stable
+   - docker-compose up -d
+   - docker-compose exec web bin/rake db:create db:migrate RAILS_ENV=test
+   - docker-compose stop

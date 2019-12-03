@@ -4,7 +4,10 @@ import Controller from '@ember/controller';
 import paginatedResults from "ember-ozean/mixins/paginated-result";
 
 export default Controller.extend(paginatedResults,{
-  newexaminator:{},
+  init() {
+    this._super(...arguments);
+    this.newexaminator = this.newexaminator || {};
+  },
   showReportDialog:false,
   page: 1,
   resultsLength:computed('meta.record-count',function(){

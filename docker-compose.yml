@@ -1,0 +1,52 @@
+---
+version: '3'
+networks:
+  app-tier:
+    driver: bridge
+services:
+  postgres:
+    image: 'postgres:9.6'
+    labels:
+      kompose.service.type: nodeport
+    # volumes:
+    # TODO: Add postgresql
+    environment:
+      - POSTGRES_PASSWORD=WKJWajdaw
+    networks:
+      - app-tier
+  redis:
+    image: "redis:alpine"
+    networks:
+      - app-tier
+  web:
+    build: .
+    image: moozean:latest
+    container_name: moozean
+    ports:
+      - "127.0.0.1:3000:3000"
+      - "45422:22"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=WDWDFWFWFwf
+      - SECRET_TOKEN=ekfeoefokoe
+      - PRODUCTION_DATABASE_URL=postgresql://postgres:@postgres:5432/moozean
+      - PRODUCTION_DATABASE_ADAPTER=postgresql
+      - PRODUCTION_DATABASE_USERNAME=postgres
+      - REDIS_URL=redis://redis:6379/1
+      - PRODUCTION_DATABASE_HOST=postgres
+      - PRODUCTION_DATABASE_PASSWORD=WKJWajdaw
+      - PRODUCTION_DATABASE_PORT=5432
+      - PRINTER_HOST=192.168.0.1:631
+      - PRINTER_NAME=sw-simplex
+      - PRODUCTION_IMAP_SERVER=webmail.henrixapp.com
+      - PRODUCTION_IMAP_PORT=993
+      - PRODUCTION_EMAIL_ADDRESS=pruefungsberichte@henrixapp.com
+      - PRODUCTION_EMAIL_PASSWORD=FachschaftMathPhysrules!
+      - PRODUCTION_EMAIL_BOX=INBOX
+      - SMTP_ADDRESS=192.168.0.82
+      - SMTP_PORT=1025
+    networks:
+      - app-tier

@@ -12,7 +12,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background: color($color-grey, '500');
+  background: paper-color($color-grey, '500');
 }
 
 .site-sidenav,
@@ -26,10 +26,10 @@
   min-width: 218px;
 }
 md-sidenav.site-sidenav {
-  background: color($primary, '400');
+  background: paper-color($primary, '400');
 
   md-toolbar.md-default-theme {
-    background: linear-gradient(to bottom, color($primary, '600'), color($primary, '400'));;
+    background: linear-gradient(to bottom, paper-color($primary, '600'), paper-color($primary, '400'));;
     border-bottom: 1px solid rgba(#fff000, .1);
 
     height: 180px;
