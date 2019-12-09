@@ -1,2 +1,0 @@
-class IsAboutsController < ApplicationController
-end

@@ -1,2 +1,0 @@
-class ReferencablesController < ApplicationController
-end

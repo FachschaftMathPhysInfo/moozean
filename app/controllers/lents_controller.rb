@@ -1,2 +1,0 @@
-class LentsController < ApplicationController
-end

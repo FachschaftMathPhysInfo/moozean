@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   #resources :folders
-  scope '/api' do
+  namespace :api do
     jsonapi_resources :folders
     jsonapi_resources :students
     jsonapi_resources :lents

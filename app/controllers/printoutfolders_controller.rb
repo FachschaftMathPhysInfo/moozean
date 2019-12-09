@@ -1,2 +1,0 @@
-class PrintoutfoldersController < ApplicationController
-end

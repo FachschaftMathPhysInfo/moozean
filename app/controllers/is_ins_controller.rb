@@ -1,2 +1,0 @@
-class IsInsController < ApplicationController
-end

@@ -1,2 +1,0 @@
-class ReturnedsController < ApplicationController
-end
