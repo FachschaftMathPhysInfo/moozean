@@ -1,3 +1,4 @@
+require 'open3'
 class Report < ApplicationRecord
   belongs_to :subject
   belongs_to :typ
