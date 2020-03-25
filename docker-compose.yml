@@ -46,6 +46,7 @@ services:
       - PRODUCTION_EMAIL_ADDRESS=pruefungsberichte@henrixapp.com
       - PRODUCTION_EMAIL_PASSWORD=FachschaftMathPhysrules!
       - PRODUCTION_EMAIL_BOX=INBOX
+      - PRODUCTION_USERNAME_SALT=Lambda
       - SMTP_ADDRESS=192.168.0.82
       - SMTP_PORT=1025
     networks:

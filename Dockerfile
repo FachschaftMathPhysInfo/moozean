@@ -45,7 +45,6 @@ ENV RAILS_ENV production
 ENV EMBER_ENV production
 WORKDIR ${EMBER_INSTALL_PATH}
 RUN npm install && \
-    npm audit fix && \
     bower install && \
     ember build
 WORKDIR ${INSTALL_PATH}
