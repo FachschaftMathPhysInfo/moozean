@@ -77,9 +77,9 @@ class Report < ApplicationRecord
     buffer << '\put(172,-15){\normalsize\bf ' << self.id.to_s << '}'<<"\n"
     buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
     buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s.to_s << '}'<<"\n"
-    buffer << '\put(50,-18){\tiny ' << generation_info << '}' << "\n"
+    buffer << '\put(10,-18){\small ' << generation_info << '}' << "\n"
     buffer << '\put(6,-295){\includegraphics*[width=187mm,height=265mm]{'<<dir<<'/' << report_name << '_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
-    buffer << '\put(50,-295){\tiny ' << generation_info << '}' << "\n"
+    buffer << '\put(10,-295){\small ' << generation_info << '}' << "\n"
     buffer << '\end{picture}'<<"\n" << '\end{textblock*}'<<"\n" << '\null\newpage'<<"\n"
     buffer
   end
