@@ -113,6 +113,22 @@
         {{paper-progress-linear}}
       {{/if}}
     {{/paper-card}}
+    {{#paper-card as |card|}}
+      {{#card.title as |title|}}
+      {{#title.text as |text|}}
+          {{#text.headline}}{{paper-icon "get_app"}}Downloadeinstellungen{{/text.headline}}
+        {{/title.text}}
+      {{/card.title}}
+      {{#card.content}}
+        {{#paper-autocomplete searchMessage="Zum Suchen tippen"  allowClear=true searchText=(readonly student.name) selected=student search=(action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
+                  noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange= (action (mut student)) as |country autocomplete|}}
+                  {{paper-autocomplete-highlight
+              label=country.name
+              searchText=autocomplete.searchText
+              flags="i"}} <em>{{country.uniid}}</em>
+                {{/paper-autocomplete}}
+      {{/card.content}}
+    {{/paper-card}}
     <div class="layout-row layout-wrap">
       {{#each results as |report|}}
         <div class="flex-xs-100 flex-gt-xs-33-noshrink flex-gt-l-25-noshrink">
@@ -223,6 +239,15 @@
               }}
                 {{paper-icon "print"}}
               {{/paper-button}}
+              {{#if student}}
+              {{#paper-button
+                iconButton=true
+                target="_blank"
+                href=(concat "/api/download/" report.id "/" student.id)
+              }}
+                {{paper-icon "get_app"}}
+              {{/paper-button}}
+              {{/if}}
             {{/card.actions}}
           {{/paper-card}}
         </div>

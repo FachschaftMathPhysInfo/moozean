@@ -30,7 +30,7 @@ class Report < ApplicationRecord
     end
   end
 
-  def make_header(folderseries,examinator, times)
+  def make_header()
     buffer = ''
     buffer << '\documentclass[a4paper,twoside]{article}'<<"\n"
     buffer << '\usepackage[absolute]{textpos}'<<"\n"
@@ -49,7 +49,7 @@ class Report < ApplicationRecord
     buffer
   end
 
-  def generate_page(folderseries,examinator,times, page,pages_s,dir,report_name)
+  def generate_page(folderseries,examinator,times, page,pages_s,dir,report_name,generation_info="")
     buffer =  '\begin{textblock*}{1cm}(0mm,0mm)'<<"\n"
     buffer << '\setlength{\unitlength}{1mm}'<<"\n"
     buffer << '\begin{picture}(0,0)(0,0)'<<"\n"
@@ -77,7 +77,9 @@ class Report < ApplicationRecord
     buffer << '\put(172,-15){\normalsize\bf ' << self.id.to_s << '}'<<"\n"
     buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
     buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s.to_s << '}'<<"\n"
-    buffer << '\put(6,-297){\includegraphics*[width=198mm,height=280mm]{'<<dir<<'/' << report_name << '_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
+    buffer << '\put(10,-18){\small ' << generation_info << '}' << "\n"
+    buffer << '\put(6,-295){\includegraphics*[width=187mm,height=265mm]{'<<dir<<'/' << report_name << '_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
+    buffer << '\put(10,-295){\small ' << generation_info << '}' << "\n"
     buffer << '\end{picture}'<<"\n" << '\end{textblock*}'<<"\n" << '\null\newpage'<<"\n"
     buffer
   end
@@ -92,7 +94,7 @@ class Report < ApplicationRecord
   end
 
   def print_document(folderseries,examinator, times)
-    buffer= make_header(folderseries,examinator,times)
+    buffer= make_header()
     Dir.mktmpdir{ |dir|
       puts buffer
       Dir.chdir dir

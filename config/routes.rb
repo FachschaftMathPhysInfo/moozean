@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   #resources :folders
+
+  
   namespace :api do
+    get 'download/:report/:student', to: 'download#show'
     jsonapi_resources :folders
     jsonapi_resources :students
     jsonapi_resources :lents

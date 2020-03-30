@@ -17,6 +17,7 @@ export default Controller.extend({
     return e;
   }),
   page: 1,
+  student:null,
   examinatora: A(),
   modula: A(),
   folderseriesa: A(),
@@ -74,6 +75,17 @@ export default Controller.extend({
   reporttoedit: null,
   editReport: false,
   actions: {
+    searchStudent: function(data) {
+      var store = this.get('store');
+      return store.query('student', {
+        filter: {
+          nameoruniid: '%' + data + '%'
+        },
+        page: {
+          limit: 10
+        }
+      })
+    },
     printReport: function(report) {
       this.set('reporttoprint',report);
       this.set('prd',true);
