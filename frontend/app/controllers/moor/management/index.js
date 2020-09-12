@@ -13,19 +13,19 @@ export default Controller.extend(paginatedResults,{
   limitSubject:10,
   pageSubject:1,
   paginatedSubjects:computed('limitSubject','pageSubject','model.subjects.[]', function() {
-    let q= this.queryPaginated("subject", this.get("pageSubject"),this.get("limitSubject"),"Subject");
+    let q= this.queryPaginated("subject", this.pageSubject,this.limitSubject,"Subject");
     return q;
   }),
   limitTyp:10,
   pageTyp:1,
   paginatedTyps:computed('limitTyp','pageTyp','model.typs.[]', function() {
-    let q= this.queryPaginated('typ',this.get("pageTyp"),this.get("limitTyp"),"Typ");
+    let q= this.queryPaginated('typ',this.pageTyp,this.limitTyp,"Typ");
     return q;
   }),
   limitModul:10,
   pageModul:1,
   paginatedModuls:computed('limitModul','pageModul','model.moduls.[]', function() {
-    let q= this.queryPaginated('modul', this.get("pageModul"),this.get("limitModul"),"Modul");
+    let q= this.queryPaginated('modul', this.pageModul,this.limitModul,"Modul");
     return q;
   }),
   actions:{
@@ -44,16 +44,16 @@ export default Controller.extend(paginatedResults,{
     closeDeleteDialog:function(option){
       this.set('showDeleteDialog',false);
       if(option=="ok"){
-        this.get('newobject').destroyRecord();
+        this.newobject.destroyRecord();
       }
       this.set('newobject',null);
     },
     closeModulDialog:function(option){
       if(option=="ok"){
-        this.get('newmodul').save().then(null)
+        this.newmodul.save().then(null)
       }
       else{
-        this.get('newmodul').rollback();
+        this.newmodul.rollback();
       }
       this.set('showCreateModulDialog',false);
       this.set('showEditModulDialog',false);
@@ -68,11 +68,11 @@ export default Controller.extend(paginatedResults,{
     },
     closeSubjectDialog:function(option){
       if(option=="ok"){
-        this.get('newsubject').save().then(null)
+        this.newsubject.save().then(null)
       } else
       {
-        if(this.get('showCreateSubjectDialog')){
-          this.get('newsubject').unloadRecord();
+        if(this.showCreateSubjectDialog){
+          this.newsubject.unloadRecord();
       }
       }
       this.set('showCreateSubjectDialog',false);
@@ -88,11 +88,11 @@ export default Controller.extend(paginatedResults,{
     },
     closeTypDialog:function(option){
       if(option=="ok"){
-        this.get('newtyp').save().then(null)
+        this.newtyp.save().then(null)
       } else
       {
-        if(this.get('showCreateTypDialog'))
-        this.get('newtyp').unloadRecord();
+        if(this.showCreateTypDialog)
+        this.newtyp.unloadRecord();
       }
       this.set('showCreateTypDialog',false);
       this.set('showEditTypDialog',false);

@@ -1,6 +1,5 @@
-import DS from 'ember-data';
-const {belongsTo}=DS;
-export default DS.Model.extend({
-  times: DS.attr('number'),
+import Model, { belongsTo, attr } from '@ember-data/model';
+export default Model.extend({
+  times: attr('number'),
   folderseries: belongsTo('folderseries')
 });

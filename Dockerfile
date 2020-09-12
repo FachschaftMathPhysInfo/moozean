@@ -23,7 +23,7 @@ CMD ["/bin/bash", "-c", "/sbin/my_init 2>&1 | tee /home/app/ozean/log/stdout.log
 #update nodejs
 RUN npm cache clean -f && \
     npm install -g n && \
-    n 8
+    n 14
 RUN PATH="$PATH" && \ 
     npm install -g bower && \
     npm install -g ember-cli

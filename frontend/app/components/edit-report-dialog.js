@@ -13,7 +13,7 @@ export default Component.extend({
       this.set('filetexName',file.filename);
     },
     exitDialog:function(option){
-      this.sendAction('closeDialog',option,this.get('report'));
+      this.sendAction('closeDialog',option,this.report);
     }
     }
 });

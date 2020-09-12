@@ -1,7 +1,6 @@
-import DS from 'ember-data';
-const { belongsTo } = DS;
+import Model, { belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   //lentat:attr('date'), TODO: FIXMe
   report:belongsTo('report'),
   modul:belongsTo('modul')

@@ -1,7 +1,3 @@
-{{#paper-autocomplete required=required searchMessage="Zum Suchen tippen" options=options allowClear=true searchText=(readonly typSearchText) onSearchTextChange=(action (mut typSearchText))  disabled=disabled selected=selected searchField="name" labelPath="name" placeholder="Wähle einen Prüfungstyp" loadingMessage="Suche Typ..." search=(action "searchTyps")
-  noMatchesMessage="Es gibt kein solchen Typ" onSelectionChange=(action (mut selected)) as |typ autocomplete|}}
-  {{paper-autocomplete-highlight
-      label=typ.name
-      searchText=autocomplete.searchText
-      flags="i"}}
-{{/paper-autocomplete}}
+<PaperAutocomplete @required={{required}} @searchMessage="Zum Suchen tippen" @options={{options}} @allowClear={{true}} @searchText={{readonly typSearchText}} @onSearchTextChange={{action (mut typSearchText)}} @disabled={{disabled}} @selected={{selected}} @searchField="name" @labelPath="name" @placeholder="Wähle einen Prüfungstyp" @loadingMessage="Suche Typ..." @search={{action "searchTyps"}} @noMatchesMessage="Es gibt kein solchen Typ" @onSelectionChange={{action (mut selected)}} as |typ autocomplete|>
+  <PaperAutocompleteHighlight @label={{typ.name}} @searchText={{autocomplete.searchText}} @flags="i" />
+</PaperAutocomplete>

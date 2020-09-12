@@ -1,61 +1,61 @@
 <div class="flex-xs-100 flex-gt-xs-33 flex-gt-l-25 flex-noshrink">
-  {{#paper-card as |card| }}
-    {{#card.actions}}
+  <PaperCard as |card|>
+    <card.actions>
       &emsp;#{{report.id}}<span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "toggleSelection" report)}}
+      <PaperButton @iconButton={{true}} @onClick={{action "toggleSelection" report}}>
         {{#if selected}}{{paper-icon "remove"}}{{else}}{{paper-icon "add"}}{{/if}}
-      {{/paper-button}}
-    {{/card.actions}}
-    {{card.media size="sm" src=report.picture alt="erste PDF-Seite des Berichts" title="PDF-Seite"}}
-    {{#card.content}}
-      {{#paper-list}}
+      </PaperButton>
+    </card.actions>
+    <card.media @size="sm" @src={{report.picture}} @alt="erste PDF-Seite des Berichts" @title="PDF-Seite" />
+    <card.content>
+      <PaperList>
         {{#each report.moduls as |modul|}}
-          {{#paper-item class="md-2-line" }}
+          <PaperItem @class="md-2-line">
             {{paper-icon "perm media" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>{{modul.name}}</h3>
             </div>
-          {{/paper-item}}
+          </PaperItem>
         {{/each}}
-        {{paper-divider}}
+        <PaperDivider />
         {{#each report.examinators as |exm|}}
-          {{#paper-item class="md-2-line" }}
+          <PaperItem @class="md-2-line">
             {{paper-icon "perm identity" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>{{exm.surname}} <em>{{exm.givenname}}</em></h3>
             </div>
-          {{/paper-item}}
+          </PaperItem>
         {{/each}}
-        {{paper-divider}}
-        {{#paper-item class="md-2-line" }}
+        <PaperDivider />
+        <PaperItem @class="md-2-line">
           {{paper-icon "today" class="md-avatar-icon"}}
           <div class="md-list-item-text">
             <h3>{{moment-format report.examinationAt "MM.YYYY" }}</h3>
           </div>
-        {{/paper-item}}
-        {{paper-divider}}
-        {{#paper-item class="md-2-line" }}
+        </PaperItem>
+        <PaperDivider />
+        <PaperItem @class="md-2-line">
           {{paper-icon "bubble chart" class="md-avatar-icon"}}
           <div class="md-list-item-text flex">
             <h3 class="layout-wrap"><span class="flex">{{report.typ.name}}</span></h3>
           </div>
-        {{/paper-item}}
-        {{paper-divider}}
-        {{#paper-item class="md-2-line" }}
+        </PaperItem>
+        <PaperDivider />
+        <PaperItem @class="md-2-line">
           {{paper-icon "book" class="md-avatar-icon"}}
           <div class="md-list-item-text flex">
             <h3 class="layout-wrap"><span class="flex">{{report.subject.name}}</span></h3>
           </div>
-        {{/paper-item}}
-      {{/paper-list}}
-    {{/card.content}}
-    {{#card.actions}}
+        </PaperItem>
+      </PaperList>
+    </card.content>
+    <card.actions>
       {{#if report.texAvailable}}
-        {{#email-share subject='Prüfungsbericht-TeX-Datei' url=report.id body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:" }}
-          {{#paper-button iconButton=true}}{{paper-icon "text fields"}}{{/paper-button}}
-        {{/email-share}}
+        <EmailShare @subject="Prüfungsbericht-TeX-Datei" @url={{report.id}} @body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:">
+          <PaperButton @iconButton={{true}}>{{paper-icon "text fields"}}</PaperButton>
+        </EmailShare>
       {{/if}}
-      {{#paper-button iconButton=true onClick=(action "printReport")}}{{paper-icon "print"}}{{/paper-button}}
-    {{/card.actions}}
-  {{/paper-card}}
+      <PaperButton @iconButton={{true}} @onClick={{action "printReport"}}>{{paper-icon "print"}}</PaperButton>
+    </card.actions>
+  </PaperCard>
 </div>

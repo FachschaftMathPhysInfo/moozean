@@ -11,7 +11,7 @@ export default Component.extend({
   setPdfFile(){},
   selectedAttachment:null,
   fullAttention: on('init', observer('model.attachments.[]', 'model.subject', function() {
-    this.get("attachments").clear();
+    this.attachments.clear();
     schedule('afterRender', this, function() {
       this.set("toBeInserted", this.get("model.attachments").slice());
     });
@@ -19,8 +19,8 @@ export default Component.extend({
   didRender: function() {
     this._super(...arguments);
     if (this.get("toBeInserted.length") > 0) {
-      this.get("attachments").addObject(this.get("toBeInserted")[0]);
-      this.get("toBeInserted").removeAt(0);
+      this.attachments.addObject(this.toBeInserted[0]);
+      this.toBeInserted.removeAt(0);
     }
   },
   actions:{

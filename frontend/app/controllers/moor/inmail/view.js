@@ -16,7 +16,7 @@ export default Controller.extend(texUploading,studentManagment,{
         }));
       },
       closeMailDialog(){
-        this.get("newmail").save();
+        this.newmail.save();
         this.set("showReplyDialog",false);
       },
       searchStudent:function(data){
@@ -49,7 +49,7 @@ export default Controller.extend(texUploading,studentManagment,{
         this.set('saving',true);
         this.saveFile();
         this.set("student.report",true);
-        this.get("student").save().then(()=>{
+        this.student.save().then(()=>{
           this.set('saving',false);
         });
       },

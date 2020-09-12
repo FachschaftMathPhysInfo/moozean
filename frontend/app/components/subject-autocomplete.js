@@ -5,7 +5,7 @@ export default Component.extend({
   store: service(),
   actions:{
     searchSubjects:function(name){
-      return this.get("store").query('subject', {filter:{ name: name}});
+      return this.store.query('subject', {filter:{ name: name}});
     }
   }
 });

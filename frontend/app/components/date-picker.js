@@ -6,7 +6,7 @@ export default Component.extend({
   tagName:'md-datepicker',
   actions:{
     onSelect:function(date){
-      this.set('visibleCalendar', !this.get('visibleCalendar'));
+      this.set('visibleCalendar', !this.visibleCalendar);
       this.set('date', date.moment);
     },
     fromGerman:function(value){

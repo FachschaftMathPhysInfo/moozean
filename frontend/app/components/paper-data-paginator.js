@@ -10,8 +10,8 @@ export default Component.extend({
 	limit:5,
 	plural:"Berichte",
 	pagesA:computed('meta.page-count','pages', function() {
-		if(this.get("pages")){
-			return this.get("pages");
+		if(this.pages){
+			return this.pages;
 		}
 		let i=1;
 		let result=[];
@@ -21,28 +21,28 @@ export default Component.extend({
 		return result;
 	}),
 	resultsLength:computed('meta.record-count','count', function() {
-		if(this.get("count")){
-			return this.get("count");
+		if(this.count){
+			return this.count;
 		} else return this.get("meta.record-count");
 	}),
 	startOffset: computed('page', 'limit', 'meta',function() {
-		return Math.max((this.get('page') - 1) * this.get('limit') + 1, 1); // 1-based index
+		return Math.max((this.page - 1) * this.limit + 1, 1); // 1-based index
 	}),
 	endOffset: computed('startOffset', 'limit', function() {
-		return this.get('startOffset') + this.get('limit');
+		return this.startOffset + this.limit;
 	}),
 	actions: {
 		resetPage(){
 			this.set('page',1);
 		},
 		increase(){
-			if(this.get("page")<this.get("meta.page-count")){
-				this.set("page",this.get("page")+1);
+			if(this.page<this.get("meta.page-count")){
+				this.set("page",this.page+1);
 			}
 		},
 		decrease(){
-			if(this.get("page")>1){
-				this.set("page",this.get("page")-1);
+			if(this.page>1){
+				this.set("page",this.page-1);
 			}
 		}
 	}

@@ -1,49 +1,45 @@
 {{#if showDialog closeDialog=(action "closeDialog") action="closeDialog"}}
-{{folderseries-create-dialog folderseries=newfolderseries closeDialog=(action "closeDialog") title="Ordnerreihe  eintragen"}}
+<FolderseriesCreateDialog @folderseries={{newfolderseries}} @closeDialog={{action "closeDialog"}} @title="Ordnerreihe  eintragen" />
 {{/if}}
-{{#paper-toolbar}}
-   {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-            {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-      {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+   <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+            <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+      <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
      <h2>Moor <span class="hide-sm"></span></h2>
      <span class="flex"></span>
-     {{#paper-button iconButton=true onClick=(action "addFolderseries")}}
+     <PaperButton @iconButton={{true}} @onClick={{action "addFolderseries"}}>
        {{paper-icon "create new folder"}}
-     {{/paper-button}}
-     {{#paper-button iconButton=true}}
+     </PaperButton>
+     <PaperButton @iconButton={{true}}>
        {{paper-icon "more_vert"}}
-     {{/paper-button}}
-   {{/paper-toolbar-tools}}
- {{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
-{{paper-data-paginator
-limit=limitFolders
-page=pageFolder
-meta=meta
-plural="Ordnerreihen"}}
-      {{#paper-data-table sortProp="folder.name" sortDir="desc" selectable=true as |table|}}
-        {{#table.head as |head|}}
-          {{#head.column}}{{/head.column}}
-          {{#head.column sortProp="name" }}Name{{/head.column}}
-          {{#head.column sortProp="obligationtoreport"}}pfandpflichtig{{/head.column}}
-          {{#head.column}}Optionen{{/head.column}}
-        {{/table.head}}
-        {{#table.body as |body|}}
+     </PaperButton>
+   </PaperToolbarTools>
+ </PaperToolbar>
+<PaperContent @class="md-padding">
+<PaperDataPaginator @limit={{limitFolders}} @page={{pageFolder}} @meta={{meta}} @plural="Ordnerreihen" />
+      <PaperDataTable @sortProp="folder.name" @sortDir="desc" @selectable={{true}} as |table|>
+        <table.head as |head|>
+          <head.column></head.column>
+          <head.column @sortProp="name">Name</head.column>
+          <head.column @sortProp="obligationtoreport">pfandpflichtig</head.column>
+          <head.column>Optionen</head.column>
+        </table.head>
+        <table.body as |body|>
           {{#each (sort-by table.sortDesc fetched) as |m|}}
-            {{#body.row edit=true onClick=(action (transition-to "moor.folderseries" m)) as |row|}}
-              {{#row.cell}}{{paper-icon "dns"}}{{/row.cell}}
-              {{#row.cell}}{{m.name}}{{/row.cell}}
-              {{#row.cell}}{{#if m.obligationtoreport}}ja{{else}}nein{{/if}}{{/row.cell}}
-              {{#row.cell}}
-              {{#paper-button iconButton=true onClick=(action (transition-to "moor.folderseries.print" m))}}{{paper-icon "print"}}{{/paper-button}}
-              {{#paper-button iconButton=true onClick=(action "deleteFolderSeries" m)}}{{paper-icon "delete forever"}}{{/paper-button}}
-              {{/row.cell}}
-            {{/body.row}}
+            <body.row @edit={{true}} @onClick={{action (transition-to "moor.folderseries" m)}} as |row|>
+              <row.cell>{{paper-icon "dns"}}</row.cell>
+              <row.cell>{{m.name}}</row.cell>
+              <row.cell>{{#if m.obligationtoreport}}ja{{else}}nein{{/if}}</row.cell>
+              <row.cell>
+              <PaperButton @iconButton={{true}} @onClick={{action (transition-to "moor.folderseries.print" m)}}>{{paper-icon "print"}}</PaperButton>
+              <PaperButton @iconButton={{true}} @onClick={{action "deleteFolderSeries" m}}>{{paper-icon "delete forever"}}</PaperButton>
+              </row.cell>
+            </body.row>
           {{/each}}
-        {{/table.body}}
-      {{/paper-data-table}}
+        </table.body>
+      </PaperDataTable>
 {{outlet}}
-{{/paper-content}}
+</PaperContent>

@@ -1,24 +1,20 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Fehler!
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true}}
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
-{{#paper-content}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
+<PaperContent>
   <center>
     {{paper-icon "error" size=512}}
   </center>
@@ -27,4 +23,4 @@
       Ein Fehler ist aufgetreten...
     </h2>
   </center>
-{{/paper-content}}
+</PaperContent>

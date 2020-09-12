@@ -23,15 +23,15 @@ export default Mixin.create({
   },
   actions:{
       incrementPage: function() {
-      let page = this.get('page');
-      let max = this.get('pages').reduce((prev, curr) => curr > prev
+      let page = this.page;
+      let max = this.pages.reduce((prev, curr) => curr > prev
         ? curr
         : prev, 0);
       if (page < max) {
         this.set('page', page + 1);
       }},
       decrementPage: function() {
-      let page = this.get('page');
+      let page = this.page;
       if (page > 0) {
         this.set('page', page - 1);
       }

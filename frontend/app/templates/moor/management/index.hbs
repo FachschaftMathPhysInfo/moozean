@@ -1,14 +1,10 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Moor
       {{paper-icon "chevron-right"}}
@@ -18,29 +14,24 @@
       <span class="hide-sm"></span>
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true}}
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
 <div class="overflow-y-scroll">
-  {{#paper-content}}
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}Fach{{/text.headline}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#paper-list}}
-        {{paper-data-paginator
-          limit=limitSubject
-          page=pageSubject
-          meta=metaSubject
-          plural="Fächer"
-        }}
-        {{paper-divider}}
+  <PaperContent>
+    <PaperCard as |card|>
+      <card.title as |title|>
+        <title.text as |text|>
+          <text.headline>Fach</text.headline>
+        </title.text>
+      </card.title>
+      <PaperList>
+        <PaperDataPaginator @limit={{limitSubject}} @page={{pageSubject}} @meta={{metaSubject}} @plural="Fächer" />
+        <PaperDivider />
         {{#each paginatedSubjects as |subject|}}
-          {{#paper-item class="md-1-line"}}
+          <PaperItem @class="md-1-line">
             {{paper-icon "book" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>
@@ -48,44 +39,33 @@
               </h3>
             </div>
             <span class="flex"></span>
-            {{#paper-button
-              iconButton=true
-              onClick=(action "editSubject" subject)
-            }}
+            <PaperButton @iconButton={{true}} @onClick={{action "editSubject" subject}}>
               {{paper-icon "edit"}}
-            {{/paper-button}}
-            {{#paper-button
-              iconButton=true
-              onClick=(action "deleteObject" subject)
-            }}
+            </PaperButton>
+            <PaperButton @iconButton={{true}} @onClick={{action "deleteObject" subject}}>
               {{paper-icon "delete"}}
-            {{/paper-button}}
-          {{/paper-item}}
-          {{paper-divider}}
+            </PaperButton>
+          </PaperItem>
+          <PaperDivider />
         {{/each}}
-      {{/paper-list}}
-      {{#card.actions}}
-        {{#paper-button primary=true onClick=(action "addSubject")}}
+      </PaperList>
+      <card.actions>
+        <PaperButton @primary={{true}} @onClick={{action "addSubject"}}>
           Neues Prüfungsfach
-        {{/paper-button}}
-      {{/card.actions}}
-    {{/paper-card}}
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}Prüfungsart{{/text.headline}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#paper-list}}
-        {{paper-data-paginator
-          limit=limitTyp
-          page=pageTyp
-          meta=metaTyp
-          plural="Typen"
-        }}
-        {{paper-divider}}
+        </PaperButton>
+      </card.actions>
+    </PaperCard>
+    <PaperCard as |card|>
+      <card.title as |title|>
+        <title.text as |text|>
+          <text.headline>Prüfungsart</text.headline>
+        </title.text>
+      </card.title>
+      <PaperList>
+        <PaperDataPaginator @limit={{limitTyp}} @page={{pageTyp}} @meta={{metaTyp}} @plural="Typen" />
+        <PaperDivider />
         {{#each paginatedTyps as |typ|}}
-          {{#paper-item class="md-1-line"}}
+          <PaperItem @class="md-1-line">
             {{paper-icon "bubble chart" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>
@@ -93,39 +73,33 @@
               </h3>
             </div>
             <span class="flex"></span>
-            {{#paper-button iconButton=true onClick=(action "editTyp" typ)}}
+            <PaperButton @iconButton={{true}} @onClick={{action "editTyp" typ}}>
               {{paper-icon "edit"}}
-            {{/paper-button}}
-            {{#paper-button iconButton=true onClick=(action "deleteObject" typ)
-            }}
+            </PaperButton>
+            <PaperButton @iconButton={{true}} @onClick={{action "deleteObject" typ}}>
               {{paper-icon "delete"}}
-            {{/paper-button}}
-          {{/paper-item}}
-          {{paper-divider}}
+            </PaperButton>
+          </PaperItem>
+          <PaperDivider />
         {{/each}}
-      {{/paper-list}}
-      {{#card.actions}}
-        {{#paper-button primary=true onClick=(action "addTyp")}}
+      </PaperList>
+      <card.actions>
+        <PaperButton @primary={{true}} @onClick={{action "addTyp"}}>
           Neue Prüfungsart
-        {{/paper-button}}
-      {{/card.actions}}
-    {{/paper-card}}
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}Module{{/text.headline}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#paper-list}}
-        {{paper-data-paginator
-          limit=limitModul
-          page=pageModul
-          meta=metaModul
-          plural="Module"
-        }}
-        {{paper-divider}}
+        </PaperButton>
+      </card.actions>
+    </PaperCard>
+    <PaperCard as |card|>
+      <card.title as |title|>
+        <title.text as |text|>
+          <text.headline>Module</text.headline>
+        </title.text>
+      </card.title>
+      <PaperList>
+        <PaperDataPaginator @limit={{limitModul}} @page={{pageModul}} @meta={{metaModul}} @plural="Module" />
+        <PaperDivider />
         {{#each paginatedModuls as |modul|}}
-          {{#paper-item class="md-3-line"}}
+          <PaperItem @class="md-3-line">
             {{paper-icon "bubble chart" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>
@@ -139,73 +113,42 @@
               </p>
             </div>
             <span class="flex"></span>
-            {{#paper-button iconButton=true onClick=(action "editModul" modul)}}
+            <PaperButton @iconButton={{true}} @onClick={{action "editModul" modul}}>
               {{paper-icon "edit"}}
-            {{/paper-button}}
-            {{#paper-button
-              iconButton=true
-              onClick=(action "deleteObject" modul)
-            }}
+            </PaperButton>
+            <PaperButton @iconButton={{true}} @onClick={{action "deleteObject" modul}}>
               {{paper-icon "delete"}}
-            {{/paper-button}}
-          {{/paper-item}}
-          {{paper-divider}}
+            </PaperButton>
+          </PaperItem>
+          <PaperDivider />
         {{/each}}
-      {{/paper-list}}
-      {{#card.actions}}
-        {{#paper-button primary=true onClick=(action "addModul")}}
+      </PaperList>
+      <card.actions>
+        <PaperButton @primary={{true}} @onClick={{action "addModul"}}>
           Neues Modul
-        {{/paper-button}}
-      {{/card.actions}}
-    {{/paper-card}}
-  {{/paper-content}}
+        </PaperButton>
+      </card.actions>
+    </PaperCard>
+  </PaperContent>
 </div>
 {{#if showCreateSubjectDialog}}
-  {{subject-dialog
-    closeDialog=(action "closeSubjectDialog")
-    title="Erstelle Prüfungsfach"
-    subject=newsubject
-  }}
+  <SubjectDialog @closeDialog={{action "closeSubjectDialog"}} @title="Erstelle Prüfungsfach" @subject={{newsubject}} />
 {{/if}}
 {{#if showEditSubjectDialog}}
-  {{subject-dialog
-    closeDialog=(action "closeSubjectDialog")
-    title="Bearbeite Prüfungsfach"
-    subject=newsubject
-  }}
+  <SubjectDialog @closeDialog={{action "closeSubjectDialog"}} @title="Bearbeite Prüfungsfach" @subject={{newsubject}} />
 {{/if}}
 {{#if showCreateTypDialog}}
-  {{typ-dialog
-    closeDialog=(action "closeTypDialog")
-    title="Erstelle Prüfungsart"
-    typ=newtyp
-  }}
+  <TypDialog @closeDialog={{action "closeTypDialog"}} @title="Erstelle Prüfungsart" @typ={{newtyp}} />
 {{/if}}
 {{#if showEditTypDialog}}
-  {{typ-dialog
-    closeDialog=(action "closeTypDialog")
-    title="Bearbeite Prüfungsart"
-    typ=newtyp
-  }}
+  <TypDialog @closeDialog={{action "closeTypDialog"}} @title="Bearbeite Prüfungsart" @typ={{newtyp}} />
 {{/if}}
 {{#if showDeleteDialog}}
-  {{delete-dependency-dialog
-    store=store
-    closeDialog=(action "closeDeleteDialog")
-    objekt=newobject
-  }}
+  <DeleteDependencyDialog @store={{store}} @closeDialog={{action "closeDeleteDialog"}} @objekt={{newobject}} />
 {{/if}}
 {{#if showCreateModulDialog}}
-  {{modul-dialog
-    closeDialog=(action "closeModulDialog")
-    title="Erstelle Modul"
-    modul=newmodul
-  }}
+  <ModulDialog @closeDialog={{action "closeModulDialog"}} @title="Erstelle Modul" @modul={{newmodul}} />
 {{/if}}
 {{#if showEditModulDialog}}
-  {{modul-dialog
-    closeDialog=(action "closeModulDialog")
-    title="Bearbeite Modul"
-    modul=newmodul
-  }}
+  <ModulDialog @closeDialog={{action "closeModulDialog"}} @title="Bearbeite Modul" @modul={{newmodul}} />
 {{/if}}

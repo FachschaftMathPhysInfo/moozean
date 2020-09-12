@@ -5,7 +5,7 @@ export default Component.extend({
   filetexName:"In Datenbank",
   actions: {
     saveChanges:function(){
-      this.get("report").save();
+      this.report.save();
     },
     fileLoaded:function(file) {
       this.set('report.pdf',file.data);

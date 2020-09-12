@@ -1,119 +1,115 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>Ozean <span class="hide-xs hide-sm">- Organ zur Entnahme allerlei nützlicher Ordner</span></h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true onClick=(action "addStudent")}}
+    <PaperButton @iconButton={{true}} @onClick={{action "addStudent"}}>
       {{paper-icon "person add"}}
-    {{/paper-button}}
-    {{#paper-menu isOpen=dreipunktemenuisopen position="target-right target" as |menu|}}
-      {{#menu.trigger}}
-        {{#paper-button onClick=null iconButton=true}}
+    </PaperButton>
+    <PaperMenu @isOpen={{dreipunktemenuisopen}} @position="target-right target" as |menu|>
+      <menu.trigger>
+        <PaperButton @onClick={{null}} @iconButton={{true}}>
           {{paper-icon "more_vert" class="md-menu-origin"}}
-        {{/paper-button}}
-      {{/menu.trigger}}
+        </PaperButton>
+      </menu.trigger>
 
-      {{#menu.content as |content|}}
-        {{#content.menu-item onClick=(transition-to "recentlyreturned")}}
+      <menu.content as |content|>
+        <content.menu-item @onClick={{transition-to "recentlyreturned"}}>
           {{paper-icon "folder_shared" class="md-menu-align-target"}} letzte Zurückgaben
-        {{/content.menu-item}}
-      {{/menu.content}}
-    {{/paper-menu}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
+        </content.menu-item>
+      </menu.content>
+    </PaperMenu>
+  </PaperToolbarTools>
+</PaperToolbar>
 
-{{#paper-content class="md-padding column flex-100" }}
+<PaperContent @class="md-padding column flex-100">
   {{#if showDialog closeDialog=(action "closeDialog") action="closeDialog" }}
-    {{student-create-dialog student=newstudent deletable=deletable closeDialog=(action "closeDialog") title=titlestudent}}
+    <StudentCreateDialog @student={{newstudent}} @deletable={{deletable}} @closeDialog={{action "closeDialog"}} @title={{titlestudent}} />
   {{/if}}
 
   {{#if showMailDialog closeDialog=(action "closeMailDialog") action="closeMailDialog" }}
-    {{mail-dialog mail=newmail closeDialog=(action "closeMailDialog")}}
+    <MailDialog @mail={{newmail}} @closeDialog={{action "closeMailDialog"}} />
   {{/if}}
 
   <div class="flex">
-    {{#paper-card as |card|}}
-      {{#card.content}}
-        {{#paper-stepper currentStep=currentStep onStepChange=(pipe (action (mut currentStep))(action "clearWhenBack" currentStep)) mobileStepper=true linear=false vertical=true class="flex" as |stepper|}}
-          {{#stepper.step label="Welches Studierendes leiht aus? (Name oder Uni-ID)" summary=student.name as |step|}}
-            {{#step.body}}
-              {{#step.actions as |nextStep previousStep|}}
-                {{#paper-autocomplete searchMessage="Zum Suchen tippen" disabled=firstDisabled onCreate=(action "addStudent") allowClear=true searchText=(readonly student.name) selected=student search=(action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
-                  noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange=(pipe (action (mut student))(action (unless studentselected nextStep previousStep))(action "focusFolderSelection" currentStep)) as |country autocomplete|}}
-                  {{paper-autocomplete-highlight
-              label=country.name
-              searchText=autocomplete.searchText
-              flags="i"}} <em>{{country.uniid}}</em>
-                {{/paper-autocomplete}}
-              {{/step.actions}}
-            {{/step.body}}
-          {{/stepper.step}}
+    <PaperCard as |card|>
+      <card.content>
+        <PaperStepper @currentStep={{currentStep}} @onStepChange={{pipe (action (mut currentStep)) (action "clearWhenBack" currentStep)}} @mobileStepper={{true}} @linear={{false}} @vertical={{true}} @class="flex" as |stepper|>
+          <stepper.step @label="Welches Studierendes leiht aus? (Name oder Uni-ID)" @summary={{student.name}} as |step|>
+            <step.body>
+              <step.actions as |nextStep previousStep|>
+                <PaperAutocomplete @searchMessage="Zum Suchen tippen" @disabled={{firstDisabled}} @onCreate={{action "addStudent"}} @allowClear={{true}} @searchText={{readonly student.name}} @selected={{student}} @search={{action "searchStudent"}} @searchField="name" @labelPath="name" @placeholder="Studierendes aussuchen" @loadingMessage="Suche Studierendes..." @noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" @onSelectionChange={{pipe (action (mut student)) (action (unless studentselected nextStep previousStep)) (action "focusFolderSelection" currentStep)}} as |country autocomplete|>
+                  <PaperAutocompleteHighlight @label={{country.name}} @searchText={{autocomplete.searchText}} @flags="i" /> <em>{{country.uniid}}</em>
+                </PaperAutocomplete>
+              </step.actions>
+            </step.body>
+          </stepper.step>
           {{#unless studentselected}}
-            {{#stepper.step label="Welche(n) Ordner? (Ordnerrückenbeschriftung)" summary=sumordner as |step|}}
-              {{#step.body}}
+            <stepper.step @label="Welche(n) Ordner? (Ordnerrückenbeschriftung)" @summary={{sumordner}} as |step|>
+              <step.body>
                 {{teste}}
-                {{#paper-chips defaultHightlighted=(action "firstFolder") readOnly=false removeItem=(action "removeFolder") addItem=(action "addFolder") placeholder="Ordner hinzufügen" content=ordner options=model.folders search=(action "searchFolders") searchField="name" noMatchesMessage="Kein Ordner gefunden" as |item|}}
+                <PaperChips @defaultHightlighted={{action "firstFolder"}} @readOnly={{false}} @removeItem={{action "removeFolder"}} @addItem={{action "addFolder"}} @placeholder="Ordner hinzufügen" @content={{ordner}} @options={{model.folders}} @search={{action "searchFolders"}} @searchField="name" @noMatchesMessage="Kein Ordner gefunden" as |item|>
                   <strong>{{item.name}}</strong>
                   {{#if item.obligationtoreport}}
                     {{paper-icon "attach money" size=18}}
                   {{/if}}
-                {{/paper-chips}}
+                </PaperChips>
                 {{!#step.actions as |nextStep previousStep|}}
-                {{#paper-button primary=true raised=true disabled=no_lent_selected onClick=(action "saveModel" student)}}
+                <PaperButton @primary={{true}} @raised={{true}} @disabled={{no_lent_selected}} @onClick={{action "saveModel" student}}>
                   Ausleihen
-                {{/paper-button}}
+                </PaperButton>
                 {{!/step.actions}}
-              {{/step.body}}
-            {{/stepper.step}}
+              </step.body>
+            </stepper.step>
           {{/unless}}
-        {{/paper-stepper}}
-      {{/card.content}}
-    {{/paper-card}}
+        </PaperStepper>
+      </card.content>
+    </PaperCard>
     {{!Table in Card}}
-    {{#paper-card as |card|}}
-      {{#card.content }}
-        {{#paper-data-table sortProp="folder" sortDir="desc" selectable=true as |table|}}
-          {{#table.head as |head|}}
-            {{#head.column sortProp="folder.name" }}Ordner{{/head.column}}
-            {{#head.column sortProp="student.name" }}Studierendes{{/head.column}}
-            {{#head.column sortProp="createdAt" }}ausgeliehen am{{/head.column}}
-            {{#head.column}}Optionen{{/head.column}}
-          {{/table.head}}
-          {{#table.body as |body|}}
+    <PaperCard as |card|>
+      <card.content>
+        <PaperDataTable @sortProp="folder" @sortDir="desc" @selectable={{true}} as |table|>
+          <table.head as |head|>
+            <head.column @sortProp="folder.name">Ordner</head.column>
+            <head.column @sortProp="student.name">Studierendes</head.column>
+            <head.column @sortProp="createdAt">ausgeliehen am</head.column>
+            <head.column>Optionen</head.column>
+          </table.head>
+          <table.body as |body|>
             {{#each (sort-by table.sortDesc model.lents) as |m|}}
-              {{#body.row edit=true as |row|}}
-                {{#row.cell}}{{m.folder.name}}{{/row.cell}}
-                {{#row.cell}}
+              <body.row @edit={{true}} as |row|>
+                <row.cell>{{m.folder.name}}</row.cell>
+                <row.cell>
                   {{m.student.name}}
-                  {{#paper-button iconButton=true onClick=(action "editStudent" m.student)}}
+                  <PaperButton @iconButton={{true}} @onClick={{action "editStudent" m.student}}>
                     {{paper-icon "edit" }}
-                  {{/paper-button}}
-                {{/row.cell}}
-                {{#row.cell}}{{moment-format m.createdAt 'DD.MM.YY' interval=1000}}{{/row.cell}}
-                {{#row.cell edit=true as |cell|}}
-                  {{#paper-button raised=true primary=true onClick=(action "giveBack" m)}}Zurückgeben{{/paper-button}}
-                  {{#paper-button raised=true primary=(not m.emails.length) warn=m.emails.length onClick=(action "mail" m)}}
+                  </PaperButton>
+                </row.cell>
+                <row.cell>{{moment-format m.createdAt 'DD.MM.YY' interval=1000}}</row.cell>
+                <row.cell @edit={{true}} as |cell|>
+                  <PaperButton @raised={{true}} @primary={{true}} @onClick={{action "giveBack" m}}>Zurückgeben</PaperButton>
+                  <PaperButton @raised={{true}} @primary={{not m.emails.length}} @warn={{m.emails.length}} @onClick={{action "mail" m}}>
                   {{paper-icon "contact mail"}}
                   Mailen
                   {{#if m.emails.length}}
-                    {{#paper-tooltip}}
+                    <PaperTooltip>
                       zuletzt: {{moment-format m.emails.lastObject.createdAt 'DD.MM.YY HH:mm'}}
-                    {{/paper-tooltip}}
+                    </PaperTooltip>
                   {{/if}}
-                  {{/paper-button}}
-                {{/row.cell}}
-              {{/body.row}}
+                  </PaperButton>
+                </row.cell>
+              </body.row>
             {{/each}}
-          {{/table.body}}
-        {{/paper-data-table}}
-      {{/card.content}}
-    {{/paper-card}}
+          </table.body>
+        </PaperDataTable>
+      </card.content>
+    </PaperCard>
   </div>
   {{outlet}}
-{{/paper-content}}
+</PaperContent>
 {{yield}}
-{{#if showPfandDialog}}{{pfand-dialog closeDialog=(action "closePfand") student=student}}{{/if}}
+{{#if showPfandDialog}}<PfandDialog @closeDialog={{action "closePfand"}} @student={{student}} />{{/if}}

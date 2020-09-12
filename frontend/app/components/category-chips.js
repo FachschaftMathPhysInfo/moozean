@@ -5,13 +5,13 @@ export default Component.extend({
   store: service(),
   actions: {
     removeObj:function(folderseries){
-      this.get('content').removeObject(folderseries);
+      this.content.removeObject(folderseries);
     },
     addObj: function(folderseries){
-      this.get('content').pushObject(folderseries);
+      this.content.pushObject(folderseries);
     },
     search:function(name){
-      return this.get("store").query(this.get('modelName'),{filter:{name:name}});
+      return this.store.query(this.modelName,{filter:{name:name}});
     }
   }
 });

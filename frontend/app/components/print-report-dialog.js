@@ -7,7 +7,7 @@ export default Component.extend({
         this.get('report.examinators').filter(item=>{return item.selected}).forEach(exm=>{
           this.get('report.folderseries').filter(item=>{return item.selected}).forEach(fs=>{
             let po = this.store.createRecord('printout', {
-              report: this.get('report'),
+              report: this.report,
               times: 1,
               examinator: exm,
               folderseries: fs

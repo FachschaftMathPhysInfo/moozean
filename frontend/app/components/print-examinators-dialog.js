@@ -6,9 +6,9 @@ import Component from '@ember/component';
 export default Component.extend({
   pruefauswahl: A(),
   reportslistDidChange: on('init', observer('reportslist', function() {
-    let pruefauswahl = this.get('pruefauswahl');
+    let pruefauswahl = this.pruefauswahl;
     pruefauswahl.clear();
-      this.get('reportslist').forEach((item)=>{
+      this.reportslist.forEach((item)=>{
         item.get('examinators').forEach((item2)=>{
           pruefauswahl.pushObject({
             report: item,
@@ -19,21 +19,21 @@ export default Component.extend({
   })),
   actions: {
     toggleSelect: function(rep, exm) {
-      let a = this.get('pruefauswahl').filter(function(item) {
+      let a = this.pruefauswahl.filter(function(item) {
         return (item.report.get('id') == rep.get('id')) && (item.examinator.get('id') == exm.get('id'))
       });
       if (a.length > 0) {
-        this.get('pruefauswahl').removeObject(a[0]);
+        this.pruefauswahl.removeObject(a[0]);
       } else {
-        this.get('pruefauswahl').pushObject({
+        this.pruefauswahl.pushObject({
           report: rep,
           examinator: exm
         });
       }
-      this.set('pruefauswahl', this.get('pruefauswahl').slice());
+      this.set('pruefauswahl', this.pruefauswahl.slice());
     },
     exitDialog: function(option) {
-      if (this.get('auswahl')) {
+      if (this.auswahl) {
         this.sendAction('closeDialogAuswahl', option);
       } else {
         this.sendAction('closeDialogDrucken', option);

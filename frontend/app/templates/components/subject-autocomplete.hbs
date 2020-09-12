@@ -1,7 +1,3 @@
-{{#paper-autocomplete required=required searchMessage="Zum Suchen tippen" allowClear=true searchText=(readonly subjectSearchText) onSearchTextChange=(action (mut subjectSearchText)) selected=selected disabled=disabled search=(action "searchSubjects") searchField="name" labelPath="name" placeholder="Wähle ein Studienfach" loadingMessage="Suche Fach..."
-  noMatchesMessage="Es gibt kein solches Fach" onSelectionChange=(action (mut selected)) as |subject autocomplete|}}
-  {{paper-autocomplete-highlight
-      label=subject.name
-      searchText=autocomplete.searchText
-      flags="i"}}
-{{/paper-autocomplete}}
+<PaperAutocomplete @required={{required}} @searchMessage="Zum Suchen tippen" @allowClear={{true}} @searchText={{readonly subjectSearchText}} @onSearchTextChange={{action (mut subjectSearchText)}} @selected={{selected}} @disabled={{disabled}} @search={{action "searchSubjects"}} @searchField="name" @labelPath="name" @placeholder="Wähle ein Studienfach" @loadingMessage="Suche Fach..." @noMatchesMessage="Es gibt kein solches Fach" @onSelectionChange={{action (mut selected)}} as |subject autocomplete|>
+  <PaperAutocompleteHighlight @label={{subject.name}} @searchText={{autocomplete.searchText}} @flags="i" />
+</PaperAutocomplete>

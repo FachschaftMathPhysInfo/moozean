@@ -1,14 +1,10 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Moor
       {{paper-icon "chevron-right"}}
@@ -17,34 +13,26 @@
       drucken
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true}}
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
-{{#paper-sidenav-container class="inner-sidenav"}}
-  {{#paper-sidenav
-    class="md-whiteframe-z2"
-    name="right1"
-    open=rightSidebar
-    position="right"
-    closeOnClick=false
-    lockedOpen=rightSideBarLockedOpen
-    onToggle=(action (mut rightSidebar))
-  }}
-    {{#paper-toolbar as |toolbar|}}
-      {{#paper-toolbar-tools}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
+<PaperSidenavContainer @class="inner-sidenav">
+  <PaperSidenav @class="md-whiteframe-z2" @name="right1" @open={{rightSidebar}} @position="right" @closeOnClick={{false}} @lockedOpen={{rightSideBarLockedOpen}} @onToggle={{action (mut rightSidebar)}}>
+    <PaperToolbar as |toolbar|>
+      <PaperToolbarTools>
         Druckauswahl
         <span class="flex"></span>
-        {{#paper-button onClick=(action "printSelection") iconButton=true}}
+        <PaperButton @onClick={{action "printSelection"}} @iconButton={{true}}>
           {{paper-icon "print" class="md-avatar-icon"}}
-        {{/paper-button}}
-      {{/paper-toolbar-tools}}
-    {{/paper-toolbar}}
-    {{#paper-content padding=true}}
-      {{#paper-list}}
+        </PaperButton>
+      </PaperToolbarTools>
+    </PaperToolbar>
+    <PaperContent @padding={{true}}>
+      <PaperList>
         {{#each printselection as |item|}}
-          {{#paper-item}}
+          <PaperItem>
             #
             {{item.report.id}}
             {{#each (take 1 item.report.moduls) as |mod|}}
@@ -52,65 +40,41 @@
             {{/each}}
             {{item.examinator.surname}}
             <span class="flex"></span>
-            {{#paper-button
-              iconButton=true
-              onClick=(action "decreaseTimes" item)
-            }}
+            <PaperButton @iconButton={{true}} @onClick={{action "decreaseTimes" item}}>
               {{paper-icon "remove"}}
-            {{/paper-button}}
+            </PaperButton>
             {{item.times}}
-            {{#paper-button
-              iconButton=true
-              onClick=(action "increaseTimes" item)
-            }}
+            <PaperButton @iconButton={{true}} @onClick={{action "increaseTimes" item}}>
               {{paper-icon "add"}}
-            {{/paper-button}}
-          {{/paper-item}}
+            </PaperButton>
+          </PaperItem>
         {{/each}}
-      {{/paper-list}}
-    {{/paper-content}}
-  {{/paper-sidenav}}
-  {{#paper-content class="md-padding"}}
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}Suchen & Drucken{{/text.headline}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#card.content}}
+      </PaperList>
+    </PaperContent>
+  </PaperSidenav>
+  <PaperContent @class="md-padding">
+    <PaperCard as |card|>
+      <card.title as |title|>
+        <title.text as |text|>
+          <text.headline>Suchen & Drucken</text.headline>
+        </title.text>
+      </card.title>
+      <card.content>
         <div
           class="layout-column layout-gt-xs-row layout-wrap"
           style="justify-content: space-around"
         >
           <div class="layout flex-100">
             <div class="flex-gt-xs-20">
-              {{#paper-autocomplete
-                options=model.reports
-                allowClear=true
-                searchText=(readonly IDSearchText)
-                onSearchTextChange=(action (mut IDSearchText))
-                selected=selectedID
-                searchField="id"
-                labelPath="id"
-                placeholder="ID"
-                loadingMessage="Suche ID"
-                noMatchesMessage="Es gibt keine solche ID"
-                onSelectionChange=(action
-                  (mut selectedID)
-                ) as |report autocomplete|
-              }}
-                {{paper-autocomplete-highlight
-                  label=report.id
-                  searchText=autocomplete.searchText
-                  flags="i"
-                }}
-              {{/paper-autocomplete}}
+              <PaperAutocomplete @options={{model.reports}} @allowClear={{true}} @searchText={{readonly IDSearchText}} @onSearchTextChange={{action (mut IDSearchText)}} @selected={{selectedID}} @searchField="id" @labelPath="id" @placeholder="ID" @loadingMessage="Suche ID" @noMatchesMessage="Es gibt keine solche ID" @onSelectionChange={{action (mut selectedID)}} as |report autocomplete|>
+                <PaperAutocompleteHighlight @label={{report.id}} @searchText={{autocomplete.searchText}} @flags="i" />
+              </PaperAutocomplete>
             </div>
             <div class="flex-gt-xs-30">
-              {{subject-autocomplete options=model.subjects selected=subject}}
+              <SubjectAutocomplete @options={{model.subjects}} @selected={{subject}} />
             </div>
             <div class="flex-gt-xs-45">
-              {{typ-autocomplete options=model.typs selected=typ}}
+              <TypAutocomplete @options={{model.typs}} @selected={{typ}} />
             </div>
           </div>
           <div
@@ -118,10 +82,10 @@
             style="justify-content: space-around"
           >
             <div class="flex-gt-xs-45">
-              {{pruefende-chips content=pruefende options=model.examinators}}
+              <PruefendeChips @content={{pruefende}} @options={{model.examinators}} />
             </div>
             <div class="flex-gt-xs-50">
-              {{modul-chips content=module options=model.moduls}}
+              <ModulChips @content={{module}} @options={{model.moduls}} />
             </div>
           </div>
           <div class="layout-column flex-100">
@@ -160,61 +124,37 @@
             </p>
           </div>
         </div>
-      {{/card.content}}
-      {{#card.actions}}
+      </card.content>
+      <card.actions>
         {{#if printing}}
-          {{paper-progress-linear}}
+          <PaperProgressLinear />
         {{else}}
-          {{#paper-button onClick=(action "printAll")}}
+          <PaperButton @onClick={{action "printAll"}}>
             ganzen Ordner drucken
-          {{/paper-button}}
-          {{#paper-button onClick=(action "printShown")}}
+          </PaperButton>
+          <PaperButton @onClick={{action "printShown"}}>
             Angezeigtes drucken
-          {{/paper-button}}
-          {{#paper-button onClick=(action (mut rightSidebar))}}
+          </PaperButton>
+          <PaperButton @onClick={{action (mut rightSidebar)}}>
             Auswahl anzeigen
-          {{/paper-button}}
+          </PaperButton>
         {{/if}}
-      {{/card.actions}}
-    {{/paper-card}}
-    {{#paper-card as |card|}}
-      {{#card.actions}}
-        {{paper-data-paginator
-          count=resultsLength
-          limit=limit
-          limitOptions=limitOptions
-          page=page
-          pages=pages
-          onChangePage=(action (mut page))
-          onChangeLimit=(action (mut limit))
-          onIncrementPage=(action "incrementPage")
-          onDecrementPage=(action "decrementPage")
-          meta=meta
-        }}
-      {{/card.actions}}
-      {{#card.content}}
+      </card.actions>
+    </PaperCard>
+    <PaperCard as |card|>
+      <card.actions>
+        <PaperDataPaginator @count={{resultsLength}} @limit={{limit}} @limitOptions={{limitOptions}} @page={{page}} @pages={{pages}} @onChangePage={{action (mut page)}} @onChangeLimit={{action (mut limit)}} @onIncrementPage={{action "incrementPage"}} @onDecrementPage={{action "decrementPage"}} @meta={{meta}} />
+      </card.actions>
+      <card.content>
         <div class="layout-row layout-wrap">
           {{#each results as |report|}}
-            {{report-print-view
-              printReportComp=(action "printReportCon")
-              report=report
-              showPruefDialog=showPruefDialog
-              auswahl=auswahl
-              reportslist=reportslist
-              printselection=printselection
-            }}
+            <ReportPrintView @printReportComp={{action "printReportCon"}} @report={{report}} @showPruefDialog={{showPruefDialog}} @auswahl={{auswahl}} @reportslist={{reportslist}} @printselection={{printselection}} />
           {{/each}}
         </div>
-      {{/card.content}}
-    {{/paper-card}}
-  {{/paper-content}}
-{{/paper-sidenav-container}}
+      </card.content>
+    </PaperCard>
+  </PaperContent>
+</PaperSidenavContainer>
 {{#if showPruefDialog}}
-  {{print-examinators-dialog
-    closeDialogDrucken=(action "closeDialogDrucken")
-    closeDialogAuswahl=(action "closeDialogAuswahl")
-    reportslist=reportslist
-    auswahl=auswahl
-    pruefauswahl=pruefauswahl
-  }}
+  <PrintExaminatorsDialog @closeDialogDrucken={{action "closeDialogDrucken"}} @closeDialogAuswahl={{action "closeDialogAuswahl"}} @reportslist={{reportslist}} @auswahl={{auswahl}} @pruefauswahl={{pruefauswahl}} />
 {{/if}}

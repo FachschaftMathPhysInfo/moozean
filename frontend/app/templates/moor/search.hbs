@@ -1,14 +1,10 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Moor
       {{paper-icon "chevron-right"}}
@@ -18,29 +14,29 @@
       <span class="hide-sm"></span>
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true}}
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
 <div class="overflow-y-scroll">
-  {{#paper-content}}
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-        {{#title.text as |text|}}
-          {{#text.headline}}{{paper-icon "search"}}Suchen{{/text.headline}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#card.content}}
+  <PaperContent>
+    <PaperCard as |card|>
+      <card.title as |title|>
+        <title.text as |text|>
+          <text.headline>{{paper-icon "search"}}Suchen</text.headline>
+        </title.text>
+      </card.title>
+      <card.content>
         <div
           class="layout-gt-xs-row layout-wrap"
           style="justify-content: space-around"
         >
           <div class="flex-gt-xs-40">
-            {{subject-autocomplete options=model.subjects selected=subject}}
+            <SubjectAutocomplete @options={{model.subjects}} @selected={{subject}} />
           </div>
           <div class="flex-gt-xs-45">
-            {{typ-autocomplete options=model.typs selected=typ}}
+            <TypAutocomplete @options={{model.typs}} @selected={{typ}} />
           </div>
         </div>
         {{! Prüfende }}
@@ -49,11 +45,11 @@
           style="margin-top:20px; justify-content: space-around"
         >
           <div class="flex-gt-xs-40">
-            {{pruefende-chips options=model.examinators content=examinatora}}
+            <PruefendeChips @options={{model.examinators}} @content={{examinatora}} />
             {{!Module}}
           </div>
           <div class="flex-gt-xs-45">
-            {{modul-chips options=model.moduls content=modula}}
+            <ModulChips @options={{model.moduls}} @content={{modula}} />
             {{!Folderseries}}
           </div>
         </div>
@@ -62,24 +58,18 @@
           style="margin-top:20px; justify-content: space-around"
         >
           <div class="flex-90">
-            {{folderseries-chips
-              options=model.folderseries
-              content=folderseriesa
-            }}
+            <FolderseriesChips @options={{model.folderseries}} @content={{folderseriesa}} />
           </div>
         </div>
         <div
           class="layout-gt-xs-row layout-wrap"
           style="margin-top:20px; justify-content: space-around"
         >
-          {{#paper-checkbox
-            value=setRangeDate
-            onChange=(action (mut setRangeDate))
-          }}
+          <PaperCheckbox @value={{setRangeDate}} @onChange={{action (mut setRangeDate)}}>
             <p style="margin-bottom:0px;color: rgba(0, 0, 0, 0.5);">
               Prüfungsdatum (MM.YYYY) einschränken:
             </p>
-          {{/paper-checkbox}}
+          </PaperCheckbox>
         </div>
         {{#if setRangeDate}}
           <div
@@ -87,84 +77,62 @@
             style="justify-content: space-around"
           >
             <div class="flex-90">
-              {{timespan-slider
-                min=(readonly minDate)
-                from=beginExamAt
-                to=endExamAt
-                max=(readonly maxDate)
-              }}
+              <TimespanSlider @min={{readonly minDate}} @from={{beginExamAt}} @to={{endExamAt}} @max={{readonly maxDate}} />
             </div>
           </div>
         {{/if}}
-      {{/card.content}}
-      {{#card.actions}}
-        {{paper-data-paginator
-          meta=meta
-          count=resultsLength
-          limit=limit
-          limitOptions=limitOptions
-          page=page
-          pages=pages
-          onChangePage=(action (mut page))
-          onChangeLimit=(action (mut limit))
-        }}
-      {{/card.actions}}
+      </card.content>
+      <card.actions>
+        <PaperDataPaginator @meta={{meta}} @count={{resultsLength}} @limit={{limit}} @limitOptions={{limitOptions}} @page={{page}} @pages={{pages}} @onChangePage={{action (mut page)}} @onChangeLimit={{action (mut limit)}} />
+      </card.actions>
       {{#if loading}}
-        {{paper-progress-linear}}
+        <PaperProgressLinear />
       {{/if}}
-    {{/paper-card}}
-    {{#paper-card as |card|}}
-      {{#card.title as |title|}}
-      {{#title.text as |text|}}
-          {{#text.headline}}{{paper-icon "get_app"}}Downloadeinstellungen{{/text.headline}}
-        {{/title.text}}
-      {{/card.title}}
-      {{#card.content}}
-        {{#paper-autocomplete searchMessage="Zum Suchen tippen"  allowClear=true searchText=(readonly student.name) selected=student search=(action "searchStudent") searchField="name" labelPath="name" placeholder="Studierendes aussuchen" loadingMessage="Suche Studierendes..."
-                  noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" onSelectionChange= (action (mut student)) as |country autocomplete|}}
-                  {{paper-autocomplete-highlight
-              label=country.name
-              searchText=autocomplete.searchText
-              flags="i"}} <em>{{country.uniid}}</em>
-                {{/paper-autocomplete}}
-      {{/card.content}}
-    {{/paper-card}}
+    </PaperCard>
+    <PaperCard as |card|>
+      <card.title as |title|>
+      <title.text as |text|>
+          <text.headline>{{paper-icon "get_app"}}Downloadeinstellungen</text.headline>
+        </title.text>
+      </card.title>
+      <card.content>
+        <PaperAutocomplete @searchMessage="Zum Suchen tippen" @allowClear={{true}} @searchText={{readonly student.name}} @selected={{student}} @search={{action "searchStudent"}} @searchField="name" @labelPath="name" @placeholder="Studierendes aussuchen" @loadingMessage="Suche Studierendes..." @noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" @onSelectionChange={{action (mut student)}} as |country autocomplete|>
+                  <PaperAutocompleteHighlight @label={{country.name}} @searchText={{autocomplete.searchText}} @flags="i" /> <em>{{country.uniid}}</em>
+                </PaperAutocomplete>
+      </card.content>
+    </PaperCard>
     <div class="layout-row layout-wrap">
       {{#each results as |report|}}
         <div class="flex-xs-100 flex-gt-xs-33-noshrink flex-gt-l-25-noshrink">
-          {{#paper-card as |card|}}
-            {{#card.actions}}#{{report.id}}{{/card.actions}}
-            {{card.image
-              src=report.picture
-              alt="erste PDF-Seite des Berichts"
-              title="PDF-Seite"
-            }}
-            {{#card.content}}
-              {{#paper-list}}
+          <PaperCard as |card|>
+            <card.actions>#{{report.id}}</card.actions>
+            <card.image @src={{report.picture}} @alt="erste PDF-Seite des Berichts" @title="PDF-Seite" />
+            <card.content>
+              <PaperList>
                 {{#each report.folderseries as |fs|}}
-                  {{#paper-item class="md-2-line"}}
+                  <PaperItem @class="md-2-line">
                     {{paper-icon "folder" class="md-avatar-icon"}}
                     <div class="md-list-item-text">
                       <h3>
                         {{fs.name}}
                       </h3>
                     </div>
-                  {{/paper-item}}
+                  </PaperItem>
                 {{/each}}
-                {{paper-divider}}
+                <PaperDivider />
                 {{#each report.moduls as |modul|}}
-                  {{#paper-item class="md-2-line"}}
+                  <PaperItem @class="md-2-line">
                     {{paper-icon "perm media" class="md-avatar-icon"}}
                     <div class="md-list-item-text">
                       <h3>
                         {{modul.name}}
                       </h3>
                     </div>
-                  {{/paper-item}}
+                  </PaperItem>
                 {{/each}}
-                {{paper-divider}}
+                <PaperDivider />
                 {{#each report.examinators as |exm|}}
-                  {{#paper-item class="md-2-line"}}
+                  <PaperItem @class="md-2-line">
                     {{paper-icon "perm identity" class="md-avatar-icon"}}
                     <div class="md-list-item-text">
                       <h3>
@@ -174,19 +142,19 @@
                         </em>
                       </h3>
                     </div>
-                  {{/paper-item}}
+                  </PaperItem>
                 {{/each}}
-                {{paper-divider}}
-                {{#paper-item class="md-2-line"}}
+                <PaperDivider />
+                <PaperItem @class="md-2-line">
                   {{paper-icon "today" class="md-avatar-icon"}}
                   <div class="md-list-item-text">
                     <h3>
                       {{moment-format report.examinationAt "MM.YYYY"}}
                     </h3>
                   </div>
-                {{/paper-item}}
-                {{paper-divider}}
-                {{#paper-item class="md-2-line"}}
+                </PaperItem>
+                <PaperDivider />
+                <PaperItem @class="md-2-line">
                   {{paper-icon "bubble chart" class="md-avatar-icon"}}
                   <div class="md-list-item-text flex">
                     <h3 class="layout-wrap">
@@ -195,9 +163,9 @@
                       </span>
                     </h3>
                   </div>
-                {{/paper-item}}
-                {{paper-divider}}
-                {{#paper-item class="md-2-line"}}
+                </PaperItem>
+                <PaperDivider />
+                <PaperItem @class="md-2-line">
                   {{paper-icon "book" class="md-avatar-icon"}}
                   <div class="md-list-item-text flex">
                     <h3 class="layout-wrap">
@@ -206,74 +174,44 @@
                       </span>
                     </h3>
                   </div>
-                {{/paper-item}}
-              {{/paper-list}}
-            {{/card.content}}
-            {{#card.actions}}
-              {{#paper-button
-                iconButton=true
-                onClick=(action "deleteReport" report)
-              }}
+                </PaperItem>
+              </PaperList>
+            </card.content>
+            <card.actions>
+              <PaperButton @iconButton={{true}} @onClick={{action "deleteReport" report}}>
                 {{paper-icon "delete"}}
-              {{/paper-button}}
+              </PaperButton>
               {{#if report.texAvailable}}
-                {{#email-share
-                  subject="Prüfungsbericht-TeX-Datei"
-                  url=report.id
-                  body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:"
-                }}
-                  {{#paper-button iconButton=true}}
+                <EmailShare @subject="Prüfungsbericht-TeX-Datei" @url={{report.id}} @body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:">
+                  <PaperButton @iconButton={{true}}>
                     {{paper-icon "text fields"}}
-                  {{/paper-button}}
-                {{/email-share}}
+                  </PaperButton>
+                </EmailShare>
               {{/if}}
-              {{#paper-button
-                iconButton=true
-                onClick=(action "editReport" report)
-              }}
+              <PaperButton @iconButton={{true}} @onClick={{action "editReport" report}}>
                 {{paper-icon "edit"}}
-              {{/paper-button}}
-              {{#paper-button
-                iconButton=true
-                onClick=(action "printReport" report)
-              }}
+              </PaperButton>
+              <PaperButton @iconButton={{true}} @onClick={{action "printReport" report}}>
                 {{paper-icon "print"}}
-              {{/paper-button}}
+              </PaperButton>
               {{#if student}}
-              {{#paper-button
-                iconButton=true
-                target="_blank"
-                href=(concat "/api/download/" report.id "/" student.id)
-              }}
+              <PaperButton @iconButton={{true}} @target="_blank" @href={{concat "/api/download/" report.id "/" student.id}}>
                 {{paper-icon "get_app"}}
-              {{/paper-button}}
+              </PaperButton>
               {{/if}}
-            {{/card.actions}}
-          {{/paper-card}}
+            </card.actions>
+          </PaperCard>
         </div>
       {{/each}}
     </div>
-  {{/paper-content}}
+  </PaperContent>
 </div>
 {{#if editReport}}
-  {{edit-report-dialog
-    model=model
-    closeDialog="closeReportDialog"
-    title="Bericht bearbeiten"
-    report=reporttoedit
-  }}
+  <EditReportDialog @model={{model}} @closeDialog="closeReportDialog" @title="Bericht bearbeiten" @report={{reporttoedit}} />
 {{/if}}
 {{#if prd}}
-  {{print-report-dialog
-    store=store
-    closeDialog="closePrintDialog"
-    report=reporttoprint
-  }}
+  <PrintReportDialog @store={{store}} @closeDialog="closePrintDialog" @report={{reporttoprint}} />
 {{/if}}
 {{#if deleteReport}}
-  {{delete-report-dialog
-    closeDialog="closeDeleteDialog"
-    title="Bericht löschen"
-    report=reporttoedit
-  }}
+  <DeleteReportDialog @closeDialog="closeDeleteDialog" @title="Bericht löschen" @report={{reporttoedit}} />
 {{/if}}

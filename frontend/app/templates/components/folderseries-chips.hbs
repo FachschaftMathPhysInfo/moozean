@@ -1,4 +1,4 @@
-{{#paper-chips removeItem=(action "removeObj") addItem=(action "addObj") placeholder="Ordnerreihen" content=content options=options search=(action "search") readOnly=disabled searchField="name" requireMatch=true as |item|}}
+<PaperChips @removeItem={{action "removeObj"}} @addItem={{action "addObj"}} @placeholder="Ordnerreihen" @content={{content}} @options={{options}} @search={{action "search"}} @readOnly={{disabled}} @searchField="name" @requireMatch={{true}} as |item|>
 
   <strong>{{item.name}}</strong>
-{{/paper-chips}}
+</PaperChips>

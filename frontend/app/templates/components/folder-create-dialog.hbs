@@ -1,23 +1,23 @@
-{{#paper-dialog class="flex-77" onClose=(action closeDialog "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action closeDialog "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>{{title}}</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action closeDialog "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-  {{#paper-form onSubmit=(action closeDialog "ok") as |form|}}
-  {{#paper-dialog-content}}
+      <PaperButton @iconButton={{true}} @onClick={{action closeDialog "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
+  <PaperForm @onSubmit={{action closeDialog "ok"}} as |form|>
+  <PaperDialogContent>
       <div class="flex layout-column">
-    {{folder.folderseries.name}}{{form.input flex=30 label="Suffix" value=folder.suffix required=true onChange=(action (mut folder.suffix))}}
-    {{form.input flex=30 label="Barcode" value=folder.barcode required=true onChange=(action (mut folder.barcode))}}
+    {{folder.folderseries.name}}<form.input @flex={{30}} @label="Suffix" @value={{folder.suffix}} @required={{true}} @onChange={{action (mut folder.suffix)}} />
+    <form.input @flex={{30}} @label="Barcode" @value={{folder.barcode}} @required={{true}} @onChange={{action (mut folder.barcode)}} />
     </div>
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row"}}
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="flex"></span>
-    {{#paper-button onClick=(action closeDialog "cancel")}}Abbrechen{{/paper-button}}
-    {{#paper-button onClick=(action closeDialog "ok" folder) disabled=form.isInvalid}} OK{{/paper-button }}
-  {{/paper-dialog-actions}}
-  {{/paper-form}}
-{{/paper-dialog}}
+    <PaperButton @onClick={{action closeDialog "cancel"}}>Abbrechen</PaperButton>
+    <PaperButton @onClick={{action closeDialog "ok" folder}} @disabled={{form.isInvalid}}> OK</PaperButton>
+  </PaperDialogActions>
+  </PaperForm>
+</PaperDialog>
 {{yield}}

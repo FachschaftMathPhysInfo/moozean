@@ -1,122 +1,91 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Moor
       {{paper-icon "chevron-right"}}
       Mail
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true onClick=(action "addStudent")}}
+    <PaperButton @iconButton={{true}} @onClick={{action "addStudent"}}>
       {{paper-icon "person add"}}
-    {{/paper-button}}
-    {{#paper-button iconButton=true}}
+    </PaperButton>
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
-{{#paper-content}}
-  {{#paper-card as |card|}}
-    {{#card.title}}Posteingang{{/card.title}}
-    {{#card.content}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
+<PaperContent>
+  <PaperCard as |card|>
+    <card.title>Posteingang</card.title>
+    <card.content>
       <div style="height:350px;overflow-y:scroll">
-        {{#paper-data-table
-          sortProp="createdAt"
-          sortDir="desc"
-          selectable=true as |table|
-        }}
-          {{#table.head as |head|}}
-            {{#head.column sortProp="createdAt"}}
+        <PaperDataTable @sortProp="createdAt" @sortDir="desc" @selectable={{true}} as |table|>
+          <table.head as |head|>
+            <head.column @sortProp="createdAt">
               Datum
-            {{/head.column}}
-            {{#head.column sortProp="fromname"}}
+            </head.column>
+            <head.column @sortProp="fromname">
               von
-            {{/head.column}}
-            {{#head.column sortProp="subject"}}
+            </head.column>
+            <head.column @sortProp="subject">
               Betreff
-            {{/head.column}}
-            {{#head.column}}Anhänge{{/head.column}}
-            {{#head.column sortProp="read"}}
+            </head.column>
+            <head.column>Anhänge</head.column>
+            <head.column @sortProp="read">
               gelesen
-            {{/head.column}}
-            {{#head.column}}Optionen{{/head.column}}
-          {{/table.head}}
-          {{#table.body as |body|}}
+            </head.column>
+            <head.column>Optionen</head.column>
+          </table.head>
+          <table.body as |body|>
             {{#each model as |d|}}
-              {{#body.row edit=true as |row|}}
-                {{#row.cell
-                  onClick=(action (transition-to "moor.inmail.view" d.id))
-                }}
+              <body.row @edit={{true}} as |row|>
+                <row.cell @onClick={{action (transition-to "moor.inmail.view" d.id)}}>
                   {{moment-format d.createdAt "DD.MM.YYYY"}}
-                {{/row.cell}}
-                {{#row.cell
-                  onClick=(action (transition-to "moor.inmail.view" d.id))
-                }}
+                </row.cell>
+                <row.cell @onClick={{action (transition-to "moor.inmail.view" d.id)}}>
                   {{d.fromname}}
-                {{/row.cell}}
-                {{#row.cell
-                  onClick=(action (transition-to "moor.inmail.view" d.id))
-                }}
+                </row.cell>
+                <row.cell @onClick={{action (transition-to "moor.inmail.view" d.id)}}>
                   {{d.subject}}
-                {{/row.cell}}
-                {{#row.cell
-                  onClick=(action (transition-to "moor.inmail.view" d.id))
-                }}
+                </row.cell>
+                <row.cell @onClick={{action (transition-to "moor.inmail.view" d.id)}}>
                   {{#each d.attachments as |att index|}}
                     {{if index ", "}}{{att.name}}
                   {{else}}
                     kein Anhang
                   {{/each}}
-                {{/row.cell}}
-                {{#row.cell checkbox=true}}
-                  {{#paper-checkbox value=d.read onChange=(action (mut d.read))
-                  }}{{/paper-checkbox}}
-                {{/row.cell}}
-                {{#row.cell}}
-                  {{#paper-button
-                    iconButton=true
-                    onClick=(pipe
-                      (transition-to "moor.inmail.index")
-                      (action "archiveMail" d)
-                    )
-                  }}
+                </row.cell>
+                <row.cell @checkbox={{true}}>
+                  <PaperCheckbox @value={{d.read}} @onChange={{action (mut d.read)}}></PaperCheckbox>
+                </row.cell>
+                <row.cell>
+                  <PaperButton @iconButton={{true}} @onClick={{pipe (transition-to "moor.inmail.index") (action "archiveMail" d)}}>
                     {{paper-icon "layers"}}
-                    {{#paper-tooltip position="top"}}
+                    <PaperTooltip @position="top">
                       Archivieren
-                    {{/paper-tooltip}}
-                  {{/paper-button}}
-                  {{#paper-button
-                    iconButton=true
-                    onClick=(action "deleteMail" d)
-                  }}
+                    </PaperTooltip>
+                  </PaperButton>
+                  <PaperButton @iconButton={{true}} @onClick={{action "deleteMail" d}}>
                     {{paper-icon "delete forever"}}
-                    {{#paper-tooltip position="top"}}
+                    <PaperTooltip @position="top">
                       Löschen
-                    {{/paper-tooltip}}
-                  {{/paper-button}}
-                {{/row.cell}}
-              {{/body.row}}
+                    </PaperTooltip>
+                  </PaperButton>
+                </row.cell>
+              </body.row>
             {{/each}}
-          {{/table.body}}
-        {{/paper-data-table}}
+          </table.body>
+        </PaperDataTable>
       </div>
-    {{/card.content}}
-  {{/paper-card}}
+    </card.content>
+  </PaperCard>
   {{outlet}}
-{{/paper-content}}
+</PaperContent>
 {{#if showCreate}}
-  {{student-create-dialog
-    student=newstudent
-    deletable=false
-    closeDialog=(action "closeDialog")
-    title="Studierendes erstellen"
-  }}
+  <StudentCreateDialog @student={{newstudent}} @deletable={{false}} @closeDialog={{action "closeDialog"}} @title="Studierendes erstellen" />
 {{/if}}

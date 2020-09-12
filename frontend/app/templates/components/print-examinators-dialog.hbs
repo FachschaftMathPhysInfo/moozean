@@ -1,35 +1,35 @@
-{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action "exitDialog" "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>Prüfende auswählen</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
+      <PaperButton @iconButton={{true}} @onClick={{action "exitDialog" "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
 
-  {{#paper-dialog-content class="flex-66"}}
-    {{#paper-list }}
+  <PaperDialogContent @class="flex-66">
+    <PaperList>
       {{#each reportslist as |report|}}
-        {{#paper-subheader}}
+        <PaperSubheader>
           {{report.subject.name}}-{{report.typ.name}}:
           {{#each report.moduls as |modul|}}
             {{modul.abbreviation}}{{if (has-next modul useDeepEqual report.moduls) ", "}}
           {{/each}}
-          {{/paper-subheader}}
+          </PaperSubheader>
             {{#each report.examinators as |exm|}}
-              {{#paper-item}}
-                {{#paper-checkbox value=(contains pruefauswahl report exm) onChange=(action "toggleSelect" report exm)}}
-                {{/paper-checkbox}}
+              <PaperItem>
+                <PaperCheckbox @value={{contains pruefauswahl report exm}} @onChange={{action "toggleSelect" report exm}}>
+                </PaperCheckbox>
                 <b>{{exm.surname}}</b>&nbsp; <em>{{exm.givenname}}</em>
-              {{/paper-item}}
+              </PaperItem>
             {{/each}}
       {{/each}}
-    {{/paper-list}}
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row" }}
+    </PaperList>
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="flex"></span>
-    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
-    {{#paper-button onClick=(action "exitDialog" "ok")}}{{if auswahl "Auswählen" "Drucken"}}{{/paper-button}}
-  {{/paper-dialog-actions}}
-{{/paper-dialog}}
+    <PaperButton @onClick={{action "exitDialog" "cancel"}}>Abbrechen</PaperButton>
+    <PaperButton @onClick={{action "exitDialog" "ok"}}>{{if auswahl "Auswählen" "Drucken"}}</PaperButton>
+  </PaperDialogActions>
+</PaperDialog>
 {{yield}}

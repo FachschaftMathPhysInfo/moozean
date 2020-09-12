@@ -1,5 +1,4 @@
-import DS from 'ember-data';
-const {hasMany} = DS;
-export default DS.Model.extend({
+import Model, { hasMany } from '@ember-data/model';
+export default Model.extend({
   emails:hasMany('email')
 });

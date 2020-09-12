@@ -21,8 +21,8 @@ export default Controller.extend(paginatedResult,{
         folderseries:this.get("model.id")
       },
       page: {
-        number: this.get('page'),
-        size: this.get("limit")
+        number: this.page,
+        size: this.limit
       }
     });
     result.then((data) => {
@@ -32,16 +32,16 @@ export default Controller.extend(paginatedResult,{
   }),
   actions:{
     toggleEditable: function(){
-      this.set('noneditable',!this.get('noneditable'));
+      this.set('noneditable',!this.noneditable);
     },
     saveFolderseries:function(){
-      this.get("model").save().then(null)
+      this.model.save().then(null)
     },
     deleteFolderseries:function(){
-      this.get("model").destroyRecord();
+      this.model.destroyRecord();
     },
     addFolder:function(){
-      this.set('thisfolder',this.store.createRecord('folder',{folderseries:this.get('model'),suffix:''}));
+      this.set('thisfolder',this.store.createRecord('folder',{folderseries:this.model,suffix:''}));
       this.set("showCreateFolderDialog",true);
     },
     editFolder:function(folder){
@@ -50,7 +50,7 @@ export default Controller.extend(paginatedResult,{
     },
     closeDeleteFolderDialog:function(option){
       if(option=="löschen"){
-        this.get('thisfolder').destroyRecord();
+        this.thisfolder.destroyRecord();
       }
       this.set('thisfolder',{});
       this.set("showDeleteFolderDialog",false);
@@ -61,10 +61,10 @@ export default Controller.extend(paginatedResult,{
     },
     closeFolderDialog:function(option){
       if(option=="ok"){
-        this.get('thisfolder').save().then(null)
+        this.thisfolder.save().then(null)
       }
       else {
-        this.get('thisfolder').rollback();
+        this.thisfolder.rollback();
       }
       this.set('showCreateFolderDialog',false);
       this.set('showEditFolderDialog',false);

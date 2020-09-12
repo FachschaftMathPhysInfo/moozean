@@ -1,61 +1,57 @@
-{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action "exitDialog" "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>{{title}}</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-  {{#paper-form onSubmit=(action "exitDialog" "ok") as |form|}}
-  {{#paper-dialog-content}}
+      <PaperButton @iconButton={{true}} @onClick={{action "exitDialog" "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
+  <PaperForm @onSubmit={{action "exitDialog" "ok"}} as |form|>
+  <PaperDialogContent>
   <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
     <div class="flex-gt-xs-45">
-      {{subject-autocomplete selected=report.subject options=model.subjects}}
+      <SubjectAutocomplete @selected={{report.subject}} @options={{model.subjects}} />
     </div>
     <div class="flex-gt-xs-50">
-      {{typ-autocomplete selected=report.typ options=model.typs}}
+      <TypAutocomplete @selected={{report.typ}} @options={{model.typs}} />
     </div>
   </div>
   <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
     <div class="flex-gt-xs-45">
       {{! Prüfende }}
-      {{pruefende-chips options=model.examinators content=report.examinators }}
+      <PruefendeChips @options={{model.examinators}} @content={{report.examinators}} />
     </div>
     <div class="flex-gt-xs-50">
       {{!Module}}
-      {{modul-chips options=model.moduls content=report.moduls}}
+      <ModulChips @options={{model.moduls}} @content={{report.moduls}} />
     </div>
   </div>
   <div class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
     <div class="flex-gt-xs-45">
       {{!Folderseries}}
-      {{folderseries-chips options=model.folderseries content=report.folderseries}}
+      <FolderseriesChips @options={{model.folderseries}} @content={{report.folderseries}} />
     </div>
     <div class="flex-gt-xs-50">
-      {{paper-pikaday label="Prüfungsdatum"
-            required=true
-            value=(readonly (moment-format report.examinationAt "MM.YYYY"))
-            onSelection=(action (mut report.examinationAt))
-            onChange=(action (mut someThing)) }}
+      <PaperPikaday @label="Prüfungsdatum" @required={{true}} @value={{readonly (moment-format report.examinationAt "MM.YYYY")}} @onSelection={{action (mut report.examinationAt)}} @onChange={{action (mut someThing)}} />
     </div>
   </div>
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row"}}
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-    {{#file-picker preview=false readAs="readAsBinaryString" accept=".tex" fileLoaded="fileLoadedTex" }}
-      {{#paper-button}}
+    <FilePicker @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @fileLoaded="fileLoadedTex">
+      <PaperButton>
         {{paper-icon "text fields"}} {{filetexName}}
-      {{/paper-button}}
-    {{/file-picker}}
-    {{#file-picker preview=false readAs="readAsDataURL" accept=".pdf" fileLoaded="fileLoaded" }}
-      {{#paper-button}}
+      </PaperButton>
+    </FilePicker>
+    <FilePicker @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="fileLoaded">
+      <PaperButton>
         {{paper-icon "picture as pdf"}}{{fileName}}
-      {{/paper-button}}
-    {{/file-picker}}
-    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
-    {{#paper-button onClick=(action "exitDialog" "ok")}}Speichern{{/paper-button }}
+      </PaperButton>
+    </FilePicker>
+    <PaperButton @onClick={{action "exitDialog" "cancel"}}>Abbrechen</PaperButton>
+    <PaperButton @onClick={{action "exitDialog" "ok"}}>Speichern</PaperButton>
     </span>
-  {{/paper-dialog-actions}}
-  {{/paper-form}}
-{{/paper-dialog}}
+  </PaperDialogActions>
+  </PaperForm>
+</PaperDialog>
 {{yield}}

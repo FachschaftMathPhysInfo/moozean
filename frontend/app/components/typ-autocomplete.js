@@ -5,7 +5,7 @@ export default Component.extend({
   store: service(),
   actions:{
     searchTyps:function(name){
-      return this.get("store").query('typ', {filter:{ name: name}});
+      return this.store.query('typ', {filter:{ name: name}});
     }
   }
 });

@@ -17,14 +17,14 @@ export default Controller.extend(paginatedResult,{
   }),
   page: 1,
   queryReports:function(moduls,examinators,folderseries){
-    let ergebnis = this.get('store').query('report', {
+    let ergebnis = this.store.query('report', {
       filter: {
         subject: this.get('subject.id'),
         typ: this.get('typ.id'),
         moduls: moduls,
         examinators: examinators,
         folderseries: folderseries
-      }, page: {size: this.get("limit"),number:this.get("page")}
+      }, page: {size: this.limit,number:this.page}
     });
     ergebnis.then((data) => {
       this.set("meta",data.meta);
@@ -37,13 +37,13 @@ export default Controller.extend(paginatedResult,{
     let moduls = [];
     let examinators = [];
     let folderseries = [this.get("model.id")];
-    if (this.get("pruefende") != null) {
-      this.get("pruefende").forEach((item) => {
+    if (this.pruefende != null) {
+      this.pruefende.forEach((item) => {
         examinators.pushObject(item.get("id"));
       });
     }
-    if (this.get("module") != null) {
-      this.get("module").forEach((item) => {
+    if (this.module != null) {
+      this.module.forEach((item) => {
         moduls.pushObject(item.get("id"));
       });
     }
@@ -51,7 +51,7 @@ export default Controller.extend(paginatedResult,{
     return ergebnis;
   }),
   createPrintout: function(item) {
-    return this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+    return this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.model,examinator:item.examinator});
   },
   printMany: function(query){
     this.set('reportslist',this.get(query));
@@ -60,16 +60,16 @@ export default Controller.extend(paginatedResult,{
   },
   actions:{
     removeExaminator:function(examinator){
-      this.get('pruefende').removeObject(examinator);
+      this.pruefende.removeObject(examinator);
     },
     addExaminator: function(examinator){
-      this.get('pruefende').pushObject(examinator);
+      this.pruefende.pushObject(examinator);
     },
     removeModul:function(modul){
-      this.get('module').removeObject(modul);
+      this.module.removeObject(modul);
     },
     addModul: function(modul){
-      this.get('module').pushObject(modul);
+      this.module.pushObject(modul);
     },
     printReportCon:function(report) {
       this.set('reportslist',[report]);
@@ -84,14 +84,14 @@ export default Controller.extend(paginatedResult,{
         select.set('times',select.get('times')-1);
       }
       else{
-        this.get('printselection').removeObject(select);
-        this.set('printselection',this.get('printselection').slice());
+        this.printselection.removeObject(select);
+        this.set('printselection',this.printselection.slice());
       }
     },
     printAll:function(){
       if(confirm("Möchtest du den gesamten Ordner ausdrucken?")) {
         this.set("printing",true);
-        this.store.createRecord('printoutfolder',{times:1,folderseries:this.get("model")}).save().then(()=>{
+        this.store.createRecord('printoutfolder',{times:1,folderseries:this.model}).save().then(()=>{
           this.set("printing",false);
         });
       }
@@ -100,16 +100,16 @@ export default Controller.extend(paginatedResult,{
       this.printMany('gefilterte');
     },
     printSelection:function(){
-      this.get('printselection').forEach((printout)=>{
+      this.printselection.forEach((printout)=>{
         printout.save().then(null)
       });
       this.set('printselection',[]);
     },
     closeDialogAuswahl:function(option){
       if(option=="ok"){
-        this.get('pruefauswahl').forEach((item)=>{
+        this.pruefauswahl.forEach((item)=>{
           let a=this.createPrintout(item);
-          this.get('printselection').pushObject(a);
+          this.printselection.pushObject(a);
         });
       }
       this.set('reportslist',[]);
@@ -117,7 +117,7 @@ export default Controller.extend(paginatedResult,{
     },
     closeDialogDrucken:function(option){
       if(option=="ok"){
-        this.get('pruefauswahl').forEach((item)=>{
+        this.pruefauswahl.forEach((item)=>{
           let pr=this.createPrintout(item);
           pr.save().then(null)
         });

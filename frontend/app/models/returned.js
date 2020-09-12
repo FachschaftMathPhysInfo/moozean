@@ -1,8 +1,8 @@
-import DS from 'ember-data';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
-  lentat: DS.attr('date'),
-  createdAt:DS.attr('date'),
-  student: DS.belongsTo('student'),
-  folder: DS.belongsTo('folder')
+export default Model.extend({
+  lentat: attr('date'),
+  createdAt:attr('date'),
+  student: belongsTo('student'),
+  folder: belongsTo('folder')
 });

@@ -6,7 +6,7 @@ import studentManagment from "ember-ozean/mixins/student-managment";
 export default Component.extend(studentManagment,{
   store: service(),
   didInsertElement(){
-    if (this.get('student')==null) {
+    if (this.student==null) {
       this.$('md-autocomplete-wrap input').focus();
     }
   },
@@ -27,18 +27,18 @@ export default Component.extend(studentManagment,{
         _this.set("showDialog", false);
       }
     };
-    if (this.get('newstudent').save != null)
-      this.get('newstudent').save().then(foo(this), function(reason) {
+    if (this.newstudent.save != null)
+      this.newstudent.save().then(foo(this), function(reason) {
         alert(reason); //TODO: FIXME
       })
-    else this.get('newstudent').content.save().then(foo(this), function(reason) {
+    else this.newstudent.content.save().then(foo(this), function(reason) {
       alert(reason); //TODO: FIXME
     });
     foo();
   },
   actions:{
     closeDialog: function(option) {
-      var store = this.get('store');
+      var store = this.store;
       let foo = ()=>{
         schedule('afterRender', this, ()=>{
           this.set('student', store.createRecord('student'));
@@ -51,17 +51,17 @@ export default Component.extend(studentManagment,{
         this.closeOkDialog(store);
       }
       else if(option == 'delete'){
-        this.get('student').destroyRecord().then(()=>{
+        this.student.destroyRecord().then(()=>{
           foo();
         });
       }
       else {
-        this.get('newstudent').rollbackAttributes();
+        this.newstudent.rollbackAttributes();
         foo();
       }
     },
     searchStudent: function(data) {
-      var store = this.get('store');
+      var store = this.store;
       return store.query('student', {
         filter: {
           nameoruniid: '%' + data + '%',
@@ -72,8 +72,8 @@ export default Component.extend(studentManagment,{
       })
     },
     editStudent: function(){
-      if(this.get('student')!=null && this.get('student.name')!=''){
-        this.set('newstudent',this.get('student'));
+      if(this.student!=null && this.get('student.name')!=''){
+        this.set('newstudent',this.student);
         this.set("showDialog",true);
       }
     }

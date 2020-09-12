@@ -13,18 +13,18 @@ format:"MM.YYYY",
   },
 
   onPikadayOpen: function() {
-    this.get('onOpen')();
+    this.onOpen();
   },
 
   onPikadayClose: function() {
-    this.get('onSelection')(this.get('pikaday').getDate());
-    if (this.get('pikaday').getDate() === null || isEmpty(this.$(this.field).val())) {
+    this.onSelection(this.pikaday.getDate());
+    if (this.pikaday.getDate() === null || isEmpty(this.$(this.field).val())) {
       this.set('value', null);
-      this.get('onSelection')(null);
+      this.onSelection(null);
     } else {
-      this.set('value', this.get('pikaday').toString(this.get('format')));
+      this.set('value', this.pikaday.toString(this.format));
     }
 
-    this.get('onClose')();
+    this.onClose();
   },
 });

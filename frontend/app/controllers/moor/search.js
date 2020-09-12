@@ -27,7 +27,7 @@ export default Controller.extend({
   queryReports: function(moduls,examinators,folderseries,start,end){
     let dr =[start,end];
     if(start==null) dr=null;
-    let ergebnis = this.get('store').query('report', {
+    let ergebnis = this.store.query('report', {
       filter: {
         subject: this.get('subject.id'),
         typ: this.get('typ.id'),
@@ -37,8 +37,8 @@ export default Controller.extend({
         daterange: dr,
       },
       page: {
-        size: this.get("limit"),
-        number:this.get("page")
+        size: this.limit,
+        number:this.page
       }
     });
     ergebnis.then((data) => {
@@ -51,24 +51,24 @@ export default Controller.extend({
     let moduls = [];
     let examinators = [];
     let folderseries = [];
-    var start=this.get('beginExamAt').toDate();
-    var end=this.get('endExamAt').toDate();
-    if (this.get("folderseriesa") != null) {
-      this.get("folderseriesa").forEach((item) => {
+    var start=this.beginExamAt.toDate();
+    var end=this.endExamAt.toDate();
+    if (this.folderseriesa != null) {
+      this.folderseriesa.forEach((item) => {
         folderseries.pushObject(item.get("id"));
       });
     }
-    if (this.get("examinatora") != null) {
-      this.get("examinatora").forEach((item) => {
+    if (this.examinatora != null) {
+      this.examinatora.forEach((item) => {
         examinators.pushObject(item.get("id"));
       });
     }
-    if (this.get("modula") != null) {
-      this.get("modula").forEach((item) => {
+    if (this.modula != null) {
+      this.modula.forEach((item) => {
         moduls.pushObject(item.get("id"));
       });
     }
-    if(!this.get("setRangeDate")) start=null;
+    if(!this.setRangeDate) start=null;
     let ergebnis =this.queryReports(moduls,examinators,folderseries,start,end);
     return ergebnis;
   }),
@@ -76,7 +76,7 @@ export default Controller.extend({
   editReport: false,
   actions: {
     searchStudent: function(data) {
-      var store = this.get('store');
+      var store = this.store;
       return store.query('student', {
         filter: {
           nameoruniid: '%' + data + '%'

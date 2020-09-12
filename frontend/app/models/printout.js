@@ -1,7 +1,6 @@
-import DS from 'ember-data';
-const {belongsTo,attr}=DS;
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
+export default Model.extend({
   report:belongsTo('report'),
   examinator:belongsTo('examinator'),
   folderseries:belongsTo('folderseries'),

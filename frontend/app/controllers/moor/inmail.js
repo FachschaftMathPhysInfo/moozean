@@ -18,7 +18,7 @@ export default Controller.extend(studentManagment,{
       mail.save().then(null)
     },
     closeDialog: function(option) {
-      var store = this.get('store');
+      var store = this.store;
       if (option == "ok") {
         let foo = function(_this) {
           return function() {
@@ -27,9 +27,9 @@ export default Controller.extend(studentManagment,{
             _this.set("showDialog", false);
           }
         };
-        this.get('newstudent').save().then(foo(this));
+        this.newstudent.save().then(foo(this));
       }else{
-        this.get('newstudent').destroyRecord();
+        this.newstudent.destroyRecord();
       }
       this.set('showCreate', false);
     },

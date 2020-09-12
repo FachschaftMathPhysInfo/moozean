@@ -4,7 +4,7 @@ export default Controller.extend({
   open:false,
   actions: {
     toggleExpandedItem(value, ev) {
-      if (this.get('expandedItem') === value) {
+      if (this.expandedItem === value) {
         value = null;
       }
       this.set('expandedItem', value);

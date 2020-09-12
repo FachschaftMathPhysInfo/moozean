@@ -15,8 +15,8 @@ export default Controller.extend(texUploading, {
       this.set("printDialog", true);
     },
     printDialog: function() {
-      this.get("folderseriesToBePrint").forEach((item) => {
-        this.get("examinatorsToBePrint").forEach((examinator) => {
+      this.folderseriesToBePrint.forEach((item) => {
+        this.examinatorsToBePrint.forEach((examinator) => {
           this.createPrintout(this.get("model.report"), item,examinator).save();
         });
       });

@@ -1,6 +1,6 @@
-import DS from 'ember-data';
+import JSONAPISerializer from '@ember-data/serializer/json-api';
 
-export default DS.JSONAPISerializer.extend({
+export default JSONAPISerializer.extend({
   serialize(){
     let json =this._super(...arguments);
     if(json.data.relationships){

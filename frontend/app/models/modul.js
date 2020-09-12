@@ -1,6 +1,5 @@
-import DS from 'ember-data';
-const { attr, hasMany } = DS;
-export default DS.Model.extend({
+import Model, { hasMany, attr } from '@ember-data/model';
+export default Model.extend({
   name:attr('string'),
   abbreviation:attr('string'),
   linkModulhandbuch:attr('string'),

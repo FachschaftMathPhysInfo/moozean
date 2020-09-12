@@ -1,23 +1,22 @@
-{{#paper-dialog class="flex-90" fullscreen=true onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-90" @fullscreen={{true}} @onClose={{action "exitDialog" "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>Mail versenden</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-  {{#paper-dialog-content}}
+      <PaperButton @iconButton={{true}} @onClick={{action "exitDialog" "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
+  <PaperDialogContent>
       <div class="flex layout-column">
-        {{paper-input flex=100 label="Mailadresse"  required=true value=mail.address onChange=(action (mut mail.address))}}
-        {{paper-input flex=100 label="Betreff" value=mail.subject required=true onChange=(action (mut mail.subject))}}
+        <PaperInput @flex={{100}} @label="Mailadresse" @required={{true}} @value={{mail.address}} @onChange={{action (mut mail.address)}} />
+        <PaperInput @flex={{100}} @label="Betreff" @value={{mail.subject}} @required={{true}} @onChange={{action (mut mail.subject)}} />
       </div>
-        {{paper-input textarea=true block=true label="Text" required=true passThru=(hash rows=5)
-        value=mail.body onChange=(action (mut mail.body))}}
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row"}}
+        <PaperInput @textarea={{true}} @block={{true}} @label="Text" @required={{true}} @passThru={{hash rows=5}} @value={{mail.body}} @onChange={{action (mut mail.body)}} />
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="flex"></span>
-    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
-    {{#paper-button onClick=(action "exitDialog" "ok") disabled=form.isInvalid}}{{#if saving}}{{paper-icon "rotate-right" spin=true}}{{/if}}Abschicken{{/paper-button }}
-  {{/paper-dialog-actions}}
-{{/paper-dialog}}
+    <PaperButton @onClick={{action "exitDialog" "cancel"}}>Abbrechen</PaperButton>
+    <PaperButton @onClick={{action "exitDialog" "ok"}} @disabled={{form.isInvalid}}>{{#if saving}}{{paper-icon "rotate-right" spin=true}}{{/if}}Abschicken</PaperButton>
+  </PaperDialogActions>
+</PaperDialog>
 {{yield}}

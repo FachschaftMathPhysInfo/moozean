@@ -1,13 +1,13 @@
-{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action "exitDialog" "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>Pfand bezahlen</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
+      <PaperButton @iconButton={{true}} @onClick={{action "exitDialog" "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
 
-  {{#paper-dialog-content}}
+  <PaperDialogContent>
     <div class="flex layout-column">
       <p> Für diese Aufgabe brauchst du 1 Person mit Tresorzugriff im Raum.</p>
       <ul>
@@ -17,11 +17,11 @@
         <li> Stelle dem Studierenden eine Quittung aus. Diese findest du im Prüfungsberichte-Ordner links neben dem Tresor. </li>
       </ul>
     </div>
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row"}}
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="flex"></span>
-    {{#paper-button tabindex=2 onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
-    {{#paper-button tabindex=1 onClick=(action "exitDialog" "ok" student)}}Bezahlt{{/paper-button}}
-  {{/paper-dialog-actions}}
-{{/paper-dialog}}
+    <PaperButton @tabindex={{2}} @onClick={{action "exitDialog" "cancel"}}>Abbrechen</PaperButton>
+    <PaperButton @tabindex={{1}} @onClick={{action "exitDialog" "ok" student}}>Bezahlt</PaperButton>
+  </PaperDialogActions>
+</PaperDialog>
 {{yield}}

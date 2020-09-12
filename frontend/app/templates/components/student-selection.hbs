@@ -1,51 +1,35 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>Moor {{paper-icon "chevron-right"}} Verwaltung {{paper-icon "chevron-right"}} Studierende <span class="hide-sm"></span></h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true onClick=(action "addStudent")}}
+    <PaperButton @iconButton={{true}} @onClick={{action "addStudent"}}>
       {{paper-icon "person add"}}
-    {{/paper-button}}
-    {{#paper-button iconButton=true}}
+    </PaperButton>
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
-{{#paper-content class="md-padding" }}
-  {{#paper-card as |card|}}
-    {{#card.title as |title|}}
-      {{#title.text as |text|}}
-        {{#text.headline}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
+<PaperContent @class="md-padding">
+  <PaperCard as |card|>
+    <card.title as |title|>
+      <title.text as |text|>
+        <text.headline>
           {{paper-icon "search"}} Auswahl
-        {{/text.headline}}
-      {{/title.text}}
-    {{/card.title}}
-    {{#card.content}}
-    {{#paper-autocomplete
-            disabled=firstDisabled
-            onCreate=(action "addStudent")
-            searchMessage="Zum Suchen tippen"
-            allowClear=true
-            searchText=(readonly student.name)
-            selected=student
-            search= (action "searchStudent")
-            searchField="name"
-            labelPath="name"
-            placeholder="Studierendes aussuchen"
-            loadingMessage="Suche Studierendes..."
-            noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?"
-            onSelectionChange=(pipe (action (mut student))(action "editStudent")) as |country autocomplete|}}
-            {{paper-autocomplete-highlight
-              label=country.name
-              searchText=autocomplete.searchText
-              flags="i"}} <em>{{country.uniid}}</em>
-    {{/paper-autocomplete}}
-    {{/card.content}}
-  {{/paper-card}}
+        </text.headline>
+      </title.text>
+    </card.title>
+    <card.content>
+    <PaperAutocomplete @disabled={{firstDisabled}} @onCreate={{action "addStudent"}} @searchMessage="Zum Suchen tippen" @allowClear={{true}} @searchText={{readonly student.name}} @selected={{student}} @search={{action "searchStudent"}} @searchField="name" @labelPath="name" @placeholder="Studierendes aussuchen" @loadingMessage="Suche Studierendes..." @noMatchesMessage="Oops, dieses Studierendes existiert nicht. Neues Studierendes eintragen?" @onSelectionChange={{pipe (action (mut student)) (action "editStudent")}} as |country autocomplete|>
+            <PaperAutocompleteHighlight @label={{country.name}} @searchText={{autocomplete.searchText}} @flags="i" /> <em>{{country.uniid}}</em>
+    </PaperAutocomplete>
+    </card.content>
+  </PaperCard>
 
-{{/paper-content}}
-{{#if showDialog}}{{student-create-dialog student=newstudent deletable=deletable closeDialog=(action "closeDialog") title="Studierendes bearbeiten"}}{{/if}}
+</PaperContent>
+{{#if showDialog}}<StudentCreateDialog @student={{newstudent}} @deletable={{deletable}} @closeDialog={{action "closeDialog"}} @title="Studierendes bearbeiten" />{{/if}}

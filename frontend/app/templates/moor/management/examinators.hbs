@@ -1,14 +1,10 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Moor
       {{paper-icon "chevron-right"}}
@@ -18,90 +14,60 @@
       <span class="hide-sm"></span>
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true onClick=(action "addExaminator")}}
+    <PaperButton @iconButton={{true}} @onClick={{action "addExaminator"}}>
       {{paper-icon "person add"}}
-    {{/paper-button}}
-    {{#paper-button iconButton=true}}
+    </PaperButton>
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
 <div class="overflow-y-scroll">
-  {{#paper-content}}
-    {{#paper-card as |card|}}
-      {{paper-data-paginator
-        count=resultsLength
-        limit=limit
-        limitOptions=limitOptions
-        page=page
-        pages=pages
-        onChangePage=(action (mut page))
-        onChangeLimit=(action (mut limit))
-        onIncrementPage=(action "incrementPage")
-        onDecrementPage=(action "decrementPage")
-        plural="Prüfende"
-        meta=meta
-      }}
-      {{#paper-data-table sortProp="surname" selectable=true as |table|}}
-        {{#table.head as |head|}}
-          {{#head.column}}{{/head.column}}
-          {{#head.column sortProp="givenname"}}
+  <PaperContent>
+    <PaperCard as |card|>
+      <PaperDataPaginator @count={{resultsLength}} @limit={{limit}} @limitOptions={{limitOptions}} @page={{page}} @pages={{pages}} @onChangePage={{action (mut page)}} @onChangeLimit={{action (mut limit)}} @onIncrementPage={{action "incrementPage"}} @onDecrementPage={{action "decrementPage"}} @plural="Prüfende" @meta={{meta}} />
+      <PaperDataTable @sortProp="surname" @selectable={{true}} as |table|>
+        <table.head as |head|>
+          <head.column></head.column>
+          <head.column @sortProp="givenname">
             Vorname
-          {{/head.column}}
-          {{#head.column sortProp="surname"}}
+          </head.column>
+          <head.column @sortProp="surname">
             Nachname
-          {{/head.column}}
-          {{#head.column sortProp="title"}}
+          </head.column>
+          <head.column @sortProp="title">
             Titel
-          {{/head.column}}
-          {{#head.column}}Optionen{{/head.column}}
-        {{/table.head}}
-        {{#table.body as |body|}}
+          </head.column>
+          <head.column>Optionen</head.column>
+        </table.head>
+        <table.body as |body|>
           {{#each (sort-by table.sortDesc paginatedResults) as |m|}}
-            {{#body.row edit=true as |row|}}
-              {{#row.cell}}{{paper-icon "perm identity"}}{{/row.cell}}
-              {{#row.cell}}{{m.givenname}}{{/row.cell}}
-              {{#row.cell}}{{m.surname}}{{/row.cell}}
-              {{#row.cell}}{{m.title}}{{/row.cell}}
-              {{#row.cell edit=true as |cell|}}
-                {{#paper-button
-                  iconButton=true
-                  onClick=(action "editExaminator" m)
-                }}
+            <body.row @edit={{true}} as |row|>
+              <row.cell>{{paper-icon "perm identity"}}</row.cell>
+              <row.cell>{{m.givenname}}</row.cell>
+              <row.cell>{{m.surname}}</row.cell>
+              <row.cell>{{m.title}}</row.cell>
+              <row.cell @edit={{true}} as |cell|>
+                <PaperButton @iconButton={{true}} @onClick={{action "editExaminator" m}}>
                   {{paper-icon "edit"}}
-                {{/paper-button}}
-                {{#paper-button
-                  iconButton=true
-                  onClick=(action "deleteExaminator" m)
-                }}
+                </PaperButton>
+                <PaperButton @iconButton={{true}} @onClick={{action "deleteExaminator" m}}>
                   {{paper-icon "delete"}}
-                {{/paper-button}}
-              {{/row.cell}}
-            {{/body.row}}
+                </PaperButton>
+              </row.cell>
+            </body.row>
           {{/each}}
-        {{/table.body}}
-      {{/paper-data-table}}
-    {{/paper-card}}
-  {{/paper-content}}
+        </table.body>
+      </PaperDataTable>
+    </PaperCard>
+  </PaperContent>
 </div>
 {{#if showCreateExaminatorDialog}}
-  {{examinator-dialog
-    closeDialog=(action "closeExaminatorDialog")
-    title="Erstelle Prüfendes"
-    examinator=newexaminator
-  }}
+  <ExaminatorDialog @closeDialog={{action "closeExaminatorDialog"}} @title="Erstelle Prüfendes" @examinator={{newexaminator}} />
 {{/if}}
 {{#if showEditExaminatorDialog}}
-  {{examinator-dialog
-    closeDialog=(action "closeExaminatorDialog")
-    title="Bearbeite Prüfendes"
-    examinator=newexaminator
-  }}
+  <ExaminatorDialog @closeDialog={{action "closeExaminatorDialog"}} @title="Bearbeite Prüfendes" @examinator={{newexaminator}} />
 {{/if}}
 {{#if showReportDialog}}
-  {{delete-dependency-dialog
-    store=store
-    closeDialog=(action "closeDeleteExaminatorDialog")
-    objekt=newexaminator
-  }}
+  <DeleteDependencyDialog @store={{store}} @closeDialog={{action "closeDeleteExaminatorDialog"}} @objekt={{newexaminator}} />
 {{/if}}

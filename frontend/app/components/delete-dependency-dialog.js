@@ -5,7 +5,7 @@ import DS from 'ember-data';
 export default Component.extend({
   store: service(),
   elemente: computed('objekt',function(){
-    switch(this.get('objekt').get('constructor.modelName')){
+    switch(this.objekt.get('constructor.modelName')){
       case 'modul' :
         return 'Modul';
       case 'typ' :
@@ -17,8 +17,8 @@ export default Component.extend({
     }
   }),
   dieseselements: computed('objekt',function() {
-    if(this.get('objekt')==null) return '';
-    switch (this.get('objekt').get('constructor.modelName')){
+    if(this.objekt==null) return '';
+    switch (this.objekt.get('constructor.modelName')){
       case 'modul' :
         return 'dieses Moduls';
       case 'typ' :

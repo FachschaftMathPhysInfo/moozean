@@ -1,64 +1,52 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button classNames="hide-gt-sm" iconButton=true onClick=(action toggleAction)}}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>Moor {{paper-icon "chevron-right"}} {{model.name}} <span class="hide-sm"></span></h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true onClick=(action "addFolder")}}
+    <PaperButton @iconButton={{true}} @onClick={{action "addFolder"}}>
       {{paper-icon "create new folder"}}
-    {{/paper-button}}
-    {{#paper-button iconButton=true onClick=(transition-to "moor.folderseries.print" model)}}
+    </PaperButton>
+    <PaperButton @iconButton={{true}} @onClick={{transition-to "moor.folderseries.print" model}}>
       {{paper-icon "print"}}
-    {{/paper-button}}
-    {{#paper-button iconButton=true}}
+    </PaperButton>
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
-{{#paper-content class="md-padding" }}
-  {{#paper-card as |card|}}
-    {{#card.title as |title|}}
-      {{#title.text as |text|}}
-        {{#text.headline}}Einstellungen{{#paper-button iconButton=true onClick=(action "toggleEditable")}}{{paper-icon "edit"}}{{/paper-button}}{{/text.headline}}
-      {{/title.text}}
-    {{/card.title}}
-    {{#card.content}}
-      {{paper-input disabled=noneditable label="Name" flex=100  value=model.name onChange=(action (mut model.name))}} {{paper-input disabled=noneditable textarea=true block=true label="Beschreibung"  passThru=(hash rows=3 maxRows=3)
-    value=model.description onChange=(action (mut model.description))}}
-      {{#paper-switch disabled=noneditable value=model.obligationtoreport onChange=(action (mut model.obligationtoreport))}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
+<PaperContent @class="md-padding">
+  <PaperCard as |card|>
+    <card.title as |title|>
+      <title.text as |text|>
+        <text.headline>Einstellungen<PaperButton @iconButton={{true}} @onClick={{action "toggleEditable"}}>{{paper-icon "edit"}}</PaperButton></text.headline>
+      </title.text>
+    </card.title>
+    <card.content>
+      <PaperInput @disabled={{noneditable}} @label="Name" @flex={{100}} @value={{model.name}} @onChange={{action (mut model.name)}} /> <PaperInput @disabled={{noneditable}} @textarea={{true}} @block={{true}} @label="Beschreibung" @passThru={{hash rows=3 maxRows=3}} @value={{model.description}} @onChange={{action (mut model.description)}} />
+      <PaperSwitch @disabled={{noneditable}} @value={{model.obligationtoreport}} @onChange={{action (mut model.obligationtoreport)}}>
         {{if model.obligationtoreport "Pfand pflichtig" "Pfandfrei"}}
-      {{/paper-switch}}
-    {{/card.content}}
-    {{#card.actions}}
-      {{#paper-button disabled=noneditable onClick=(pipe (transition-to "moor")(action "deleteFolderseries")(action "toggleEditable")) warn=true}}Löschen{{/paper-button}}
-      {{#paper-button disabled=noneditable onClick=(pipe (action "saveFolderseries")(action "toggleEditable"))}}Speichern{{/paper-button}}
-    {{/card.actions}}
-  {{/paper-card}}
-  {{#paper-card as |card|}}
-    {{#card.title as |title|}}
-      {{#title.text as |text|}}
-        {{#text.headline}}Ordner{{/text.headline}}
-      {{/title.text}}
-    {{/card.title}}
-    {{#card.content}}
-    {{paper-data-paginator
-      count=resultsLength
-    limit=limit
-    limitOptions=limitOptions
-    page=page
-    pages=pages
-    onChangePage=(action (mut page))
-    onChangeLimit=(action (mut limit))
-    onIncrementPage=(action 'incrementPage')
-    onDecrementPage=(action 'decrementPage')
-    plural="Ordner"
-    meta=meta}}
-      {{#paper-list}}
+      </PaperSwitch>
+    </card.content>
+    <card.actions>
+      <PaperButton @disabled={{noneditable}} @onClick={{pipe (transition-to "moor") (action "deleteFolderseries") (action "toggleEditable")}} @warn={{true}}>Löschen</PaperButton>
+      <PaperButton @disabled={{noneditable}} @onClick={{pipe (action "saveFolderseries") (action "toggleEditable")}}>Speichern</PaperButton>
+    </card.actions>
+  </PaperCard>
+  <PaperCard as |card|>
+    <card.title as |title|>
+      <title.text as |text|>
+        <text.headline>Ordner</text.headline>
+      </title.text>
+    </card.title>
+    <card.content>
+    <PaperDataPaginator @count={{resultsLength}} @limit={{limit}} @limitOptions={{limitOptions}} @page={{page}} @pages={{pages}} @onChangePage={{action (mut page)}} @onChangeLimit={{action (mut limit)}} @onIncrementPage={{action "incrementPage"}} @onDecrementPage={{action "decrementPage"}} @plural="Ordner" @meta={{meta}} />
+      <PaperList>
         {{#each paginatedResults as |folder|}}
-          {{#paper-item class="md-2-line" }}
+          <PaperItem @class="md-2-line">
             {{paper-icon "folder" class="md-avatar-icon"}}
             <div class="md-list-item-text">
               <h3>{{folder.name}}</h3>
@@ -66,18 +54,18 @@
             </div>
             <span class="flex">
             </span>
-            {{#paper-button iconButton=true onClick=(action "editFolder" folder)}}{{paper-icon "edit"}}{{/paper-button}}
-            {{#paper-button iconButton=true onClick=(action "deleteFolder" folder)}}{{paper-icon "delete"}}{{/paper-button}}
-          {{/paper-item}}
-          {{paper-divider}}
+            <PaperButton @iconButton={{true}} @onClick={{action "editFolder" folder}}>{{paper-icon "edit"}}</PaperButton>
+            <PaperButton @iconButton={{true}} @onClick={{action "deleteFolder" folder}}>{{paper-icon "delete"}}</PaperButton>
+          </PaperItem>
+          <PaperDivider />
         {{/each}}
-      {{/paper-list}}
-    {{/card.content}}
-    {{#card.actions}}
-      {{#paper-button primary=true onClick=(action "addFolder")}}Neuer Ordner{{/paper-button}}
-    {{/card.actions}}
-  {{/paper-card}}
-{{/paper-content}}
-{{#if showCreateFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Erstelle Ordner' folder=thisfolder}}{{/if}}
-{{#if showEditFolderDialog}}{{folder-create-dialog closeDialog=(action "closeFolderDialog") title='Bearbeite Ordner' folder=thisfolder}}{{/if}}
-{{#if showDeleteFolderDialog}}{{folder-delete-dialog closeDialog=(action "closeDeleteFolderDialog") title='Lösche Ordner' folder=thisfolder}}{{/if}}
+      </PaperList>
+    </card.content>
+    <card.actions>
+      <PaperButton @primary={{true}} @onClick={{action "addFolder"}}>Neuer Ordner</PaperButton>
+    </card.actions>
+  </PaperCard>
+</PaperContent>
+{{#if showCreateFolderDialog}}<FolderCreateDialog @closeDialog={{action "closeFolderDialog"}} @title="Erstelle Ordner" @folder={{thisfolder}} />{{/if}}
+{{#if showEditFolderDialog}}<FolderCreateDialog @closeDialog={{action "closeFolderDialog"}} @title="Bearbeite Ordner" @folder={{thisfolder}} />{{/if}}
+{{#if showDeleteFolderDialog}}<FolderDeleteDialog @closeDialog={{action "closeDeleteFolderDialog"}} @title="Lösche Ordner" @folder={{thisfolder}} />{{/if}}

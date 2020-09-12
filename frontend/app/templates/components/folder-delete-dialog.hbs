@@ -1,19 +1,19 @@
-{{#paper-dialog class="flex-77" onClose=(action closeDialog "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action closeDialog "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>{{title}}</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action closeDialog "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-  {{#paper-dialog-content}}
+      <PaperButton @iconButton={{true}} @onClick={{action closeDialog "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
+  <PaperDialogContent>
       <div class="flex layout-column">
     Willst du {{folder.folderseries.name}}{{folder.suffix}} wirklich löschen?</div>
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row"}}
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="flex"></span>
-    {{#paper-button tabindex=2 onClick=(action closeDialog "löschen" folder)}}Löschen{{/paper-button}}
-    {{#paper-button tabindex=1 onClick=(action closeDialog "cancel" folder)}}Abbrechen{{/paper-button }}
-  {{/paper-dialog-actions}}
-{{/paper-dialog}}
+    <PaperButton @tabindex={{2}} @onClick={{action closeDialog "löschen" folder}}>Löschen</PaperButton>
+    <PaperButton @tabindex={{1}} @onClick={{action closeDialog "cancel" folder}}>Abbrechen</PaperButton>
+  </PaperDialogActions>
+</PaperDialog>
 {{yield}}

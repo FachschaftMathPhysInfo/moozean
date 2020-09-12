@@ -16,7 +16,7 @@ export default Controller.extend(paginatedResults,{
   limitOptions: A([10, 20, 30]),
   limit:20,
   paginatedResults: computed('page', 'limit','model.[]', function() {
-    return this.queryPaginated("examinator",this.get("page",this.get("limit")))
+    return this.queryPaginated("examinator",this.get("page",this.limit));
   }),
   actions:{
     addExaminator:function(){
@@ -41,7 +41,7 @@ export default Controller.extend(paginatedResults,{
       closeDeleteExaminatorDialog:function(option) {
           this.set("showReportDialog",false);
         if(option=="ok"){
-          this.get('newexaminator').destroyRecord();
+          this.newexaminator.destroyRecord();
         }
         else {
           this.set('newexaminator',null);
@@ -50,16 +50,16 @@ export default Controller.extend(paginatedResults,{
       },
     closeExaminatorDialog:function(option){
       if(option=="ok"){
-        this.get('newexaminator').save().then(null);
+        this.newexaminator.save().then(null);
       } else
       {
         if(this.get('newexaminator.id')!=null){
-          this.get('newexaminator').then((item)=>{
+          this.newexaminator.then((item)=>{
             item.rollbackAttributes();
           });
         }
         else {
-          this.get('newexaminator').destroyRecord();
+          this.newexaminator.destroyRecord();
         }
       }
       this.set('showCreateExaminatorDialog',false);

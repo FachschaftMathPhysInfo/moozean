@@ -38,18 +38,18 @@ export default Component.extend({
   })),
   checkBoundaries(){
     let error= false;
-    if(this.get("stateto")>this.get("statemax")){
+    if(this.stateto>this.statemax){
       error=true;
     }
-    if(this.get("statefrom")<this.get("statemin")){
+    if(this.statefrom<this.statemin){
       error=true;
     }
-    if(error||this.get("statefrom")>this.get("stateto")){
-      this.set("statefrom",this.get("statemin"));
-      this.set("stateto",this.get("statemax"));
+    if(error||this.statefrom>this.stateto){
+      this.set("statefrom",this.statemin);
+      this.set("stateto",this.statemax);
     }
     schedule("afterRender",this,function(){
-      this.calculate({from:this.get("statefrom"),to:this.get("stateto")});
+      this.calculate({from:this.statefrom,to:this.stateto});
     });
   },
   calculate(option) {

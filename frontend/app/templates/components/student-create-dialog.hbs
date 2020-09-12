@@ -1,49 +1,22 @@
-{{#paper-dialog
-  class="flex-77"
-  onClose=(action "exitDialog" "cancel")
-  origin=dialogOrigin
-  clickOutsideToClose=true
-}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action "exitDialog" "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>
         {{title}}
       </h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}
-        {{paper-icon icon="close"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
-  {{#paper-form onSubmit=(action "exitDialog" "ok") as |form|}}
-    {{#paper-dialog-content}}
+      <PaperButton @iconButton={{true}} @onClick={{action "exitDialog" "cancel"}}>
+        <PaperIcon @icon="close" />
+      </PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
+  <PaperForm @onSubmit={{action "exitDialog" "ok"}} as |form|>
+    <PaperDialogContent>
       <div class="flex layout-column">
-        {{form.input
-          flex=30
-          label="Name"
-          id="nameinput"
-          tabindex=1
-          value=student.name
-          required=true
-          onChange=(action (mut student.name))
-        }}
-        {{form.input
-          flex=30
-          label="Uni-ID"
-          tabindex=2
-          maxlength=5
-          minlength=5
-          required=true
-          value=student.uniid
-          onChange=(action (mut student.uniid))
-        }}
+        <form.input @flex={{30}} @label="Name" @id="nameinput" @tabindex={{1}} @value={{student.name}} @required={{true}} @onChange={{action (mut student.name)}} />
+        <form.input @flex={{30}} @label="Uni-ID" @tabindex={{2}} @maxlength={{5}} @minlength={{5}} @required={{true}} @value={{student.uniid}} @onChange={{action (mut student.uniid)}} />
         {{#if (and (not student.refund) (not student.report))}}
-          {{#paper-switch
-            tabindex=5
-            flex=30
-            value=student.refund
-            onChange=(action (mut student.refund))
-          }}
+          <PaperSwitch @tabindex={{5}} @flex={{30}} @value={{student.refund}} @onChange={{action (mut student.refund)}}>
             {{#unless student.refund}}
               <strong>
                 kein
@@ -55,13 +28,8 @@
                 vorhanden
               </strong>
             {{/if}}
-          {{/paper-switch}}
-          {{#paper-switch
-            tabindex=6
-            flex=30
-            value=student.report
-            onChange=(action (mut student.report))
-          }}
+          </PaperSwitch>
+          <PaperSwitch @tabindex={{6}} @flex={{30}} @value={{student.report}} @onChange={{action (mut student.report)}}>
             Bericht
             {{#unless student.report}}
               <strong>
@@ -69,15 +37,10 @@
               </strong>
             {{/unless}}
             abgegeben
-          {{/paper-switch}}
+          </PaperSwitch>
         {{/if}}
         {{#if (and student.refund (not student.report))}}
-          {{#paper-switch
-            tabindex=5
-            flex=30
-            value=student.refund
-            onChange=(action (mut student.refund))
-          }}
+          <PaperSwitch @tabindex={{5}} @flex={{30}} @value={{student.refund}} @onChange={{action (mut student.refund)}}>
             {{#unless student.refund}}
               <strong>
                 kein
@@ -89,13 +52,8 @@
                 vorhanden
               </strong>
             {{/if}}
-          {{/paper-switch}}
-          {{#paper-switch
-            tabindex=6
-            flex=30
-            value=student.report
-            onChange=(action (mut student.report))
-          }}
+          </PaperSwitch>
+          <PaperSwitch @tabindex={{6}} @flex={{30}} @value={{student.report}} @onChange={{action (mut student.report)}}>
             Bericht
             {{#unless student.report}}
               <strong>
@@ -103,45 +61,41 @@
               </strong>
             {{/unless}}
             abgegeben
-          {{/paper-switch}}
+          </PaperSwitch>
         {{/if}}
         {{#if (and student.refund student.report)}}
           Bericht vorhanden,
           <br />
-          {{#paper-button onClick=(action "repay" student)}}
+          <PaperButton @onClick={{action "repay" student}}>
             Pfand zurückerstatten
-          {{/paper-button}}
+          </PaperButton>
         {{/if}}
         {{#if (and (not student.refund) student.report)}}
           Studi hat Pfandrückzahlung erhalten.
         {{/if}}
       </div>
-    {{/paper-dialog-content}}
-    {{#paper-dialog-actions class="layout-row"}}
+    </PaperDialogContent>
+    <PaperDialogActions @class="layout-row">
       <span
         class="layout-gt-xs-row layout-wrap"
         style="justify-content: space-around"
       >
         {{#if deletable}}
-          {{#paper-button tabindex=5 onClick=(action "exitDialog" "delete")}}
+          <PaperButton @tabindex={{5}} @onClick={{action "exitDialog" "delete"}}>
             Löschen
-          {{/paper-button}}
+          </PaperButton>
         {{/if}}
-        {{#paper-button tabindex=4 onClick=(action "exitDialog" "cancel")}}
+        <PaperButton @tabindex={{4}} @onClick={{action "exitDialog" "cancel"}}>
           Abbrechen
-        {{/paper-button}}
-        {{#paper-button
-          tabindex=3
-          onClick=(action "exitDialog" "ok" student)
-          disabled=form.isInvalid
-        }}
+        </PaperButton>
+        <PaperButton @tabindex={{3}} @onClick={{action "exitDialog" "ok" student}} @disabled={{form.isInvalid}}>
           {{#if saving}}
             {{paper-icon "rotate-right" spin=true}}
           {{/if}}
           OK
-        {{/paper-button}}
+        </PaperButton>
       </span>
-    {{/paper-dialog-actions}}
-  {{/paper-form}}
-{{/paper-dialog}}
+    </PaperDialogActions>
+  </PaperForm>
+</PaperDialog>
 {{yield}}

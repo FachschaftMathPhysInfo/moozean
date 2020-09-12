@@ -14,8 +14,8 @@ export default Controller.extend({
   fetched:computed('limitFolders','pageFolder','model.[]','model','showDialog', function() {
     let result= this.store.query("folderseries", {
       page: {
-        number: this.get('pageFolder'),
-        size: this.get("limitFolders")
+        number: this.pageFolder,
+        size: this.limitFolders
       }
     });
     result.then((data) => {
@@ -35,10 +35,10 @@ export default Controller.extend({
     },
     closeDialog: function(option) {
       if (option == "ok") {
-        this.get('newfolderseries').save();
+        this.newfolderseries.save();
       }
       else{
-        this.get("newfolderseries").destroyRecord();
+        this.newfolderseries.destroyRecord();
       }
 
       this.set('showDialog', false);

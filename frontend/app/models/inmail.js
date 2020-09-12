@@ -1,6 +1,5 @@
-import DS from 'ember-data';
+import { hasMany, attr } from '@ember-data/model';
 import Referencable from './referencable';
-const { attr, hasMany } = DS;
 export default Referencable.extend({
   subject: attr('string'),
   fromname:attr('string'),

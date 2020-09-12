@@ -1,50 +1,50 @@
-{{#paper-dialog class="flex-77" onClose=(action "exitDialog" "cancel") origin=dialogOrigin clickOutsideToClose=true}}
-  {{#paper-toolbar}}
-    {{#paper-toolbar-tools}}
+<PaperDialog @class="flex-77" @onClose={{action "exitDialog" "cancel"}} @origin={{dialogOrigin}} @clickOutsideToClose={{true}}>
+  <PaperToolbar>
+    <PaperToolbarTools>
       <h2>{{elemente}} löschen?</h2>
       <span class="flex"></span>
-      {{#paper-button iconButton=true onClick=(action "exitDialog" "cancel")}}{{paper-icon icon="close"}}{{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/paper-toolbar}}
+      <PaperButton @iconButton={{true}} @onClick={{action "exitDialog" "cancel"}}><PaperIcon @icon="close" /></PaperButton>
+    </PaperToolbarTools>
+  </PaperToolbar>
 
-  {{#paper-dialog-content}}
+  <PaperDialogContent>
     <div class="flex layout-column">
       <p class="md-warn md-button">ACHTUNG !</p>
       <p> Aufgrund von Verweisen müssten beim Löschen {{dieseselements}} folgende Änderungen an den Prüfungsberichten vorgenommen werden: </p>        <br>
-        {{#paper-data-table sortProp="examinationAt" sortDir="desc" selectable=true as |table|}}
-          {{#table.head as |head|}}
-            {{#head.column}}Prüfungsart{{/head.column}}
-            {{#head.column}}Fach{{/head.column}}
-            {{#head.column}}Datum{{/head.column}}
-            {{#head.column}}Prüfende{{/head.column}}
-            {{#head.column}}Änderung{{/head.column}}
-          {{/table.head}}
-          {{#table.body as |body|}}
+        <PaperDataTable @sortProp="examinationAt" @sortDir="desc" @selectable={{true}} as |table|>
+          <table.head as |head|>
+            <head.column>Prüfungsart</head.column>
+            <head.column>Fach</head.column>
+            <head.column>Datum</head.column>
+            <head.column>Prüfende</head.column>
+            <head.column>Änderung</head.column>
+          </table.head>
+          <table.body as |body|>
             {{#each (sort-by table.sortDesc objekt.reports) as |report|}}
-              {{#body.row edit=true as |row|}}
-                {{#row.cell}}{{report.typ.name}}{{/row.cell}}
-                {{#row.cell}}{{report.subject.name}}{{/row.cell}}
-                {{#row.cell}}{{moment-format report.examinationAt "MM.YYYY"}}{{/row.cell}}
-                {{#row.cell}}
+              <body.row @edit={{true}} as |row|>
+                <row.cell>{{report.typ.name}}</row.cell>
+                <row.cell>{{report.subject.name}}</row.cell>
+                <row.cell>{{moment-format report.examinationAt "MM.YYYY"}}</row.cell>
+                <row.cell>
                   {{#each report.examinators as |exm index|}}
                     {{if index ", "}}{{exm.surname}}
                   {{/each}}
-                {{/row.cell}}
-                {{#row.cell}}
+                </row.cell>
+                <row.cell>
                   {{#if (compute (action "multiple") report)}}{{elemente}} aus Liste entfernen{{/if}}
                   {{#unless (compute (action "multiple") report)}}Bericht löschen{{/unless}}
-                {{/row.cell}}
+                </row.cell>
 
-              {{/body.row}}
+              </body.row>
             {{/each}}
-          {{/table.body}}
-        {{/paper-data-table}}
+          </table.body>
+        </PaperDataTable>
     </div>
-  {{/paper-dialog-content}}
-  {{#paper-dialog-actions class="layout-row"}}
+  </PaperDialogContent>
+  <PaperDialogActions @class="layout-row">
     <span class="flex"></span>
-    {{#paper-button onClick=(action "exitDialog" "ok")}}OK{{/paper-button}}
-    {{#paper-button onClick=(action "exitDialog" "cancel")}}Abbrechen{{/paper-button}}
-  {{/paper-dialog-actions}}
-{{/paper-dialog}}
+    <PaperButton @onClick={{action "exitDialog" "ok"}}>OK</PaperButton>
+    <PaperButton @onClick={{action "exitDialog" "cancel"}}>Abbrechen</PaperButton>
+  </PaperDialogActions>
+</PaperDialog>
 {{yield}}

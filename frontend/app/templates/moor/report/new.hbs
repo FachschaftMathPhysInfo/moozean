@@ -1,14 +1,10 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    {{#paper-sidenav-toggle name="left2" as |toggleAction|}}
-      {{#paper-button
-        classNames="hide-gt-sm"
-        iconButton=true
-        onClick=(action toggleAction)
-      }}
-        {{paper-icon icon="menu"}}
-      {{/paper-button}}
-    {{/paper-sidenav-toggle}}
+<PaperToolbar>
+  <PaperToolbarTools>
+    <PaperSidenavToggle @name="left2" as |toggleAction|>
+      <PaperButton @classNames="hide-gt-sm" @iconButton={{true}} @onClick={{action toggleAction}}>
+        <PaperIcon @icon="menu" />
+      </PaperButton>
+    </PaperSidenavToggle>
     <h2>
       Moor
       {{paper-icon "chevron-right"}}
@@ -20,39 +16,31 @@
       <span class="hide-sm"></span>
     </h2>
     <span class="flex"></span>
-    {{#paper-button iconButton=true}}
+    <PaperButton @iconButton={{true}}>
       {{paper-icon "more_vert"}}
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
-{{#paper-content class="md-padding"}}
-  {{#paper-card as |card|}}
-    {{#card.title as |title|}}
-      {{#title.text as |text|}}
-        {{#text.headline}}
+    </PaperButton>
+  </PaperToolbarTools>
+</PaperToolbar>
+<PaperContent @class="md-padding">
+  <PaperCard as |card|>
+    <card.title as |title|>
+      <title.text as |text|>
+        <text.headline>
           {{paper-icon "color lens"}}Prüfungsbericht eintragen
-        {{/text.headline}}
-      {{/title.text}}
-    {{/card.title}}
-    {{#card.content}}
+        </text.headline>
+      </title.text>
+    </card.title>
+    <card.content>
       Pflichtfelder: Studienfach, Prüfungstyp, Prüfungsdatum. Andere sehr empfohlen!
       <div
         class="layout-gt-xs-row layout-wrap"
         style="justify-content: space-around"
       >
         <div class="flex-gt-xs-40">
-          {{subject-autocomplete
-            required=true
-            selected=model.report.subject
-            options=model.subjects
-          }}
+          <SubjectAutocomplete @required={{true}} @selected={{model.report.subject}} @options={{model.subjects}} />
         </div>
         <div class="flex-gt-xs-45">
-          {{typ-autocomplete
-            required=true
-            selected=model.report.typ
-            options=model.typs
-          }}
+          <TypAutocomplete @required={{true}} @selected={{model.report.typ}} @options={{model.typs}} />
         </div>
       </div>
       <div
@@ -61,14 +49,11 @@
       >
         <div class="flex-gt-xs-40">
           {{! Prüfende }}
-          {{pruefende-chips
-            options=model.examinators
-            content=model.report.examinators
-          }}
+          <PruefendeChips @options={{model.examinators}} @content={{model.report.examinators}} />
         </div>
         <div class="flex-gt-xs-45">
           {{!Module}}
-          {{modul-chips options=model.moduls content=model.report.moduls}}
+          <ModulChips @options={{model.moduls}} @content={{model.report.moduls}} />
         </div>
       </div>
       <div
@@ -77,67 +62,36 @@
       >
         <div class="flex-gt-xs-40">
           {{!Folderseries}}
-          {{folderseries-chips
-            options=model.folderseries
-            content=model.report.folderseries
-          }}
+          <FolderseriesChips @options={{model.folderseries}} @content={{model.report.folderseries}} />
         </div>
         <div class="flex-gt-xs-45">
-          {{paper-pikaday
-            required=true
-            label="Prüfungsdatum"
-            value=(readonly
-              (moment-format model.report.examinationAt "MM.YYYY")
-            )
-            onSelection=(action (mut model.report.examinationAt))
-            onChange=(action (mut model.report.examinationAt))
-          }}
+          <PaperPikaday @required={{true}} @label="Prüfungsdatum" @value={{readonly (moment-format model.report.examinationAt "MM.YYYY")}} @onSelection={{action (mut model.report.examinationAt)}} @onChange={{action (mut model.report.examinationAt)}} />
         </div>
       </div>
-    {{/card.content}}
-    {{#card.actions}}
-      {{#file-picker
-        preview=false
-        readAs="readAsBinaryString"
-        accept=".tex"
-        fileLoaded="fileLoadedTex"
-      }}
-        {{#paper-button}}
+    </card.content>
+    <card.actions>
+      <FilePicker @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @fileLoaded="fileLoadedTex">
+        <PaperButton>
           {{paper-icon "text fields"}}{{filetexName}}
-        {{/paper-button}}
-      {{/file-picker}}
+        </PaperButton>
+      </FilePicker>
       <span class="flex-25"></span>
-      {{#file-picker
-        preview=false
-        readAs="readAsDataURL"
-        accept=".pdf"
-        fileLoaded="fileLoaded"
-      }}
-        {{#paper-button}}
+      <FilePicker @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="fileLoaded">
+        <PaperButton>
           {{paper-icon "picture as pdf"}}{{fileName}}
-        {{/paper-button}}
-      {{/file-picker}}
+        </PaperButton>
+      </FilePicker>
       <span class="flex-25"></span>
-      {{#paper-button
-        onClick=(action "save")
-        disabled=(or
-          (or (not model.report.typ) (not model.report.subject))
-          (not model.report.pdf)
-        )
-      }}
+      <PaperButton @onClick={{action "save"}} @disabled={{or (or (not model.report.typ) (not model.report.subject)) (not model.report.pdf)}}>
         Speichern
-      {{/paper-button}}
-    {{/card.actions}}
+      </PaperButton>
+    </card.actions>
     {{#if savingReport}}
-      {{paper-progress-linear}}
+      <PaperProgressLinear />
     {{/if}}
-  {{/paper-card}}
-{{/paper-content}}
+  </PaperCard>
+</PaperContent>
 {{#if prd}}
-  {{print-report-dialog
-    store=store
-    closeDialog="closePrintDialog"
-    report=report2print
-  }}
+  <PrintReportDialog @store={{store}} @closeDialog="closePrintDialog" @report={{report2print}} />
 {{/if}}
 {{outlet}}
