@@ -1,4 +1,11 @@
 namespace :utils do
+  desc "reruns all image preview generations"
+  task :preview_generate => :environment  do |t, args|
+    Report.all.each do |rep|
+      rep.render_picture()
+      rep.save!
+    end
+  end
   desc ""
   namespace :typ do
     desc "Verschmiltzt zwei Typen zu einem. Namen vom ersten wird übernommen. Zweite danach gelöscht."
