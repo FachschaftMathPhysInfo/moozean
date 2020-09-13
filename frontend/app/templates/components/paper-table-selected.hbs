@@ -1,3 +1,4 @@
+<PaperSelect>
 <PaperSelectMenu @horizontalPosition={{readonly horizontalPosition}} @initiallyOpened={{readonly initiallyOpened}} @matchTriggerWidth={{readonly matchTriggerWidth}} @onClose={{action "onClose"}} @onOpen={{action "onOpen"}} @registerAPI={{action "registerAPI"}} @renderInPlace={{readonly renderInPlace}} @verticalPosition={{readonly verticalPosition}} @disabled={{readonly disabled}} @searchEnabled={{searchEnabled}} as |menu|>
 
   {{#if shouldShowLabel}}
@@ -88,3 +89,4 @@
     {{component afterOptionsComponent select=(readonly publicAPI) extra=(readonly extra)}}
   </menu.content>
 </PaperSelectMenu>
+</PaperSelect>

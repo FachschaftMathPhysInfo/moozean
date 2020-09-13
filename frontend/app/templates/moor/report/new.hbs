@@ -70,17 +70,17 @@
       </div>
     </card.content>
     <card.actions>
-      <FilePicker @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @fileLoaded="fileLoadedTex">
-        <PaperButton>
+      <FileUpload @name="tex" @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @onfileadd="fileLoadedTex">
+        a<PaperButton>
           {{paper-icon "text fields"}}{{filetexName}}
         </PaperButton>
-      </FilePicker>
+      </FileUpload>
       <span class="flex-25"></span>
-      <FilePicker @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="fileLoaded">
+      <FileUpload @name="pdf" @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @onfileadd="fileLoaded">
         <PaperButton>
           {{paper-icon "picture as pdf"}}{{fileName}}
         </PaperButton>
-      </FilePicker>
+      </FileUpload>
       <span class="flex-25"></span>
       <PaperButton @onClick={{action "save"}} @disabled={{or (or (not model.report.typ) (not model.report.subject)) (not model.report.pdf)}}>
         Speichern

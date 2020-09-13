@@ -38,16 +38,16 @@
   </PaperDialogContent>
   <PaperDialogActions @class="layout-row">
     <span class="layout-gt-xs-row layout-wrap" style="justify-content: space-around">
-    <FilePicker @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @fileLoaded="fileLoadedTex">
+    <FileUpload @preview={{false}}  @accept=".tex" @onfileadd="fileLoadedTex">
       <PaperButton>
         {{paper-icon "text fields"}} {{filetexName}}
       </PaperButton>
-    </FilePicker>
-    <FilePicker @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="fileLoaded">
+    </FileUpload>
+    <FileUpload @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @onfileadd="fileLoaded">
       <PaperButton>
         {{paper-icon "picture as pdf"}}{{fileName}}
       </PaperButton>
-    </FilePicker>
+    </FileUpload>
     <PaperButton @onClick={{action "exitDialog" "cancel"}}>Abbrechen</PaperButton>
     <PaperButton @onClick={{action "exitDialog" "ok"}}>Speichern</PaperButton>
     </span>

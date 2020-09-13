@@ -38,17 +38,17 @@
     </card.content>
     <card.actions>
     {{#if editable}}
-      <FilePicker @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @fileLoaded="fileLoadedTex">
+      <FileUpload @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @onfileadd="fileLoadedTex">
         <PaperButton>
           {{paper-icon "text fields"}} {{filetexName}}
         </PaperButton>
-      </FilePicker>
+      </FileUpload>
       <span class="flex-25"/>
-      <FilePicker @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="fileLoaded">
+      <FileUpload @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="onfileadd">
         <PaperButton>
           {{paper-icon "picture as pdf"}}{{fileName}}
         </PaperButton>
-      </FilePicker>
+      </FileUpload>
     {{else}}
       {{#if report.texAvailable}}
         <EmailShare @subject="Prüfungsbericht-TeX-Datei" @url={{report.id}} @body="Hallo roots, ich würde gerne hiermit die TeX-Datei für die folgende Prüfungsbericht-ID beantragen:">

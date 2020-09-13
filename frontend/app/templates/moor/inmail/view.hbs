@@ -28,14 +28,14 @@
       </card.content>
       <card.actions>
         <PaperButton>
-          <FilePicker @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @fileLoaded="fileLoadedTex">
+          <FileUpload @preview={{false}} @readAs="readAsBinaryString" @accept=".tex" @onfileadd="fileLoadedTex">
             {{paper-icon "text fields"}}{{filetexName}}
-          </FilePicker>
+          </FileUpload>
         </PaperButton>
         <PaperButton>
-          <FilePicker @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @fileLoaded="fileLoaded">
+          <FileUpload @preview={{false}} @readAs="readAsDataURL" @accept=".pdf" @onfileadd="fileLoaded">
             {{paper-icon "picture as pdf"}}{{fileName}}
-          </FilePicker>
+          </FileUpload>
         </PaperButton>
         <PaperButton @disabled={{or (or (not model.report.typ) (not model.report.subject)) (not model.report.pdf)}} @onClick={{action "save"}}>
           Speichern

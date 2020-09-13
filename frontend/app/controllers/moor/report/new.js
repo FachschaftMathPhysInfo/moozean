@@ -6,10 +6,12 @@ export default Controller.extend(texUploading,{
   filetexName:"TeX hochladen",
   actions:{
     fileLoaded:function(file) {
+      console.log(file);
       this.set('model.report.pdf',file.data);
       this.set('fileName',file.filename);
     },
     fileLoadedTex:function(file) {
+      console.log(file);
       this.set('model.report.tex',file.data);
       this.set('filetexName',file.filename);
     },

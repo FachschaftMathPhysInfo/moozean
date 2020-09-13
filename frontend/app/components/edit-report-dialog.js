@@ -5,7 +5,11 @@ export default Component.extend({
   filetexName:"bisherige Datei",
   actions:{
     fileLoaded:function(file) {
-      this.set('report.pdf',file.data);
+      console.log(file);
+      file.readAsDataURL().then((url) => {
+        console.log(url);
+        this.set('report.pdf',url);
+      });
       this.set('fileName',file.filename);
     },
     fileLoadedTex:function(file) {

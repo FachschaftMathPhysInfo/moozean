@@ -3,15 +3,15 @@
 </div>
 <div class="page-select" style="margin: 30px;">
 	<div class="md-table-label">Seite:&nbsp;</div>
-	<PaperTableSelected @class="no-min-wdith" @options={{readonly pagesA}} @selected={{page}} @onChange={{action (mut page)}} as |pageNumber|>
+	<PaperSelect @class="no-min-wdith" @options={{readonly pagesA}} @selected={{page}} @onChange={{action (mut page)}} as |pageNumber|>
 		{{pageNumber}}
-	</PaperTableSelected>
+	</PaperSelect>
 </div>
 <div class="limit-select" style="margin: 0px;">
 	<div class="md-table-label">{{plural}} pro Seite:&nbsp;</div>
-	<PaperTableSelected @class="no-min-wdith" @options={{limitOptions}} @selected={{limit}} @onChange={{pipe (action (mut limit)) (action "resetPage")}} as |limit|>
+	<PaperSelect @class="no-min-wdith" @options={{limitOptions}} @selected={{limit}} @onChange={{pipe (action (mut limit)) (action "resetPage")}} as |limit|>
 		{{limit}}
-	</PaperTableSelected>
+	</PaperSelect>
 </div>
 <div class="buttons">
 	{{#if total}}<div class="label">{{startOffset}} - {{endOffset}} of {{total}}</div>{{/if}}
