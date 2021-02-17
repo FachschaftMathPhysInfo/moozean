@@ -1,6 +1,6 @@
 module Api
   class PrintoutfolderResource < JSONAPI::Resource
-    attributes :times
+    attributes :times, :uniid
     has_one :folderseries
     after_save :print_documents
 
@@ -30,7 +30,7 @@ module Api
          r.examinators.empty? ? 'zzz' : r.examinators.first.surname]
       end.each do |report|
         examinator = report.examinators.first
-        report.add_report(buffer, dir, @model.folderseries, examinator, index)
+        report.add_report(buffer, dir, @model.folderseries, examinator, index, @model.uniid)
         index += 1
       end
     end

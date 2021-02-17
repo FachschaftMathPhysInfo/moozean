@@ -1,22 +1,27 @@
-import { computed } from '@ember/object';
-import { A } from '@ember/array';
+import {
+  computed
+} from '@ember/object';
+import {
+  A
+} from '@ember/array';
 import Controller from '@ember/controller';
 import paginatedResult from "ember-ozean/mixins/paginated-result";
-export default Controller.extend(paginatedResult,{
-  pruefende:A(),
-  module:A(),
-  printselection:A(),
-  selectedDate:null,
-  pruefauswahl:A(),
-  reportslist:A(),
-  auswahl:false,
+export default Controller.extend(paginatedResult, {
+  pruefende: A(),
+  module: A(),
+  uniid: "",
+  printselection: A(),
+  selectedDate: null,
+  pruefauswahl: A(),
+  reportslist: A(),
+  auswahl: false,
   limitOptions: A([5, 10, 15]),
   limit: 5,
-  resultsLength:computed('meta.record-count', function() {
+  resultsLength: computed('meta.record-count', function () {
     return this.get("meta.record-count");
   }),
   page: 1,
-  queryReports:function(moduls,examinators,folderseries){
+  queryReports: function (moduls, examinators, folderseries) {
     let ergebnis = this.get('store').query('report', {
       filter: {
         subject: this.get('subject.id'),
@@ -24,15 +29,19 @@ export default Controller.extend(paginatedResult,{
         moduls: moduls,
         examinators: examinators,
         folderseries: folderseries
-      }, page: {size: this.get("limit"),number:this.get("page")}
+      },
+      page: {
+        size: this.get("limit"),
+        number: this.get("page")
+      }
     });
     ergebnis.then((data) => {
-      this.set("meta",data.meta);
+      this.set("meta", data.meta);
       this.set("loading", false);
     });
     return ergebnis;
   },
-  results: computed('pruefende.[]', 'module.[]', 'subject', 'typ','page','limit', function() {
+  results: computed('pruefende.[]', 'module.[]', 'subject', 'typ', 'page', 'limit', function () {
     this.set("loading", true);
     let moduls = [];
     let examinators = [];
@@ -47,83 +56,95 @@ export default Controller.extend(paginatedResult,{
         moduls.pushObject(item.get("id"));
       });
     }
-    let ergebnis = this.queryReports(moduls,examinators,folderseries);
+    let ergebnis = this.queryReports(moduls, examinators, folderseries);
     return ergebnis;
   }),
-  createPrintout: function(item) {
-    return this.store.createRecord('printout',{report:item.report,times:1,folderseries:this.get('model'),examinator:item.examinator});
+  createPrintout: function (item) {
+    return this.store.createRecord('printout', {
+      report: item.report,
+      times: 1,
+      folderseries: this.get('model'),
+      examinator: item.examinator
+    });
   },
-  printMany: function(query){
-    this.set('reportslist',this.get(query));
-    this.set('auswahl',false);
-    this.set('showPruefDialog',true);
+  printMany: function (query) {
+    this.set('reportslist', this.get(query));
+    this.set('auswahl', false);
+    this.set('showPruefDialog', true);
   },
-  actions:{
-    removeExaminator:function(examinator){
+  actions: {
+    removeExaminator: function (examinator) {
       this.get('pruefende').removeObject(examinator);
     },
-    addExaminator: function(examinator){
+    addExaminator: function (examinator) {
       this.get('pruefende').pushObject(examinator);
     },
-    removeModul:function(modul){
+    removeModul: function (modul) {
       this.get('module').removeObject(modul);
     },
-    addModul: function(modul){
+    addModul: function (modul) {
       this.get('module').pushObject(modul);
     },
-    printReportCon:function(report) {
-      this.set('reportslist',[report]);
-      this.set('auswahl',false);
-      this.set('showPruefDialog',true);
+    printReportCon: function (report) {
+      this.set('reportslist', [report]);
+      this.set('auswahl', false);
+      this.set('showPruefDialog', true);
     },
-    increaseTimes:function(select){
-      select.set('times',select.get('times')+1);
+    increaseTimes: function (select) {
+      select.set('times', select.get('times') + 1);
     },
-    decreaseTimes:function(select){
-      if(select.get('times')>1){
-        select.set('times',select.get('times')-1);
-      }
-      else{
+    decreaseTimes: function (select) {
+      if (select.get('times') > 1) {
+        select.set('times', select.get('times') - 1);
+      } else {
         this.get('printselection').removeObject(select);
-        this.set('printselection',this.get('printselection').slice());
+        this.set('printselection', this.get('printselection').slice());
       }
     },
-    printAll:function(){
-      if(confirm("Möchtest du den gesamten Ordner ausdrucken?")) {
-        this.set("printing",true);
-        this.store.createRecord('printoutfolder',{times:1,folderseries:this.get("model")}).save().then(()=>{
-          this.set("printing",false);
+    printAll: function () {
+      if (confirm("Möchtest du den gesamten Ordner ausdrucken?")) {
+        this.set("printing", true);
+        let s = prompt("UniId des Studis?");
+        while (s == "" || s == null || s.length != 5) {
+          s = prompt("Ich sagte Uniid!");
+        }
+        this.store.createRecord('printoutfolder', {
+          times: 1,
+          folderseries: this.get("model"),
+          uniid: s
+        }).save().then(() => {
+          this.set("printing", false);
         });
       }
     },
-    printShown:function(){
+    printShown: function () {
       this.printMany('gefilterte');
     },
-    printSelection:function(){
-      this.get('printselection').forEach((printout)=>{
+    printSelection: function () {
+      this.get('printselection').forEach((printout) => {
         printout.save().then(null)
       });
-      this.set('printselection',[]);
+      this.set('printselection', []);
     },
-    closeDialogAuswahl:function(option){
-      if(option=="ok"){
-        this.get('pruefauswahl').forEach((item)=>{
-          let a=this.createPrintout(item);
+    closeDialogAuswahl: function (option) {
+      if (option == "ok") {
+        this.get('pruefauswahl').forEach((item) => {
+          let a = this.createPrintout(item);
           this.get('printselection').pushObject(a);
         });
       }
-      this.set('reportslist',[]);
-      this.set('showPruefDialog',false);
+      this.set('reportslist', []);
+      this.set('showPruefDialog', false);
     },
-    closeDialogDrucken:function(option){
-      if(option=="ok"){
-        this.get('pruefauswahl').forEach((item)=>{
-          let pr=this.createPrintout(item);
+    closeDialogDrucken: function (option) {
+      if (option == "ok") {
+        this.get('pruefauswahl').forEach((item) => {
+          let pr = this.createPrintout(item);
           pr.save().then(null)
         });
       }
-      this.set('reportslist',[]);
-      this.set('showPruefDialog',false);
+      this.set('reportslist', []);
+      this.set('showPruefDialog', false);
     }
   }
 });

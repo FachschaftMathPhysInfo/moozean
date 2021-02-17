@@ -49,7 +49,7 @@ class Report < ApplicationRecord
     buffer
   end
 
-  def generate_page(folderseries,examinator,times, page,pages_s,dir,report_name,generation_info="")
+  def generate_page(folderseries,examinator,times, page,pages_s,dir,report_name,generation_info="",uniid="")
     buffer =  '\begin{textblock*}{1cm}(0mm,0mm)'<<"\n"
     buffer << '\setlength{\unitlength}{1mm}'<<"\n"
     buffer << '\begin{picture}(0,0)(0,0)'<<"\n"
@@ -69,7 +69,11 @@ class Report < ApplicationRecord
     buffer << '\put(67,-15){\scriptsize ' << self.typ.name << '{ $\triangleright$ }' << self.subject.name << '{ $\triangleright$ }'<<"\n"
     buffer << self.moduls.collect{|mod| mod.name}.join(", ")
     buffer << '}' << "\n" << '\put(145,-7.5){\tiny Ordner:}'<<"\n"
-    buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}\end{pspicture}}'<<"\n"
+    if uniid ==""
+      buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}\end{pspicture}}'<<"\n"
+    else
+      buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<uniid<<'}{}{qrcode}\end{pspicture}}'<<"\n"
+    end
     buffer << '\put(145,-15){\Huge\bf ' << folderseries.name << '}'<<"\n"
     buffer << '\put(172,-5.6){\tiny Datum:}'<<"\n"
     buffer << '\put(172,-9){\normalsize\bf ' << self.examination_at.strftime("%Y-%m") << '}'<<"\n" unless self.examination_at.nil?
@@ -79,21 +83,25 @@ class Report < ApplicationRecord
     buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s.to_s << '}'<<"\n"
     buffer << '\put(10,-18){\small ' << generation_info << '}' << "\n"
     buffer << '\put(6,-295){\includegraphics*[width=187mm,height=265mm]{'<<dir<<'/' << report_name << '_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
-    buffer << '\put(10,-295){\small ' << generation_info << '}' << "\n"
+    if uniid != ""
+      buffer << '\put(10,-295){\small ' << "Generiert für "<<uniid <<" sichtbar und unsichtbar gegen Weitergabe geschützt." << '}' << "\n"
+    else
+      buffer << '\put(10,-295){\small ' << generation_info << '}' << "\n"
+    end
     buffer << '\end{picture}'<<"\n" << '\end{textblock*}'<<"\n" << '\null\newpage'<<"\n"
     buffer
   end
 
-  def add_report(buffer,dir,folderseries,examinator,index)
+  def add_report(buffer,dir,folderseries,examinator,index, uniid="")
     pages_s, error = Open3.capture2("pdftk - dump_data | grep 'NumberOfPages' | sed 's/[^0-9]//g'", :stdin_data=>self.pdf, :binmode=>true)
     Open3.capture2("pdftk - burst output #{dir}/report_#{index}_%02d.pdf",:stdin_data => self.pdf,:binmode=>true)
     pages_s.to_i.times do |page|
-      buffer << generate_page(folderseries,examinator,1,page,pages_s.to_i, dir,"report_#{index}")
+      buffer << generate_page(folderseries,examinator,1,page,pages_s.to_i, dir,"report_#{index}","",uniid)
     end
     buffer << '\cleardoublepage' << "\n"
   end
 
-  def print_document(folderseries,examinator, times)
+  def print_document(folderseries,examinator, times, uniid ="")
     buffer= make_header()
     Dir.mktmpdir{ |dir|
       puts buffer
@@ -101,7 +109,7 @@ class Report < ApplicationRecord
       pages_s, error = Open3.capture2("pdftk - dump_data | grep 'NumberOfPages' | sed 's/[^0-9]//g'", :stdin_data=>self.pdf, :binmode=>true)
       Open3.capture2("pdftk - burst output #{dir}/current_report_%02d.pdf",:stdin_data => self.pdf,:binmode=>true)
       pages_s.to_i.times do |page|
-        buffer << generate_page(folderseries,examinator,times,page,pages_s.to_i, dir,"current_report")
+        buffer << generate_page(folderseries,examinator,times,page,pages_s.to_i, dir,"current_report", "",uniid)
       end
       buffer << '\cleardoublepage' << "\n"
       buffer << '\end{document}'
