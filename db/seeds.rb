@@ -14,7 +14,7 @@ Typ.create(name:'Klausur')
 Typ.create(name:'Diplomprüfung')
 Typ.create(name:'Master')
 for i in 0..30
-  Examinator.create(givenname:Faker::Name.first_name,surname:Faker::Name.last_name,title:Faker::Name.title)
+  Examinator.create(givenname:Faker::Name.first_name,surname:Faker::Name.last_name,title:"HC")
   Modul.create(name:'Mathe'+i.to_s,abbreviation:'M'+i.to_s,link_modulhandbuch:Faker::Internet.url)
 end
 for i in 0..4
@@ -23,7 +23,7 @@ end
 for i in 0..5
   Folder.create(barcode:Faker::Code.ean,suffix:i.to_s,folderseries:Folderseries.offset(rand(Folderseries.count)).first)
   Student.create(name:Faker::Name.name,uniid:'ab'+rand(0..999).to_s,refund:[true, false].sample,report:[true, false].sample)
-  report= Report.create(pdf:File.read('erd.pdf'),tex:'tex'+rand(0..300).to_s,examination_at:Faker::Date.between(2.days.ago, Date.tomorrow),subject:Subject.offset(rand(Subject.count)).first,typ:Typ.offset(rand(Typ.count)).first)
+  report= Report.create(pdf:File.read('erd.pdf'),tex:'tex'+rand(0..300).to_s,examination_at:Faker::Date.between(from:2.days.ago,to: Date.tomorrow),subject:Subject.offset(rand(Subject.count)).first,typ:Typ.offset(rand(Typ.count)).first)
   IsAbout.create(modul:Modul.offset(rand(Modul.count)).first,report:report)
   ExaminedBy.create(examinator:Examinator.offset(rand(Examinator.count)).first,report:report)
   IsIn.create(report:report,folderseries:Folderseries.offset(rand(Folderseries.count)).first)

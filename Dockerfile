@@ -1,12 +1,12 @@
-FROM phusion/passenger-customizable:0.9.34
+FROM phusion/passenger-ruby25
 LABEL vendor="Fachschaft MathPhysInfo"
 MAINTAINER Henrik Reinstädtler <henrik@mathphys.stura.uni-heidelberg.de>
-RUN apt-get update && \
-    apt-get install -y gnupg2 dirmngr && \
-    gpg2 --recv-keys 7D2BAF1CF37B13E2069D6956105BD0E739499BDB && \
-    curl -sSL https://rvm.io/mpapis.asc | gpg2 --import - && \
-    /pd_build/ruby-2.3.7.sh && \
-    /pd_build/redis.sh
+#RUN apt-get update && \
+#    apt-get install -y gnupg2 dirmngr
+#RUN gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 
+# RUN    curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -  
+ # RUN  /pd_build/ruby-2.3.7.sh  
+ #  RUN  /pd_build/redis.sh
 
 # Enable the Redis service.
 RUN rm -f /etc/service/redis/down && \
@@ -36,9 +36,9 @@ WORKDIR $INSTALL_PATH
 
 #Gemfile kopieren
 COPY --chown=app:app Gemfile Gemfile.lock ./
+COPY --chown=app:app bin bin
 #bundles installieren
-RUN gem install bundler && \
-    DEBUG_RESOLVER=1 bundler install --binstubs --verbose
+RUN bin/bundle install
 #und den rest kopieren
 COPY --chown=app:app ./ ./
 ENV RAILS_ENV production
