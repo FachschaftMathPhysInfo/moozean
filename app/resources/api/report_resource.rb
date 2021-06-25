@@ -32,9 +32,7 @@ module Api
     }
     def self.filter_by(records, value, category, model)
       if value.is_a?(Array)
-        value.each do |val|
-          records = records.joins("INNER JOIN #{category} #{category}" + val.to_s + " ON #{category}" + val.to_s + '.report_id = reports.id').where(category.to_s + val.to_s + ".#{model}_id" => val)
-        end
+        records = records.joins("INNER JOIN #{category} #{category}"  + " ON #{category}"  + '.report_id = reports.id').where("#{category}.#{model}_id"=> value)
         records
       else
         records.joins("INNER JOIN #{category} #{category}" + value.to_s + " ON #{category}" + value.to_s + '.report_id = reports.id').where(category.to_s + value.to_s + ".#{model}_id" => value)
