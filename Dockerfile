@@ -14,7 +14,7 @@ RUN rm -f /etc/service/redis/down && \
     apt-get install -qq -y --no-install-recommends \
     build-essential nodejs npm libpq-dev wget git cron pdftk \
     imagemagick libmagickwand-dev ghostscript texlive-latex-extra \
-    cups texlive-pstricks texlive-fonts-recommended
+    cups texlive-pstricks texlive-fonts-recommended texlive-luatex
 
 ENV HOME /root
 

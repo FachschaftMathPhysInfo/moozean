@@ -9,6 +9,8 @@ class Report < ApplicationRecord
   has_many :examinators, through: :examined_bies
   has_many :is_abouts, dependent: :delete_all
   has_many :moduls, through: :is_abouts
+  has_many :printouts, dependent: :destroy
+  has_many :downloads, dependent: :destroy
 
   def render_picture
     if(self.pdf!=nil)
