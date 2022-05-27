@@ -102,7 +102,7 @@ GEM
     puma (3.12.6)
     queue_classic (3.1.0)
       pg (>= 0.17, < 0.19)
-    rack (2.2.3)
+    rack (2.2.3.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.1.7)
