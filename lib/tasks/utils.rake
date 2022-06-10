@@ -19,7 +19,7 @@ namespace :utils do
     task :merge, [:ident_one,:ident_two]=> :environment do |t, args|
       puts "Merging #{Modul.find(args.ident_two).name} into #{Modul.find(args.ident_one).name}"
       IsAbout.where(modul_id:args.ident_two).update_all(modul_id:args.ident_one)
-      IsAbout.find(args.ident_two).destroy
+      Modul.find(args.ident_two).destroy
     end
   end
   namespace :folderseries do

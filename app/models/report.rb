@@ -59,7 +59,7 @@ class Report < ApplicationRecord
     buffer << '\put(5,-17){\line(1,0){200}}'<<"\n"
     buffer << '\put(48,-17){\line(0,1){12}}'<<"\n"
     buffer << '\fontsize{11pt}{21}\selectfont'<<"\n"
-    buffer << '\put(5,-11){\Huge $\mu\varphi$}'<<"\n"
+    buffer << '\put(5,-11){\includegraphics[width=1.8\cm]{/home/app/ozean/logo.png}}'<<"\n"
     buffer << '\put(18,-7){\scriptsize Fachschaft MathPhys}'<<"\n"
     buffer << '\put(18,-10){\scriptsize Universität Heidelberg}'<<"\n"
     buffer << '\put(18,-15){\bf Prüfungsbericht}'<<"\n"
