@@ -1,4 +1,4 @@
-defaults: &defaults
+defaults: &default
   imap_server: <%= ENV['PRODUCTION_IMAP_SERVER'] %>
   imap_port: <%= ENV['PRODUCTION_IMAP_PORT'] %>
   use_ssl: true
@@ -9,10 +9,10 @@ defaults: &defaults
   box: <%= ENV['PRODUCTION_EMAIL_BOX'] %>
 
 development:
-  <<: *defaults
+  <<: *default
 
 test:
-  <<: *defaults
+  <<: *default
 
 production:
-  <<: *defaults
+  <<: *default

@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.1'
+gem 'rails', '~> 6  '
 # Use sqlite3 as the database for Active Record
 gem 'pg'
 #gem 'sqlite3'
@@ -43,14 +43,19 @@ group :production do
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
-gem "queue_classic", '~> 3.1'
+gem "queue_classic"#, '~> 3.1'
 gem 'jsonapi-resources'
+gem 'net-smtp', require: false
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+
 
 gem 'rails_12factor', group: [:staging, :production]
 gem "rails-erd"
 gem 'mail'
 gem 'whenever', :require => false
 gem 'iconv'
+gem 'psych', '< 4'
 group :development, :test do
   gem "rspec-rails", "~> 3.6.0"
 end
