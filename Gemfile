@@ -44,7 +44,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data'
 gem "queue_classic"#, '~> 3.1'
-gem 'jsonapi-resources'
+gem 'jsonapi-resources', '=0.9.12'
 gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false

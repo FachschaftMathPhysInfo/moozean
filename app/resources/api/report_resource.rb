@@ -48,7 +48,7 @@ module Api
       when 'examinators.id'
         records = filter_by(records, value, 'examined_bies', 'examinator')
       else
-        super(records, filter, value)
+        super(records, filter.to_s, value)
       end
     end
     has_many :examinators, acts_as_set: true
