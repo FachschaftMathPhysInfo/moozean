@@ -33,7 +33,7 @@
       class="flex-50"
       fullscreen=true
       multiple=true
-      options=model.folderseries
+      options=model.report.folderseries
       selected=folderseriesToBePrint
       onSelect=(action (mut folderseriesToBePrint))
       onClose=(action
@@ -51,7 +51,7 @@
       class="flex-50"
       fullscreen=true
       multiple=true
-      options=model.examinators
+      options=model.report.examinators
       selected=examinatorsToBePrint
       onSelect=(action (mut examinatorsToBePrint))
       onClose=(action "printDialog") as |option index selected|

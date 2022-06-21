@@ -74,7 +74,7 @@ class Report < ApplicationRecord
     if uniid ==""
       buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}\end{pspicture}}'<<"\n"
     else
-      buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<":"<<uniid<<'}{}{qrcode}\end{pspicture}}'<<"\n"
+      buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<":"<<uniid.to_s<<'}{}{qrcode}\end{pspicture}}'<<"\n"
     end
     buffer << '\put(145,-15){\Huge\bf ' << folderseries.name << '}'<<"\n"
     buffer << '\put(172,-5.6){\tiny Datum:}'<<"\n"
@@ -82,7 +82,7 @@ class Report < ApplicationRecord
     buffer << '\put(172,-11.6){\tiny Nummer:}'<<"\n"
     buffer << '\put(172,-15){\normalsize\bf ' << self.id.to_s << '}'<<"\n"
     buffer << '\put(190,-7.5){\tiny Seite:}'<<"\n"
-    buffer << '\put(190,-15){\Huge\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s.to_s << '}'<<"\n"
+    buffer << '\put(190,-15){\large\bf ' << (page+1).to_s << '{\large \,}/{\large \,}' << pages_s.to_s << '}'<<"\n"
     buffer << '\put(10,-18){\small ' << generation_info << '}' << "\n"
     buffer << '\put(6,-295){\includegraphics*[width=187mm,height=265mm]{'<<dir<<'/' << report_name << '_' << "%02d" % (page+1) << '.pdf}}'<<"\n"
     if uniid != ""
