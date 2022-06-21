@@ -59,7 +59,7 @@ class Report < ApplicationRecord
     buffer << '\put(5,-17){\line(1,0){200}}'<<"\n"
     buffer << '\put(48,-17){\line(0,1){12}}'<<"\n"
     buffer << '\fontsize{11pt}{21}\selectfont'<<"\n"
-    buffer << '\put(5,-11){\includegraphics[width=1.8\cm]{/home/app/ozean/logo.png}}'<<"\n"
+    #buffer << '\put(5,-11){\includegraphics[width=1.8\cm]{/home/app/ozean/logo.png}}'<<"\n"
     buffer << '\put(18,-7){\scriptsize Fachschaft MathPhys}'<<"\n"
     buffer << '\put(18,-10){\scriptsize Universität Heidelberg}'<<"\n"
     buffer << '\put(18,-15){\bf Prüfungsbericht}'<<"\n"
@@ -74,7 +74,7 @@ class Report < ApplicationRecord
     if uniid ==""
       buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<'}{}{qrcode}\end{pspicture}}'<<"\n"
     else
-      buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<uniid<<'}{}{qrcode}\end{pspicture}}'<<"\n"
+      buffer << '\put(50,-16){\begin{pspicture}(1.2cm,1.2cm)\psbarcode[scalex=0.8,scaley=0.8]{'<<self.id.to_s<<"-"<<page.to_s<<":"<<uniid<<'}{}{qrcode}\end{pspicture}}'<<"\n"
     end
     buffer << '\put(145,-15){\Huge\bf ' << folderseries.name << '}'<<"\n"
     buffer << '\put(172,-5.6){\tiny Datum:}'<<"\n"
