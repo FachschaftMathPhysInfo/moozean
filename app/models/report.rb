@@ -37,6 +37,7 @@ class Report < ApplicationRecord
     buffer << '\documentclass[a4paper,twoside]{article}'<<"\n"
     buffer << '\usepackage[absolute]{textpos}'<<"\n"
     buffer << '\usepackage{psfrag}'<<"\n"
+    buffer << '\usepackage{adjustbox}'<<"\n"
     buffer << '\usepackage{pst-barcode}'<<"\n"
     buffer << '\usepackage[runs=2, crop=off]{auto-pst-pdf}'<<"\n"
     buffer << '\usepackage{graphicx}'<<"\n"
@@ -63,11 +64,12 @@ class Report < ApplicationRecord
     buffer << '\put(18,-7){\scriptsize Fachschaft MathPhys}'<<"\n"
     buffer << '\put(18,-10){\scriptsize Universität Heidelberg}'<<"\n"
     buffer << '\put(18,-15){\bf Prüfungsbericht}'<<"\n"
-    if examinator.nil?
-      buffer << '\put(67,-9){\Large{\bf unknown}, unbekannt}'<<"\n"
-    else
-      buffer << '\put(67,-9){\Large{\bf ' << examinator.surname << '}, ' << examinator.givenname << '}'<<"\n"
-    end
+    #if examinator.nil?
+    #  buffer << '\put(67,-9){\Large{\bf unknown}, unbekannt}'<<"\n"
+    #else
+    examinatorss = self.examinators.map{|examinator| '{\bf ' + examinator.surname + '}, ' + examinator.givenname}.join('; ')
+    buffer << '\put(67,-9){ \maxsizebox{80mm}{8mm}{'<<examinatorss<<'}}'<<"\n"
+    #end
     buffer << '\put(67,-15){\scriptsize ' << self.typ.name << '{ $\triangleright$ }' << self.subject.name << '{ $\triangleright$ }'<<"\n"
     buffer << self.moduls.collect{|mod| mod.name}.join(", ")
     buffer << '}' << "\n" << '\put(145,-7.5){\tiny Ordner:}'<<"\n"
