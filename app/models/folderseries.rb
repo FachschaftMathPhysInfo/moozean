@@ -1,4 +1,6 @@
 class Folderseries < ApplicationRecord
+  has_many :printoutfolders, dependent: :destroy
+  has_many :printouts, dependent: :destroy
   has_many :folders, dependent: :destroy
   has_many :is_ins, dependent: :destroy
   has_many :reports, :through => :is_ins
