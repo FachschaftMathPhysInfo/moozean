@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby30
+FROM phusion/passenger-ruby32
 LABEL vendor="Fachschaft MathPhysInfo"
 MAINTAINER Henrik Reinstädtler <henrik@mathphys.stura.uni-heidelberg.de>
 #RUN apt-get update && \
