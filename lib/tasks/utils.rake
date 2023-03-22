@@ -14,6 +14,13 @@ namespace :utils do
       Typ.find(args.ident_two).destroy
     end
   end
+  namespace :subject do
+    desc "Verschmiltzt zwei Subjects zu einem. Namen vom ersten wird übernommen. Zweite danach gelöscht."
+    task :merge, [:ident_one,:ident_two]=> :environment do |t, args|
+      Report.where(subject_id:args.ident_two).update_all(subject_id:args.ident_one)
+      Subject.find(args.ident_two).destroy
+    end
+  end
   namespace :modul do
     desc "Verschmiltzt zwei Module zu einem. Namen vom ersten wird übernommen. Zweite danach gelöscht. Mehrfache tags bleiben erhalten."
     task :merge, [:ident_one,:ident_two]=> :environment do |t, args|
