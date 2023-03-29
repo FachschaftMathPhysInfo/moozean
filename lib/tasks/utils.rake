@@ -28,6 +28,12 @@ namespace :utils do
       IsAbout.where(modul_id:args.ident_two).update_all(modul_id:args.ident_one)
       Modul.find(args.ident_two).destroy
     end
+    desc "Teilt ein Modul in zwei andere auf. Die ersten zwei werden gefüllt, das dritte wird geleert und gelöscht."
+    task :split, [:ident_one,:ident_two,:ident_three]=> :enviroment do |t,args|
+      puts "Splitting #{Modul.find(args.ident_three).name} into #{Modul.find(args.ident_one).name} and #{Modul.find(args.ident_two).name}"
+      IsAbout.where(modul_id:args.ident_three).update_all(modul_id:args.ident_one)
+      IsAbout.where(modul_id:args.ident_three).update_all(modul_id:args.ident_two)
+      Modul.find(args.ident_three).destroy
   end
   namespace :folderseries do
     desc "Verschmiltzt zwei Ordnerreihen zu einer. Namen vom ersten wird übernommen. Zweite danach gelöscht. Mehrfache tags bleiben erhalten."
