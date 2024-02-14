@@ -40,7 +40,7 @@ services:
       - PRODUCTION_DATABASE_PASSWORD=WKJWajdaw
       - PRODUCTION_DATABASE_PORT=5432
       - PRINTER_HOST=192.168.0.1:631
-      - PRINTER_NAME=sw-simplex
+      - PRINTER_NAME=sw-duplex
       - PRODUCTION_IMAP_SERVER=webmail.henrixapp.com
       - PRODUCTION_IMAP_PORT=993
       - PRODUCTION_EMAIL_ADDRESS=pruefungsberichte@henrixapp.com
