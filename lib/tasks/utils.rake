@@ -6,6 +6,13 @@ namespace :utils do
       rep.save!
     end
   end
+  desc "reruns all image preview generations for a single folder"
+  task :preview_generate_folder, [:folder_id]=> :enviroment do |t, args|
+    Report.where(folderseries_id:args.folder_id).each do |rep|
+      rep.render_picture()
+      rep.save!
+    end
+  end
   desc ""
   namespace :typ do
     desc "Verschmiltzt zwei Typen zu einem. Namen vom ersten wird übernommen. Zweite danach gelöscht."
