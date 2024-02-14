@@ -8,23 +8,10 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6  '
-# Use sqlite3 as the database for Active Record
+# Use postgresql as the database for Active Record
 gem 'pg'
-#gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -38,33 +25,18 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 gem 'faker'
-group :production do
-#   gem 'heroku-deflater'
-end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data'
-gem "queue_classic"#, '~> 3.1'
 gem 'jsonapi-resources', '=0.9.12'
-gem 'net-smtp', require: false
 gem 'net-imap', require: false
 gem 'net-pop', require: false
+gem 'net-smtp', require: false
+gem 'queue_classic'
+gem 'tzinfo-data'
 
-
-gem 'rails_12factor', group: [:staging, :production]
-gem "rails-erd"
-gem 'mail'
-gem 'whenever', :require => false
 gem 'iconv'
+gem 'mail'
 gem 'psych', '< 4'
-group :development, :test do
-  gem "rspec-rails", "~> 3.6.0"
-end
-
-group :test do
-  gem 'capybara'
-  gem "chromedriver-helper"
-  gem "selenium-webdriver"
-  gem "database_cleaner"
-#  gem 'poltergeist'
-#  gem "capybara-webkit"
-end
+gem 'rails_12factor', group: [:staging, :production]
+gem 'rails-erd'
+gem 'whenever', :require => false

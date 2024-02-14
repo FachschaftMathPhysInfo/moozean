@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby30
+FROM phusion/passenger-ruby32
 LABEL vendor="Fachschaft MathPhysInfo"
 MAINTAINER Henrik Reinstädtler <henrik@mathphys.stura.uni-heidelberg.de>
 #RUN apt-get update && \
@@ -9,20 +9,20 @@ MAINTAINER Henrik Reinstädtler <henrik@mathphys.stura.uni-heidelberg.de>
  #  RUN  /pd_build/redis.sh
 
 # Enable the Redis service.
-RUN rm -f /etc/service/redis/down && \
+RUN rm -f /etc/service/redis/down && \ 
     apt-get update && \
-    apt-get install -qq -y --no-install-recommends \
-    build-essential nodejs npm libpq-dev wget git cron pdftk \
-    imagemagick libmagickwand-dev ghostscript texlive-latex-extra \
-    cups texlive-pstricks texlive-fonts-recommended texlive-luatex
+    apt-get install -y \
+        build-essential libpq-dev wget git cron pdftk \
+        imagemagick libmagickwand-dev ghostscript texlive-latex-extra \
+        cups texlive-pstricks texlive-fonts-recommended texlive-luatex
 
 ENV HOME /root
 
 # Use baseimage-docker's init process.
 CMD ["/bin/bash", "-c", "/sbin/my_init 2>&1 | tee /home/app/ozean/log/stdout.log"]
 #update nodejs
-RUN npm cache clean -f && \
-    npm install -g n && \
+RUN npm install -g n && \
+    npm cache clean -f && \
     n 8
 RUN PATH="$PATH" && \ 
     npm install -g bower && \
