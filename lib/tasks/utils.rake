@@ -6,9 +6,9 @@ namespace :utils do
       rep.save!
     end
   end
-  desc "reruns all image preview generations for a single folder"
-  task :preview_generate_folder, [:folder_id]=> :enviroment do |t, args|
-    Report.where(folderseries_id:args.folder_id).each do |rep|
+  desc "reruns all image preview generations for reports without a rendered picture"
+  task :preview_generate_missing => :enviroment do |t, args|
+    Report.where(picture: ["data:image/png;base64,").each do |rep|
       rep.render_picture()
       rep.save!
     end
