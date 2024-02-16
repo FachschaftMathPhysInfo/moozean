@@ -35,13 +35,20 @@ namespace :utils do
       IsAbout.where(modul_id:args.ident_two).update_all(modul_id:args.ident_one)
       Modul.find(args.ident_two).destroy
     end
-    desc "Teilt ein Modul in zwei andere auf. Die ersten zwei werden gefüllt, das dritte wird geleert und gelöscht."
+    desc "Teilt ein Modul in zwei andere auf. Das erste wird in die beiden anderen aufgeteilt und dann gelöscht."
     task :split, [:ident_one,:ident_two,:ident_three]=> :enviroment do |t,args|
-      puts "Splitting #{Modul.find(args.ident_three).name} into #{Modul.find(args.ident_one).name} and #{Modul.find(args.ident_two).name}"
-      IsAbout.where(modul_id:args.ident_three).update_all(modul_id:args.ident_one)
-      IsAbout.where(modul_id:args.ident_three).update_all(modul_id:args.ident_two)
-      Modul.find(args.ident_three).destroy
-  end
+      puts "Splitting #{Modul.find(args.ident_one).name} into #{Modul.find(args.ident_two).name} and #{Modul.find(args.ident_three).name}"
+      isAbout_entrys_ident_one = IsAbout.where(modul_id:args.ident_one)
+      module_two = Modul.find(ident_two)
+      module_three = Modul.find(ident_three)
+      isAbout_entrys_ident_one.each do |is_about|
+        rep = Report.find(is_about.report_id)
+        IsAbout.create(report:rep,modul:module_two)
+        IsAbout.create(report:rep,modul:module_three)
+        is_about.destroy
+      end #this should end the loop
+    end   #this should end the function
+  end     #this should end the modul namespace
   namespace :folderseries do
     desc "Verschmiltzt zwei Ordnerreihen zu einer. Namen vom ersten wird übernommen. Zweite danach gelöscht. Mehrfache tags bleiben erhalten."
     task :merge, [:ident_one,:ident_two]=> :environment do |t, args|
