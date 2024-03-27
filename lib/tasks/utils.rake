@@ -8,7 +8,7 @@ namespace :utils do
   end
   desc "reruns all image preview generations for reports without a rendered picture"
   task :preview_generate_missing => :enviroment do |t, args|
-    Report.where(picture: ["data:image/png;base64,").each do |rep|
+    Report.where(picture:"data:image/png;base64,").each do |rep|
       rep.render_picture()
       rep.save!
     end
@@ -46,9 +46,9 @@ namespace :utils do
         IsAbout.create(report:rep,modul:module_two)
         IsAbout.create(report:rep,modul:module_three)
         is_about.destroy
-      end #this should end the loop
-    end   #this should end the function
-  end     #this should end the modul namespace
+      end
+    end
+  end
   namespace :folderseries do
     desc "Verschmiltzt zwei Ordnerreihen zu einer. Namen vom ersten wird übernommen. Zweite danach gelöscht. Mehrfache tags bleiben erhalten."
     task :merge, [:ident_one,:ident_two]=> :environment do |t, args|
