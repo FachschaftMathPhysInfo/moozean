@@ -109,7 +109,8 @@ GEM
       racc (~> 1.4)
     pg (1.4.6)
     psych (3.3.4)
-    puma (3.12.6)
+    puma (4.3.12)
+      nio4r (~> 2.0)
     queue_classic (4.0.0)
       pg (>= 1.1, < 2.0)
     racc (1.6.2)
@@ -198,7 +199,7 @@ DEPENDENCIES
   net-smtp
   pg
   psych (< 4)
-  puma (~> 3.0)
+  puma (~> 4.3)
   queue_classic
   rails (~> 6)
   rails-erd
