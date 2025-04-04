@@ -1,17 +1,16 @@
 ---
-version: '3'
 networks:
   app-tier:
     driver: bridge
 services:
   postgres:
-    image: 'postgres:9.6'
-    labels:
-      kompose.service.type: nodeport
-    # volumes:
-    # TODO: Add postgresql
+    image: postgres:15 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=WKJWajdaw
+      POSTGRES_USER: postgres
+      POSTGRES_DB: moozean_production 
+      POSTGRES_PASSWORD: WKJWajdaw
     networks:
       - app-tier
   redis:
@@ -23,14 +22,14 @@ services:
     image: moozean:latest
     container_name: moozean
     ports:
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:3008:3000"
       - "45422:22"
     depends_on:
       - postgres
       - redis
     environment:
       - RAILS_ENV=production
-      - SECRET_KEY_BASE=WDWDFWFWFwf
+      - SECRET_KEY_BASE=WKJWajdaw
       - SECRET_TOKEN=ekfeoefokoe
       - PRODUCTION_DATABASE_URL=postgresql://postgres:@postgres:5432/moozean
       - PRODUCTION_DATABASE_ADAPTER=postgresql
@@ -51,3 +50,5 @@ services:
       - SMTP_PORT=1025
     networks:
       - app-tier
+volumes:
+  postgres_data:
