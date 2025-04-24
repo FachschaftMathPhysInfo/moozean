@@ -1,7 +1,5 @@
 ---
-networks:
-  app-tier:
-    driver: bridge
+
 services:
   postgres:
     image: postgres:15 
@@ -11,12 +9,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: moozean_production 
       POSTGRES_PASSWORD: WKJWajdaw
-    networks:
-      - app-tier
+
   redis:
     image: "redis:alpine"
-    networks:
-      - app-tier
+
   web:
     build: .
     image: moozean:latest
@@ -48,7 +44,6 @@ services:
       - PRODUCTION_USERNAME_SALT=Lambda
       - SMTP_ADDRESS=192.168.0.82
       - SMTP_PORT=1025
-    networks:
-      - app-tier
+
 volumes:
   postgres_data:
