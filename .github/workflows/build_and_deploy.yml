@@ -8,73 +8,36 @@ on:
 
 
 env:
-  # === USER CONFIGURABLE VARIABLES ===
-  DOCKERFILE_CONTEXT_PATH: "/Dockerfile"
-  IMAGE_BASENAME: "moozean"
+  IMAGE_BASENAME: "fachschaftmathphysinfo/moozean"
 
-  # Needed for fast Kaniko uploads, see 
-  # https://docs.gitlab.com/user/packages/container_registry/troubleshoot_container_registry/#slow-uploads-when-using-kaniko-to-push-large-images
-  # KANIKO_CONTEXT: "$CI_PROJECT_DIR/$DOCKERFILE_PATH" 
-  GODEBUG: "http2client=0"
 jobs:
  build_base_image:
-    name: Build and Push Base Image
+    name: Build and publish image
     runs-on: ubuntu-latest 
     permissions:
       contents: read  
       packages: write  
-
-    container:
-      image: gcr.io/kaniko-project/executor:v1.23.2-debug
-
-    env:
-      KANIKO_CONTEXT_DIR: "${{ github.workspace }}/${{ env.DOCKERFILE_CONTEXT_PATH }}"
-      KANIKO_DOCKERFILE: "${{ github.workspace }}/${{ env.DOCKERFILE_CONTEXT_PATH }}/Dockerfile"
-
-      IMAGE_REGISTRY: "ghcr.io"
-      IMAGE_OWNER_LOWERCASE: ${{ lower(github.repository_owner) }} 
-      IMAGE_BASENAME_LOWERCASE: ${{ lower(env.IMAGE_BASENAME) }}
+      id-token: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare Kaniko Docker config for GHCR
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & tag Docker image
         run: |
-          mkdir -p /kaniko/.docker
-          echo "{\"auths\":{\"${{ env.IMAGE_REGISTRY }}\":{\"username\":\"${{ github.actor }}\",\"password\":\"${{ secrets.GITHUB_TOKEN }}\"}}}" > /kaniko/.docker/config.json
-        shell: sh 
+          IMAGE=ghcr.io/${{ env.IMAGE_NAME }}
+          docker build -t $IMAGE:latest .
+          docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
 
-      - name: Define Image Tags
-        id: image_tags
+      - name: Push Docker images
         run: |
-          dest_sha_val="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_OWNER_LOWERCASE }}/${{ env.IMAGE_BASENAME_LOWERCASE }}:${{ needs.decide_to_run.outputs.commit_sha }}"
-          dest_ref_val="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_OWNER_LOWERCASE }}/${{ env.IMAGE_BASENAME_LOWERCASE }}:${{ needs.decide_to_run.outputs.branch_tag }}"
-
-          echo "DEST_SHA=$dest_sha_val" >> $GITHUB_ENV
-          echo "DEST_REF=$dest_ref_val" >> $GITHUB_ENV
-
-          echo "dest_sha_output=$dest_sha_val" >> $GITHUB_OUTPUT
-          echo "dest_ref_output=$dest_ref_val" >> $GITHUB_OUTPUT
-        shell: sh
-
-      - name: Echo build information
-        run: |
-          echo "Building custom CI image with GODEBUG: ${{ env.GODEBUG }}"
-          echo "  SHA Tagged Image: ${{ env.DEST_SHA }}"
-          echo "  Ref Tagged Image: ${{ env.DEST_REF }}"
-          echo "  Kaniko Context: ${{ env.KANIKO_CONTEXT_DIR }}"
-          echo "  Kaniko Dockerfile: ${{ env.KANIKO_DOCKERFILE }}"
-        shell: sh
-
-      - name: Execute Kaniko Build and Push
-        run: |
-          /kaniko/executor \
-            --context "${{ env.KANIKO_CONTEXT_DIR }}" \
-            --dockerfile "${{ env.KANIKO_DOCKERFILE }}" \
-            --destination "${{ env.DEST_SHA }}" \
-            --destination "${{ env.DEST_REF }}" \
-            --cache=true
-        shell: sh
-
-
+          IMAGE=ghcr.io/${{ env.IMAGE_NAME }}
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
