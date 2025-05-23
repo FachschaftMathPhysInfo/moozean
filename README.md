@@ -1,6 +1,7 @@
 # Moozean
-[![Build Status](https://travis-ci.org/FachschaftMathPhys/moozean.svg?branch=master)](https://travis-ci.org/FachschaftMathPhys/moozean)
-[![Maintainability](https://api.codeclimate.com/v1/badges/84ac36e28761fdd593b9/maintainability)](https://codeclimate.com/github/FachschaftMathPhys/moozean/maintainability)
+
+[![Build and Deploy Status](https://github.com/FachschaftMathPhysInfo/moozean/actions/workflows/build_and_deploy.yml/badge.svg)](https://github.com/FachschaftMathPhysInfo/moozean/actions/workflows/build_and_deploy.yml)
+
 # Requirements
 
 ## Ruby version
