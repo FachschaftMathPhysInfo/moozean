@@ -3,7 +3,7 @@ name: Build image and deploy to registry
 on:
   push: 
     branches:
-      - main
+      - master
   workflow_dispatch: {}
 
 
@@ -32,12 +32,12 @@ jobs:
 
       - name: Build & tag Docker image
         run: |
-          IMAGE=ghcr.io/${{ env.IMAGE_NAME }}
+          IMAGE=ghcr.io/${{ env.IMAGE_BASENAME }}
           docker build -t $IMAGE:latest .
           docker tag $IMAGE:latest $IMAGE:${{ github.sha }}
 
       - name: Push Docker images
         run: |
-          IMAGE=ghcr.io/${{ env.IMAGE_NAME }}
+          IMAGE=ghcr.io/${{ env.IMAGE_BASENAME }}
           docker push $IMAGE:latest
           docker push $IMAGE:${{ github.sha }}
