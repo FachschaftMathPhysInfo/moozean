@@ -3,7 +3,6 @@ name: Build image and deploy to registry
 on:
   push: 
     branches:
-      - main
       - master
   workflow_dispatch: {}
 
