@@ -8,7 +8,7 @@ on:
 
 
 env:
-  IMAGE_BASENAME: "fachschaftmathphysinfo/moozean"
+  IMAGE_BASENAME: "dheidemann/moozean"
 
 jobs:
  build_base_image:
