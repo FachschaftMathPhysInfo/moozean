@@ -1,6 +1,7 @@
 # Moozean
-[![Build Status](https://travis-ci.org/FachschaftMathPhys/moozean.svg?branch=master)](https://travis-ci.org/FachschaftMathPhys/moozean)
-[![Maintainability](https://api.codeclimate.com/v1/badges/84ac36e28761fdd593b9/maintainability)](https://codeclimate.com/github/FachschaftMathPhys/moozean/maintainability)
+
+[![Build and Deploy Status](https://github.com/FachschaftMathPhysInfo/moozean/actions/workflows/build_and_deploy.yml/badge.svg)](https://github.com/FachschaftMathPhysInfo/moozean/actions/workflows/build_and_deploy.yml)
+
 # Requirements
 
 ## Ruby version
@@ -36,12 +37,13 @@ We strongly recommend using the Docker--approach:
 6. Start the engines: `rails s`
 
 ## Docker
-
-1. Have an running instance of postgresql
-2. Edit the `development.env` accordingly
-3. Build the docker-image `docker build .`
-4. Create the docker container: `docker create --env-file=development.env --name Moozean -p 3008:3000 <hash of the image>`
-5. Start the container `docker start Moozean`
-6. Create the database, if needed, `docker exec Moozean bundle exec rake db:create`
-7. Migrate the database, if needed, `docker exec Moozean bundle exec rake db:migrate qc:update`
-8. Done! Visit `localhost:3008`
+1. Set variables in `docker-compose.yml`
+2. Build and start the docker container:
+  ```bash
+docker compose up --build -d
+```
+3. Next we need to seed the database with some test data:
+  ```bash
+docker compose exec web bundle exec rails db:seed 
+docker compose exec web bundle exec rails db:migrate
+```
