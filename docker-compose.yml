@@ -16,6 +16,7 @@ services:
   web:
     build: .
     image: moozean:latest
+    platform: linux/amd64
     container_name: moozean
     ports:
       - "127.0.0.1:3008:3000"
