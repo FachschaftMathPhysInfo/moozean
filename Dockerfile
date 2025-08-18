@@ -28,8 +28,9 @@ ENV HOME=/home/app
 ENV INSTALL_PATH=/home/app/ozean
 ENV EMBER_INSTALL_PATH=/home/app/ozean/frontend
 
-# Create app directory (ensure root creates it so permissions are right initially)
-RUN mkdir -p $INSTALL_PATH && chown app:app $INSTALL_PATH
+# Create app directory and bower cache (ensure root creates and assigns ownership)
+RUN mkdir -p $INSTALL_PATH /home/app/.cache/bower && \
+    chown -R app:app $INSTALL_PATH /home/app/.cache
 WORKDIR $INSTALL_PATH
 
 #Switch to APP user 
@@ -54,11 +55,13 @@ ENV EMBER_ENV=production
 
 # Build frontend assets AS APP USER
 WORKDIR ${EMBER_INSTALL_PATH}
+ENV BOWER_STORAGE__CACHE=/home/app/.cache/bower
+# Run frontend dependency install and build (bower cache pre-created and owned by app)
 RUN npm install && \
     bower install && \
     ember build && \
-    npm update 
-    #npm audit fix
+    npm update
+    # npm audit fix (left commented to avoid large churn on legacy stack)
 
 # Switch back to app's main workdir
 WORKDIR ${INSTALL_PATH}
