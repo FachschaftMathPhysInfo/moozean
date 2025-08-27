@@ -122,8 +122,8 @@ class Report < ApplicationRecord
       make_log, s=Open3.capture2e("pdflatex -halt-on-error -enable-write18 -output-directory=#{dir} current_report_full.tex")
       puts make_log
       times.times do |k|
-        p "lp -d #{ENV['PRINTER_NAME']} -h #{ENV['PRINTER_HOST']}  - < #{dir}/current_report_full.pdf"
-        print_log, s=Open3.capture2e("lp -d #{ENV['PRINTER_NAME']} -h #{ENV['PRINTER_HOST']}   < #{dir}/current_report_full.pdf")
+        p "lp -h #{ENV['PRINTER_HOST']} -d #{ENV['PRINTER_NAME']} - < #{dir}/current_report_full.pdf"
+        print_log, s=Open3.capture2e("lp -h #{ENV['PRINTER_HOST']} -d #{ENV['PRINTER_NAME']} - < #{dir}/current_report_full.pdf")
         puts print_log
       end
     }
